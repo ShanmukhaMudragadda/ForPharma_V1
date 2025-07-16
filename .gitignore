@@ -1,0 +1,58 @@
+# ─── Node.js ─────────────────────────────
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+package-lock.json
+
+# ─── Expo / React Native ─────────────────
+.expo/
+.expo-shared/
+web-build/
+dist/
+android/
+ios/
+*.apk
+*.keystore
+
+# ─── TypeScript / Build ──────────────────
+*.tsbuildinfo
+build/
+out/
+lib/
+
+# ─── Metro Bundler ───────────────────────
+.cache/
+*.bundle
+*.map
+
+# ─── OS / IDE Files ──────────────────────
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# ─── Environment & Config ────────────────
+.env
+.env.*
+*.env.local
+*.env.production
+*.env.development
+
+# ─── Prisma ──────────────────────────────
+prisma/dev.db
+prisma/dev.db-journal
+prisma/migrations/
+
+# ─── Logs ────────────────────────────────
+logs/
+*.log
+*.log.*
+
+# ─── Test Output ─────────────────────────
+coverage/
+*.lcov
+
+# ─── Expo Router Cache ───────────────────
+.parcel-cache/
