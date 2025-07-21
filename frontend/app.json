@@ -24,6 +24,11 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    
+    "entryPoint": "./app/index.tsx",
+    "scheme": "your-app-scheme",
+    "plugins": ["expo-router"]
   }
 }
+
