@@ -226,10 +226,10 @@ const handleCheckInOut = () => {
           </StyledView>
           
 
-          {/* <StyledView className="flex-row justify-around mb-3">
+          <StyledView className="flex-row justify-around mb-3">
             <QuickActionCard icon="calendar" label="Apply Leave" color="#FFF8E1" iconColor="#FFA000" />
             <QuickActionCard icon="wallet-outline" label="Expense Claim" color="#E8F5E9" iconColor="#28A745" />
-          </StyledView> */}
+          </StyledView>
 
         </StyledView>
 

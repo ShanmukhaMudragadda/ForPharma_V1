@@ -1,0 +1,113 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma-shared"  
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")  
+}
+
+
+model Organization {
+  id           String   @id @default(uuid())
+  name         String   @db.VarChar(255)
+  schemaName   String?  @unique @db.VarChar(100)
+  address      String?  @db.Text
+  contactEmail String   @map("contact_email") @db.VarChar(255)
+  contactPhone String?  @map("contact_phone") @db.VarChar(20)
+  website      String?  @db.VarChar(255)
+  settings     Json?    @db.JsonB
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+  isActive     Boolean  @default(true) @map("is_active")
+
+  // Relations
+  employees      Employee[]
+  territories    Territory[]
+  hospitalChains HospitalChain[]
+  chemistChains  ChemistChain[]
+//   hospitals      Hospital[]
+//   doctors        Doctor[]
+  drugs          Drug[]
+  chemists       Chemist[]
+  orders         Order[]
+  dcrReports     DcrReport[]
+  rcpaReports    RcpaReport[]
+  checkIns       CheckIn[]
+  // calendarEvents CalendarEvent[]
+  auditLogs      AuditLog[]
+
+  @@map("organizations")
+}
+
+model Employee {
+  id             String       @id @default(uuid())
+  organizationId String       @map("organization_id")
+  organization   Organization @relation(fields: [organizationId], references: [id])
+
+  // Authentication fields
+  email        String @unique @db.VarChar(255)
+  passwordHash String @map("password_hash") @db.VarChar(255)
+
+  // Personal information
+  firstName  String  @map("first_name") @db.VarChar(100)
+  lastName   String? @map("last_name") @db.VarChar(100)
+  phone      String? @db.VarChar(20)
+  profilePic String? @map("profile_pic")
+
+  // Role and hierarchy
+  role               EmployeeRole
+  reportingManagerId String?      @map("reporting_manager_id")
+  reportingManager   Employee?    @relation("EmployeeManager", fields: [reportingManagerId], references: [id])
+  subordinates       Employee[]   @relation("EmployeeManager")
+
+  // Team
+  teamId    String? @map("team_id")
+  team      Team?   @relation("TeamMembers", fields: [teamId], references: [id])
+  leadsTeam Team?   @relation("TeamLead")
+
+  // Employee details
+  employeeCode      String?  @map("employee_code") @db.VarChar(50)
+  city              String?  @db.VarChar(100)
+  state             String?  @db.VarChar(100)
+  assignedLatitude  Decimal? @db.Decimal(10, 8)
+  assignedLongitude Decimal? @db.Decimal(11, 8)
+
+  // Timestamps
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+  lastLoginAt DateTime? @map("last_login_at")
+  isActive    Boolean   @default(true) @map("is_active")
+
+  // Relations
+  // territories            EmployeeTerritory[]
+  trainingRecords        EmployeeTrainingRecord[]
+  doctorNotes            DoctorNote[]
+  chemistNotes           ChemistNote[]
+  doctorInteractions     DoctorInteraction[]
+  chemistInteractions    ChemistInteraction[]
+  dcrReports             DcrReport[]
+  rcpaReports            RcpaReport[]
+  checkIns               CheckIn[]
+  // calendarEvents         CalendarEvent[]
+  auditLogs              AuditLog[]
+  ordersCreated          Order[]                  @relation("OrderCreatedBy")
+  // inventoryUpdates       ChemistDrugInventory[]    @relation("InventoryUpdatedBy")
+  doctorsCreated         Doctor[]                 @relation("DoctorCreatedBy")
+  drugsCreated           Drug[]                   @relation("DrugCreatedBy")
+  chemistsCreated        Chemist[]                @relation("ChemistCreatedBy")
+  doctorChemistRelations DoctorChemistRelation[]  @relation("RelationCreatedBy")
+  expenseClaims          ExpenseClaim[]
+  approvedClaims         ExpenseClaim[]           @relation("ApprovedBy")
+  drugInventories        UserDrugInventory[]
+  giftInventories        UserGiftInventory[]
+  giftsCreated           Gift[]                   @relation("GiftCreatedBy")
+  doctorDistributions    DoctorDistribution[]
+  taskPlans              TaskPlanner[]
+  doctorTasks            DoctorTask[]
+  chemistTasks           ChemistTask[]
+  tourPlanTasks          TourPlanTask[]
+
+  @@map("employees")
+}
