@@ -13,14 +13,15 @@ const StyledTouchableOpacity = styled(TouchableOpacity);
     return (
       <StyledTouchableOpacity 
         className="bg-white p-5 rounded-xl items-center"
-        style={{
-          width: '46%',
-          shadowColor: '#000',
-          shadowOffset: { width: 0, height: 2 },
-          shadowOpacity: 0.05,
-          shadowRadius: 8,
-          elevation: 3,
-        }}
+        // style={{
+        //   width: '46%',
+        //   height:'150%',
+        //   shadowColor: '#000',
+        //   shadowOffset: { width: 0, height: 2 },
+        //   shadowOpacity: 0.05,
+        //   shadowRadius: 8,
+        //   elevation: 3,
+        // }}
       >
         <StyledView 
           className="w-10 h-12 rounded-xl items-center justify-center mb-3"

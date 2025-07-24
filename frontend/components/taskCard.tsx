@@ -14,13 +14,17 @@ export default function TaskCard  ({ type, name, location, time }: any) {
   
     return (
     <StyledTouchableOpacity 
-      className="bg-white p-4 rounded-xl mb-3 flex-row items-center"
+      className="bg-white  rounded-xl  flex-row items-center"
       style={{
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.05,
         shadowRadius: 8,
         elevation: 2,
+        height:90,
+        marginBottom:7,
+        paddingHorizontal:10
+
       }}
     >
       <StyledView className={`w-12 h-12 rounded-xl items-center justify-center mr-3 ${

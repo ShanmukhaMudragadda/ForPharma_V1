@@ -2,7 +2,7 @@ import React , {useState} from 'react'
 import { View, Text ,ScrollView,TouchableOpacity,StatusBar,
     Alert , SafeAreaView} from 'react-native'
 import { styled } from 'nativewind'   
-import { useRouter , Link } from 'expo-router'
+import { useRouter , Link, Redirect } from 'expo-router'
 import { Ionicons } from '@expo/vector-icons'
 import Drawer from '../components/drawer.tsx';
 import QuickActionCard from '../components/quickActionCard.tsx'
@@ -44,6 +44,57 @@ const ActivityItem = ({ icon, title, subtitle, time, bgColor, iconColor }: any) 
       <StyledText className="text-xs text-gray-500">{time}</StyledText>
     </StyledView>
   );
+};
+
+const handleLogin = ()=>{
+   router.push('/login');
+}
+const handleCheckInOut = () => {
+  if (isCheckedIn) {
+    // Check out
+    const checkOutTime = new Date();
+    const workDuration = checkInTime ? checkOutTime.getTime() - checkInTime.getTime() : 0;
+    const hours = Math.floor(workDuration / (1000 * 60 * 60));
+    const minutes = Math.floor((workDuration % (1000 * 60 * 60)) / (1000 * 60));
+
+    Alert.alert(
+      'Check Out',
+      `You checked out at ${checkOutTime.toLocaleTimeString()} from Forsys Inc, HYD. You worked for ${hours}h ${minutes}m today. Thank you!`,
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'OK',
+          onPress: () => {
+            setIsCheckedIn(false);
+            setCheckInTime(null);
+          },
+        },
+      ]
+    );
+  } else {
+    // Check in
+    const time = new Date();
+    Alert.alert(
+      'Check In',
+      `You checked in at ${time.toLocaleTimeString()} from Forsys Inc, HYD today`,
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'OK',
+          onPress: () => {
+            setCheckInTime(time);
+            setIsCheckedIn(true);
+          },
+        },
+      ]
+    );
+  }
 };
 
 
@@ -105,7 +156,7 @@ const ActivityItem = ({ icon, title, subtitle, time, bgColor, iconColor }: any) 
             className={`w-full py-4 rounded-xl flex-row items-center justify-center gap-2 ${
               isCheckedIn ? 'bg-green-500' : 'bg-[#0077B6]'
             }`}
-            
+            onPress={handleLogin}
             style={{
               shadowColor: isCheckedIn ? '#28A745' : '#0077B6',
               shadowOffset: { width: 0, height: 4 },
@@ -167,16 +218,18 @@ const ActivityItem = ({ icon, title, subtitle, time, bgColor, iconColor }: any) 
             Quick Actions
           </StyledText>
           
-            <StyledView className="flex-row justify-around mb-3 ">
+            <StyledView className="flex-row justify-between items-center" style={{
+              height:100
+            }}>
             <QuickActionCard  icon="clipboard-outline" label="Create Order" color="#E6F3FA" iconColor="#0077B6" />
             <QuickActionCard icon="calendar-outline" label="Tour Plan" color="#E6F9FD" iconColor="#00B4D8" />
           </StyledView>
           
 
-          <StyledView className="flex-row justify-around mb-3">
+          {/* <StyledView className="flex-row justify-around mb-3">
             <QuickActionCard icon="calendar" label="Apply Leave" color="#FFF8E1" iconColor="#FFA000" />
             <QuickActionCard icon="wallet-outline" label="Expense Claim" color="#E8F5E9" iconColor="#28A745" />
-          </StyledView>
+          </StyledView> */}
 
         </StyledView>
 
