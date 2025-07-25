@@ -25,10 +25,10 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    
-    "entryPoint": "./app/index.tsx",
+    "entryPoint": "./app/login.tsx",
     "scheme": "your-app-scheme",
-    "plugins": ["expo-router"]
+    "plugins": [
+      "expo-router"
+    ]
   }
 }
-

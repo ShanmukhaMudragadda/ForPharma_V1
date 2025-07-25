@@ -15,15 +15,15 @@ import {
 import { LinearGradient } from 'expo-linear-gradient';
 import { MaterialIcons } from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
+import { useRouter } from 'expo-router';
 
-
-
-const App = () => {
+const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
+  const router = useRouter();
 
   const handleLogin = async () => {
     if (!email || !password) {
@@ -32,13 +32,15 @@ const App = () => {
     }
 
     setLoading(true);
-    
+
     // Simulate API call
     setTimeout(() => {
       setLoading(false);
-      Alert.alert('Success', 'Login successful!');
+      // Navigate to home page
+      router.replace('/(tabs)/');
     }, 2000);
   };
+
 
   const handleForgotPassword = () => {
     Alert.alert('Forgot Password', 'Password reset link will be sent to your email');
@@ -70,10 +72,10 @@ const App = () => {
             <View style={styles.logoContainer}>
               <MaterialIcons name="person" size={48} color="#3B82F6" />
             </View>
-            
+
             {/* Title */}
             <Text style={styles.title}>ForPharma App</Text>
-            
+
             {/* Subtitle */}
             <Text style={styles.subtitle}>Welcome back! Please log in to your account</Text>
           </View>
@@ -82,7 +84,7 @@ const App = () => {
           <View style={styles.formContainer}>
             {/* Form Title */}
             <Text style={styles.formTitle}>Log In</Text>
-            
+
             {/* Email Input */}
             <View style={styles.inputContainer}>
               <MaterialIcons name="email" size={20} color="#9CA3AF" style={styles.inputIcon} />
@@ -136,7 +138,7 @@ const App = () => {
                 />
                 <Text style={styles.rememberMeText}>Remember me</Text>
               </TouchableOpacity>
-              
+
               {/* Forgot Password */}
               <TouchableOpacity onPress={handleForgotPassword}>
                 <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
@@ -165,10 +167,10 @@ const App = () => {
 
             {/* Google Login Button */}
             <TouchableOpacity onPress={handleGoogleLogin} style={styles.googleButton}>
-              <Image 
-  source={{ uri: 'https://developers.google.com/identity/images/g-logo.png' }}
-  style={styles.googleIcon}
-/>
+              <Image
+                source={{ uri: 'https://developers.google.com/identity/images/g-logo.png' }}
+                style={styles.googleIcon}
+              />
               <Text style={styles.googleButtonText}>Continue with Google</Text>
             </TouchableOpacity>
           </View>
@@ -212,7 +214,7 @@ const styles = StyleSheet.create({
   logoContainer: {
     width: 96,
     height: 96,
-    marginTop:20,
+    marginTop: 20,
     backgroundColor: 'white',
     borderRadius: 48,
     justifyContent: 'center',
@@ -369,9 +371,19 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   googleIcon: {
-  width: 20,
-  height: 20,
+    width: 20,
+    height: 20,
   },
 });
 
-export default App;
+export default Login;
+
+
+
+
+
+
+
+
+
+
