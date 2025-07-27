@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import { loginController } from './src/controllers/authController.ts';
+import { loginController,googleLoginController } from './src/controllers/authController.ts';
 import { createOrganizationController } from './src/controllers/organizationController.ts';
 import employeeRoutes from './src/routes/employeeRoutes.ts';
 import { cleanupMiddleware } from './src/middlewares/tenantMiddleware.ts';
@@ -33,6 +33,7 @@ app.get('/', (req, res) => {
 
 // Public routes (no auth required)
 app.post('/api/auth/login', loginController);
+app.post('/api/auth/googlelogin', googleLoginController);
 app.post('/api/auth/register', createOrganizationController); // Alternative endpoint
 app.post('/api/organizations', createOrganizationController);
 
