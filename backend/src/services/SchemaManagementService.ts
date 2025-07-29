@@ -1,22 +1,63 @@
 import { PrismaClient as SharedPrismaClient } from '../../generated/prisma-shared/index.js';
 import { PrismaClient as TenantPrismaClient } from '../../generated/prisma-tenant/index.js';
-import { exec } from 'child_process';
-import { promisify } from 'util';
 import fs from 'fs/promises';
 import path from 'path';
 
-const execAsync = promisify(exec);
+// Define an interface for a loaded migration
+interface TenantMigration {
+  name: string; // e.g., 'V001_initial_schema'
+  filePath: string;
+  sqlContent: string;
+  checksum: string; // Placeholder for now, but important for integrity
+}
 
 class SchemaManagementService {
-  // sharedDb;
-  // tenantConnections;
+  private sharedDb: SharedPrismaClient;
+  private tenantConnections: Map<string, TenantPrismaClient>;
+  private loadedMigrations: TenantMigration[] = []; // Store all available migrations
+
   constructor() {
     this.sharedDb = new SharedPrismaClient();
     this.tenantConnections = new Map();
   }
 
-  async createOrganizationSchema(organizationId, organizationName) {
-    let schemaName;
+  /**
+   * Initializes and loads all tenant migration files from the 'tenant-migrations' directory.
+   * This should be called once when the application starts.
+   */
+  async initializeMigrations() {
+    console.log('📚 Loading tenant migration files...');
+    const migrationsDir = path.join(process.cwd(), 'tenant-migrations');
+    try {
+      const migrationFiles = await fs.readdir(migrationsDir);
+
+      // Filter and sort SQL migration files (e.g., V001_..., V002_...)
+      const sortedMigrationFiles = migrationFiles
+        .filter(file => file.endsWith('.sql'))
+        .sort();
+
+      this.loadedMigrations = await Promise.all(sortedMigrationFiles.map(async (file) => {
+        const filePath = path.join(migrationsDir, file);
+        const sqlContent = await fs.readFile(filePath, 'utf8');
+        // In a real-world scenario, you'd generate a proper checksum of the content here
+        const checksum = 'placeholder_checksum'; // Replace with actual checksum generation
+        return {
+          name: file.replace('.sql', ''),
+          filePath,
+          sqlContent,
+          checksum
+        };
+      }));
+      console.log(`✅ Loaded ${this.loadedMigrations.length} tenant migration files.`);
+    } catch (error) {
+      console.error('❌ Error loading tenant migration files:', error);
+      throw new Error('Failed to initialize tenant migrations.');
+    }
+  }
+
+  async createOrganizationSchema(organizationId: string, organizationName: string): Promise<string> {
+    let schemaName: string | null = null;
+
     try {
       const timestamp = Date.now();
       schemaName = `org_${organizationName.toLowerCase().replace(/[^a-z0-9]/g, '_')}_${timestamp}`;
@@ -31,11 +72,12 @@ class SchemaManagementService {
       // 2. Grant permissions
       const dbUser = process.env.DB_USER || 'postgres';
       await this.sharedDb.$executeRawUnsafe(
-        `GRANT ALL ON SCHEMA "${schemaName}" TO ${dbUser}`
+        `GRANT ALL ON SCHEMA "${schemaName}" TO "${dbUser}"`
       );
 
       // 3. Run migrations for the new schema
-      await this.runMigrationsForSchema(schemaName);
+      // This will apply ALL loaded migrations as it's a new schema
+      await this.applyRequiredMigrationsToSchema(schemaName);
 
       // 4. Verify schema was created properly
       const isValid = await this.verifySchemaCreation(schemaName);
@@ -49,17 +91,19 @@ class SchemaManagementService {
         data: { schemaName: schemaName }
       });
 
-      console.log(`Schema ${schemaName} created successfully`);
+      console.log(`✅ Schema ${schemaName} created successfully`);
       return schemaName;
 
     } catch (error) {
-      console.error('Error creating schema:', error);
-      // Cleanup on error - try to drop the schema
+      console.error('❌ Error creating schema:', error);
+
+      // Cleanup on error
       if (schemaName) {
         try {
           await this.sharedDb.$executeRawUnsafe(
             `DROP SCHEMA IF EXISTS "${schemaName}" CASCADE`
           );
+          console.log(`🧹 Cleaned up failed schema ${schemaName}`);
         } catch (cleanupError) {
           console.error('Failed to cleanup schema:', cleanupError);
         }
@@ -69,819 +113,279 @@ class SchemaManagementService {
   }
 
   /**
-   * Run migrations for a specific schema
+   * Applies all required (unapplied) migrations to a single specified schema.
+   * This is the core migration logic used by other functions.
    */
-  async runMigrationsForSchema(schemaName) {
-    try {
-      console.log(`Setting up tables for schema ${schemaName}...`);
-
-      // Skip Prisma migrations and directly create tables
-      // This avoids conflicts with existing migrations
-      await this.runPrismaGeneratedSQL(schemaName);
-
-      console.log(`Tables created successfully for schema ${schemaName}`);
-    } catch (error) {
-      console.error(`Error setting up schema ${schemaName}:`, error);
-      throw error;
+  async applyRequiredMigrationsToSchema(schemaName: string): Promise<void> {
+    if (this.loadedMigrations.length === 0) {
+      console.warn('⚠️ No tenant migration files loaded. Call initializeMigrations() first.');
+      return;
     }
-  }
 
-  /**
-   * Generate SQL from Prisma schema and execute it (Fallback method)
-   */
-  /**
-    * Generate SQL from Prisma schema and execute it (Complete version)
-    */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  /**
-    * Generate SQL from Prisma schema and execute it (Complete version)
-    */
-  async runPrismaGeneratedSQL(schemaName) {
     const tenantDb = await this.getTenantClient(schemaName);
 
     try {
-      console.log(`Creating all tables for schema ${schemaName}...`);
+      console.log(`🔄 Running required migrations for schema ${schemaName}...`);
 
-      // First set the search path
-      await tenantDb.$executeRawUnsafe(
-        `SET search_path TO "${schemaName}", public`
-      );
+      // Ensure the migrations table exists
+      await tenantDb.$executeRawUnsafe(`
+        CREATE TABLE IF NOT EXISTS "${schemaName}"."_prisma_migrations" (
+          id                      VARCHAR(36) PRIMARY KEY,
+          checksum                VARCHAR(64) NOT NULL,
+          finished_at             TIMESTAMPTZ,
+          migration_name          VARCHAR(255) NOT NULL,
+          logs                    TEXT,
+          rolled_back_at          TIMESTAMPTZ,
+          started_at              TIMESTAMPTZ DEFAULT now() NOT NULL,
+          applied_steps_count     INTEGER DEFAULT 0 NOT NULL
+        );
+      `);
 
-      // Create ENUM types first - execute each DO block separately
-      console.log('Creating ENUM types...');
+      // Get list of applied migrations for this schema
+      // FIX: Use executeRawUnsafe with string interpolation instead of queryRaw with parameters
+      const appliedMigrationsResult: { migration_name: string }[] = await tenantDb.$queryRawUnsafe(`
+        SELECT migration_name FROM "${schemaName}"."_prisma_migrations" ORDER BY started_at ASC;
+      `);
+      const appliedMigrations = new Set(appliedMigrationsResult.map(row => row.migration_name));
 
-      const enumTypes = [
-        { name: 'EmployeeRole', values: "'MEDICAL_REPRESENTATIVE', 'SALES_MANAGER', 'SYSTEM_ADMINISTRATOR'" },
-        { name: 'TaskType', values: "'DOCTOR', 'CHEMIST', 'TOUR_PLANNER'" },
-        { name: 'TaskStatus', values: "'PENDING', 'COMPLETED', 'RESCHEDULED'" },
-        { name: 'AssociationType', values: "'DOCTOR', 'CHEMIST'" },
-        { name: 'DayOfWeek', values: "'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY'" },
-        { name: 'ConsultationType', values: "'OPD', 'EMERGENCY', 'SURGERY', 'SPECIAL'" },
-        { name: 'InteractionType', values: "'MEETING', 'CALL', 'EMAIL', 'WHATSAPP'" },
-        { name: 'OrderStatus', values: "'PENDING', 'CONFIRMED', 'DISPATCHED', 'DELIVERED', 'CANCELLED'" },
-        { name: 'EventType', values: "'MEETING', 'VISIT', 'TRAINING', 'OTHER'" },
-        { name: 'EventStatus', values: "'SCHEDULED', 'COMPLETED', 'CANCELLED', 'RESCHEDULED'" },
-        { name: 'ExpenseClaimStatus', values: "'PENDING', 'APPROVED', 'REJECTED'" },
-        { name: 'TaskPlannerStatus', values: "'DRAFT', 'PENDING_APPROVAL', 'APPROVED', 'REJECTED'" },
-        { name: 'TaskTypeReference', values: "'DOCTOR_TASK', 'CHEMIST_TASK', 'TOUR_PLAN_TASK'" },
-        { name: 'ChemistType', values: "'CHEMIST', 'STOCKIST'" }
-      ];
+      let totalStatementsApplied = 0;
 
-      for (const enumType of enumTypes) {
+      for (const migration of this.loadedMigrations) {
+        if (appliedMigrations.has(migration.name)) {
+          console.log(`⏩ Skipping already applied migration: ${migration.name} for schema ${schemaName}`);
+          continue;
+        }
+
+        console.log(`🚀 Applying migration: ${migration.name} for schema ${schemaName}`);
+        let tenantSql = migration.sqlContent
+          .replace(/public\./g, `"${schemaName}".`)
+          .replace(/CREATE TABLE/g, 'CREATE TABLE IF NOT EXISTS')
+          .replace(/CREATE INDEX/g, 'CREATE INDEX IF NOT EXISTS')
+          .replace(/CREATE UNIQUE INDEX/g, 'CREATE UNIQUE INDEX IF NOT EXISTS');
+
+        // Split SQL statements carefully to handle DO blocks
+        const statements = [];
+        let currentStatement = '';
+        const lines = tenantSql.split('\n');
+
+        for (const line of lines) {
+          currentStatement += line + '\n';
+          if (line.trim().endsWith(';') && !currentStatement.includes('DO $') || (currentStatement.includes('DO $') && line.trim().endsWith('END $;'))) {
+            statements.push(currentStatement.trim());
+            currentStatement = '';
+          }
+        }
+        const filteredStatements = statements.filter(stmt => stmt.trim().length > 0);
+
+        let migrationSuccessCount = 0;
+        for (const statement of filteredStatements) {
+          if (statement.length > 1) {
+            try {
+              await tenantDb.$executeRawUnsafe(statement);
+              migrationSuccessCount++;
+            } catch (error: any) { // Use 'any' for error to access meta property
+              if (error.message.includes('already exists') ||
+                error.message.includes('duplicate_object') ||
+                (error.meta && (error.meta.code === '42P07' || error.meta.code === '42710'))) {
+                console.warn(`Skipping existing object in ${migration.name}: ${statement.substring(0, 100).replace(/\n/g, ' ')}...`);
+              } else {
+                console.error(`❌ Failed statement in ${migration.name}:`, statement.substring(0, 100) + '...');
+                throw error;
+              }
+            }
+          }
+        }
+
+        // Record this migration as applied
+        // FIX: Use executeRawUnsafe with string interpolation instead of parameters
+        const migrationId = `${migration.name}_${Date.now()}`;
         await tenantDb.$executeRawUnsafe(`
-          DO $$ BEGIN
-            CREATE TYPE "${schemaName}"."${enumType.name}" AS ENUM (${enumType.values});
-            EXCEPTION WHEN duplicate_object THEN NULL;
-          END $$
+          INSERT INTO "${schemaName}"."_prisma_migrations"
+          (id, checksum, finished_at, migration_name, applied_steps_count)
+          VALUES ('${migrationId}', '${migration.checksum}', NOW(), '${migration.name}', ${migrationSuccessCount})
         `);
+
+        totalStatementsApplied += migrationSuccessCount;
+        console.log(`✅ Migration ${migration.name} completed for schema ${schemaName}`);
       }
 
-      console.log('Creating tables...');
+      console.log(`✅ All required migrations completed for schema ${schemaName}. Total statements applied: ${totalStatementsApplied}`);
 
-      // Create tables - execute each CREATE TABLE separately
-      const tableStatements = [
-        // Core System Tables
-        `CREATE TABLE IF NOT EXISTS "${schemaName}"."teams" (
-          "id" TEXT NOT NULL DEFAULT gen_random_uuid(),
-          "team_name" VARCHAR(255) NOT NULL,
-          "lead_id" TEXT,
-          "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-          "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-          "is_active" BOOLEAN NOT NULL DEFAULT true,
-          CONSTRAINT "teams_pkey" PRIMARY KEY ("id")
-        )`,
-
-        `CREATE TABLE IF NOT EXISTS "${schemaName}"."territories" (
-          "territory_id" TEXT NOT NULL DEFAULT gen_random_uuid(),
-          "organization_id" TEXT,
-          "name" VARCHAR(255) NOT NULL,
-          "type" VARCHAR(100) NOT NULL,
-          "boundaries" JSONB,
-          "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-          "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-          CONSTRAINT "territories_pkey" PRIMARY KEY ("territory_id")
-        )`,
-
-        `CREATE TABLE IF NOT EXISTS "${schemaName}"."employee_training_records" (
-          "id" TEXT NOT NULL DEFAULT gen_random_uuid(),
-          "employee_id" TEXT,
-          "training_name" VARCHAR(255) NOT NULL,
-          "description" TEXT,
-          "completion_date" DATE NOT NULL,
-          "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-          CONSTRAINT "employee_training_records_pkey" PRIMARY KEY ("id")
-        )`,
-
-        `CREATE TABLE IF NOT EXISTS "${schemaName}"."hospital_chains" (
-          "id" TEXT NOT NULL DEFAULT gen_random_uuid(),
-          "organization_id" TEXT,
-          "name" VARCHAR(255) NOT NULL,
-          "headquarters_address" TEXT,
-          "contact_email" VARCHAR(255),
-          "contact_phone" VARCHAR(20),
-          "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-          "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-          "is_active" BOOLEAN NOT NULL DEFAULT true,
-          CONSTRAINT "hospital_chains_pkey" PRIMARY KEY ("id")
-        )`,
-
-        `CREATE TABLE IF NOT EXISTS "${schemaName}"."chemist_chains" (
-          "chemist_chain_id" TEXT NOT NULL DEFAULT gen_random_uuid(),
-          "organization_id" TEXT,
-          "name" VARCHAR(255) NOT NULL,
-          "headquarters_address" TEXT,
-          "contact_email" VARCHAR(255),
-          "contact_phone" VARCHAR(20),
-          "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-          "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-          "is_active" BOOLEAN NOT NULL DEFAULT true,
-          CONSTRAINT "chemist_chains_pkey" PRIMARY KEY ("chemist_chain_id")
-        )`,
-
-        // Main Entity Tables
-        `CREATE TABLE IF NOT EXISTS "${schemaName}"."hospitals" (
-          "hospital_id" TEXT NOT NULL DEFAULT gen_random_uuid(),
-          "organization_id" TEXT,
-          "hospital_chain_id" TEXT,
-          "name" VARCHAR(255) NOT NULL,
-          "type" VARCHAR(100) NOT NULL,
-          "address" TEXT NOT NULL,
-          "city" VARCHAR(100),
-          "state" VARCHAR(100),
-          "pincode" VARCHAR(10),
-          "latitude" DECIMAL(10,8),
-          "longitude" DECIMAL(11,8),
-          "phone" VARCHAR(20),
-          "email" VARCHAR(255),
-          "website" VARCHAR(255),
-          "description" TEXT,
-          "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-          "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-          "is_active" BOOLEAN NOT NULL DEFAULT true,
-          CONSTRAINT "hospitals_pkey" PRIMARY KEY ("hospital_id")
-        )`,
-
-        `CREATE TABLE IF NOT EXISTS "${schemaName}"."doctors" (
-          "doctor_id" TEXT NOT NULL DEFAULT gen_random_uuid(),
-          "organization_id" TEXT,
-          "name" VARCHAR(255) NOT NULL,
-          "specialization" VARCHAR(255),
-          "email" VARCHAR(255),
-          "phone" VARCHAR(20),
-          "description" TEXT,
-          "profile_picture_url" VARCHAR(500),
-          "qualification" VARCHAR(255),
-          "experience_years" INTEGER,
-          "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-          "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-          "created_by" TEXT,
-          "is_active" BOOLEAN NOT NULL DEFAULT true,
-          CONSTRAINT "doctors_pkey" PRIMARY KEY ("doctor_id")
-        )`,
-
-        `CREATE TABLE IF NOT EXISTS "${schemaName}"."chemists" (
-          "chemist_id" TEXT NOT NULL DEFAULT gen_random_uuid(),
-          "organization_id" TEXT,
-          "chemist_chain_id" TEXT,
-          "name" VARCHAR(255) NOT NULL,
-          "type" "${schemaName}"."ChemistType" NOT NULL,
-          "email" VARCHAR(255),
-          "phone" VARCHAR(20),
-          "address" TEXT,
-          "city" VARCHAR(100),
-          "state" VARCHAR(100),
-          "pincode" VARCHAR(10),
-          "latitude" DECIMAL(10,8),
-          "longitude" DECIMAL(11,8),
-          "description" TEXT,
-          "profile_picture_url" VARCHAR(500),
-          "visiting_hours" VARCHAR(255),
-          "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-          "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-          "created_by" TEXT,
-          "is_active" BOOLEAN NOT NULL DEFAULT true,
-          CONSTRAINT "chemists_pkey" PRIMARY KEY ("chemist_id")
-        )`,
-
-        `CREATE TABLE IF NOT EXISTS "${schemaName}"."drugs" (
-          "drug_id" TEXT NOT NULL DEFAULT gen_random_uuid(),
-          "organization_id" TEXT,
-          "name" VARCHAR(255) NOT NULL,
-          "composition" TEXT,
-          "manufacturer" VARCHAR(255),
-          "indications" TEXT,
-          "side_effects" TEXT,
-          "safety_advice" TEXT,
-          "dosage_forms" JSONB,
-          "price" DECIMAL(10,2),
-          "schedule" VARCHAR(10),
-          "regulatory_approvals" TEXT,
-          "category" VARCHAR(100),
-          "is_available" BOOLEAN NOT NULL DEFAULT true,
-          "images" JSONB,
-          "marketing_materials" JSONB,
-          "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-          "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-          "created_by" TEXT,
-          "is_active" BOOLEAN NOT NULL DEFAULT true,
-          CONSTRAINT "drugs_pkey" PRIMARY KEY ("drug_id")
-        )`,
-
-        // Association Tables
-        `CREATE TABLE IF NOT EXISTS "${schemaName}"."doctor_hospital_associations" (
-          "id" TEXT NOT NULL DEFAULT gen_random_uuid(),
-          "doctor_id" TEXT NOT NULL,
-          "hospital_id" TEXT NOT NULL,
-          "department" VARCHAR(255),
-          "position" VARCHAR(255),
-          "is_primary" BOOLEAN NOT NULL DEFAULT false,
-          "association_start_date" TIMESTAMP(3),
-          "association_end_date" TIMESTAMP(3),
-          "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-          "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-          CONSTRAINT "doctor_hospital_associations_pkey" PRIMARY KEY ("id"),
-          CONSTRAINT "doctor_hospital_unique" UNIQUE ("doctor_id", "hospital_id")
-        )`,
-
-        `CREATE TABLE IF NOT EXISTS "${schemaName}"."doctor_consultation_schedules" (
-          "id" TEXT NOT NULL DEFAULT gen_random_uuid(),
-          "doctor_id" TEXT NOT NULL,
-          "hospital_id" TEXT NOT NULL,
-          "day_of_week" "${schemaName}"."DayOfWeek" NOT NULL,
-          "start_time" TIME NOT NULL,
-          "end_time" TIME NOT NULL,
-          "consultation_type" "${schemaName}"."ConsultationType" NOT NULL,
-          "is_active" BOOLEAN NOT NULL DEFAULT true,
-          "effective_from" TIMESTAMP(3),
-          "effective_to" TIMESTAMP(3),
-          "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-          "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-          CONSTRAINT "doctor_consultation_schedules_pkey" PRIMARY KEY ("id")
-        )`,
-
-        `CREATE TABLE IF NOT EXISTS "${schemaName}"."doctor_notes" (
-          "id" TEXT NOT NULL DEFAULT gen_random_uuid(),
-          "doctor_id" TEXT NOT NULL,
-          "created_by" TEXT,
-          "content" TEXT NOT NULL,
-          "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-          "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-          CONSTRAINT "doctor_notes_pkey" PRIMARY KEY ("id")
-        )`,
-
-        `CREATE TABLE IF NOT EXISTS "${schemaName}"."doctor_interactions" (
-          "id" TEXT NOT NULL DEFAULT gen_random_uuid(),
-          "doctor_id" TEXT NOT NULL,
-          "employee_id" TEXT,
-          "hospital_id" TEXT,
-          "doctorTaskId" TEXT,
-          "interaction_type" "${schemaName}"."InteractionType" NOT NULL,
-          "start_time" TIMESTAMP(3) NOT NULL,
-          "end_time" TIMESTAMP(3),
-          "purpose" TEXT,
-          "outcome" TEXT,
-          "comments" TEXT,
-          "rating" SMALLINT,
-          "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-          CONSTRAINT "doctor_interactions_pkey" PRIMARY KEY ("id")
-        )`,
-
-        `CREATE TABLE IF NOT EXISTS "${schemaName}"."chemist_notes" (
-          "id" TEXT NOT NULL DEFAULT gen_random_uuid(),
-          "chemist_id" TEXT NOT NULL,
-          "created_by" TEXT,
-          "content" TEXT NOT NULL,
-          "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-          "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-          CONSTRAINT "chemist_notes_pkey" PRIMARY KEY ("id")
-        )`,
-
-        `CREATE TABLE IF NOT EXISTS "${schemaName}"."chemist_interactions" (
-          "id" TEXT NOT NULL DEFAULT gen_random_uuid(),
-          "chemist_id" TEXT NOT NULL,
-          "employee_id" TEXT,
-          "chemistTaskId" TEXT,
-          "interaction_type" "${schemaName}"."InteractionType" NOT NULL,
-          "start_time" TIMESTAMP(3) NOT NULL,
-          "end_time" TIMESTAMP(3),
-          "purpose" TEXT,
-          "outcome" TEXT,
-          "comments" TEXT,
-          "rating" SMALLINT,
-          "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-          CONSTRAINT "chemist_interactions_pkey" PRIMARY KEY ("id")
-        )`,
-
-        `CREATE TABLE IF NOT EXISTS "${schemaName}"."doctor_chemist_relations" (
-          "id" TEXT NOT NULL DEFAULT gen_random_uuid(),
-          "doctor_id" TEXT NOT NULL,
-          "chemist_id" TEXT NOT NULL,
-          "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-          "created_by" TEXT,
-          CONSTRAINT "doctor_chemist_relations_pkey" PRIMARY KEY ("id")
-        )`
-      ];
-
-      // Execute each table creation statement
-      let createdCount = 0;
-      for (const statement of tableStatements) {
-        await tenantDb.$executeRawUnsafe(statement);
-        createdCount++;
-        if (createdCount % 5 === 0) {
-          console.log(`Created ${createdCount} tables...`);
-        }
-      }
-
-      // Continue with remaining tables...
-      const remainingTables = [
-        // Orders and Tasks
-        `CREATE TABLE IF NOT EXISTS "${schemaName}"."orders" (
-          "order_id" TEXT NOT NULL DEFAULT gen_random_uuid(),
-          "organization_id" TEXT,
-          "chemist_id" TEXT,
-          "total_amount" DECIMAL(10,2) NOT NULL,
-          "status" "${schemaName}"."OrderStatus" NOT NULL,
-          "order_date" TIMESTAMP(3) NOT NULL,
-          "delivery_date" TIMESTAMP(3),
-          "special_instructions" TEXT,
-          "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-          "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-          "created_by" TEXT,
-          CONSTRAINT "orders_pkey" PRIMARY KEY ("order_id")
-        )`,
-
-        `CREATE TABLE IF NOT EXISTS "${schemaName}"."order_items" (
-          "order_id" TEXT NOT NULL,
-          "drug_id" TEXT NOT NULL,
-          "quantity" INTEGER NOT NULL,
-          "unit_price" DECIMAL(10,2) NOT NULL,
-          "subtotal" DECIMAL(10,2) NOT NULL,
-          "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-          CONSTRAINT "order_items_pkey" PRIMARY KEY ("order_id", "drug_id")
-        )`,
-
-        `CREATE TABLE IF NOT EXISTS "${schemaName}"."task_planners" (
-          "id" TEXT NOT NULL DEFAULT gen_random_uuid(),
-          "employee_id" TEXT,
-          "start_date" DATE NOT NULL,
-          "end_date" DATE NOT NULL,
-          "status" "${schemaName}"."TaskPlannerStatus" NOT NULL DEFAULT 'DRAFT',
-          "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-          "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-          CONSTRAINT "task_planners_pkey" PRIMARY KEY ("id")
-        )`,
-
-        `CREATE TABLE IF NOT EXISTS "${schemaName}"."doctor_tasks" (
-          "id" TEXT NOT NULL DEFAULT gen_random_uuid(),
-          "task_planner_id" TEXT NOT NULL,
-          "employee_id" TEXT,
-          "doctor_id" TEXT NOT NULL,
-          "taskDate" DATE NOT NULL,
-          "start_time" TIME NOT NULL,
-          "end_time" TIME NOT NULL,
-          "taskStatus" "${schemaName}"."TaskStatus" NOT NULL DEFAULT 'PENDING',
-          "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-          "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-          CONSTRAINT "doctor_tasks_pkey" PRIMARY KEY ("id")
-        )`,
-
-        `CREATE TABLE IF NOT EXISTS "${schemaName}"."chemist_tasks" (
-          "id" TEXT NOT NULL DEFAULT gen_random_uuid(),
-          "task_planner_id" TEXT NOT NULL,
-          "employee_id" TEXT,
-          "chemist_id" TEXT NOT NULL,
-          "taskDate" DATE NOT NULL,
-          "start_time" TIME NOT NULL,
-          "end_time" TIME NOT NULL,
-          "taskStatus" "${schemaName}"."TaskStatus" NOT NULL DEFAULT 'PENDING',
-          "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-          "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-          CONSTRAINT "chemist_tasks_pkey" PRIMARY KEY ("id")
-        )`,
-
-        `CREATE TABLE IF NOT EXISTS "${schemaName}"."tour_plans" (
-          "id" TEXT NOT NULL DEFAULT gen_random_uuid(),
-          "name" VARCHAR(255) NOT NULL,
-          "description" TEXT,
-          "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-          "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-          CONSTRAINT "tour_plans_pkey" PRIMARY KEY ("id")
-        )`,
-
-        `CREATE TABLE IF NOT EXISTS "${schemaName}"."tour_plan_tasks" (
-          "id" TEXT NOT NULL DEFAULT gen_random_uuid(),
-          "task_planner_id" TEXT NOT NULL,
-          "employee_id" TEXT,
-          "tour_plan_id" TEXT NOT NULL,
-          "location" VARCHAR(255) NOT NULL,
-          "taskDate" DATE NOT NULL,
-          "start_time" TIME NOT NULL,
-          "end_time" TIME NOT NULL,
-          "taskStatus" "${schemaName}"."TaskStatus" NOT NULL DEFAULT 'PENDING',
-          "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-          "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-          CONSTRAINT "tour_plan_tasks_pkey" PRIMARY KEY ("id")
-        )`,
-
-        `CREATE TABLE IF NOT EXISTS "${schemaName}"."tour_planner_interactions" (
-          "id" TEXT NOT NULL DEFAULT gen_random_uuid(),
-          "task_for_tour_planner_id" TEXT NOT NULL,
-          "interaction_time" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-          "purpose" VARCHAR(255),
-          "outcome" TEXT,
-          "comments" TEXT,
-          "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-          "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-          CONSTRAINT "tour_planner_interactions_pkey" PRIMARY KEY ("id")
-        )`,
-
-        // Reporting Tables
-        `CREATE TABLE IF NOT EXISTS "${schemaName}"."dcr_reports" (
-          "id" TEXT NOT NULL DEFAULT gen_random_uuid(),
-          "organization_id" TEXT,
-          "employee_id" TEXT,
-          "task_id" TEXT,
-          "task_type" "${schemaName}"."TaskTypeReference",
-          "report_date" DATE NOT NULL,
-          "products_discussed" TEXT,
-          "comments" TEXT,
-          "is_draft" BOOLEAN NOT NULL DEFAULT true,
-          "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-          "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-          CONSTRAINT "dcr_reports_pkey" PRIMARY KEY ("id")
-        )`,
-
-        `CREATE TABLE IF NOT EXISTS "${schemaName}"."rcpa_reports" (
-          "id" TEXT NOT NULL DEFAULT gen_random_uuid(),
-          "organization_id" TEXT,
-          "employee_id" TEXT,
-          "chemist_id" TEXT NOT NULL,
-          "remarks" TEXT,
-          "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-          "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-          CONSTRAINT "rcpa_reports_pkey" PRIMARY KEY ("id")
-        )`,
-
-        `CREATE TABLE IF NOT EXISTS "${schemaName}"."rcpa_drug_data" (
-          "id" TEXT NOT NULL DEFAULT gen_random_uuid(),
-          "rcpa_report_id" TEXT NOT NULL,
-          "drug_id" TEXT,
-          "competitor_drug_name" VARCHAR(255),
-          "own_quantity" INTEGER NOT NULL,
-          "competitor_quantity" INTEGER NOT NULL,
-          "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-          CONSTRAINT "rcpa_drug_data_pkey" PRIMARY KEY ("id")
-        )`,
-
-        `CREATE TABLE IF NOT EXISTS "${schemaName}"."check_ins" (
-          "id" TEXT NOT NULL DEFAULT gen_random_uuid(),
-          "organization_id" TEXT,
-          "employee_id" TEXT,
-          "check_in_time" TIMESTAMP(3),
-          "check_out_time" TIMESTAMP(3),
-          "check_in_latitude" DECIMAL(10,8),
-          "check_in_longitude" DECIMAL(11,8),
-          "check_out_latitude" DECIMAL(10,8),
-          "check_out_longitude" DECIMAL(11,8),
-          "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-          CONSTRAINT "check_ins_pkey" PRIMARY KEY ("id")
-        )`,
-
-        // Expense Tables
-        `CREATE TABLE IF NOT EXISTS "${schemaName}"."expense_types" (
-          "id" TEXT NOT NULL DEFAULT gen_random_uuid(),
-          "name" VARCHAR(50) NOT NULL UNIQUE,
-          "description" TEXT,
-          "icon" TEXT,
-          "form_fields" JSONB NOT NULL,
-          "is_active" BOOLEAN NOT NULL DEFAULT true,
-          "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-          "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-          CONSTRAINT "expense_types_pkey" PRIMARY KEY ("id")
-        )`,
-
-        `CREATE TABLE IF NOT EXISTS "${schemaName}"."expense_role_configs" (
-          "id" TEXT NOT NULL DEFAULT gen_random_uuid(),
-          "expense_type_id" TEXT NOT NULL,
-          "role" "${schemaName}"."EmployeeRole" NOT NULL,
-          "limits" JSONB NOT NULL,
-          "rates" JSONB,
-          "validation_rules" JSONB NOT NULL,
-          "is_active" BOOLEAN NOT NULL DEFAULT true,
-          "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-          "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-          CONSTRAINT "expense_role_configs_pkey" PRIMARY KEY ("id"),
-          CONSTRAINT "expense_type_role_unique" UNIQUE ("expense_type_id", "role")
-        )`,
-
-        `CREATE TABLE IF NOT EXISTS "${schemaName}"."expense_claims" (
-          "id" TEXT NOT NULL DEFAULT gen_random_uuid(),
-          "claim_number" VARCHAR(50) NOT NULL UNIQUE,
-          "employee_id" TEXT,
-          "expense_type_id" TEXT NOT NULL,
-          "expense_role_config_id" TEXT NOT NULL,
-          "expense_data" JSONB NOT NULL,
-          "status" "${schemaName}"."ExpenseClaimStatus" NOT NULL DEFAULT 'PENDING',
-          "submitted_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-          "approved_at" TIMESTAMP(3),
-          "approved_by" TEXT,
-          "approval_comments" TEXT,
-          "rejection_reason" TEXT,
-          "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-          "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-          CONSTRAINT "expense_claims_pkey" PRIMARY KEY ("id")
-        )`,
-
-        // Inventory Tables
-        `CREATE TABLE IF NOT EXISTS "${schemaName}"."gifts" (
-          "id" TEXT NOT NULL DEFAULT gen_random_uuid(),
-          "name" VARCHAR(200) NOT NULL,
-          "description" TEXT,
-          "unit_cost" DECIMAL(10,2) NOT NULL,
-          "specifications" JSONB,
-          "gift_images" JSONB,
-          "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-          "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-          "created_by" TEXT,
-          "is_active" BOOLEAN NOT NULL DEFAULT true,
-          CONSTRAINT "gifts_pkey" PRIMARY KEY ("id")
-        )`,
-
-        `CREATE TABLE IF NOT EXISTS "${schemaName}"."user_drug_inventory" (
-          "id" TEXT NOT NULL DEFAULT gen_random_uuid(),
-          "employee_id" TEXT,
-          "drug_id" TEXT NOT NULL,
-          "quantity" INTEGER NOT NULL,
-          "last_restocked_date" TIMESTAMP(3),
-          "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-          "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-          CONSTRAINT "user_drug_inventory_pkey" PRIMARY KEY ("id")
-        )`,
-
-        `CREATE TABLE IF NOT EXISTS "${schemaName}"."user_gift_inventory" (
-          "id" TEXT NOT NULL DEFAULT gen_random_uuid(),
-          "employee_id" TEXT,
-          "gift_id" TEXT NOT NULL,
-          "quantity" INTEGER NOT NULL,
-          "last_restocked_date" TIMESTAMP(3),
-          "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-          "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-          CONSTRAINT "user_gift_inventory_pkey" PRIMARY KEY ("id")
-        )`,
-
-        `CREATE TABLE IF NOT EXISTS "${schemaName}"."doctor_distributions" (
-          "id" TEXT NOT NULL DEFAULT gen_random_uuid(),
-          "doctor_interaction_id" TEXT NOT NULL,
-          "employee_id" TEXT,
-          "distributed_at" TIMESTAMP(3) NOT NULL,
-          "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-          "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-          CONSTRAINT "doctor_distributions_pkey" PRIMARY KEY ("id")
-        )`,
-
-        `CREATE TABLE IF NOT EXISTS "${schemaName}"."doctor_distribution_drug_items" (
-          "id" TEXT NOT NULL DEFAULT gen_random_uuid(),
-          "doctor_distribution_id" TEXT NOT NULL,
-          "drug_id" TEXT NOT NULL,
-          "from_inventory_id" TEXT NOT NULL,
-          "quantity" INTEGER NOT NULL,
-          "unit_cost" DECIMAL(10,2) NOT NULL,
-          "total_cost" DECIMAL(10,2) NOT NULL,
-          "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-          "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-          CONSTRAINT "doctor_distribution_drug_items_pkey" PRIMARY KEY ("id")
-        )`,
-
-        `CREATE TABLE IF NOT EXISTS "${schemaName}"."doctor_distribution_gift_items" (
-          "id" TEXT NOT NULL DEFAULT gen_random_uuid(),
-          "doctor_distribution_id" TEXT NOT NULL,
-          "gift_id" TEXT NOT NULL,
-          "from_inventory_id" TEXT NOT NULL,
-          "quantity" INTEGER NOT NULL,
-          "unit_cost" DECIMAL(10,2) NOT NULL,
-          "total_cost" DECIMAL(10,2) NOT NULL,
-          "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-          "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-          CONSTRAINT "doctor_distribution_gift_items_pkey" PRIMARY KEY ("id")
-        )`,
-
-        `CREATE TABLE IF NOT EXISTS "${schemaName}"."audit_logs" (
-          "id" TEXT NOT NULL DEFAULT gen_random_uuid(),
-          "organization_id" TEXT,
-          "employee_id" TEXT,
-          "table_name" VARCHAR(100) NOT NULL,
-          "action_type" VARCHAR(50) NOT NULL,
-          "record_id" TEXT NOT NULL,
-          "old_values" JSONB,
-          "new_values" JSONB,
-          "ip_address" VARCHAR(45),
-          "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-          CONSTRAINT "audit_logs_pkey" PRIMARY KEY ("id")
-        )`
-      ];
-
-      for (const statement of remainingTables) {
-        await tenantDb.$executeRawUnsafe(statement);
-        createdCount++;
-        if (createdCount % 5 === 0) {
-          console.log(`Created ${createdCount} tables...`);
-        }
-      }
-
-      console.log('Creating indexes...');
-
-      // Create indexes separately
-      const indexStatements = [
-        `CREATE INDEX IF NOT EXISTS "idx_doctors_organization" ON "${schemaName}"."doctors"("organization_id")`,
-        `CREATE INDEX IF NOT EXISTS "idx_chemists_organization" ON "${schemaName}"."chemists"("organization_id")`,
-        `CREATE INDEX IF NOT EXISTS "idx_hospitals_organization" ON "${schemaName}"."hospitals"("organization_id")`,
-        `CREATE INDEX IF NOT EXISTS "idx_drugs_organization" ON "${schemaName}"."drugs"("organization_id")`,
-        `CREATE INDEX IF NOT EXISTS "idx_doctor_interactions_doctor" ON "${schemaName}"."doctor_interactions"("doctor_id")`,
-        `CREATE INDEX IF NOT EXISTS "idx_chemist_interactions_chemist" ON "${schemaName}"."chemist_interactions"("chemist_id")`,
-        `CREATE INDEX IF NOT EXISTS "idx_orders_chemist" ON "${schemaName}"."orders"("chemist_id")`,
-        `CREATE INDEX IF NOT EXISTS "idx_order_items_order" ON "${schemaName}"."order_items"("order_id")`,
-        `CREATE INDEX IF NOT EXISTS "idx_order_items_drug" ON "${schemaName}"."order_items"("drug_id")`,
-        `CREATE INDEX IF NOT EXISTS "idx_task_planners_employee" ON "${schemaName}"."task_planners"("employee_id")`,
-        `CREATE INDEX IF NOT EXISTS "idx_doctor_tasks_planner" ON "${schemaName}"."doctor_tasks"("task_planner_id")`,
-        `CREATE INDEX IF NOT EXISTS "idx_chemist_tasks_planner" ON "${schemaName}"."chemist_tasks"("task_planner_id")`,
-        `CREATE INDEX IF NOT EXISTS "idx_audit_logs_employee" ON "${schemaName}"."audit_logs"("employee_id")`,
-        `CREATE INDEX IF NOT EXISTS "idx_audit_logs_table_action" ON "${schemaName}"."audit_logs"("table_name", "action_type")`
-      ];
-
-      for (const indexStatement of indexStatements) {
-        await tenantDb.$executeRawUnsafe(indexStatement);
-      }
-
-      console.log(`All tables and indexes created successfully in schema ${schemaName}`);
-    } catch (error) {
-      console.error('SQL execution error:', error);
-      throw error;
     } finally {
       await tenantDb.$disconnect();
-      // Remove from cache to ensure fresh connection
       this.tenantConnections.delete(schemaName);
     }
   }
 
   /**
-   * Verify that schema was created properly
+   * Applies all required (unapplied) migrations to all existing tenant schemas.
+   * This function should be run as a separate script during deployment.
    */
-  async verifySchemaCreation(schemaName) {
+  async applyMigrationsToAllExistingTenants(): Promise<void> {
+    console.log('Starting migration application for all existing tenants...');
+    let successCount = 0;
+    let failureCount = 0;
+
+    try {
+      // Ensure migrations are loaded before attempting to apply them
+      if (this.loadedMigrations.length === 0) {
+        await this.initializeMigrations();
+      }
+
+      const organizations = await this.sharedDb.organization.findMany({
+        select: {
+          id: true,
+          name: true,
+          schemaName: true
+        }
+      });
+
+      for (const org of organizations) {
+        if (org.schemaName) {
+          console.log(`Processing schema for organization: ${org.name} (${org.id}) - Schema: ${org.schemaName}`);
+          try {
+            await this.applyRequiredMigrationsToSchema(org.schemaName);
+            console.log(`✅ Successfully applied migrations for schema: ${org.schemaName}`);
+            successCount++;
+          } catch (error) {
+            console.error(`❌ Failed to apply migrations for schema: ${org.schemaName}`, error);
+            failureCount++;
+            // Continue processing other schemas even if one fails
+          }
+        } else {
+          console.warn(`Organization ${org.name} (${org.id}) does not have a schemaName. Skipping.`);
+        }
+      }
+      console.log(`Migration sweep complete. Successful: ${successCount}, Failed: ${failureCount}`);
+    } catch (error) {
+      console.error('Error during mass tenant migration:', error);
+      throw error;
+    } finally {
+      // Ensure all connections are closed after the sweep
+      await this.closeAllConnections();
+    }
+  }
+
+  /**
+   * Applies all required (unapplied) migrations to a specific list of tenant schemas.
+   * @param schemaNames An array of schema names to apply migrations to.
+   */
+  async applyMigrationsToSpecificTenants(schemaNames: string[]): Promise<void> {
+    console.log(`Starting migration application for specific tenants: ${schemaNames.join(', ')}...`);
+    let successCount = 0;
+    let failureCount = 0;
+
+    try {
+      // Ensure migrations are loaded before attempting to apply them
+      if (this.loadedMigrations.length === 0) {
+        await this.initializeMigrations();
+      }
+
+      for (const schemaName of schemaNames) {
+        console.log(`Processing specified schema: ${schemaName}`);
+        try {
+          await this.applyRequiredMigrationsToSchema(schemaName);
+          console.log(`✅ Successfully applied migrations for schema: ${schemaName}`);
+          successCount++;
+        } catch (error) {
+          console.error(`❌ Failed to apply migrations for schema: ${schemaName}`, error);
+          failureCount++;
+          // Continue processing other schemas even if one fails
+        }
+      }
+      console.log(`Specific tenant migration complete. Successful: ${successCount}, Failed: ${failureCount}`);
+    } catch (error) {
+      console.error('Error during specific tenant migration:', error);
+      throw error;
+    } finally {
+      await this.closeAllConnections();
+    }
+  }
+
+  async verifySchemaCreation(schemaName: string): Promise<boolean> {
     const tenantDb = await this.getTenantClient(schemaName);
 
     try {
-      // Set search path to the schema
-      await tenantDb.$executeRawUnsafe(
-        `SET search_path TO "${schemaName}", public`
-      );
-
       // Check if tables exist in the schema
-      const result = await tenantDb.$queryRaw`
-        SELECT table_name 
-        FROM information_schema.tables 
+      const result: { table_name: string }[] = await tenantDb.$queryRaw`
+        SELECT table_name
+        FROM information_schema.tables
         WHERE table_schema = ${schemaName}
         AND table_type = 'BASE TABLE'
         ORDER BY table_name;
       `;
 
       const tables = result.map(row => row.table_name);
-      console.log(`Tables found in schema ${schemaName}:`, tables);
+      console.log(`📊 Tables created in schema ${schemaName}: ${tables.length} tables`);
 
-      // If we have at least some core tables, consider it successful
-      const coreTables = ['teams', 'doctors', 'chemists', 'drugs', 'hospitals'];
-      const foundCoreTables = tables.filter(table => coreTables.includes(table));
+      // Check for essential tables
+      const essentialTables = ['employees', 'doctors', 'chemists', 'drugs'];
+      const missingTables = essentialTables.filter(table => !tables.includes(table));
 
-      if (foundCoreTables.length > 0) {
-        console.log(`Found ${foundCoreTables.length} core tables in schema ${schemaName}`);
-        return true;
+      if (missingTables.length > 0) {
+        console.error(`❌ Missing essential tables: ${missingTables.join(', ')}`);
+        return false;
       }
 
-      // Even if no core tables, if we have ANY tables, log it
-      if (tables.length > 0) {
-        console.log(`Schema ${schemaName} has ${tables.length} tables`);
-        return true;
+      // Check if we have enough tables (adjust this number based on your actual initial schema)
+      if (tables.length < 30) {
+        console.error(`❌ Only ${tables.length} tables found, expected at least 30`);
+        return false;
       }
 
-      console.error(`No tables found in schema ${schemaName}`);
-      return false;
+      console.log(`✅ Schema ${schemaName} verified successfully with ${tables.length} tables`);
+      return true;
+
     } catch (error) {
       console.error('Schema verification error:', error);
-      // Don't fail on verification errors, just log them
-      return true;
+      return false;
     } finally {
+      // Ensure tenantDb connection is closed after verification
       await tenantDb.$disconnect();
-      // Remove from cache
       this.tenantConnections.delete(schemaName);
     }
   }
 
-  /**
-   * Get a Prisma client for a specific tenant
-   */
-  async getTenantClient(schemaNameOrOrgId) {
-    let schemaName;
-
-    // Handle different input types
-    if (typeof schemaNameOrOrgId === 'string') {
-      // Check if it's a UUID (organization ID)
-      const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
-
-      if (uuidRegex.test(schemaNameOrOrgId)) {
-        // It's an organization ID, look up the schema name
-        const org = await this.sharedDb.organization.findUnique({
-          where: { id: schemaNameOrOrgId },
-          select: { schemaName: true }
-        });
-
-        if (!org?.schemaName) {
-          throw new Error(`Organization schema not found for ID: ${schemaNameOrOrgId}`);
-        }
-
-        schemaName = org.schemaName;
-      } else {
-        // It's already a schema name
-        schemaName = schemaNameOrOrgId;
-      }
-    } else {
-      throw new Error('Invalid parameter type for getTenantClient - expected string');
-    }
-
+  async getTenantClient(schemaName: string): Promise<TenantPrismaClient> {
     // Check cache
     if (this.tenantConnections.has(schemaName)) {
-      return this.tenantConnections.get(schemaName);
+      return this.tenantConnections.get(schemaName)!; // Use ! because we checked for existence
     }
 
-    // Create new connection with the specific schema
-    const databaseUrl = process.env.DATABASE_URL
-      .replace(/schema=\w+/, `schema=${schemaName}`)
-      .replace(/\?/, `?search_path=${schemaName}&`);
+    // Create new connection
+    const baseUrl = process.env.DATABASE_URL;
+    if (!baseUrl) {
+      throw new Error('DATABASE_URL environment variable is not set.');
+    }
+    const url = new URL(baseUrl);
+    url.searchParams.set('schema', schemaName);
 
     const tenantClient = new TenantPrismaClient({
       datasources: {
-        db: { url: databaseUrl }
+        db: { url: url.toString() }
       }
     });
 
-    // Set search path to ensure we're using the correct schema
+    // Set search path
     await tenantClient.$executeRawUnsafe(
       `SET search_path TO "${schemaName}", public`
     );
 
-    // Verify connection
-    try {
-      await tenantClient.$queryRaw`SELECT 1`;
-    } catch (error) {
-      console.error(`Failed to connect to schema ${schemaName}:`, error);
-      await tenantClient.$disconnect();
-      throw new Error(`Failed to establish connection to schema ${schemaName}`);
-    }
-
     // Cache the connection
     this.tenantConnections.set(schemaName, tenantClient);
-
     return tenantClient;
   }
 
-  /**
-   * Remove a tenant client from cache
-   */
-  async removeTenantClient(schemaName) {
-    if (this.tenantConnections.has(schemaName)) {
-      const client = this.tenantConnections.get(schemaName);
-      await client.$disconnect();
-      this.tenantConnections.delete(schemaName);
-    }
-  }
-
-  /**
-   * Close all connections
-   */
-  async closeAllConnections() {
-    console.log('Closing all database connections...');
+  async closeAllConnections(): Promise<void> {
+    console.log('🔌 Closing all database connections...');
 
     // Close all tenant connections
     for (const [schema, client] of this.tenantConnections) {
       try {
         await client.$disconnect();
-        console.log(`Closed connection for schema: ${schema}`);
+        console.log(`✅ Closed connection for schema: ${schema}`);
       } catch (error) {
-        console.error(`Error closing connection for schema ${schema}:`, error);
+        console.error(`❌ Error closing connection for schema ${schema}:`, error);
       }
     }
     this.tenantConnections.clear();
@@ -889,38 +393,9 @@ class SchemaManagementService {
     // Close shared connection
     try {
       await this.sharedDb.$disconnect();
-      console.log('Closed shared database connection');
+      console.log('✅ Closed shared database connection');
     } catch (error) {
-      console.error('Error closing shared connection:', error);
-    }
-  }
-
-  /**
-   * Get schema statistics
-   */
-  async getSchemaStats(schemaName) {
-    const tenantDb = await this.getTenantClient(schemaName);
-
-    try {
-      const stats = await tenantDb.$queryRaw`
-        SELECT 
-          t.table_name,
-          COUNT(c.column_name) as column_count,
-          pg_size_pretty(pg_total_relation_size(quote_ident(t.table_schema)||'.'||quote_ident(t.table_name))) as size
-        FROM information_schema.tables t
-        LEFT JOIN information_schema.columns c 
-          ON t.table_schema = c.table_schema 
-          AND t.table_name = c.table_name
-        WHERE t.table_schema = ${schemaName}
-          AND t.table_type = 'BASE TABLE'
-        GROUP BY t.table_schema, t.table_name
-        ORDER BY t.table_name;
-      `;
-
-      return stats;
-    } finally {
-      await tenantDb.$disconnect();
-      this.tenantConnections.delete(schemaName);
+      console.error('❌ Error closing shared connection:', error);
     }
   }
 }
