@@ -1,4 +1,4 @@
-import SchemaManagementService from '../services/SchemaManagementService.ts';
+import SchemaManagementService from '../services/SchemaManagementService';
 import bcrypt from 'bcrypt';
 
 interface OrganizationData {
