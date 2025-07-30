@@ -12,22 +12,57 @@ interface TenantMigration {
 }
 
 class SchemaManagementService {
-  private sharedDb: SharedPrismaClient;
-  private tenantConnections: Map<string, TenantPrismaClient>;
-  private loadedMigrations: TenantMigration[] = []; // Store all available migrations
+  // Singleton instance
+  static instance: SchemaManagementService | null = null;
 
-  constructor() {
+  // Instance properties
+  sharedDb: SharedPrismaClient;
+  tenantConnections: Map<string, TenantPrismaClient>;
+  loadedMigrations: TenantMigration[] = [];
+  initialized: boolean = false;
+
+  // Private constructor prevents direct instantiation
+  private constructor() {
     this.sharedDb = new SharedPrismaClient();
     this.tenantConnections = new Map();
+    console.log("constructor called");
+    console.log('🏗️ SchemaManagementService singleton instance created');
+  }
+
+  /**
+   * Gets the singleton instance of SchemaManagementService
+   * @returns The singleton instance
+   */
+  public static getInstance(): SchemaManagementService {
+    console.log("getInstance called");
+    if (!SchemaManagementService.instance) {
+      SchemaManagementService.instance = new SchemaManagementService();
+    }
+    return SchemaManagementService.instance;
+  }
+
+  /**
+   * Checks if the service has been initialized
+   * @returns true if initialized, false otherwise
+   */
+  public isInitialized(): boolean {
+    return this.initialized;
   }
 
   /**
    * Initializes and loads all tenant migration files from the 'tenant-migrations' directory.
    * This should be called once when the application starts.
    */
-  async initializeMigrations() {
+  public async initializeMigrations(): Promise<void> {
+    // Prevent multiple initializations
+    if (this.initialized) {
+      console.log('⚡ SchemaManagementService already initialized, skipping...');
+      return;
+    }
+
     console.log('📚 Loading tenant migration files...');
     const migrationsDir = path.join(process.cwd(), 'tenant-migrations');
+
     try {
       const migrationFiles = await fs.readdir(migrationsDir);
 
@@ -48,14 +83,29 @@ class SchemaManagementService {
           checksum
         };
       }));
+
       console.log(`✅ Loaded ${this.loadedMigrations.length} tenant migration files.`);
+      this.initialized = true;
+
     } catch (error) {
       console.error('❌ Error loading tenant migration files:', error);
       throw new Error('Failed to initialize tenant migrations.');
     }
   }
 
-  async createOrganizationSchema(organizationId: string, organizationName: string): Promise<string> {
+  /**
+   * Ensures the service is initialized before executing any operations
+   * @throws Error if not initialized
+   */
+  private ensureInitialized(): void {
+    if (!this.initialized) {
+      throw new Error('SchemaManagementService not initialized. Call initializeMigrations() first.');
+    }
+  }
+
+  public async createOrganizationSchema(organizationId: string, organizationName: string): Promise<string> {
+    this.ensureInitialized();
+
     let schemaName: string | null = null;
 
     try {
@@ -116,9 +166,11 @@ class SchemaManagementService {
    * Applies all required (unapplied) migrations to a single specified schema.
    * This is the core migration logic used by other functions.
    */
-  async applyRequiredMigrationsToSchema(schemaName: string): Promise<void> {
+  public async applyRequiredMigrationsToSchema(schemaName: string): Promise<void> {
+    this.ensureInitialized();
+
     if (this.loadedMigrations.length === 0) {
-      console.warn('⚠️ No tenant migration files loaded. Call initializeMigrations() first.');
+      console.warn('⚠️ No tenant migration files loaded.');
       return;
     }
 
@@ -142,7 +194,6 @@ class SchemaManagementService {
       `);
 
       // Get list of applied migrations for this schema
-      // FIX: Use executeRawUnsafe with string interpolation instead of queryRaw with parameters
       const appliedMigrationsResult: { migration_name: string }[] = await tenantDb.$queryRawUnsafe(`
         SELECT migration_name FROM "${schemaName}"."_prisma_migrations" ORDER BY started_at ASC;
       `);
@@ -183,7 +234,7 @@ class SchemaManagementService {
             try {
               await tenantDb.$executeRawUnsafe(statement);
               migrationSuccessCount++;
-            } catch (error: any) { // Use 'any' for error to access meta property
+            } catch (error: any) {
               if (error.message.includes('already exists') ||
                 error.message.includes('duplicate_object') ||
                 (error.meta && (error.meta.code === '42P07' || error.meta.code === '42710'))) {
@@ -197,7 +248,6 @@ class SchemaManagementService {
         }
 
         // Record this migration as applied
-        // FIX: Use executeRawUnsafe with string interpolation instead of parameters
         const migrationId = `${migration.name}_${Date.now()}`;
         await tenantDb.$executeRawUnsafe(`
           INSERT INTO "${schemaName}"."_prisma_migrations"
@@ -221,17 +271,14 @@ class SchemaManagementService {
    * Applies all required (unapplied) migrations to all existing tenant schemas.
    * This function should be run as a separate script during deployment.
    */
-  async applyMigrationsToAllExistingTenants(): Promise<void> {
+  public async applyMigrationsToAllExistingTenants(): Promise<void> {
+    this.ensureInitialized();
+
     console.log('Starting migration application for all existing tenants...');
     let successCount = 0;
     let failureCount = 0;
 
     try {
-      // Ensure migrations are loaded before attempting to apply them
-      if (this.loadedMigrations.length === 0) {
-        await this.initializeMigrations();
-      }
-
       const organizations = await this.sharedDb.organization.findMany({
         select: {
           id: true,
@@ -270,17 +317,14 @@ class SchemaManagementService {
    * Applies all required (unapplied) migrations to a specific list of tenant schemas.
    * @param schemaNames An array of schema names to apply migrations to.
    */
-  async applyMigrationsToSpecificTenants(schemaNames: string[]): Promise<void> {
+  public async applyMigrationsToSpecificTenants(schemaNames: string[]): Promise<void> {
+    this.ensureInitialized();
+
     console.log(`Starting migration application for specific tenants: ${schemaNames.join(', ')}...`);
     let successCount = 0;
     let failureCount = 0;
 
     try {
-      // Ensure migrations are loaded before attempting to apply them
-      if (this.loadedMigrations.length === 0) {
-        await this.initializeMigrations();
-      }
-
       for (const schemaName of schemaNames) {
         console.log(`Processing specified schema: ${schemaName}`);
         try {
@@ -302,7 +346,9 @@ class SchemaManagementService {
     }
   }
 
-  async verifySchemaCreation(schemaName: string): Promise<boolean> {
+  public async verifySchemaCreation(schemaName: string): Promise<boolean> {
+    this.ensureInitialized();
+
     const tenantDb = await this.getTenantClient(schemaName);
 
     try {
@@ -346,10 +392,12 @@ class SchemaManagementService {
     }
   }
 
-  async getTenantClient(schemaName: string): Promise<TenantPrismaClient> {
+  public async getTenantClient(schemaName: string): Promise<TenantPrismaClient> {
+    this.ensureInitialized();
+
     // Check cache
     if (this.tenantConnections.has(schemaName)) {
-      return this.tenantConnections.get(schemaName)!; // Use ! because we checked for existence
+      return this.tenantConnections.get(schemaName)!;
     }
 
     // Create new connection
@@ -376,7 +424,7 @@ class SchemaManagementService {
     return tenantClient;
   }
 
-  async closeAllConnections(): Promise<void> {
+  public async closeAllConnections(): Promise<void> {
     console.log('🔌 Closing all database connections...');
 
     // Close all tenant connections
@@ -396,6 +444,35 @@ class SchemaManagementService {
       console.log('✅ Closed shared database connection');
     } catch (error) {
       console.error('❌ Error closing shared connection:', error);
+    }
+  }
+
+  /**
+   * Gets the shared database client
+   * @returns The shared Prisma client
+   */
+  public getSharedDb(): SharedPrismaClient {
+    this.ensureInitialized();
+    return this.sharedDb;
+  }
+
+  /**
+   * Gets all loaded migrations
+   * @returns Array of loaded migrations
+   */
+  public getLoadedMigrations(): TenantMigration[] {
+    return [...this.loadedMigrations];
+  }
+
+  /**
+   * Resets the singleton instance (mainly for testing purposes)
+   * WARNING: This should only be used in test environments
+   */
+  public static async resetInstance(): Promise<void> {
+    if (SchemaManagementService.instance) {
+      await SchemaManagementService.instance.closeAllConnections();
+      SchemaManagementService.instance = null;
+      console.log('🔄 SchemaManagementService instance reset');
     }
   }
 }

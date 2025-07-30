@@ -38,7 +38,7 @@ const Login = () => {
     clientId: '1030595062945-g6stfe7vrfibabd5mibc6gg5qjr36m85.apps.googleusercontent.com',
     scopes: ['openid', 'profile', 'email'],
     responseType: 'id_token', // ensure id_token is returned
-   
+
   });
 
   const handleLogin = async () => {
@@ -47,20 +47,21 @@ const Login = () => {
       return;
     }
     setLoading(true);
-    try {
-      const data = await loginWithEmail(email, password);
-      await SecureStore.setItemAsync('token', data.token);
-      await SecureStore.setItemAsync('user', JSON.stringify(data.user));
-      router.replace('/(tabs)/');
-    } catch (error: any) {
-      if (error.response?.data?.error) {
-        Alert.alert('Login Failed', error.response.data.error);
-      } else {
-        Alert.alert('Login Failed', 'An unexpected error occurred');
-      }
-    } finally {
-      setLoading(false);
-    }
+    router.replace('/(tabs)/');
+    // try {
+    //   const data = await loginWithEmail(email, password);
+    //   await SecureStore.setItemAsync('token', data.token);
+    //   await SecureStore.setItemAsync('user', JSON.stringify(data.user));
+    //   router.replace('/(tabs)/');
+    // } catch (error: any) {
+    //   if (error.response?.data?.error) {
+    //     Alert.alert('Login Failed', error.response.data.error);
+    //   } else {
+    //     Alert.alert('Login Failed', 'An unexpected error occurred');
+    //   }
+    // } finally {
+    //   setLoading(false);
+    // }
   };
 
 
@@ -70,42 +71,42 @@ const Login = () => {
 
   //Google auth initiation
   const handleGoogleLogin = async () => {
-  if (!request) {
-    Alert.alert('Error', 'Google Login Failed');
-    return;
-  }
-
-  try {
-    const result = await promptAsync();
-
-    if (result.type === 'success' && result.authentication) {
-      const idToken = result.authentication.idToken;
-
-      if (!idToken) {
-        Alert.alert('Google Login Failed', 'No ID token received.');
-        return;
-      }
-
-      setLoading(true);
-      try {
-        const res = await loginWithGoogle(idToken);
-        await SecureStore.setItemAsync('token', res.token);
-        await SecureStore.setItemAsync('user', JSON.stringify(res.user));
-        router.replace('/(tabs)/');
-      } catch (error: any) {
-        const backendErrorMsg = error.response?.data?.error || 'An error occurred';
-        Alert.alert('Google Login Failed', backendErrorMsg);
-      } finally {
-        setLoading(false);
-      }
-    } else if (result.type === 'error') {
-      Alert.alert('Google Login Failed', 'Authentication failed.');
+    if (!request) {
+      Alert.alert('Error', 'Google Login Failed');
+      return;
     }
-    // No alert for 'cancel' or unexpected types to reduce noise
-  } catch {
-    Alert.alert('Google Login Failed', 'An unexpected error occurred during login.');
-  }
-};
+
+    try {
+      const result = await promptAsync();
+
+      if (result.type === 'success' && result.authentication) {
+        const idToken = result.authentication.idToken;
+
+        if (!idToken) {
+          Alert.alert('Google Login Failed', 'No ID token received.');
+          return;
+        }
+
+        setLoading(true);
+        try {
+          const res = await loginWithGoogle(idToken);
+          await SecureStore.setItemAsync('token', res.token);
+          await SecureStore.setItemAsync('user', JSON.stringify(res.user));
+          router.replace('/(tabs)/');
+        } catch (error: any) {
+          const backendErrorMsg = error.response?.data?.error || 'An error occurred';
+          Alert.alert('Google Login Failed', backendErrorMsg);
+        } finally {
+          setLoading(false);
+        }
+      } else if (result.type === 'error') {
+        Alert.alert('Google Login Failed', 'Authentication failed.');
+      }
+      // No alert for 'cancel' or unexpected types to reduce noise
+    } catch {
+      Alert.alert('Google Login Failed', 'An unexpected error occurred during login.');
+    }
+  };
 
   return (
     <SafeAreaView style={styles.container}>

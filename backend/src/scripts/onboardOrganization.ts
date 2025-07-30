@@ -15,18 +15,15 @@ interface OrganizationData {
 /**
  * Onboards a new organization by creating its record, schema, and initial admin user.
  * @param organizationData Data for the new organization and its admin user.
- * @param schemaService The pre-initialized SchemaManagementService instance.
  * @returns An object containing the new organization's ID, schema name, and admin user ID.
  */
-export async function onboardNewOrganization(organizationData: OrganizationData, schemaService: SchemaManagementService) {
-  // IMPORTANT: Do NOT create a new SchemaManagementService instance here.
-  // We are using the instance passed from the controller, which was initialized in main.ts.
-  // const schemaService = new SchemaManagementService(); // <-- This line MUST be removed/commented out
+export async function onboardNewOrganization(organizationData: OrganizationData) {
 
   try {
     console.log('Starting organization onboarding process...');
 
     // 1. Create the organization record in the shared database schema
+    const schemaService = SchemaManagementService.getInstance();
     const org = await schemaService.sharedDb.organization.create({
       data: {
         name: organizationData.name,
