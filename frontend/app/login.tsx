@@ -21,6 +21,7 @@ import * as SecureStore from 'expo-secure-store';
 import * as AuthSession from 'expo-auth-session';
 import * as Google from 'expo-auth-session/providers/google';
 import * as WebBrowser from 'expo-web-browser';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { loginWithEmail, loginWithGoogle } from '../api/api';
 
@@ -47,21 +48,24 @@ const Login = () => {
       return;
     }
     setLoading(true);
-    router.replace('/(tabs)/');
-    // try {
-    //   const data = await loginWithEmail(email, password);
-    //   await SecureStore.setItemAsync('token', data.token);
-    //   await SecureStore.setItemAsync('user', JSON.stringify(data.user));
-    //   router.replace('/(tabs)/');
-    // } catch (error: any) {
-    //   if (error.response?.data?.error) {
-    //     Alert.alert('Login Failed', error.response.data.error);
-    //   } else {
-    //     Alert.alert('Login Failed', 'An unexpected error occurred');
-    //   }
-    // } finally {
-    //   setLoading(false);
-    // }
+    // ❌ DELETE THIS LINE: router.replace('/(tabs)/');
+    try {
+      console.log("sign in pressed")
+      const data = await loginWithEmail(email, password);
+      console.log(data.token)
+      await AsyncStorage.setItem('token', data.token);
+      console.log('Token saved successfully!');
+      await AsyncStorage.setItem('user', JSON.stringify(data.user));
+
+      // await SecureStore.setItemAsync('token', data.token);
+      // await SecureStore.setItemAsync('user', JSON.stringify(data.user));
+
+      router.replace('/(tabs)/'); // ✅ Keep only this one
+    } catch (error: any) {
+      // ... error handling
+    } finally {
+      setLoading(false);
+    }
   };
 
 

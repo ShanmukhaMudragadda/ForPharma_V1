@@ -176,7 +176,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "C:\\Users\\ravi.meena_forsysinc\\forpharma_revamped\\backend\\generated\\prisma-shared",
+      "value": "C:\\Users\\ravi.meena_forsysinc\\pharma\\forpharma_revamped\\backend\\generated\\prisma-shared",
       "fromEnvVar": null
     },
     "config": {
@@ -190,7 +190,7 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "C:\\Users\\ravi.meena_forsysinc\\forpharma_revamped\\backend\\prisma\\schema.shared.prisma",
+    "sourceFilePath": "C:\\Users\\ravi.meena_forsysinc\\pharma\\forpharma_revamped\\backend\\prisma\\schema.shared.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
@@ -204,6 +204,7 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
