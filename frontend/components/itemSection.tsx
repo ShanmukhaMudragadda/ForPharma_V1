@@ -1,7 +1,7 @@
-// components/ItemsSection.tsx
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, TextInput, ScrollView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import Dropdown from './dropdown'; // Import the main dropdown component
 
 interface Drug {
     id: string;
@@ -14,6 +14,13 @@ interface OrderItem {
     drug: Drug | null;
     quantity: number;
     subtotal: number;
+}
+
+// Interface for dropdown items based on the Drug interface
+interface DrugDropdownItem {
+    id: string;
+    label: string;
+    value: Drug;
 }
 
 interface ItemsSectionProps {
@@ -45,8 +52,12 @@ export default function ItemsSection({
     maxQuantity = 999,
     currency = "₹"
 }: ItemsSectionProps) {
-    const [drugDropdownOpen, setDrugDropdownOpen] = useState<{ [key: number]: boolean }>({});
-    const [searchTexts, setSearchTexts] = useState<{ [key: number]: string }>({});
+    // Map available drugs to the format required by the Dropdown component
+    const drugOptions: DrugDropdownItem[] = availableDrugs.map(drug => ({
+        id: drug.id,
+        label: `${drug.name} - ${currency}${drug.price.toFixed(2)}`,
+        value: drug
+    }));
 
     const addNewItem = () => {
         const newItem: OrderItem = {
@@ -60,27 +71,21 @@ export default function ItemsSection({
 
     const removeItem = (index: number) => {
         const newItems = items.filter((_, i) => i !== index);
-        // Clean up dropdown states
-        const newDropdownOpen = { ...drugDropdownOpen };
-        const newSearchTexts = { ...searchTexts };
-        delete newDropdownOpen[index];
-        delete newSearchTexts[index];
-        setDrugDropdownOpen(newDropdownOpen);
-        setSearchTexts(newSearchTexts);
         onUpdateItems(newItems);
     };
 
-    const selectDrug = (drug: Drug, index: number) => {
-        console.log('Selecting drug:', drug.name, 'for index:', index); // Debug log
-
+    const handleDrugSelection = (item: DrugDropdownItem, index: number) => {
         const newItems = [...items];
-        newItems[index].drug = drug;
-        newItems[index].subtotal = drug.price * newItems[index].quantity;
-        onUpdateItems(newItems);
+        const selectedDrug = item.value;
+        const newQuantity = newItems[index].quantity > 0 ? newItems[index].quantity : minQuantity;
 
-        // Close dropdown and clear search
-        setDrugDropdownOpen(prev => ({ ...prev, [index]: false }));
-        setSearchTexts(prev => ({ ...prev, [index]: '' }));
+        newItems[index] = {
+            ...newItems[index],
+            drug: selectedDrug,
+            quantity: newQuantity,
+            subtotal: selectedDrug.price * newQuantity
+        };
+        onUpdateItems(newItems);
     };
 
     const updateQuantity = (index: number, quantity: number) => {
@@ -88,37 +93,9 @@ export default function ItemsSection({
         const clampedQuantity = Math.max(minQuantity, Math.min(maxQuantity, quantity));
         newItems[index].quantity = clampedQuantity;
         if (newItems[index].drug) {
-            newItems[index].subtotal = newItems[index].drug!.price * newItems[index].quantity;
+            newItems[index].subtotal = newItems[index].drug.price * clampedQuantity;
         }
         onUpdateItems(newItems);
-    };
-
-    const toggleDrugDropdown = (index: number) => {
-        setDrugDropdownOpen(prev => ({ ...prev, [index]: !prev[index] }));
-    };
-
-    const handleSearchChange = (text: string, index: number) => {
-        setSearchTexts(prev => ({ ...prev, [index]: text }));
-        setDrugDropdownOpen(prev => ({ ...prev, [index]: true }));
-
-        // Clear selected drug if user is typing
-        if (items[index].drug && text !== items[index].drug.name) {
-            const newItems = [...items];
-            newItems[index].drug = null;
-            newItems[index].subtotal = 0;
-            onUpdateItems(newItems);
-        }
-    };
-
-    const handleInputFocus = (index: number) => {
-        setDrugDropdownOpen(prev => ({ ...prev, [index]: true }));
-    };
-
-    const getFilteredDrugs = (index: number) => {
-        const searchText = searchTexts[index] || '';
-        return availableDrugs.filter(drug =>
-            drug.name.toLowerCase().includes(searchText.toLowerCase())
-        );
     };
 
     const totalAmount = items.reduce((sum, item) => sum + item.subtotal, 0);
@@ -179,7 +156,6 @@ export default function ItemsSection({
                                 padding: 16,
                                 borderBottomWidth: index < items.length - 1 ? 1 : 0,
                                 borderBottomColor: '#F3F4F6',
-                                zIndex: drugDropdownOpen[index] ? 1000 - index : 1
                             }}>
                                 <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
                                     {/* Remove Button */}
@@ -201,108 +177,21 @@ export default function ItemsSection({
 
                                     {/* Item Content */}
                                     <View style={{ flex: 1 }}>
-                                        {/* Drug Selection */}
-                                        <View style={{ position: 'relative', marginBottom: 12 }}>
-                                            <TextInput
-                                                placeholder={searchPlaceholder}
-                                                value={item.drug ? item.drug.name : (searchTexts[index] || '')}
-                                                onChangeText={(text) => handleSearchChange(text, index)}
-                                                onFocus={() => handleInputFocus(index)}
-                                                style={{
-                                                    borderWidth: 1,
-                                                    borderColor: '#0077B6',
-                                                    borderRadius: drugDropdownOpen[index] ? 6 : 6,
-                                                    borderBottomLeftRadius: drugDropdownOpen[index] ? 0 : 6,
-                                                    borderBottomRightRadius: drugDropdownOpen[index] ? 0 : 6,
-                                                    padding: 12,
-                                                    fontSize: 16,
-                                                    backgroundColor: '#fff',
-                                                    color: '#111827',
-                                                    paddingRight: 40
-                                                }}
-                                                placeholderTextColor="#9CA3AF"
-                                            />
-
-                                            <TouchableOpacity
-                                                onPress={() => toggleDrugDropdown(index)}
-                                                style={{
-                                                    position: 'absolute',
-                                                    right: 12,
-                                                    top: 0,
-                                                    bottom: 0,
-                                                    justifyContent: 'center',
-                                                    alignItems: 'center',
-                                                    width: 24
-                                                }}
-                                            >
-                                                <Ionicons
-                                                    name={drugDropdownOpen[index] ? "chevron-up-outline" : "chevron-down-outline"}
-                                                    size={20}
-                                                    color="#6B7280"
-                                                />
-                                            </TouchableOpacity>
-
-                                            {/* Inline Dropdown */}
-                                            {drugDropdownOpen[index] && (
-                                                <View style={{
-                                                    position: 'absolute',
-                                                    top: '100%',
-                                                    left: 0,
-                                                    right: 0,
-                                                    backgroundColor: '#fff',
-                                                    borderWidth: 1,
-                                                    borderColor: '#0077B6',
-                                                    borderTopWidth: 0,
-                                                    borderBottomLeftRadius: 6,
-                                                    borderBottomRightRadius: 6,
-                                                    maxHeight: 200,
-                                                    zIndex: 1001,
-                                                    elevation: 5,
-                                                    shadowColor: '#000',
-                                                    shadowOffset: { width: 0, height: 2 },
-                                                    shadowOpacity: 0.1,
-                                                    shadowRadius: 4,
-                                                }}>
-                                                    <ScrollView
-                                                        showsVerticalScrollIndicator={true}
-                                                        nestedScrollEnabled={true}
-                                                        keyboardShouldPersistTaps="always"
-                                                    >
-                                                        {getFilteredDrugs(index).map((drug) => (
-                                                            <TouchableOpacity
-                                                                key={drug.id}
-                                                                onPress={() => {
-                                                                    console.log('Drug item pressed:', drug.name); // Debug log
-                                                                    selectDrug(drug, index);
-                                                                }}
-                                                                style={{
-                                                                    paddingVertical: 12,
-                                                                    paddingHorizontal: 16,
-                                                                    borderBottomWidth: 1,
-                                                                    borderBottomColor: '#F3F4F6'
-                                                                }}
-                                                                activeOpacity={0.7}
-                                                            >
-                                                                <Text style={{ fontSize: 16, color: '#111827' }}>
-                                                                    {drug.name} - {currency}{drug.price}
-                                                                </Text>
-                                                            </TouchableOpacity>
-                                                        ))}
-                                                        {getFilteredDrugs(index).length === 0 && (
-                                                            <View style={{ padding: 16, alignItems: 'center' }}>
-                                                                <Text style={{ color: '#9CA3AF', fontSize: 14 }}>
-                                                                    No drugs found
-                                                                </Text>
-                                                            </View>
-                                                        )}
-                                                    </ScrollView>
-                                                </View>
-                                            )}
-                                        </View>
+                                        {/* Drug Selection - Now using the Dropdown component */}
+                                        <Dropdown
+                                            label="Drug Name"
+                                            required
+                                            placeholder={searchPlaceholder}
+                                            items={drugOptions}
+                                            selectedItem={item.drug ? { id: item.drug.id, label: `${item.drug.name} - ${currency}${item.drug.price.toFixed(2)}`, value: item.drug } : null}
+                                            onSelectItem={(selectedItem) => handleDrugSelection(selectedItem as DrugDropdownItem, index)}
+                                            searchable={true}
+                                            maxHeight={200}
+                                        />
 
                                         {/* Quantity and Price Row */}
                                         {item.drug && (
-                                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: 12 }}>
                                                 {/* Quantity */}
                                                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                                                     <Text style={{ fontSize: 14, color: '#6B7280', marginRight: 8 }}>
@@ -414,3 +303,4 @@ export default function ItemsSection({
         </View>
     );
 }
+

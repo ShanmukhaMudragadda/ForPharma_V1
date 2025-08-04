@@ -8,10 +8,103 @@ export interface Order {
     status: string;
 }
 
+export interface OrderItem {
+    id: string;
+    name: string;
+    description?: string;
+    manufacturer?: string;
+    category?: string;
+    quantity: number;
+    unitPrice: number;
+    subtotal: number;
+}
+
+export interface OrderDetails {
+    orderId: string;
+    orderNumber: string;
+    customer: {
+        id: string;
+        name: string;
+        email?: string;
+        phone?: string;
+        address?: string;
+    };
+    createdBy: {
+        name: string;
+        email?: string;
+    };
+    orderDate: string;
+    expectedDeliveryDate?: string;
+    status: string;
+    items: OrderItem[];
+    itemCount: number;
+    subtotal: number;
+    totalAmount: number;
+    specialInstructions: string;
+    createdAt: string;
+    updatedAt: string;
+}
+
+export interface Chemist {
+    chemistId: string;
+    chemistName: string;
+    type: string;
+    email?: string;
+    phone?: string;
+    address?: string;
+    visitingHours?: string;
+    chainName?: string;
+    territoryName?: string;
+}
+
+export interface ChemistListResponse {
+    success: boolean;
+    message: string;
+    data: Chemist[];
+}
+
+export interface Drug {
+    id: string;
+    name: string;
+    price: number;
+}
+
+export interface CreateOrderRequest {
+    chemistId: string;
+    expectedDeliveryDate?: string;
+    specialInstructions?: string;
+    items: {
+        drugId: string;
+        quantity: number;
+        unitPrice: number;
+    }[];
+    action: 'save' | 'confirm';
+    orderDate?: string;
+}
+
+export interface CreateOrderResponse {
+    success: boolean;
+    message: string;
+    data: {
+        orderId: string;
+        status: string;
+        totalAmount: number;
+        itemCount: number;
+        customerName: string;
+        createdBy: string;
+    };
+}
+
 export interface OrderListResponse {
     success: boolean;
     message: string;
     data: Order[];
+}
+
+export interface OrderDetailsResponse {
+    success: boolean;
+    message: string;
+    data: OrderDetails;
 }
 
 class OrderService {
@@ -32,9 +125,9 @@ class OrderService {
     }
 
     // Get order details by ID
-    async getOrderDetails(orderId: string): Promise<any> {
+    async getOrderDetails(orderId: string): Promise<OrderDetails> {
         try {
-            const response = await axiosInstance.get(`/orders/${orderId}`);
+            const response = await axiosInstance.get<OrderDetailsResponse>(`/orders/${orderId}`);
 
             if (response.data.success) {
                 return response.data.data;
@@ -47,10 +140,42 @@ class OrderService {
         }
     }
 
-    // Create a new order
-    async createOrder(orderData: any): Promise<any> {
+    // Get chemists for order creation (using existing chemist API)
+    async getChemistsForOrder(): Promise<Chemist[]> {
         try {
-            const response = await axiosInstance.post('/orders', orderData);
+            const response = await axiosInstance.get<ChemistListResponse>('/chemists');
+
+            if (response.data.success) {
+                return response.data.data;
+            } else {
+                throw new Error('Failed to fetch chemists');
+            }
+        } catch (error: any) {
+            console.error('Error fetching chemists for order:', error);
+            throw error;
+        }
+    }
+
+    // Get drugs for order creation (simplified)
+    async getDrugsForOrder(): Promise<Drug[]> {
+        try {
+            const response = await axiosInstance.get<{ success: boolean, data: Drug[] }>('/orders/drugs');
+
+            if (response.data.success) {
+                return response.data.data;
+            } else {
+                throw new Error('Failed to fetch drugs');
+            }
+        } catch (error: any) {
+            console.error('Error fetching drugs for order:', error);
+            throw error;
+        }
+    }
+
+    // Create a new order
+    async createOrder(orderData: CreateOrderRequest): Promise<CreateOrderResponse['data']> {
+        try {
+            const response = await axiosInstance.post<CreateOrderResponse>('/orders', orderData);
 
             if (response.data.success) {
                 return response.data.data;

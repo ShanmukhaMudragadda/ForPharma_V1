@@ -1,9 +1,9 @@
-// app/(tabs)/order-summary.tsx
-import React from 'react';
-import { View, Text, TouchableOpacity, ScrollView, SafeAreaView, Alert } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, TouchableOpacity, ScrollView, SafeAreaView, Alert, ActivityIndicator } from 'react-native';
 import { styled } from 'nativewind';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter, useLocalSearchParams } from 'expo-router';
+import OrderService, { CreateOrderRequest } from '../../services/orderService';
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -14,6 +14,7 @@ const StyledSafeAreaView = styled(SafeAreaView);
 export default function OrderSummary() {
     const router = useRouter();
     const params = useLocalSearchParams();
+    const [loading, setLoading] = useState(false);
 
     // Parse the data from params
     let orderData;
@@ -46,30 +47,102 @@ export default function OrderSummary() {
         router.back();
     };
 
-    const handleSaveOrder = () => {
-        Alert.alert(
-            'Order Saved!',
-            'Your order has been saved as a draft. You can access it from the Orders section.',
-            [
-                {
-                    text: 'OK',
-                    onPress: () => {
-                        router.push('/(tabs)/orders'); // Navigate to orders list with status as Draft
+    const handleSaveOrder = async () => {
+        if (!orderData.customer?.id || orderData.items.length === 0) {
+            Alert.alert('Error', 'Invalid order data. Please go back and check your selections.');
+            return;
+        }
+
+        setLoading(true);
+
+        try {
+            // Prepare order data for backend
+            const orderRequest: CreateOrderRequest = {
+                chemistId: orderData.customer.id,
+                expectedDeliveryDate: orderData.deliveryDate || undefined,
+                specialInstructions: orderData.specialInstructions || undefined,
+                items: orderData.items.map((item: any) => ({
+                    drugId: item.drugId,
+                    quantity: item.quantity,
+                    unitPrice: item.unitPrice
+                })),
+                action: 'save' // This will save as PENDING status
+            };
+
+            const result = await OrderService.createOrder(orderRequest);
+
+            Alert.alert(
+                'Order Saved!',
+                `Your order ${result.orderId} has been saved as a draft. You can access it from the Orders section.`,
+                [
+                    {
+                        text: 'OK',
+                        onPress: () => {
+                            router.push('/(tabs)/orders');
+                        }
                     }
-                }
-            ]
-        );
+                ]
+            );
+
+        } catch (error: any) {
+            console.error('Error saving order:', error);
+            Alert.alert('Error', error.message || 'Failed to save order. Please try again.');
+        } finally {
+            setLoading(false);
+        }
     };
 
-    const handleConfirmOrder = () => {
+    const handleConfirmOrder = async () => {
+        if (!orderData.customer?.id || orderData.items.length === 0) {
+            Alert.alert('Error', 'Invalid order data. Please go back and check your selections.');
+            return;
+        }
+
         Alert.alert(
-            'Order Confirmed!',
-            'Your order has been placed successfully. You can track its progress in the Orders section.',
+            'Confirm Order',
+            'Are you sure you want to confirm this order? Once confirmed, the order cannot be modified.',
             [
+                { text: 'Cancel', style: 'cancel' },
                 {
-                    text: 'OK',
-                    onPress: () => {
-                        router.push('/(tabs)/orders'); // Navigate to orders list with status as Confirmed
+                    text: 'Confirm',
+                    onPress: async () => {
+                        setLoading(true);
+
+                        try {
+                            // Prepare order data for backend
+                            const orderRequest: CreateOrderRequest = {
+                                chemistId: orderData.customer.id,
+                                expectedDeliveryDate: orderData.deliveryDate || undefined,
+                                specialInstructions: orderData.specialInstructions || undefined,
+                                items: orderData.items.map((item: any) => ({
+                                    drugId: item.drugId,
+                                    quantity: item.quantity,
+                                    unitPrice: item.unitPrice
+                                })),
+                                action: 'confirm' // This will save as CONFIRMED status
+                            };
+
+                            const result = await OrderService.createOrder(orderRequest);
+
+                            Alert.alert(
+                                'Order Confirmed!',
+                                `Your order ${result.orderId} has been placed successfully. You can track its progress in the Orders section.`,
+                                [
+                                    {
+                                        text: 'OK',
+                                        onPress: () => {
+                                            router.push('/(tabs)/orders');
+                                        }
+                                    }
+                                ]
+                            );
+
+                        } catch (error: any) {
+                            console.error('Error confirming order:', error);
+                            Alert.alert('Error', error.message || 'Failed to confirm order. Please try again.');
+                        } finally {
+                            setLoading(false);
+                        }
                     }
                 }
             ]
@@ -83,8 +156,9 @@ export default function OrderSummary() {
                 <StyledTouchableOpacity
                     className='mr-4'
                     onPress={() => router.back()}
+                    disabled={loading}
                 >
-                    <Ionicons name="arrow-back" size={24} color="#374151" />
+                    <Ionicons name="arrow-back" size={24} color={loading ? "#9CA3AF" : "#374151"} />
                 </StyledTouchableOpacity>
 
                 <StyledText className='text-xl font-semibold text-gray-900'>
@@ -157,7 +231,7 @@ export default function OrderSummary() {
                             fontWeight: '600',
                             textAlign: 'right'
                         }}>
-                            Rajesh Kumar
+                            You
                         </StyledText>
                     </StyledView>
 
@@ -425,6 +499,43 @@ export default function OrderSummary() {
                 </StyledView>
             </StyledScrollView>
 
+            {/* Loading Overlay */}
+            {loading && (
+                <StyledView style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    zIndex: 1000
+                }}>
+                    <StyledView style={{
+                        backgroundColor: 'white',
+                        borderRadius: 12,
+                        padding: 24,
+                        alignItems: 'center',
+                        shadowColor: '#000',
+                        shadowOffset: { width: 0, height: 2 },
+                        shadowOpacity: 0.25,
+                        shadowRadius: 4,
+                        elevation: 5
+                    }}>
+                        <ActivityIndicator size="large" color="#0077B6" />
+                        <StyledText style={{
+                            marginTop: 12,
+                            fontSize: 16,
+                            fontWeight: '500',
+                            color: '#374151'
+                        }}>
+                            Processing order...
+                        </StyledText>
+                    </StyledView>
+                </StyledView>
+            )}
+
             {/* Bottom Actions */}
             <StyledView style={{
                 position: 'absolute',
@@ -447,23 +558,25 @@ export default function OrderSummary() {
                 {/* Edit Order Button */}
                 <StyledTouchableOpacity
                     onPress={handleEditOrder}
+                    disabled={loading}
                     style={{
                         flex: 1,
                         paddingVertical: 14,
                         paddingHorizontal: 24,
                         borderRadius: 8,
                         borderWidth: 1,
-                        borderColor: '#D1D5DB',
-                        backgroundColor: '#F9FAFB',
+                        borderColor: loading ? '#E5E7EB' : '#D1D5DB',
+                        backgroundColor: loading ? '#F9FAFB' : '#F9FAFB',
                         alignItems: 'center',
-                        justifyContent: 'center'
+                        justifyContent: 'center',
+                        opacity: loading ? 0.5 : 1
                     }}
-                    activeOpacity={0.7}
+                    activeOpacity={loading ? 1 : 0.7}
                 >
                     <StyledText style={{
                         fontSize: 15,
                         fontWeight: '600',
-                        color: '#6B7280'
+                        color: loading ? '#9CA3AF' : '#6B7280'
                     }}>
                         Edit
                     </StyledText>
@@ -472,23 +585,25 @@ export default function OrderSummary() {
                 {/* Save Button */}
                 <StyledTouchableOpacity
                     onPress={handleSaveOrder}
+                    disabled={loading}
                     style={{
                         flex: 1,
                         paddingVertical: 14,
                         paddingHorizontal: 24,
                         borderRadius: 8,
                         borderWidth: 1,
-                        borderColor: '#D1D5DB',
-                        backgroundColor: '#F3F4F6',
+                        borderColor: loading ? '#E5E7EB' : '#D1D5DB',
+                        backgroundColor: loading ? '#F9FAFB' : '#F3F4F6',
                         alignItems: 'center',
                         justifyContent: 'center',
+                        opacity: loading ? 0.5 : 1
                     }}
-                    activeOpacity={0.7}
+                    activeOpacity={loading ? 1 : 0.7}
                 >
                     <StyledText style={{
                         fontSize: 15,
                         fontWeight: '600',
-                        color: '#4B5563'
+                        color: loading ? '#9CA3AF' : '#4B5563'
                     }}>
                         Save
                     </StyledText>
@@ -497,21 +612,22 @@ export default function OrderSummary() {
                 {/* Confirm Order Button */}
                 <StyledTouchableOpacity
                     onPress={handleConfirmOrder}
+                    disabled={loading}
                     style={{
                         flex: 1,
                         paddingVertical: 14,
                         paddingHorizontal: 24,
                         borderRadius: 8,
-                        backgroundColor: '#0077B6',
+                        backgroundColor: loading ? '#9CA3AF' : '#0077B6',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        elevation: 2,
-                        shadowColor: '#0077B6',
+                        elevation: loading ? 0 : 2,
+                        shadowColor: loading ? 'transparent' : '#0077B6',
                         shadowOffset: { width: 0, height: 2 },
                         shadowOpacity: 0.2,
                         shadowRadius: 4,
                     }}
-                    activeOpacity={0.8}
+                    activeOpacity={loading ? 1 : 0.8}
                 >
                     <StyledText style={{
                         fontSize: 15,

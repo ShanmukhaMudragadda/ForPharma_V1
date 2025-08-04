@@ -135,7 +135,7 @@ export default function Dropdown({
                             marginBottom: 16
                         }}>
                             <Text style={{ fontSize: 18, fontWeight: '600', color: '#111827' }}>
-                                Select Customer
+                                Select Medicine
                             </Text>
                             <TouchableOpacity onPress={() => setIsOpen(false)}>
                                 <Ionicons name="close" size={24} color="#6B7280" />
@@ -146,7 +146,7 @@ export default function Dropdown({
                         {searchable && (
                             <TextInput
                                 autoFocus
-                                placeholder="Search customers..."
+                                placeholder="Search Medicine..."
                                 value={searchText}
                                 onChangeText={setSearchText}
                                 style={{

@@ -2,9 +2,10 @@
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { styled } from 'nativewind';
 import { Ionicons } from '@expo/vector-icons';
-import React, { useState } from 'react';
-import { View, Text, SafeAreaView, TouchableOpacity, StatusBar, ScrollView, TextInput } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, SafeAreaView, TouchableOpacity, StatusBar, ScrollView, TextInput, ActivityIndicator, Alert } from 'react-native';
 import { Card } from 'react-native-paper';
+import OrderService, { OrderDetails, OrderItem } from '../../services/orderService';
 
 const StyledSafeAreaView = styled(SafeAreaView);
 const StyledView = styled(View);
@@ -13,34 +14,59 @@ const StyledTouchableOpacity = styled(TouchableOpacity);
 const StyledScrollView = styled(ScrollView);
 const StyledTextInput = styled(TextInput);
 
-interface OrderItem {
-    id: string;
-    name: string;
-    quantity: number;
-    unitPrice: number;
-    subtotal: number;
-}
-
-export default function OrderDetails(): JSX.Element {
+export default function OrderDetailsPage(): JSX.Element {
     const params = useLocalSearchParams();
     const router = useRouter();
+
+    // State management
+    const [orderDetails, setOrderDetails] = useState<OrderDetails | null>(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
     const [showOptionsMenu, setShowOptionsMenu] = useState<boolean>(false);
-    const [noteText, setNoteText] = useState<string>('Handle with care. Refrigerate immediately upon delivery. Contact customer before delivery.');
+    const [noteText, setNoteText] = useState<string>('');
     const [isEditingNote, setIsEditingNote] = useState<boolean>(false);
     const [isCreatingNote, setIsCreatingNote] = useState<boolean>(false);
 
-    const { orderId, customerName, date, amount, status } = params;
-    const orderStatus = (status as string) || 'Draft';
+    const { orderId } = params;
 
-    const mockOrderItems: OrderItem[] = [
-        { id: '1', name: 'Paracetamol 500mg', quantity: 100, unitPrice: 2.50, subtotal: 250.00 },
-        { id: '2', name: 'Amoxicillin 250mg', quantity: 50, unitPrice: 5.75, subtotal: 287.50 },
-        { id: '3', name: 'Ibuprofen 400mg', quantity: 75, unitPrice: 3.20, subtotal: 240.00 },
-        { id: '4', name: 'Cetirizine 10mg', quantity: 30, unitPrice: 1.80, subtotal: 54.00 }
-    ];
+    // Load order details from backend
+    const loadOrderDetails = async () => {
+        if (!orderId || typeof orderId !== 'string') {
+            setError('Invalid order ID');
+            setLoading(false);
+            return;
+        }
 
-    const totalAmount: number = mockOrderItems.reduce((sum: number, item: OrderItem) => sum + item.subtotal, 0);
-    const itemCount: number = mockOrderItems.length;
+        try {
+            setError(null);
+            const details = await OrderService.getOrderDetails(orderId);
+            setOrderDetails(details);
+            setNoteText(details.specialInstructions || '');
+        } catch (error: any) {
+            console.error('Error loading order details:', error);
+            setError(error.message || 'Failed to load order details');
+            Alert.alert('Error', 'Failed to load order details. Please try again.');
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    // Load order details on component mount
+    useEffect(() => {
+        loadOrderDetails();
+    }, [orderId]);
+
+    // Convert backend status to display status
+    const getDisplayStatus = (backendStatus: string) => {
+        switch (backendStatus) {
+            case 'PENDING':
+                return 'Draft';
+            case 'CONFIRMED':
+                return 'Confirmed';
+            default:
+                return 'Draft'; // Default to Draft for any unhandled status
+        }
+    };
 
     const handleShare = (): void => {
         console.log('Share order');
@@ -49,24 +75,46 @@ export default function OrderDetails(): JSX.Element {
 
     const handleEdit = (): void => {
         setShowOptionsMenu(false);
-        const orderDataToEdit = {
-            orderId: orderId,
-            customerName: customerName || 'Customer Name',
-            deliveryDate: date,
-            specialInstructions: noteText,
-            items: mockOrderItems,
-        };
-        router.push({
-            pathname: '/createOrder',
-            params: {
-                editData: JSON.stringify(orderDataToEdit),
-            }
-        });
+        if (orderDetails) {
+            const orderDataToEdit = {
+                orderId: orderDetails.orderId,
+                customerName: orderDetails.customer.name,
+                deliveryDate: orderDetails.expectedDeliveryDate || orderDetails.orderDate,
+                specialInstructions: orderDetails.specialInstructions,
+                items: orderDetails.items,
+            };
+            router.push({
+                pathname: '/createOrder',
+                params: {
+                    editData: JSON.stringify(orderDataToEdit),
+                }
+            });
+        }
     };
 
-    const handleDelete = (): void => {
-        console.log('Delete order');
+    const handleDelete = async (): void => {
         setShowOptionsMenu(false);
+
+        Alert.alert(
+            'Cancel Order',
+            'Are you sure you want to cancel this order? This action cannot be undone.',
+            [
+                { text: 'No', style: 'cancel' },
+                {
+                    text: 'Yes, Cancel',
+                    style: 'destructive',
+                    onPress: async () => {
+                        try {
+                            await OrderService.deleteOrder(orderId as string);
+                            Alert.alert('Success', 'Order cancelled successfully');
+                            router.back();
+                        } catch (error: any) {
+                            Alert.alert('Error', 'Failed to cancel order. Please try again.');
+                        }
+                    }
+                }
+            ]
+        );
     };
 
     const handleCreateNote = (): void => {
@@ -75,28 +123,86 @@ export default function OrderDetails(): JSX.Element {
         setNoteText('');
     };
 
-    const handleSaveNote = (): void => {
-        setIsEditingNote(false);
-        setIsCreatingNote(false);
+    const handleSaveNote = async (): void => {
+        try {
+            await OrderService.updateOrder(orderId as string, {
+                specialInstructions: noteText
+            });
+
+            setIsEditingNote(false);
+            setIsCreatingNote(false);
+
+            await loadOrderDetails();
+
+            Alert.alert('Success', 'Special instructions updated successfully');
+        } catch (error: any) {
+            Alert.alert('Error', 'Failed to update special instructions. Please try again.');
+        }
     };
 
     const getStatusColor = (status: string): string => {
         switch (status.toLowerCase()) {
-            case 'completed': return 'text-green-600';
+            case 'confirmed': return 'text-blue-600';
             case 'draft': return 'text-orange-600';
-            case 'pending': return 'text-blue-600';
             default: return 'text-gray-600';
         }
     };
 
     const getStatusBgColor = (status: string): string => {
         switch (status.toLowerCase()) {
-            case 'completed': return 'bg-green-100';
+            case 'confirmed': return 'bg-blue-100';
             case 'draft': return 'bg-orange-100';
-            case 'pending': return 'bg-blue-100';
             default: return 'bg-gray-100';
         }
     };
+
+    // Loading state
+    if (loading) {
+        return (
+            <StyledSafeAreaView className="flex-1 bg-gray-50">
+                <StatusBar backgroundColor="#0077B6" barStyle="light-content" />
+                <StyledView className="bg-white px-5 py-4 flex-row justify-between items-center border-b border-gray-200">
+                    <StyledView className="flex-row items-center gap-3">
+                        <StyledTouchableOpacity className="w-9 h-9 rounded-lg bg-gray-100 items-center justify-center" onPress={() => router.back()}>
+                            <Ionicons name="arrow-back" size={18} color="#6C757D" />
+                        </StyledTouchableOpacity>
+                        <StyledText className="text-xl font-semibold text-gray-900">Order Details</StyledText>
+                    </StyledView>
+                </StyledView>
+                <StyledView className="flex-1 justify-center items-center">
+                    <ActivityIndicator size="large" color="#0077B6" />
+                    <StyledText className="text-gray-600 mt-4">Loading order details...</StyledText>
+                </StyledView>
+            </StyledSafeAreaView>
+        );
+    }
+
+    // Error state
+    if (error || !orderDetails) {
+        return (
+            <StyledSafeAreaView className="flex-1 bg-gray-50">
+                <StatusBar backgroundColor="#0077B6" barStyle="light-content" />
+                <StyledView className="bg-white px-5 py-4 flex-row justify-between items-center border-b border-gray-200">
+                    <StyledView className="flex-row items-center gap-3">
+                        <StyledTouchableOpacity className="w-9 h-9 rounded-lg bg-gray-100 items-center justify-center" onPress={() => router.back()}>
+                            <Ionicons name="arrow-back" size={18} color="#6C757D" />
+                        </StyledTouchableOpacity>
+                        <StyledText className="text-xl font-semibold text-gray-900">Order Details</StyledText>
+                    </StyledView>
+                </StyledView>
+                <StyledView className="flex-1 justify-center items-center px-5">
+                    <StyledText className="text-5xl mb-4">⚠️</StyledText>
+                    <StyledText className="text-lg font-semibold text-gray-900 mb-2">Error loading order details</StyledText>
+                    <StyledText className="text-sm text-gray-600 text-center mb-4">{error || 'Order not found'}</StyledText>
+                    <StyledTouchableOpacity className="bg-[#0077B6] px-6 py-3 rounded-lg" onPress={loadOrderDetails}>
+                        <StyledText className="text-white font-semibold">Try Again</StyledText>
+                    </StyledTouchableOpacity>
+                </StyledView>
+            </StyledSafeAreaView>
+        );
+    }
+
+    const displayStatus = getDisplayStatus(orderDetails.status);
 
     return (
         <StyledSafeAreaView className="flex-1 bg-gray-50">
@@ -105,25 +211,24 @@ export default function OrderDetails(): JSX.Element {
             {/* Title Bar */}
             <StyledView className="bg-white px-5 py-4 flex-row justify-between items-center border-b border-gray-200 z-50">
                 <StyledView className="flex-row items-center gap-3">
-                    <StyledTouchableOpacity
-                        className="w-9 h-9 rounded-lg bg-gray-100 items-center justify-center"
-                        onPress={() => router.back()}
-                    >
+                    <StyledTouchableOpacity className="w-9 h-9 rounded-lg bg-gray-100 items-center justify-center" onPress={() => router.back()}>
                         <Ionicons name="arrow-back" size={18} color="#6C757D" />
                     </StyledTouchableOpacity>
                     <StyledText className="text-xl font-semibold text-gray-900">Order Details</StyledText>
                 </StyledView>
 
-                {/* Dropdown container */}
+                {/* Conditional Options Menu */}
                 <StyledView className="flex-row gap-2">
-                    {orderStatus === 'Completed' ? (
-                        <StyledTouchableOpacity
-                            className="w-9 h-9 rounded-lg bg-gray-100 items-center justify-center"
-                            onPress={handleShare}
-                        >
-                            <Ionicons name="share-outline" size={18} color="#6C757D" />
-                        </StyledTouchableOpacity>
-                    ) : (
+                    {/* Share button is now independent and always present */}
+                    <StyledTouchableOpacity
+                        className="w-9 h-9 rounded-lg bg-gray-100 items-center justify-center"
+                        onPress={handleShare}
+                    >
+                        <Ionicons name="share-outline" size={18} color="#6C757D" />
+                    </StyledTouchableOpacity>
+
+                    {/* Ellipsis button and dropdown only for Draft status */}
+                    {displayStatus === 'Draft' ? (
                         <StyledView className="relative">
                             <StyledTouchableOpacity
                                 className="w-9 h-9 rounded-lg bg-gray-100 items-center justify-center"
@@ -144,13 +249,6 @@ export default function OrderDetails(): JSX.Element {
                                     >
                                         <StyledTouchableOpacity
                                             className="flex-row items-center px-4 py-3 border-b border-gray-100"
-                                            onPress={handleShare}
-                                        >
-                                            <Ionicons name="share-outline" size={18} color="#0077B6" />
-                                            <StyledText className="ml-3 text-sm text-gray-900">Share</StyledText>
-                                        </StyledTouchableOpacity>
-                                        <StyledTouchableOpacity
-                                            className="flex-row items-center px-4 py-3 border-b border-gray-100"
                                             onPress={handleEdit}
                                         >
                                             <Ionicons name="create-outline" size={18} color="#0077B6" />
@@ -161,13 +259,13 @@ export default function OrderDetails(): JSX.Element {
                                             onPress={handleDelete}
                                         >
                                             <Ionicons name="trash-outline" size={18} color="#DC3545" />
-                                            <StyledText className="ml-3 text-sm text-red-600">Delete</StyledText>
+                                            <StyledText className="ml-3 text-sm text-red-600">Cancel Order</StyledText>
                                         </StyledTouchableOpacity>
                                     </StyledView>
                                 </>
                             )}
                         </StyledView>
-                    )}
+                    ) : null}
                 </StyledView>
             </StyledView>
 
@@ -181,7 +279,7 @@ export default function OrderDetails(): JSX.Element {
                 <StyledView className="bg-white px-5 py-6 border-b border-gray-200">
                     <StyledView className="items-center">
                         <StyledText className="text-2xl font-bold text-[#0077B6] mb-1">
-                            {orderId || '#ORD-2024-XXXX'}
+                            {orderDetails.orderNumber || orderDetails.orderId}
                         </StyledText>
                         <StyledText className="text-xs font-medium text-gray-500 uppercase tracking-wide">
                             Order ID
@@ -196,33 +294,35 @@ export default function OrderDetails(): JSX.Element {
                             <StyledText className="text-base font-medium text-gray-600 flex-shrink-0">Customer</StyledText>
                             <StyledTouchableOpacity className="flex-1 ml-4" onPress={() => console.log('Open customer details')}>
                                 <StyledText className="text-base font-semibold text-[#0077B6] text-right underline" numberOfLines={1} ellipsizeMode="tail">
-                                    {customerName || 'Customer Name'}
+                                    {orderDetails.customer.name}
                                 </StyledText>
                             </StyledTouchableOpacity>
                         </StyledView>
                         <StyledView className="flex-row justify-between items-center py-4 border-b border-gray-100">
                             <StyledText className="text-base font-medium text-gray-600 flex-shrink-0">Created By</StyledText>
                             <StyledText className="text-base font-semibold text-gray-900 text-right flex-1 ml-4" numberOfLines={1} ellipsizeMode="tail">
-                                Rajesh Kumar
+                                {orderDetails.createdBy.name}
                             </StyledText>
                         </StyledView>
                         <StyledView className="flex-row justify-between items-center py-4 border-b border-gray-100">
                             <StyledText className="text-base font-medium text-gray-600 flex-shrink-0">Order Placed</StyledText>
                             <StyledText className="text-base font-semibold text-gray-900 text-right flex-1 ml-4" numberOfLines={1} ellipsizeMode="tail">
-                                {date || 'Order Date'}
+                                {orderDetails.orderDate}
                             </StyledText>
                         </StyledView>
-                        <StyledView className="flex-row justify-between items-center py-4 border-b border-gray-100">
-                            <StyledText className="text-base font-medium text-gray-600 flex-shrink-0">Expected Delivery</StyledText>
-                            <StyledText className="text-base font-semibold text-gray-900 text-right flex-1 ml-4" numberOfLines={1} ellipsizeMode="tail">
-                                December 22, 2024
-                            </StyledText>
-                        </StyledView>
+                        {orderDetails.expectedDeliveryDate && (
+                            <StyledView className="flex-row justify-between items-center py-4 border-b border-gray-100">
+                                <StyledText className="text-base font-medium text-gray-600 flex-shrink-0">Expected Delivery</StyledText>
+                                <StyledText className="text-base font-semibold text-gray-900 text-right flex-1 ml-4" numberOfLines={1} ellipsizeMode="tail">
+                                    {orderDetails.expectedDeliveryDate}
+                                </StyledText>
+                            </StyledView>
+                        )}
                         <StyledView className="flex-row justify-between items-center py-4">
                             <StyledText className="text-base font-medium text-gray-600 flex-shrink-0">Order Status</StyledText>
-                            <StyledView className={`px-3 py-1 rounded-full ${getStatusBgColor(orderStatus)}`}>
-                                <StyledText className={`text-sm font-semibold ${getStatusColor(orderStatus)}`}>
-                                    {orderStatus}
+                            <StyledView className={`px-3 py-1 rounded-full ${getStatusBgColor(displayStatus)}`}>
+                                <StyledText className={`text-sm font-semibold ${getStatusColor(displayStatus)}`}>
+                                    {displayStatus}
                                 </StyledText>
                             </StyledView>
                         </StyledView>
@@ -234,7 +334,7 @@ export default function OrderDetails(): JSX.Element {
                     <Card style={{ backgroundColor: '#ffffff' }}>
                         <Card.Content style={{ padding: 20 }}>
                             <StyledText className="text-lg font-semibold text-gray-900 mb-4">Items Ordered</StyledText>
-                            {mockOrderItems.length > 0 ? (
+                            {orderDetails.items.length > 0 ? (
                                 <>
                                     <StyledView className="flex-row bg-gray-50 py-3 px-2 rounded-md mb-2">
                                         <StyledText className="flex-1 text-xs font-semibold text-gray-500 uppercase">Drug Name</StyledText>
@@ -242,11 +342,14 @@ export default function OrderDetails(): JSX.Element {
                                         <StyledText className="w-[70px] text-xs font-semibold text-gray-500 uppercase text-right">Unit Price</StyledText>
                                         <StyledText className="w-[70px] text-xs font-semibold text-gray-500 uppercase text-right">Subtotal</StyledText>
                                     </StyledView>
-                                    {mockOrderItems.map((item: OrderItem, index: number) => (
-                                        <StyledView key={item.id} className={`flex-row items-center py-3 px-2 ${index < mockOrderItems.length - 1 ? 'border-b border-gray-100' : ''}`}>
-                                            <StyledTouchableOpacity className="flex-1">
-                                                <StyledText className="text-base font-medium text-[#0077B6] underline">{item.name}</StyledText>
-                                            </StyledTouchableOpacity>
+                                    {orderDetails.items.map((item: OrderItem, index: number) => (
+                                        <StyledView key={item.id} className={`flex-row items-center py-3 px-2 ${index < orderDetails.items.length - 1 ? 'border-b border-gray-100' : ''}`}>
+                                            <StyledView className="flex-1">
+                                                <StyledText className="text-base font-medium text-[#0077B6]">{item.name}</StyledText>
+                                                {item.manufacturer && (
+                                                    <StyledText className="text-xs text-gray-500 mt-1">{item.manufacturer}</StyledText>
+                                                )}
+                                            </StyledView>
                                             <StyledText className="w-10 text-sm text-gray-900 text-center">{item.quantity}</StyledText>
                                             <StyledText className="w-[70px] text-sm text-gray-900 text-right">₹{item.unitPrice.toFixed(2)}</StyledText>
                                             <StyledText className="w-[70px] text-sm text-gray-900 text-right">₹{item.subtotal.toFixed(2)}</StyledText>
@@ -256,15 +359,15 @@ export default function OrderDetails(): JSX.Element {
                             ) : (
                                 <StyledText className="text-center text-gray-500 text-base py-5">No items found</StyledText>
                             )}
-                            {mockOrderItems.length > 0 && (
+                            {orderDetails.items.length > 0 && (
                                 <StyledView className="bg-gray-50 rounded-lg p-4 mt-4">
                                     <StyledView className="flex-row justify-between items-center mb-2">
-                                        <StyledText className="text-sm text-gray-500">Subtotal ({itemCount} items)</StyledText>
-                                        <StyledText className="text-base font-medium text-gray-900">₹{totalAmount.toFixed(2)}</StyledText>
+                                        <StyledText className="text-sm text-gray-500">Subtotal ({orderDetails.itemCount} items)</StyledText>
+                                        <StyledText className="text-base font-medium text-gray-900">₹{orderDetails.subtotal.toFixed(2)}</StyledText>
                                     </StyledView>
                                     <StyledView className="flex-row justify-between items-center">
                                         <StyledText className="text-lg font-semibold text-gray-900">Total Amount</StyledText>
-                                        <StyledText className="text-xl font-bold text-green-600">₹{totalAmount.toFixed(2)}</StyledText>
+                                        <StyledText className="text-xl font-bold text-green-600">₹{orderDetails.totalAmount.toFixed(2)}</StyledText>
                                     </StyledView>
                                 </StyledView>
                             )}
@@ -276,11 +379,19 @@ export default function OrderDetails(): JSX.Element {
                 <StyledView className='bg-white px-5 py-5 mb-20'>
                     <StyledView className='flex-row justify-between items-center mb-4'>
                         <StyledText className='text-lg font-semibold text-gray-900'>Special Instructions</StyledText>
-                        {orderStatus !== 'Completed' && (
+                        {displayStatus === 'Draft' ? (
                             <StyledView className='flex-row gap-2'>
                                 {(!noteText || noteText.length === 0) && !isEditingNote && (
                                     <StyledTouchableOpacity className='px-3 py-1.5 rounded-md border border-green-500' onPress={handleCreateNote}>
                                         <StyledText className='text-xs font-medium text-green-500'>Create</StyledText>
+                                    </StyledTouchableOpacity>
+                                )}
+                                {!isEditingNote && noteText && noteText.length > 0 && (
+                                    <StyledTouchableOpacity
+                                        className='px-3 py-1.5 rounded-md border border-blue-500'
+                                        onPress={() => setIsEditingNote(true)}
+                                    >
+                                        <StyledText className='text-xs font-medium text-blue-500'>Edit</StyledText>
                                     </StyledTouchableOpacity>
                                 )}
                                 {isEditingNote && (
@@ -290,7 +401,7 @@ export default function OrderDetails(): JSX.Element {
                                             onPress={() => {
                                                 setIsEditingNote(false);
                                                 setIsCreatingNote(false);
-                                                setNoteText('Handle with care. Refrigerate immediately upon delivery. Contact customer before delivery.');
+                                                setNoteText(orderDetails.specialInstructions || '');
                                             }}
                                         >
                                             <StyledText className='text-xs font-medium text-gray-700'>Cancel</StyledText>
@@ -301,10 +412,10 @@ export default function OrderDetails(): JSX.Element {
                                     </>
                                 )}
                             </StyledView>
-                        )}
+                        ) : null}
                     </StyledView>
                     <StyledView className='bg-gray-50 rounded-lg p-3 min-h-[80px]'>
-                        {isEditingNote && orderStatus !== 'Completed' ? (
+                        {isEditingNote && displayStatus === 'Draft' ? (
                             <StyledTextInput
                                 className='text-sm text-gray-900 leading-5'
                                 value={noteText}
@@ -318,7 +429,10 @@ export default function OrderDetails(): JSX.Element {
                                 <StyledText className='text-sm text-gray-900 leading-5'>{noteText}</StyledText>
                             ) : (
                                 <StyledText className='text-sm text-gray-600 italic text-center py-6'>
-                                    {orderStatus === 'Completed' ? 'No special instructions for this order.' : 'No special instructions available. Click "Create" to add instructions.'}
+                                    {displayStatus !== 'Draft'
+                                        ? 'No special instructions for this order.'
+                                        : 'No special instructions available. Click "Create" to add instructions.'
+                                    }
                                 </StyledText>
                             )
                         )}

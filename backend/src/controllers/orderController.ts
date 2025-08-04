@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
+import { v4 as uuidv4 } from 'uuid';
 
 // Extended Request interface to include tenant database and user info
-// These are added by the tenantMiddleware
 interface AuthenticatedRequest extends Request {
     user?: {
         id: string;
@@ -18,8 +18,6 @@ class OrderController {
     /**
      * GET /api/orders
      * List only orders created by the authenticated employee
-     * Returns: order_id, chemist_name, date, amount, status
-     * No pagination - returns all employee's orders
      */
     async getOrders(req: AuthenticatedRequest, res: Response) {
         try {
@@ -32,47 +30,40 @@ class OrderController {
                 });
             }
 
-            // This line uses the Prisma model name 'order' to query the 'orders' table.
             const orders = await req.tenantDb.order.findMany({
                 where: {
-                    // This line uses the column name 'createdById' as defined in the 'Order' model.
                     createdById: req.user?.employeeId
                 },
                 include: {
-                    // This line uses the relation name 'chemist' as defined in the 'Order' model.
                     chemist: {
                         select: {
-                            // These lines use the column names 'id' and 'name' as defined in the 'Chemist' model.
                             id: true,
                             name: true
                         }
                     },
-                    // This line uses the relation name 'createdBy' as defined in the 'Order' model.
                     createdBy: {
                         select: {
-                            // These lines use the column names 'firstName' and 'lastName' as defined in the 'Employee' model.
                             firstName: true,
                             lastName: true
                         }
                     }
                 },
                 orderBy: {
-                    // This line uses the column name 'createdAt' as defined in the 'Order' model.
                     createdAt: 'desc'
                 }
             });
 
             // Transform data to match frontend expectations
             const transformedOrders = orders.map((order: any) => ({
-                orderId: order.id, // This line uses the column name 'id' from the retrieved 'order' object.
-                customerName: order.chemist?.name || 'Unknown Customer', // This line uses the relation name 'chemist' and column name 'name'.
+                orderId: order.id,
+                customerName: order.chemist?.name || 'Unknown Customer',
                 date: order.orderDate.toLocaleDateString('en-US', {
                     year: 'numeric',
                     month: 'long',
                     day: 'numeric'
                 }),
-                amount: `₹${order.totalAmount.toLocaleString('en-IN')}`, // This line uses the column name 'totalAmount' from the 'order' object.
-                status: order.status || 'PENDING' // This line uses the column name 'status' from the 'order' object.
+                amount: `₹${order.totalAmount.toLocaleString('en-IN')}`,
+                status: order.status || 'PENDING'
             }));
 
             res.status(200).json({
@@ -86,6 +77,507 @@ class OrderController {
             res.status(500).json({
                 success: false,
                 message: 'Failed to retrieve orders',
+                error: process.env.NODE_ENV === 'development' ? error : undefined
+            });
+        }
+    }
+
+    /**
+     * GET /api/orders/:orderId
+     * Get detailed information about a specific order
+     */
+    async getOrderById(req: AuthenticatedRequest, res: Response) {
+        try {
+            const { orderId } = req.params;
+            console.log('🔍 Getting order details for:', orderId);
+
+            if (!req.tenantDb) {
+                return res.status(500).json({
+                    success: false,
+                    message: 'Tenant database connection not available'
+                });
+            }
+
+            const order = await req.tenantDb.order.findFirst({
+                where: {
+                    id: orderId,
+                    createdById: req.user?.employeeId // Ensure user can only access their own orders
+                },
+                include: {
+                    chemist: {
+                        select: {
+                            id: true,
+                            name: true,
+                            email: true,
+                            phone: true,
+                            address: true
+                        }
+                    },
+                    createdBy: {
+                        select: {
+                            firstName: true,
+                            lastName: true,
+                            email: true
+                        }
+                    },
+                    items: {
+                        include: {
+                            drug: {
+                                select: {
+                                    name: true,
+                                    composition: true,
+                                    manufacturer: true,
+                                    category: true
+                                }
+                            }
+                        },
+                        orderBy: {
+                            createdAt: 'asc'
+                        }
+                    }
+                }
+            });
+
+            if (!order) {
+                return res.status(404).json({
+                    success: false,
+                    message: 'Order not found or you do not have permission to view this order'
+                });
+            }
+
+            // Transform order items for frontend
+            const transformedItems = order.items.map((item: any) => ({
+                id: `${item.orderId}_${item.drugId}`, // Composite key as string
+                name: item.drug?.name || 'Unknown Product',
+                description: item.drug?.composition || '',
+                manufacturer: item.drug?.manufacturer || '',
+                category: item.drug?.category || '',
+                quantity: item.quantity,
+                unitPrice: parseFloat(item.unitPrice.toString()),
+                subtotal: parseFloat(item.subtotal.toString())
+            }));
+
+            // Calculate totals
+            const subtotal = transformedItems.reduce((sum, item) => sum + item.subtotal, 0);
+            const itemCount = transformedItems.length;
+
+            // Transform order details for frontend
+            const orderDetails = {
+                orderId: order.id,
+                orderNumber: order.id,
+
+                // Customer information
+                customer: {
+                    id: order.chemist?.id,
+                    name: order.chemist?.name || 'Unknown Customer',
+                    email: order.chemist?.email,
+                    phone: order.chemist?.phone,
+                    address: order.chemist?.address
+                },
+
+                // Employee information
+                createdBy: {
+                    name: `${order.createdBy?.firstName || ''} ${order.createdBy?.lastName || ''}`.trim() || 'Unknown Employee',
+                    email: order.createdBy?.email
+                },
+
+                // Order dates
+                orderDate: order.orderDate.toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                }),
+                expectedDeliveryDate: order.deliveryDate ?
+                    order.deliveryDate.toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                    }) : null,
+
+                // Order status
+                status: order.status || 'PENDING',
+
+                // Items and pricing
+                items: transformedItems,
+                itemCount: itemCount,
+                subtotal: subtotal,
+                totalAmount: parseFloat(order.totalAmount.toString()),
+
+                // Special instructions
+                specialInstructions: order.specialInstructions || '',
+
+                // Timestamps
+                createdAt: order.createdAt,
+                updatedAt: order.updatedAt
+            };
+
+            res.status(200).json({
+                success: true,
+                message: 'Order details retrieved successfully',
+                data: orderDetails
+            });
+
+        } catch (error) {
+            console.error('❌ Error getting order details:', error);
+            res.status(500).json({
+                success: false,
+                message: 'Failed to retrieve order details',
+                error: process.env.NODE_ENV === 'development' ? error : undefined
+            });
+        }
+    }
+
+    /**
+     * POST /api/orders
+     * Create a new order
+     */
+    async createOrder(req: AuthenticatedRequest, res: Response) {
+        try {
+            const orderData = req.body;
+            console.log('📝 Creating new order for employee:', req.user?.employeeId);
+
+            if (!req.tenantDb) {
+                return res.status(500).json({
+                    success: false,
+                    message: 'Tenant database connection not available'
+                });
+            }
+
+            // Validate required fields
+            if (!orderData.chemistId || !orderData.items || !Array.isArray(orderData.items) || orderData.items.length === 0) {
+                return res.status(400).json({
+                    success: false,
+                    message: 'Missing required fields: chemistId and items are required'
+                });
+            }
+
+            // Validate chemist exists and is in user's territory
+            const chemist = await req.tenantDb.chemist.findFirst({
+                where: {
+                    id: orderData.chemistId,
+                    isActive: true
+                },
+                include: {
+                    territory: true
+                }
+            });
+
+            if (!chemist) {
+                return res.status(404).json({
+                    success: false,
+                    message: 'Chemist not found or inactive'
+                });
+            }
+
+            // Validate all drugs exist and calculate totals
+            const drugIds = orderData.items.map((item: any) => item.drugId);
+            const drugs = await req.tenantDb.drug.findMany({
+                where: {
+                    id: { in: drugIds },
+                    isActive: true
+                }
+            });
+
+            if (drugs.length !== drugIds.length) {
+                return res.status(400).json({
+                    success: false,
+                    message: 'One or more drugs not found or inactive'
+                });
+            }
+
+            // Create drug map for price lookup
+            const drugMap = drugs.reduce((map, drug) => {
+                map[drug.id] = drug;
+                return map;
+            }, {} as any);
+
+            // Validate and calculate order items
+            let calculatedTotal = 0;
+            const validatedItems = orderData.items.map((item: any) => {
+                const drug = drugMap[item.drugId];
+                const quantity = parseInt(item.quantity);
+                const unitPrice = item.unitPrice ? parseFloat(item.unitPrice) : (drug.price ? parseFloat(drug.price.toString()) : 0);
+                const subtotal = quantity * unitPrice;
+
+                calculatedTotal += subtotal;
+
+                return {
+                    drugId: item.drugId,
+                    quantity: quantity,
+                    unitPrice: unitPrice,
+                    subtotal: subtotal
+                };
+            });
+
+            // Generate order ID
+            const orderCount = await req.tenantDb.order.count();
+            const orderNumber = `ORD-${new Date().getFullYear()}-${uuidv4().split('-')[0].toUpperCase()}`;
+
+            // Determine order status
+            const status = orderData.action === 'confirm' ? 'CONFIRMED' : 'PENDING';
+            const orderDate = status === 'CONFIRMED' ? new Date() : (orderData.orderDate ? new Date(orderData.orderDate) : new Date());
+
+            // Validate and parse delivery date
+            let deliveryDate = null;
+            if (orderData.expectedDeliveryDate) {
+                const parsedDeliveryDate = new Date(orderData.expectedDeliveryDate);
+                if (!isNaN(parsedDeliveryDate.getTime())) {
+                    deliveryDate = parsedDeliveryDate;
+                } else {
+                    console.warn('Invalid delivery date provided:', orderData.expectedDeliveryDate);
+                }
+            }
+
+            // Create order with transaction
+            const result = await req.tenantDb.$transaction(async (tx: any) => {
+                // Create order
+                const order = await tx.order.create({
+                    data: {
+                        id: orderNumber,
+                        organizationId: req.user?.organizationId,
+                        chemistId: orderData.chemistId,
+                        totalAmount: calculatedTotal,
+                        status: status,
+                        orderDate: orderDate,
+                        deliveryDate: deliveryDate, // Now properly validated
+                        specialInstructions: orderData.specialInstructions || null,
+                        createdById: req.user?.employeeId
+                    }
+                });
+
+                // Create order items
+                for (const item of validatedItems) {
+                    await tx.orderItem.create({
+                        data: {
+                            orderId: order.id,
+                            drugId: item.drugId,
+                            quantity: item.quantity,
+                            unitPrice: item.unitPrice,
+                            subtotal: item.subtotal
+                        }
+                    });
+                }
+
+                return order;
+            });
+
+            // Fetch created order with relations for response
+            const createdOrder = await req.tenantDb.order.findUnique({
+                where: { id: result.id },
+                include: {
+                    chemist: {
+                        select: {
+                            id: true,
+                            name: true
+                        }
+                    },
+                    createdBy: {
+                        select: {
+                            firstName: true,
+                            lastName: true
+                        }
+                    },
+                    items: {
+                        include: {
+                            drug: {
+                                select: {
+                                    name: true,
+                                    manufacturer: true
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            res.status(201).json({
+                success: true,
+                message: `Order ${status === 'CONFIRMED' ? 'confirmed' : 'saved as draft'} successfully`,
+                data: {
+                    orderId: createdOrder.id,
+                    status: createdOrder.status,
+                    totalAmount: parseFloat(createdOrder.totalAmount.toString()),
+                    itemCount: createdOrder.items.length,
+                    customerName: createdOrder.chemist?.name,
+                    createdBy: `${createdOrder.createdBy?.firstName || ''} ${createdOrder.createdBy?.lastName || ''}`.trim()
+                }
+            });
+
+        } catch (error) {
+            console.error('❌ Error creating order:', error);
+            res.status(500).json({
+                success: false,
+                message: 'Failed to create order',
+                error: process.env.NODE_ENV === 'development' ? error : undefined
+            });
+        }
+    }
+
+    /**
+     * GET /api/orders/drugs
+     * Get available drugs for order creation (simplified - just name and price)
+     */
+    async getDrugsForOrder(req: AuthenticatedRequest, res: Response) {
+        try {
+            console.log('💊 Getting drugs for order creation');
+
+            if (!req.tenantDb) {
+                return res.status(500).json({
+                    success: false,
+                    message: 'Tenant database connection not available'
+                });
+            }
+
+            const drugs = await req.tenantDb.drug.findMany({
+                where: {
+                    isActive: true,
+                    isAvailable: true
+                },
+                select: {
+                    id: true,
+                    name: true,
+                    price: true
+                },
+                orderBy: {
+                    name: 'asc'
+                }
+            });
+
+            res.status(200).json({
+                success: true,
+                message: `Retrieved ${drugs.length} drugs`,
+                data: drugs.map(drug => ({
+                    id: drug.id,
+                    name: drug.name,
+                    price: drug.price ? parseFloat(drug.price.toString()) : 0
+                }))
+            });
+
+        } catch (error) {
+            console.error('❌ Error getting drugs for order:', error);
+            res.status(500).json({
+                success: false,
+                message: 'Failed to retrieve drugs',
+                error: process.env.NODE_ENV === 'development' ? error : undefined
+            });
+        }
+    }
+
+    /**
+     * PUT /api/orders/:orderId
+     * Update order details
+     */
+    async updateOrder(req: AuthenticatedRequest, res: Response) {
+        try {
+            const { orderId } = req.params;
+            const updateData = req.body;
+            console.log('📝 Updating order:', orderId);
+
+            if (!req.tenantDb) {
+                return res.status(500).json({
+                    success: false,
+                    message: 'Tenant database connection not available'
+                });
+            }
+
+            // Check if order exists and belongs to the user
+            const existingOrder = await req.tenantDb.order.findFirst({
+                where: {
+                    id: orderId,
+                    createdById: req.user?.employeeId
+                }
+            });
+
+            if (!existingOrder) {
+                return res.status(404).json({
+                    success: false,
+                    message: 'Order not found or you do not have permission to update this order'
+                });
+            }
+
+            // Update order
+            const updatedOrder = await req.tenantDb.order.update({
+                where: { id: orderId },
+                data: {
+                    ...updateData,
+                    updatedAt: new Date()
+                },
+                include: {
+                    chemist: {
+                        select: {
+                            name: true
+                        }
+                    }
+                }
+            });
+
+            res.status(200).json({
+                success: true,
+                message: 'Order updated successfully',
+                data: updatedOrder
+            });
+
+        } catch (error) {
+            console.error('❌ Error updating order:', error);
+            res.status(500).json({
+                success: false,
+                message: 'Failed to update order',
+                error: process.env.NODE_ENV === 'development' ? error : undefined
+            });
+        }
+    }
+
+    /**
+     * DELETE /api/orders/:orderId
+     * Delete/cancel an order
+     */
+    async deleteOrder(req: AuthenticatedRequest, res: Response) {
+        try {
+            const { orderId } = req.params;
+            console.log('🗑️ Deleting order:', orderId);
+
+            if (!req.tenantDb) {
+                return res.status(500).json({
+                    success: false,
+                    message: 'Tenant database connection not available'
+                });
+            }
+
+            // Check if order exists and belongs to the user
+            const existingOrder = await req.tenantDb.order.findFirst({
+                where: {
+                    id: orderId,
+                    createdById: req.user?.employeeId
+                }
+            });
+
+            if (!existingOrder) {
+                return res.status(404).json({
+                    success: false,
+                    message: 'Order not found or you do not have permission to delete this order'
+                });
+            }
+
+            // Soft delete by updating status to CANCELLED
+            const deletedOrder = await req.tenantDb.order.update({
+                where: { id: orderId },
+                data: {
+                    status: 'CANCELLED',
+                    updatedAt: new Date()
+                }
+            });
+
+            res.status(200).json({
+                success: true,
+                message: 'Order cancelled successfully',
+                data: deletedOrder
+            });
+
+        } catch (error) {
+            console.error('❌ Error deleting order:', error);
+            res.status(500).json({
+                success: false,
+                message: 'Failed to cancel order',
                 error: process.env.NODE_ENV === 'development' ? error : undefined
             });
         }
