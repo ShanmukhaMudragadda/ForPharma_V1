@@ -1,12 +1,17 @@
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useRouter } from 'expo-router';
+import { Platform } from 'react-native';
 
 
+const router = useRouter();
 // Create axios instance
 const axiosInstance = axios.create({
     // baseURL: 'http://192.168.11.22:3000/api', // Using your backend URL
-    baseURL: 'http://192.168.1.29:3000/api',
+    // baseURL: 'http://192.168.137.1:3000/api',
+    baseURL: 'http://192.168.24.215:3000/api',
+    // baseURL: 'http://192.168.1.29:3000/api',
     timeout: 30000,
     headers: {
         'Content-Type': 'application/json',
@@ -17,11 +22,20 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
     async (config) => {
         try {
-            // const token = await SecureStore.getItemAsync('token');
-            const token = await AsyncStorage.getItem('token')
-            if (token) {
-                config.headers.Authorization = `Bearer ${token}`;
+
+            if (Platform.OS === 'web') {
+                const token = localStorage.getItem('token');
+                if (token) {
+                    config.headers.Authorization = `Bearer ${token}`;
+                }
             }
+            else {
+                const token = await AsyncStorage.getItem('token')
+                if (token) {
+                    config.headers.Authorization = `Bearer ${token}`;
+                }
+            }
+
             return config;
         } catch (error) {
             console.error('Error getting auth token:', error);
@@ -41,14 +55,23 @@ axiosInstance.interceptors.response.use(
     async (error) => {
         if (error.response?.status === 401) {
             // Token expired or invalid
-            await AsyncStorage.removeItem('token');
-            console.log('Token removed successfully!');
-            await AsyncStorage.removeItem('user');
-            console.log('user removed successfully!');
+
+            // console.log('Token removed successfully!');
+
+            // console.log('user removed successfully!');
+            if (Platform.OS === 'web') {
+                localStorage.removeItem('token');
+                localStorage.removeItem('user');
+            }
+            else {
+                await AsyncStorage.removeItem('token');
+                await AsyncStorage.removeItem('user');
+            }
+
             // await SecureStore.deleteItemAsync('token');
             // await SecureStore.deleteItemAsync('user');
             // Navigate to login screen (you can implement this based on your navigation setup)
-            // router.replace('/login');
+            router.replace('/login');
         }
         return Promise.reject(error);
     }

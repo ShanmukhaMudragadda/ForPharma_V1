@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { onboardNewOrganization } from '../scripts/onboardOrganization';
+import SchemaManagementService from '@/services/SchemaManagementService';
 
 /**
  * Factory function that returns the Express middleware for creating organizations.
@@ -40,6 +41,8 @@ export const createOrganizationController = async (req: Request, res: Response) 
         // --- End Input Validation ---
 
         // Call the onboarding script, passing the organization data AND the schemaService instance
+        const schemaService = SchemaManagementService.getInstance();
+        await schemaService.initializeMigrations();
         const result = await onboardNewOrganization({
             name,
             email,

@@ -53,12 +53,23 @@ const Login = () => {
       console.log("sign in pressed")
       const data = await loginWithEmail(email, password);
       console.log(data.token)
-      await AsyncStorage.setItem('token', data.token);
-      console.log('Token saved successfully!');
-      await AsyncStorage.setItem('user', JSON.stringify(data.user));
+      // await AsyncStorage.setItem('token', data.token);
+      // console.log('Token saved successfully!');
+      // await AsyncStorage.setItem('user', JSON.stringify(data.user));
 
       // await SecureStore.setItemAsync('token', data.token);
       // await SecureStore.setItemAsync('user', JSON.stringify(data.user));
+      if (Platform.OS == 'web') {
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('user', JSON.stringify(data.user));
+      }
+      else {
+        await AsyncStorage.setItem('token', data.token);
+        console.log('Token saved successfully!');
+        await AsyncStorage.setItem('user', JSON.stringify(data.user));
+      }
+
+      console.log('Token saved successfully!');
 
       router.replace('/(tabs)/'); // ✅ Keep only this one
     } catch (error: any) {

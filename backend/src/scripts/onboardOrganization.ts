@@ -48,7 +48,7 @@ export async function onboardNewOrganization(organizationData: OrganizationData)
     // The admin user is linked to the organization via organizationId.
     const hashedPassword = await bcrypt.hash(organizationData.adminPassword, 10);
 
-    const adminUser = await schemaService.sharedDb.User.create({
+    const adminUser = await schemaService.sharedDb.user.create({
       data: {
         email: organizationData.adminEmail,
         password: hashedPassword,

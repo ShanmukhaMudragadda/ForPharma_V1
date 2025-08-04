@@ -1,10 +1,9 @@
-import SchemaManagementService from '../services/SchemaManagementService.ts';
+import SchemaManagementService from '../services/SchemaManagementService';
 import { PrismaClient as SharedPrismaClient } from '../../generated/prisma-shared/index.js';
 import jwt from 'jsonwebtoken';
 import { Request, Response, NextFunction } from 'express';
 
-const schemaService = new SchemaManagementService();
-const sharedDb = new SharedPrismaClient();
+const schemaService = SchemaManagementService.getInstance();
 
 async function tenantMiddleware(req: Request, res: Response, next: NextFunction) {
   try {
@@ -26,15 +25,13 @@ async function tenantMiddleware(req: Request, res: Response, next: NextFunction)
     }
 
     // Look up user in shared database to get organization ID
-    const employeeWithOrg = await sharedDb.employee.findUnique({
+    const employeeWithOrg = await schemaService.sharedDb.user.findUnique({
       where: {
         email: userEmail
       },
       select: {
         id: true,
         email: true,
-        firstName: true,
-        lastName: true,
         role: true,
         organizationId: true,
         organization: {
@@ -67,9 +64,23 @@ async function tenantMiddleware(req: Request, res: Response, next: NextFunction)
     }
 
     // Add user info and organization details to request
+    const schemaName = employeeWithOrg.organization?.schemaName;
+    console.log(schemaName);
+
+    const tenantDb = await schemaService.getTenantClient(schemaName);
+    req.tenantDb = tenantDb;
+    const emp_user = await tenantDb.employee.findUnique({
+      where: {
+        email: userEmail
+      },
+      select: {
+        id: true
+      }
+    })
+
     req.user = {
       ...decoded,
-      id: employeeWithOrg.id,
+      id: emp_user?.id,
       email: employeeWithOrg.email,
       employeeId: employeeWithOrg.id,
       organizationId: employeeWithOrg.organizationId,
@@ -78,8 +89,10 @@ async function tenantMiddleware(req: Request, res: Response, next: NextFunction)
     };
 
     // Get tenant database connection using organizationId
-    req.tenantDb = await schemaService.getTenantClient(employeeWithOrg.organizationId);
 
+
+
+    console.log("middleware completes")
     next();
   } catch (error) {
     console.error('Tenant middleware error:', error);
@@ -94,7 +107,7 @@ async function tenantMiddleware(req: Request, res: Response, next: NextFunction)
 
 // Optional: Add cleanup function for graceful shutdown
 export async function cleanupMiddleware() {
-  await sharedDb.$disconnect();
+  await schemaService.sharedDb.$disconnect();
   await schemaService.closeAllConnections();
 }
 
