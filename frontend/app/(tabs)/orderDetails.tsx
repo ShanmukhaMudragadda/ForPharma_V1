@@ -6,6 +6,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, SafeAreaView, TouchableOpacity, StatusBar, ScrollView, ActivityIndicator, Alert } from 'react-native';
 import { Card } from 'react-native-paper';
 import OrderService, { OrderDetails, OrderItem } from '../../services/orderService';
+import PDFService from '../../services/pdfService';
 
 const StyledSafeAreaView = styled(SafeAreaView);
 const StyledView = styled(View);
@@ -22,6 +23,7 @@ export default function OrderDetailsPage(): JSX.Element {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [showOptionsMenu, setShowOptionsMenu] = useState<boolean>(false);
+    const [isSharing, setIsSharing] = useState<boolean>(false);
 
     const { orderId } = params;
 
@@ -63,9 +65,29 @@ export default function OrderDetailsPage(): JSX.Element {
         }
     };
 
-    const handleShare = (): void => {
-        console.log('Share order');
-        setShowOptionsMenu(false);
+    const handleShare = async (): void => {
+        if (!orderDetails || isSharing) return;
+
+        try {
+            setIsSharing(true);
+
+            // Generate and share PDF
+            await PDFService.generateAndShareOrderPDF({
+                orderDetails,
+                displayStatus: getDisplayStatus(orderDetails.status)
+            });
+
+            console.log('PDF shared successfully');
+        } catch (error: any) {
+            console.error('Error sharing order:', error);
+            Alert.alert(
+                'Share Failed',
+                error.message || 'Failed to generate or share the order PDF. Please try again.',
+                [{ text: 'OK' }]
+            );
+        } finally {
+            setIsSharing(false);
+        }
     };
 
     const handleEdit = (): void => {
@@ -91,20 +113,24 @@ export default function OrderDetailsPage(): JSX.Element {
         setShowOptionsMenu(false);
 
         Alert.alert(
-            'Cancel Order',
-            'Are you sure you want to cancel this order? This action cannot be undone.',
+            'Delete Order',
+            'Are you sure you want to delete this order? This action will permanently remove the order and cannot be undone.',
             [
-                { text: 'No', style: 'cancel' },
+                { text: 'Cancel', style: 'cancel' },
                 {
-                    text: 'Yes, Cancel',
+                    text: 'Delete',
                     style: 'destructive',
                     onPress: async () => {
                         try {
                             await OrderService.deleteOrder(orderId as string);
-                            Alert.alert('Success', 'Order cancelled successfully');
-                            router.back();
+                            Alert.alert('Success', 'Order deleted successfully', [
+                                {
+                                    text: 'OK',
+                                    onPress: () => router.back()
+                                }
+                            ]);
                         } catch (error: any) {
-                            Alert.alert('Error', 'Failed to cancel order. Please try again.');
+                            Alert.alert('Error', 'Failed to delete order. Please try again.');
                         }
                     }
                 }
@@ -191,12 +217,17 @@ export default function OrderDetailsPage(): JSX.Element {
 
                 {/* Conditional Options Menu */}
                 <StyledView className="flex-row gap-2">
-                    {/* Share button is now independent and always present */}
+                    {/* Share button with loading state */}
                     <StyledTouchableOpacity
-                        className="w-9 h-9 rounded-lg bg-gray-100 items-center justify-center"
+                        className={`w-9 h-9 rounded-lg ${isSharing ? 'bg-blue-100' : 'bg-gray-100'} items-center justify-center`}
                         onPress={handleShare}
+                        disabled={isSharing}
                     >
-                        <Ionicons name="share-outline" size={18} color="#6C757D" />
+                        {isSharing ? (
+                            <ActivityIndicator size="small" color="#0077B6" />
+                        ) : (
+                            <Ionicons name="share-outline" size={18} color="#6C757D" />
+                        )}
                     </StyledTouchableOpacity>
 
                     {/* Ellipsis button and dropdown only for Draft status */}
@@ -231,7 +262,7 @@ export default function OrderDetailsPage(): JSX.Element {
                                             onPress={handleDelete}
                                         >
                                             <Ionicons name="trash-outline" size={18} color="#DC3545" />
-                                            <StyledText className="ml-3 text-sm text-red-600">Cancel Order</StyledText>
+                                            <StyledText className="ml-3 text-sm text-red-600">Delete Order</StyledText>
                                         </StyledTouchableOpacity>
                                     </StyledView>
                                 </>

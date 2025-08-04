@@ -49,7 +49,31 @@ export default function OrderSummary() {
     const itemCount = orderData.items.length;
 
     const handleEditOrder = () => {
-        router.back();
+        // Prepare the current summary data to pass back to create order page
+        const editData = {
+            // If we're in edit mode, preserve the original order ID
+            orderId: isEditMode ? orderId : undefined,
+            customerName: orderData.customer?.label || '',
+            deliveryDate: orderData.deliveryDate || '',
+            specialInstructions: orderData.specialInstructions || '',
+            items: orderData.items.map((item: any) => ({
+                id: item.id,
+                name: item.name,
+                quantity: item.quantity,
+                subtotal: item.subtotal,
+                // Add drugId if available for proper item reconstruction
+                drugId: item.drugId
+            }))
+        };
+
+        // Navigate back to create order with current data
+        router.push({
+            pathname: '/createOrder',
+            params: {
+                editData: JSON.stringify(editData),
+                fromSummary: 'true' // Flag to indicate we're coming from summary page
+            }
+        });
     };
 
     const handleSaveOrder = async () => {

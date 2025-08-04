@@ -87,16 +87,28 @@ export default function CreateOrder() {
         loadData();
     }, []);
 
-    // Handle edit mode data population
+    // Handle edit mode data population (both from order details and summary page)
     useEffect(() => {
         if (params.editData && customerOptions.length > 0 && availableDrugs.length > 0) {
             try {
                 const editData = JSON.parse(params.editData as string);
+                const fromSummary = params.fromSummary === 'true';
+
+                console.log('🔄 Loading edit data:', { editData, fromSummary });
+
                 setIsEditMode(true);
                 setEditOrderId(editData.orderId); // Store the original order ID
 
                 // Find and set the selected customer
-                const customer = customerOptions.find(c => c.label === editData.customerName);
+                let customer;
+                if (fromSummary) {
+                    // When coming from summary, we need to find by name
+                    customer = customerOptions.find(c => c.label === editData.customerName);
+                } else {
+                    // When coming from order details, we find by name as well
+                    customer = customerOptions.find(c => c.label === editData.customerName);
+                }
+
                 if (customer) {
                     setSelectedCustomer(customer);
                 }
@@ -111,10 +123,19 @@ export default function CreateOrder() {
                     setSpecialInstructions(editData.specialInstructions);
                 }
 
-                // Map and set order items by finding the corresponding drug object
+                // Map and set order items
                 if (editData.items) {
                     const formattedItems = editData.items.map((item: any) => {
-                        const drug = availableDrugs.find(d => d.name === item.name);
+                        let drug;
+
+                        if (fromSummary && item.drugId) {
+                            // Coming from summary - we have drugId, find by drugId
+                            drug = availableDrugs.find(d => d.id === item.drugId);
+                        } else {
+                            // Coming from order details - find by name
+                            drug = availableDrugs.find(d => d.name === item.name);
+                        }
+
                         return {
                             id: item.id,
                             drug: drug || null,
@@ -128,7 +149,7 @@ export default function CreateOrder() {
                 console.error("Failed to parse editData from params:", error);
             }
         }
-    }, [params.editData, customerOptions, availableDrugs]);
+    }, [params.editData, params.fromSummary, customerOptions, availableDrugs]);
 
     const isViewSummaryEnabled = useMemo(() => {
         const hasCustomer = selectedCustomer !== null;
