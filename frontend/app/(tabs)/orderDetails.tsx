@@ -3,7 +3,7 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import { styled } from 'nativewind';
 import { Ionicons } from '@expo/vector-icons';
 import React, { useState, useEffect } from 'react';
-import { View, Text, SafeAreaView, TouchableOpacity, StatusBar, ScrollView, TextInput, ActivityIndicator, Alert } from 'react-native';
+import { View, Text, SafeAreaView, TouchableOpacity, StatusBar, ScrollView, ActivityIndicator, Alert } from 'react-native';
 import { Card } from 'react-native-paper';
 import OrderService, { OrderDetails, OrderItem } from '../../services/orderService';
 
@@ -12,7 +12,6 @@ const StyledView = styled(View);
 const StyledText = styled(Text);
 const StyledTouchableOpacity = styled(TouchableOpacity);
 const StyledScrollView = styled(ScrollView);
-const StyledTextInput = styled(TextInput);
 
 export default function OrderDetailsPage(): JSX.Element {
     const params = useLocalSearchParams();
@@ -23,9 +22,6 @@ export default function OrderDetailsPage(): JSX.Element {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [showOptionsMenu, setShowOptionsMenu] = useState<boolean>(false);
-    const [noteText, setNoteText] = useState<string>('');
-    const [isEditingNote, setIsEditingNote] = useState<boolean>(false);
-    const [isCreatingNote, setIsCreatingNote] = useState<boolean>(false);
 
     const { orderId } = params;
 
@@ -41,7 +37,6 @@ export default function OrderDetailsPage(): JSX.Element {
             setError(null);
             const details = await OrderService.getOrderDetails(orderId);
             setOrderDetails(details);
-            setNoteText(details.specialInstructions || '');
         } catch (error: any) {
             console.error('Error loading order details:', error);
             setError(error.message || 'Failed to load order details');
@@ -115,29 +110,6 @@ export default function OrderDetailsPage(): JSX.Element {
                 }
             ]
         );
-    };
-
-    const handleCreateNote = (): void => {
-        setIsCreatingNote(true);
-        setIsEditingNote(true);
-        setNoteText('');
-    };
-
-    const handleSaveNote = async (): void => {
-        try {
-            await OrderService.updateOrder(orderId as string, {
-                specialInstructions: noteText
-            });
-
-            setIsEditingNote(false);
-            setIsCreatingNote(false);
-
-            await loadOrderDetails();
-
-            Alert.alert('Success', 'Special instructions updated successfully');
-        } catch (error: any) {
-            Alert.alert('Error', 'Failed to update special instructions. Please try again.');
-        }
     };
 
     const getStatusColor = (status: string): string => {
@@ -375,66 +347,20 @@ export default function OrderDetailsPage(): JSX.Element {
                     </Card>
                 </StyledView>
 
-                {/* Special Instructions/Notes Section */}
+                {/* Special Instructions/Notes Section - Read Only */}
                 <StyledView className='bg-white px-5 py-5 mb-20'>
                     <StyledView className='flex-row justify-between items-center mb-4'>
                         <StyledText className='text-lg font-semibold text-gray-900'>Special Instructions</StyledText>
-                        {displayStatus === 'Draft' ? (
-                            <StyledView className='flex-row gap-2'>
-                                {(!noteText || noteText.length === 0) && !isEditingNote && (
-                                    <StyledTouchableOpacity className='px-3 py-1.5 rounded-md border border-green-500' onPress={handleCreateNote}>
-                                        <StyledText className='text-xs font-medium text-green-500'>Create</StyledText>
-                                    </StyledTouchableOpacity>
-                                )}
-                                {!isEditingNote && noteText && noteText.length > 0 && (
-                                    <StyledTouchableOpacity
-                                        className='px-3 py-1.5 rounded-md border border-blue-500'
-                                        onPress={() => setIsEditingNote(true)}
-                                    >
-                                        <StyledText className='text-xs font-medium text-blue-500'>Edit</StyledText>
-                                    </StyledTouchableOpacity>
-                                )}
-                                {isEditingNote && (
-                                    <>
-                                        <StyledTouchableOpacity
-                                            className='px-3 py-1.5 rounded-md bg-gray-200'
-                                            onPress={() => {
-                                                setIsEditingNote(false);
-                                                setIsCreatingNote(false);
-                                                setNoteText(orderDetails.specialInstructions || '');
-                                            }}
-                                        >
-                                            <StyledText className='text-xs font-medium text-gray-700'>Cancel</StyledText>
-                                        </StyledTouchableOpacity>
-                                        <StyledTouchableOpacity className='px-3 py-1.5 rounded-md bg-[#0077B6]' onPress={handleSaveNote}>
-                                            <StyledText className='text-xs font-medium text-white'>Save</StyledText>
-                                        </StyledTouchableOpacity>
-                                    </>
-                                )}
-                            </StyledView>
-                        ) : null}
                     </StyledView>
-                    <StyledView className='bg-gray-50 rounded-lg p-3 min-h-[80px]'>
-                        {isEditingNote && displayStatus === 'Draft' ? (
-                            <StyledTextInput
-                                className='text-sm text-gray-900 leading-5'
-                                value={noteText}
-                                onChangeText={setNoteText}
-                                multiline
-                                placeholder="Add your special instructions here..."
-                                autoFocus
-                            />
+                    <StyledView className='bg-gray-50 rounded-lg p-4 min-h-[80px]'>
+                        {orderDetails.specialInstructions && orderDetails.specialInstructions.length > 0 ? (
+                            <StyledText className='text-sm text-gray-900 leading-5'>
+                                {orderDetails.specialInstructions}
+                            </StyledText>
                         ) : (
-                            noteText ? (
-                                <StyledText className='text-sm text-gray-900 leading-5'>{noteText}</StyledText>
-                            ) : (
-                                <StyledText className='text-sm text-gray-600 italic text-center py-6'>
-                                    {displayStatus !== 'Draft'
-                                        ? 'No special instructions for this order.'
-                                        : 'No special instructions available. Click "Create" to add instructions.'
-                                    }
-                                </StyledText>
-                            )
+                            <StyledText className='text-sm text-gray-600 italic text-center py-6'>
+                                No special instructions for this order.
+                            </StyledText>
                         )}
                     </StyledView>
                 </StyledView>

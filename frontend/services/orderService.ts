@@ -82,6 +82,18 @@ export interface CreateOrderRequest {
     orderDate?: string;
 }
 
+export interface UpdateOrderRequest {
+    chemistId: string;
+    expectedDeliveryDate?: string;
+    specialInstructions?: string;
+    items: {
+        drugId: string;
+        quantity: number;
+        unitPrice: number;
+    }[];
+    action: 'save' | 'confirm';
+}
+
 export interface CreateOrderResponse {
     success: boolean;
     message: string;
@@ -92,6 +104,19 @@ export interface CreateOrderResponse {
         itemCount: number;
         customerName: string;
         createdBy: string;
+    };
+}
+
+export interface UpdateOrderResponse {
+    success: boolean;
+    message: string;
+    data: {
+        orderId: string;
+        status: string;
+        totalAmount: number;
+        itemCount: number;
+        customerName: string;
+        updatedBy: string;
     };
 }
 
@@ -188,10 +213,10 @@ class OrderService {
         }
     }
 
-    // Update order
-    async updateOrder(orderId: string, orderData: any): Promise<any> {
+    // Update order - Enhanced to handle full order replacement
+    async updateOrder(orderId: string, orderData: UpdateOrderRequest): Promise<UpdateOrderResponse['data']> {
         try {
-            const response = await axiosInstance.put(`/orders/${orderId}`, orderData);
+            const response = await axiosInstance.put<UpdateOrderResponse>(`/orders/${orderId}`, orderData);
 
             if (response.data.success) {
                 return response.data.data;

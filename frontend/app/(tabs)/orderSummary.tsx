@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, ScrollView, SafeAreaView, Alert, Activity
 import { styled } from 'nativewind';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter, useLocalSearchParams } from 'expo-router';
-import OrderService, { CreateOrderRequest } from '../../services/orderService';
+import OrderService, { CreateOrderRequest, UpdateOrderRequest } from '../../services/orderService';
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -28,6 +28,7 @@ export default function OrderSummary() {
     // Fallback data if no params
     if (!orderData) {
         orderData = {
+            action: 'create',
             customer: { label: 'No customer selected' },
             deliveryDate: '',
             specialInstructions: '',
@@ -39,6 +40,10 @@ export default function OrderSummary() {
             })
         };
     }
+
+    // Extract action and orderId from data
+    const isEditMode = orderData.action === 'edit';
+    const orderId = orderData.orderId;
 
     const totalAmount = orderData.items.reduce((sum: number, item: any) => sum + item.subtotal, 0);
     const itemCount = orderData.items.length;
@@ -56,33 +61,68 @@ export default function OrderSummary() {
         setLoading(true);
 
         try {
-            // Prepare order data for backend
-            const orderRequest: CreateOrderRequest = {
-                chemistId: orderData.customer.id,
-                expectedDeliveryDate: orderData.deliveryDate || undefined,
-                specialInstructions: orderData.specialInstructions || undefined,
-                items: orderData.items.map((item: any) => ({
-                    drugId: item.drugId,
-                    quantity: item.quantity,
-                    unitPrice: item.unitPrice
-                })),
-                action: 'save' // This will save as PENDING status
-            };
+            if (isEditMode && orderId) {
+                // EDIT MODE: Update existing order
+                console.log('🔄 Updating existing order:', orderId);
 
-            const result = await OrderService.createOrder(orderRequest);
+                const updateRequest: UpdateOrderRequest = {
+                    chemistId: orderData.customer.id,
+                    expectedDeliveryDate: orderData.deliveryDate || undefined,
+                    specialInstructions: orderData.specialInstructions || undefined,
+                    items: orderData.items.map((item: any) => ({
+                        drugId: item.drugId,
+                        quantity: item.quantity,
+                        unitPrice: item.unitPrice
+                    })),
+                    action: 'save' // Save as PENDING status
+                };
 
-            Alert.alert(
-                'Order Saved!',
-                `Your order ${result.orderId} has been saved as a draft. You can access it from the Orders section.`,
-                [
-                    {
-                        text: 'OK',
-                        onPress: () => {
-                            router.push('/(tabs)/orders');
+                const result = await OrderService.updateOrder(orderId, updateRequest);
+
+                Alert.alert(
+                    'Order Updated!',
+                    `Your order ${result.orderId} has been successfully updated and saved as a draft.`,
+                    [
+                        {
+                            text: 'OK',
+                            onPress: () => {
+                                router.push('/(tabs)/orders');
+                            }
                         }
-                    }
-                ]
-            );
+                    ]
+                );
+
+            } else {
+                // CREATE MODE: Create new order
+                console.log('✨ Creating new order');
+
+                const orderRequest: CreateOrderRequest = {
+                    chemistId: orderData.customer.id,
+                    expectedDeliveryDate: orderData.deliveryDate || undefined,
+                    specialInstructions: orderData.specialInstructions || undefined,
+                    items: orderData.items.map((item: any) => ({
+                        drugId: item.drugId,
+                        quantity: item.quantity,
+                        unitPrice: item.unitPrice
+                    })),
+                    action: 'save' // This will save as PENDING status
+                };
+
+                const result = await OrderService.createOrder(orderRequest);
+
+                Alert.alert(
+                    'Order Saved!',
+                    `Your order ${result.orderId} has been saved as a draft. You can access it from the Orders section.`,
+                    [
+                        {
+                            text: 'OK',
+                            onPress: () => {
+                                router.push('/(tabs)/orders');
+                            }
+                        }
+                    ]
+                );
+            }
 
         } catch (error: any) {
             console.error('Error saving order:', error);
@@ -98,44 +138,82 @@ export default function OrderSummary() {
             return;
         }
 
+        const actionText = isEditMode ? 'update and confirm' : 'confirm';
+        const confirmText = isEditMode ? 'Update & Confirm' : 'Confirm';
+
         Alert.alert(
             'Confirm Order',
-            'Are you sure you want to confirm this order? Once confirmed, the order cannot be modified.',
+            `Are you sure you want to ${actionText} this order? Once confirmed, the order cannot be modified.`,
             [
                 { text: 'Cancel', style: 'cancel' },
                 {
-                    text: 'Confirm',
+                    text: confirmText,
                     onPress: async () => {
                         setLoading(true);
 
                         try {
-                            // Prepare order data for backend
-                            const orderRequest: CreateOrderRequest = {
-                                chemistId: orderData.customer.id,
-                                expectedDeliveryDate: orderData.deliveryDate || undefined,
-                                specialInstructions: orderData.specialInstructions || undefined,
-                                items: orderData.items.map((item: any) => ({
-                                    drugId: item.drugId,
-                                    quantity: item.quantity,
-                                    unitPrice: item.unitPrice
-                                })),
-                                action: 'confirm' // This will save as CONFIRMED status
-                            };
+                            if (isEditMode && orderId) {
+                                // EDIT MODE: Update and confirm existing order
+                                console.log('🔄✅ Updating and confirming existing order:', orderId);
 
-                            const result = await OrderService.createOrder(orderRequest);
+                                const updateRequest: UpdateOrderRequest = {
+                                    chemistId: orderData.customer.id,
+                                    expectedDeliveryDate: orderData.deliveryDate || undefined,
+                                    specialInstructions: orderData.specialInstructions || undefined,
+                                    items: orderData.items.map((item: any) => ({
+                                        drugId: item.drugId,
+                                        quantity: item.quantity,
+                                        unitPrice: item.unitPrice
+                                    })),
+                                    action: 'confirm' // Confirm as CONFIRMED status
+                                };
 
-                            Alert.alert(
-                                'Order Confirmed!',
-                                `Your order ${result.orderId} has been placed successfully. You can track its progress in the Orders section.`,
-                                [
-                                    {
-                                        text: 'OK',
-                                        onPress: () => {
-                                            router.push('/(tabs)/orders');
+                                const result = await OrderService.updateOrder(orderId, updateRequest);
+
+                                Alert.alert(
+                                    'Order Updated & Confirmed!',
+                                    `Your order ${result.orderId} has been successfully updated and confirmed. You can track its progress in the Orders section.`,
+                                    [
+                                        {
+                                            text: 'OK',
+                                            onPress: () => {
+                                                router.push('/(tabs)/orders');
+                                            }
                                         }
-                                    }
-                                ]
-                            );
+                                    ]
+                                );
+
+                            } else {
+                                // CREATE MODE: Create and confirm new order
+                                console.log('✨✅ Creating and confirming new order');
+
+                                const orderRequest: CreateOrderRequest = {
+                                    chemistId: orderData.customer.id,
+                                    expectedDeliveryDate: orderData.deliveryDate || undefined,
+                                    specialInstructions: orderData.specialInstructions || undefined,
+                                    items: orderData.items.map((item: any) => ({
+                                        drugId: item.drugId,
+                                        quantity: item.quantity,
+                                        unitPrice: item.unitPrice
+                                    })),
+                                    action: 'confirm' // This will save as CONFIRMED status
+                                };
+
+                                const result = await OrderService.createOrder(orderRequest);
+
+                                Alert.alert(
+                                    'Order Confirmed!',
+                                    `Your order ${result.orderId} has been placed successfully. You can track its progress in the Orders section.`,
+                                    [
+                                        {
+                                            text: 'OK',
+                                            onPress: () => {
+                                                router.push('/(tabs)/orders');
+                                            }
+                                        }
+                                    ]
+                                );
+                            }
 
                         } catch (error: any) {
                             console.error('Error confirming order:', error);
@@ -162,7 +240,7 @@ export default function OrderSummary() {
                 </StyledTouchableOpacity>
 
                 <StyledText className='text-xl font-semibold text-gray-900'>
-                    Order Summary
+                    {isEditMode ? 'Update Order Summary' : 'Order Summary'}
                 </StyledText>
             </StyledView>
 
@@ -180,6 +258,28 @@ export default function OrderSummary() {
                     borderWidth: 1,
                     borderColor: '#E5E7EB'
                 }}>
+                    {/* Edit Mode Indicator */}
+                    {isEditMode && (
+                        <StyledView style={{
+                            backgroundColor: '#FEF3C7',
+                            borderRadius: 6,
+                            padding: 12,
+                            marginBottom: 16,
+                            flexDirection: 'row',
+                            alignItems: 'center'
+                        }}>
+                            <Ionicons name="create-outline" size={16} color="#D97706" />
+                            <StyledText style={{
+                                fontSize: 14,
+                                color: '#D97706',
+                                fontWeight: '500',
+                                marginLeft: 8
+                            }}>
+                                Editing Order: {orderId}
+                            </StyledText>
+                        </StyledView>
+                    )}
+
                     {/* Customer */}
                     <StyledView style={{
                         flexDirection: 'row',
@@ -223,7 +323,7 @@ export default function OrderSummary() {
                             color: '#6B7280',
                             fontWeight: '500'
                         }}>
-                            Created By
+                            {isEditMode ? 'Updated By' : 'Created By'}
                         </StyledText>
                         <StyledText style={{
                             fontSize: 14,
@@ -249,7 +349,7 @@ export default function OrderSummary() {
                             color: '#6B7280',
                             fontWeight: '500'
                         }}>
-                            Order Date
+                            {isEditMode ? 'Last Updated' : 'Order Date'}
                         </StyledText>
                         <StyledText style={{
                             fontSize: 14,
@@ -530,7 +630,7 @@ export default function OrderSummary() {
                             fontWeight: '500',
                             color: '#374151'
                         }}>
-                            Processing order...
+                            {isEditMode ? 'Updating order...' : 'Processing order...'}
                         </StyledText>
                     </StyledView>
                 </StyledView>
@@ -605,7 +705,7 @@ export default function OrderSummary() {
                         fontWeight: '600',
                         color: loading ? '#9CA3AF' : '#4B5563'
                     }}>
-                        Save
+                        {isEditMode ? 'Update' : 'Save'}
                     </StyledText>
                 </StyledTouchableOpacity>
 
@@ -634,7 +734,7 @@ export default function OrderSummary() {
                         fontWeight: '600',
                         color: '#FFFFFF'
                     }}>
-                        Confirm
+                        {isEditMode ? 'Update & Confirm' : 'Confirm'}
                     </StyledText>
                 </StyledTouchableOpacity>
             </StyledView>

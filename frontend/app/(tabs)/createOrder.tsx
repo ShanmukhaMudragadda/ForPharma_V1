@@ -41,6 +41,7 @@ export default function CreateOrder() {
     const [specialInstructions, setSpecialInstructions] = useState('');
     const [orderItems, setOrderItems] = useState<OrderItem[]>([]);
     const [isEditMode, setIsEditMode] = useState(false);
+    const [editOrderId, setEditOrderId] = useState<string | null>(null);
     const [isCustomerListOpen, setIsCustomerListOpen] = useState(false);
 
     // Backend data states
@@ -92,6 +93,7 @@ export default function CreateOrder() {
             try {
                 const editData = JSON.parse(params.editData as string);
                 setIsEditMode(true);
+                setEditOrderId(editData.orderId); // Store the original order ID
 
                 // Find and set the selected customer
                 const customer = customerOptions.find(c => c.label === editData.customerName);
@@ -162,6 +164,8 @@ export default function CreateOrder() {
         if (!isViewSummaryEnabled) return;
 
         const summaryData = {
+            action: isEditMode ? 'edit' : 'create', // Key addition for Option 4
+            orderId: isEditMode ? editOrderId : undefined, // Pass original order ID when editing
             customer: selectedCustomer,
             deliveryDate: deliveryDate || (deliveryDateValue ? deliveryDateValue.toLocaleDateString('en-US', {
                 year: 'numeric',

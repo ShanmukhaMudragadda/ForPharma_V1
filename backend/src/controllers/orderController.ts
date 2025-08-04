@@ -465,12 +465,12 @@ class OrderController {
 
     /**
      * PUT /api/orders/:orderId
-     * Update order details
+     * Update order details - Enhanced to handle full order replacement
      */
     async updateOrder(req: AuthenticatedRequest, res: Response) {
         try {
             const { orderId } = req.params;
-            const updateData = req.body;
+            const orderData = req.body;
             console.log('📝 Updating order:', orderId);
 
             if (!req.tenantDb) {
@@ -495,17 +495,151 @@ class OrderController {
                 });
             }
 
-            // Update order
-            const updatedOrder = await req.tenantDb.order.update({
+            // Only allow updating PENDING orders
+            if (existingOrder.status !== 'PENDING') {
+                return res.status(400).json({
+                    success: false,
+                    message: 'Only draft orders can be edited'
+                });
+            }
+
+            // Validate required fields for full order update
+            if (!orderData.chemistId || !orderData.items || !Array.isArray(orderData.items) || orderData.items.length === 0) {
+                return res.status(400).json({
+                    success: false,
+                    message: 'Missing required fields: chemistId and items are required for order update'
+                });
+            }
+
+            // Validate chemist exists
+            const chemist = await req.tenantDb.chemist.findFirst({
+                where: {
+                    id: orderData.chemistId,
+                    isActive: true
+                }
+            });
+
+            if (!chemist) {
+                return res.status(404).json({
+                    success: false,
+                    message: 'Chemist not found or inactive'
+                });
+            }
+
+            // Validate all drugs exist and calculate totals
+            const drugIds = orderData.items.map((item: any) => item.drugId);
+            const drugs = await req.tenantDb.drug.findMany({
+                where: {
+                    id: { in: drugIds },
+                    isActive: true
+                }
+            });
+
+            if (drugs.length !== drugIds.length) {
+                return res.status(400).json({
+                    success: false,
+                    message: 'One or more drugs not found or inactive'
+                });
+            }
+
+            // Create drug map for price lookup
+            const drugMap = drugs.reduce((map, drug) => {
+                map[drug.id] = drug;
+                return map;
+            }, {} as any);
+
+            // Validate and calculate order items
+            let calculatedTotal = 0;
+            const validatedItems = orderData.items.map((item: any) => {
+                const drug = drugMap[item.drugId];
+                const quantity = parseInt(item.quantity);
+                const unitPrice = item.unitPrice ? parseFloat(item.unitPrice) : (drug.price ? parseFloat(drug.price.toString()) : 0);
+                const subtotal = quantity * unitPrice;
+
+                calculatedTotal += subtotal;
+
+                return {
+                    drugId: item.drugId,
+                    quantity: quantity,
+                    unitPrice: unitPrice,
+                    subtotal: subtotal
+                };
+            });
+
+            // Determine order status
+            const status = orderData.action === 'confirm' ? 'CONFIRMED' : 'PENDING';
+
+            // Validate and parse delivery date
+            let deliveryDate = null;
+            if (orderData.expectedDeliveryDate) {
+                const parsedDeliveryDate = new Date(orderData.expectedDeliveryDate);
+                if (!isNaN(parsedDeliveryDate.getTime())) {
+                    deliveryDate = parsedDeliveryDate;
+                } else {
+                    console.warn('Invalid delivery date provided:', orderData.expectedDeliveryDate);
+                }
+            }
+
+            // Update order with transaction - THIS IS THE KEY PART
+            const result = await req.tenantDb.$transaction(async (tx: any) => {
+                // 1. Update order table (SAME orderId)
+                const updatedOrder = await tx.order.update({
+                    where: { id: orderId },
+                    data: {
+                        chemistId: orderData.chemistId,
+                        totalAmount: calculatedTotal,
+                        status: status,
+                        deliveryDate: deliveryDate,
+                        specialInstructions: orderData.specialInstructions || null,
+                        updatedAt: new Date()
+                    }
+                });
+
+                // 2. Delete ALL existing order items
+                await tx.orderItem.deleteMany({
+                    where: { orderId: orderId }
+                });
+
+                // 3. Create NEW order items
+                for (const item of validatedItems) {
+                    await tx.orderItem.create({
+                        data: {
+                            orderId: orderId, // Same order ID
+                            drugId: item.drugId,
+                            quantity: item.quantity,
+                            unitPrice: item.unitPrice,
+                            subtotal: item.subtotal
+                        }
+                    });
+                }
+
+                return updatedOrder;
+            });
+
+            // Fetch updated order with relations for response
+            const updatedOrder = await req.tenantDb.order.findUnique({
                 where: { id: orderId },
-                data: {
-                    ...updateData,
-                    updatedAt: new Date()
-                },
                 include: {
                     chemist: {
                         select: {
+                            id: true,
                             name: true
+                        }
+                    },
+                    createdBy: {
+                        select: {
+                            firstName: true,
+                            lastName: true
+                        }
+                    },
+                    items: {
+                        include: {
+                            drug: {
+                                select: {
+                                    name: true,
+                                    manufacturer: true
+                                }
+                            }
                         }
                     }
                 }
@@ -513,8 +647,15 @@ class OrderController {
 
             res.status(200).json({
                 success: true,
-                message: 'Order updated successfully',
-                data: updatedOrder
+                message: `Order ${status === 'CONFIRMED' ? 'updated and confirmed' : 'updated as draft'} successfully`,
+                data: {
+                    orderId: updatedOrder.id,
+                    status: updatedOrder.status,
+                    totalAmount: parseFloat(updatedOrder.totalAmount.toString()),
+                    itemCount: updatedOrder.items.length,
+                    customerName: updatedOrder.chemist?.name,
+                    updatedBy: `${updatedOrder.createdBy?.firstName || ''} ${updatedOrder.createdBy?.lastName || ''}`.trim()
+                }
             });
 
         } catch (error) {

@@ -350,19 +350,6 @@ export default function Orders() {
                             color={searchOpen ? "#0077B6" : "#6C757D"}
                         />
                     </StyledTouchableOpacity>
-
-                    {/* Refresh Button */}
-                    <StyledTouchableOpacity
-                        className='w-9 h-9 rounded-lg bg-white/20 items-center justify-center'
-                        onPress={onRefresh}
-                        disabled={refreshing}
-                    >
-                        <Ionicons
-                            name="refresh-outline"
-                            size={18}
-                            color="#6C757D"
-                        />
-                    </StyledTouchableOpacity>
                 </StyledView>
             </StyledView>
 
