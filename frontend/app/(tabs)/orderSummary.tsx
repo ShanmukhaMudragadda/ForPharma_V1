@@ -46,6 +46,21 @@ export default function OrderSummary() {
         router.back();
     };
 
+    const handleSaveOrder = () => {
+        Alert.alert(
+            'Order Saved!',
+            'Your order has been saved as a draft. You can access it from the Orders section.',
+            [
+                {
+                    text: 'OK',
+                    onPress: () => {
+                        router.push('/(tabs)/orders'); // Navigate to orders list with status as Draft
+                    }
+                }
+            ]
+        );
+    };
+
     const handleConfirmOrder = () => {
         Alert.alert(
             'Order Confirmed!',
@@ -54,7 +69,7 @@ export default function OrderSummary() {
                 {
                     text: 'OK',
                     onPress: () => {
-                        router.push('/(tabs)/orders'); // Navigate to home or orders list
+                        router.push('/(tabs)/orders'); // Navigate to orders list with status as Confirmed
                     }
                 }
             ]
@@ -446,11 +461,36 @@ export default function OrderSummary() {
                     activeOpacity={0.7}
                 >
                     <StyledText style={{
-                        fontSize: 16,
+                        fontSize: 15,
                         fontWeight: '600',
                         color: '#6B7280'
                     }}>
-                        Edit Order
+                        Edit
+                    </StyledText>
+                </StyledTouchableOpacity>
+
+                {/* Save Button */}
+                <StyledTouchableOpacity
+                    onPress={handleSaveOrder}
+                    style={{
+                        flex: 1,
+                        paddingVertical: 14,
+                        paddingHorizontal: 24,
+                        borderRadius: 8,
+                        borderWidth: 1,
+                        borderColor: '#D1D5DB',
+                        backgroundColor: '#F3F4F6',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                    }}
+                    activeOpacity={0.7}
+                >
+                    <StyledText style={{
+                        fontSize: 15,
+                        fontWeight: '600',
+                        color: '#4B5563'
+                    }}>
+                        Save
                     </StyledText>
                 </StyledTouchableOpacity>
 
@@ -474,11 +514,11 @@ export default function OrderSummary() {
                     activeOpacity={0.8}
                 >
                     <StyledText style={{
-                        fontSize: 16,
+                        fontSize: 15,
                         fontWeight: '600',
                         color: '#FFFFFF'
                     }}>
-                        Confirm Order
+                        Confirm
                     </StyledText>
                 </StyledTouchableOpacity>
             </StyledView>

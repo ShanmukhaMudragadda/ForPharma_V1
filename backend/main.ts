@@ -7,6 +7,7 @@ import authRoutes from './src/routes/authRoutes.ts'
 import doctorRoutes from './src/routes/doctorRoutes.ts'
 import chemistRoutes from './src/routes/chemistRoutes.ts'
 import { cleanupMiddleware } from './src/middlewares/tenantMiddleware.ts';
+import orderRoutes from './src/routes/orderRoutes.ts';
 
 
 
@@ -53,6 +54,7 @@ app.use('/api/doctors', doctorRoutes);
 
 //chemist routes
 app.use('/api/chemists', chemistRoutes);
+app.use('/api/orders', orderRoutes);
 
 
 

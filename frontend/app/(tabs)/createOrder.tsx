@@ -1,9 +1,8 @@
-// app/(tabs)/create-order.tsx
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { View, Text, TouchableOpacity, ScrollView, SafeAreaView, Alert } from 'react-native';
 import { styled } from 'nativewind';
 import { Ionicons } from '@expo/vector-icons';
-import { useRouter } from 'expo-router';
+import { useRouter, useLocalSearchParams } from 'expo-router';
 import Dropdown from '../../components/dropdown';
 import Input from '../../components/input';
 import ItemsSection from '../../components/itemSection';
@@ -28,15 +27,26 @@ interface OrderItem {
     subtotal: number;
 }
 
+// Define the Customer interface
+interface Customer {
+    id: string;
+    label: string;
+    value: string;
+    subtitle: string;
+}
+
 export default function CreateOrder() {
     const router = useRouter();
-    const [selectedCustomer, setSelectedCustomer] = useState(null);
+    const params = useLocalSearchParams();
+
+    // Corrected state initialization to allow for Customer object or null
+    const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(null);
     const [deliveryDate, setDeliveryDate] = useState('');
     const [deliveryDateValue, setDeliveryDateValue] = useState<Date | undefined>(undefined);
     const [specialInstructions, setSpecialInstructions] = useState('');
     const [orderItems, setOrderItems] = useState<OrderItem[]>([]);
+    const [isEditMode, setIsEditMode] = useState(false);
 
-    // Static data
     const customerOptions = [
         { id: '1', label: 'Apollo Pharmacy, Sarita Vihar', value: 'apollo_sarita', subtitle: 'Sarita Vihar, New Delhi' },
         { id: '2', label: 'MedPlus Pharmacy, Lajpat Nagar', value: 'medplus_lajpat', subtitle: 'Lajpat Nagar, New Delhi' },
@@ -58,11 +68,52 @@ export default function CreateOrder() {
         { id: '10', name: 'Hydrochlorothiazide 25mg', price: 28 }
     ];
 
-    // Validation logic
+    useEffect(() => {
+        if (params.editData) {
+            try {
+                const editData = JSON.parse(params.editData as string);
+                setIsEditMode(true);
+
+                // Find and set the selected customer
+                const customer = customerOptions.find(c => c.label === editData.customerName);
+                if (customer) {
+                    setSelectedCustomer(customer);
+                }
+
+                // Set delivery date
+                if (editData.deliveryDate) {
+                    setDeliveryDate(editData.deliveryDate);
+                }
+
+                // Set special instructions
+                if (editData.specialInstructions) {
+                    setSpecialInstructions(editData.specialInstructions);
+                }
+
+                // Map and set order items by finding the corresponding drug object
+                if (editData.items) {
+                    const formattedItems = editData.items.map((item: any) => {
+                        const drug = availableDrugs.find(d => d.name === item.name);
+                        return {
+                            id: item.id,
+                            drug: drug || null,
+                            quantity: item.quantity,
+                            subtotal: item.subtotal
+                        };
+                    });
+                    setOrderItems(formattedItems);
+                }
+            } catch (error) {
+                console.error("Failed to parse editData from params:", error);
+            }
+        }
+    }, [params.editData]);
+
     const isViewSummaryEnabled = useMemo(() => {
         const hasCustomer = selectedCustomer !== null;
         const hasDeliveryDate = deliveryDate.trim() !== '' || deliveryDateValue !== undefined;
-        const hasValidItems = orderItems.length > 0 && !orderItems.some(item => item.drug === null); return hasCustomer && hasDeliveryDate && hasValidItems;
+        const hasValidItems = orderItems.length > 0 && !orderItems.some(item => item.drug === null);
+        return hasCustomer && hasDeliveryDate && hasValidItems;
     }, [selectedCustomer, deliveryDate, deliveryDateValue, orderItems]);
 
     const handleDateChange = (date: Date) => {
@@ -75,12 +126,12 @@ export default function CreateOrder() {
 
     const handleCancel = () => {
         Alert.alert(
-            'Cancel Order',
-            'Are you sure you want to cancel? All unsaved changes will be lost.',
+            isEditMode ? 'Cancel Editing' : 'Cancel Order',
+            isEditMode ? 'Are you sure you want to cancel? All changes will be lost.' : 'Are you sure you want to cancel? All unsaved changes will be lost.',
             [
-                { text: 'Continue Editing', style: 'cancel' },
+                { text: 'Continue', style: 'cancel' },
                 {
-                    text: 'Cancel Order',
+                    text: isEditMode ? 'Discard Changes' : 'Cancel Order',
                     style: 'destructive',
                     onPress: () => router.back()
                 }
@@ -91,7 +142,6 @@ export default function CreateOrder() {
     const handleViewSummary = () => {
         if (!isViewSummaryEnabled) return;
 
-        // Prepare data to pass to summary
         const summaryData = {
             customer: selectedCustomer,
             deliveryDate: deliveryDate || (deliveryDateValue ? deliveryDateValue.toLocaleDateString('en-US', {
@@ -114,7 +164,6 @@ export default function CreateOrder() {
             })
         };
 
-        // Navigate to order summary page with data
         router.push({
             pathname: '/(tabs)/orderSummary',
             params: {
@@ -122,8 +171,6 @@ export default function CreateOrder() {
             }
         });
     };
-
-
 
     return (
         <StyledSafeAreaView className='flex-1 bg-gray-50'>
@@ -137,7 +184,7 @@ export default function CreateOrder() {
                 </StyledTouchableOpacity>
 
                 <StyledText className='text-xl font-semibold text-gray-900'>
-                    Create Order
+                    {isEditMode ? 'Edit Order' : 'Create Order'}
                 </StyledText>
             </StyledView>
 
@@ -244,7 +291,7 @@ export default function CreateOrder() {
                         fontWeight: '600',
                         color: '#6B7280'
                     }}>
-                        Cancel
+                        {isEditMode ? 'Cancel' : 'Cancel'}
                     </StyledText>
                 </StyledTouchableOpacity>
 
@@ -273,7 +320,7 @@ export default function CreateOrder() {
                         fontWeight: '600',
                         color: isViewSummaryEnabled ? '#FFFFFF' : '#9CA3AF'
                     }}>
-                        View Summary
+                        {isEditMode ? 'Save Changes' : 'View Summary'}
                     </StyledText>
                 </StyledTouchableOpacity>
             </StyledView>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { SafeAreaView, StatusBar, View, Text, TouchableOpacity, ScrollView, TextInput, Modal } from 'react-native'
+import { SafeAreaView, StatusBar, View, Text, TouchableOpacity, ScrollView, TextInput, Modal, Alert, ActivityIndicator, RefreshControl } from 'react-native'
 import { styled } from 'nativewind'
 import { useRouter } from 'expo-router'
 import { Ionicons } from '@expo/vector-icons'
@@ -7,6 +7,7 @@ import DateTimePicker from '@react-native-community/datetimepicker'
 import Drawer from '../../components/drawer'
 import Header from '../../components/header'
 import OrderCard from '../../components/orderCard'
+import OrderService, { Order } from '../../services/orderService'
 
 const StyledSafeAreaView = styled(SafeAreaView)
 const StyledView = styled(View)
@@ -41,11 +42,16 @@ const monthMap: { [key: string]: number } = {
 
 export default function Orders() {
     const [sidebarOpen, setSidebarOpen] = useState(false)
-
     const router = useRouter()
     const [searchOpen, setSearchOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
     const [filterOpen, setFilterOpen] = useState(false);
+
+    // Backend data states
+    const [orders, setOrders] = useState<Order[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [refreshing, setRefreshing] = useState(false);
+    const [error, setError] = useState<string | null>(null);
 
     // Date Picker States
     const [showStartDatePicker, setShowStartDatePicker] = useState(false);
@@ -68,104 +74,41 @@ export default function Orders() {
         customEndDate: null
     });
 
-    // Orders data
-    const ordersData = [
-        {
-            orderId: '#ORD-2024-1234',
-            customerName: 'Apollo Pharmacy, Sarita Vihar',
-            date: 'April 18, 2024',
-            amount: '₹45,000',
-            status: 'Draft'
-        },
-        {
-            orderId: '#ORD-2024-1235',
-            customerName: 'MedPlus Pharmacy, Lajpat Nagar',
-            date: 'January 19, 2024',
-            amount: '₹32,500',
-            status: 'Confirmed'
-        },
-        {
-            orderId: '#ORD-2024-1236',
-            customerName: 'Guardian Pharmacy, Defence Colony',
-            date: 'December 19, 2024',
-            amount: '₹28,750',
-            status: 'Confirmed'
-        },
-        {
-            orderId: '#ORD-2024-1237',
-            customerName: 'City Medical Store, CP',
-            date: 'December 15, 2024',
-            amount: '₹67,200',
-            status: 'Confirmed'
-        },
-        {
-            orderId: '#ORD-2024-1238',
-            customerName: 'Wellness Pharmacy, GK-1',
-            date: 'December 10, 2024',
-            amount: '₹15,300',
-            status: 'Confirmed'
-        },
-        {
-            orderId: '#ORD-2024-1239',
-            customerName: 'Apollo Pharmacy, Nehru Place',
-            date: 'December 08, 2024',
-            amount: '₹54,800',
-            status: 'Confirmed'
-        },
-        {
-            orderId: '#ORD-2024-1240',
-            customerName: 'HealthKart Pharmacy, Vasant Kunj',
-            date: 'December 20, 2024',
-            amount: '₹23,400',
-            status: 'Confirmed'
-        },
-        {
-            orderId: '#ORD-2024-1241',
-            customerName: 'Fortis Healthcare, Noida',
-            date: 'December 17, 2024',
-            amount: '₹89,600'
-        },
-        {
-            orderId: '#ORD-2024-1242',
-            customerName: 'Max Super Specialty, Gurgaon',
-            date: 'June 16, 2024',
-            amount: '₹76,250'
-        },
-        {
-            orderId: '#ORD-2024-1243',
-            customerName: 'Medanta Hospital, Sector 38',
-            date: 'December 14, 2024',
-            amount: '₹41,800'
-        },
-        {
-            orderId: '#ORD-2024-1244',
-            customerName: 'AIIMS Pharmacy, New Delhi',
-            date: 'December 12, 2024',
-            amount: '₹93,500'
-        },
-        {
-            orderId: '#ORD-2024-1245',
-            customerName: 'Manipal Hospital, Dwarka',
-            date: 'July 30, 2025',
-            amount: '₹38,750'
-        },
-        {
-            orderId: '#ORD-2024-1246',
-            customerName: 'BLK Super Specialty, Rajouri Garden',
-            date: 'Dec 09, 2024',
-            amount: '₹62,300'
-        },
-        {
-            orderId: '#ORD-2024-1247',
-            customerName: 'Sir Ganga Ram Hospital, Karol Bagh',
-            date: 'Dec 07, 2024',
-            amount: '₹57,900'
-        }
-    ];
+    // Load orders from backend
+    const loadOrders = async () => {
+        try {
+            setError(null);
+            const ordersData = await OrderService.getOrderList();
 
-    // =====================================================================
-    // Corrected checkDateRange function
-    // =====================================================================
+            // Convert backend status to display status
+            const processedOrders = ordersData.map(order => ({
+                ...order,
+                status: order.status === 'PENDING' ? 'Draft' : order.status === 'CONFIRMED' ? 'Confirmed' : 'Draft'
+            }));
+
+            setOrders(processedOrders);
+        } catch (error: any) {
+            console.error('Error loading orders:', error);
+            setError(error.message || 'Failed to load orders');
+            Alert.alert('Error', 'Failed to load orders. Please try again.');
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    // Refresh orders
+    const onRefresh = async () => {
+        setRefreshing(true);
+        await loadOrders();
+        setRefreshing(false);
+    };
+
+    // Load orders on component mount
+    useEffect(() => {
+        loadOrders();
+    }, []);
+
+    // Date range check function
     const checkDateRange = (orderDate: string, range: string) => {
         // Use a more reliable method to parse the date string
         const parts = orderDate.replace(/,/g, '').split(' ');
@@ -246,7 +189,7 @@ export default function Orders() {
     };
 
     // Apply search AND filter logic
-    const filteredOrders = ordersData.filter(order => {
+    const filteredOrders = orders.filter(order => {
         // Search filter
         const matchesSearch = searchQuery === '' ||
             order.orderId.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -267,13 +210,6 @@ export default function Orders() {
 
         return matchesDateRange && matchesMinAmount && matchesMaxAmount;
     });
-
-    // Calculate pagination values using filtered data
-
-
-    // Reset pagination when search or filters change
-
-    // Pagination handlers
 
     // Filter handlers
     const openFilterModal = () => {
@@ -298,7 +234,6 @@ export default function Orders() {
     const applyFilters = () => {
         setActiveFilters({ ...tempFilters });
         setFilterOpen(false);
-        // Reset to first page when filters change
     };
 
     const clearFilters = () => {
@@ -325,6 +260,37 @@ export default function Orders() {
         { value: 'lastYear', label: 'Last Year' },
         { value: 'custom', label: 'Custom Range' }
     ];
+
+    // Loading state
+    if (loading) {
+        return (
+            <StyledSafeAreaView className="flex-1 bg-white">
+                <StatusBar backgroundColor="#0077B6" barStyle="light-content" />
+
+                {/* Title Bar */}
+                <StyledView className='bg-white px-5 py-4 flex-row justify-between items-center border-b border-gray-200'>
+                    <StyledView className='flex-row items-center gap-3'>
+                        <StyledTouchableOpacity
+                            className='w-9 h-9 rounded-lg bg-white/20 items-center justify-center'
+                            onPress={() => router.push('/')}
+                        >
+                            <Ionicons name="arrow-back" size={18} color="#6C757D" />
+                        </StyledTouchableOpacity>
+
+                        <StyledText className='text-xl font-semibold text-gray-900'>
+                            My Orders
+                        </StyledText>
+                    </StyledView>
+                </StyledView>
+
+                {/* Loading Indicator */}
+                <StyledView className="flex-1 justify-center items-center">
+                    <ActivityIndicator size="large" color="#0077B6" />
+                    <StyledText className="text-gray-600 mt-4">Loading orders...</StyledText>
+                </StyledView>
+            </StyledSafeAreaView>
+        );
+    }
 
     return (
         <StyledSafeAreaView className="flex-1 bg-white">
@@ -384,6 +350,19 @@ export default function Orders() {
                             color={searchOpen ? "#0077B6" : "#6C757D"}
                         />
                     </StyledTouchableOpacity>
+
+                    {/* Refresh Button */}
+                    <StyledTouchableOpacity
+                        className='w-9 h-9 rounded-lg bg-white/20 items-center justify-center'
+                        onPress={onRefresh}
+                        disabled={refreshing}
+                    >
+                        <Ionicons
+                            name="refresh-outline"
+                            size={18}
+                            color="#6C757D"
+                        />
+                    </StyledTouchableOpacity>
                 </StyledView>
             </StyledView>
 
@@ -401,12 +380,41 @@ export default function Orders() {
             )}
 
             {/* Orders List */}
-            <StyledScrollView className='flex-1' showsVerticalScrollIndicator={false}>
+            <StyledScrollView
+                className='flex-1'
+                showsVerticalScrollIndicator={false}
+                refreshControl={
+                    <RefreshControl
+                        refreshing={refreshing}
+                        onRefresh={onRefresh}
+                        colors={['#0077B6']}
+                        tintColor="#0077B6"
+                    />
+                }
+            >
                 <StyledView className="px-5 py-6">
-                    {filteredOrders.length > 0 ? (
+                    {error ? (
+                        <StyledView className='items-center py-12'>
+                            <StyledText className='text-5xl mb-4'>⚠️</StyledText>
+                            <StyledText className='text-lg font-semibold text-gray-900 mb-2'>
+                                Error loading orders
+                            </StyledText>
+                            <StyledText className='text-sm text-gray-600 text-center mb-4'>
+                                {error}
+                            </StyledText>
+                            <StyledTouchableOpacity
+                                className='bg-[#0077B6] px-6 py-3 rounded-lg'
+                                onPress={loadOrders}
+                            >
+                                <StyledText className='text-white font-semibold'>
+                                    Try Again
+                                </StyledText>
+                            </StyledTouchableOpacity>
+                        </StyledView>
+                    ) : filteredOrders.length > 0 ? (
                         filteredOrders.map((order, index) => (
                             <OrderCard
-                                key={index}
+                                key={order.orderId || index}
                                 orderId={order.orderId}
                                 customerName={order.customerName}
                                 date={order.date}
@@ -425,20 +433,20 @@ export default function Orders() {
                         ))
                     ) : (
                         <StyledView className='items-center py-12'>
-                            <StyledText className='text-5xl mb-4'>🔍</StyledText>
+                            <StyledText className='text-5xl mb-4'>📦</StyledText>
                             <StyledText className='text-lg font-semibold text-gray-900 mb-2'>
                                 No orders found
                             </StyledText>
                             <StyledText className='text-sm text-gray-600 text-center'>
-                                Try adjusting your search terms
+                                {searchQuery || totalActiveFilters > 0
+                                    ? 'Try adjusting your search terms or filters'
+                                    : 'You haven\'t created any orders yet'
+                                }
                             </StyledText>
                         </StyledView>
                     )}
                 </StyledView>
             </StyledScrollView>
-
-            {/* Pagination */}
-
 
             <Drawer isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
