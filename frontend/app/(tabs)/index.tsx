@@ -180,10 +180,12 @@
 // }
 
 // app/(tabs)/index.tsx
+// app/(tabs)/index.tsx
 import React, { useState } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, Alert } from 'react-native';
 import { styled } from 'nativewind';
 import { Ionicons } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
 import QuickActionCard from '../../components/quickActionCard';
 import TaskCard from '../../components/taskCard';
 import ActivityItem from '../../components/recentActivity';
@@ -196,6 +198,7 @@ const StyledTouchableOpacity = styled(TouchableOpacity);
 export default function Home() {
     const [isCheckedIn, setIsCheckedIn] = useState(false);
     const [checkInTime, setCheckInTime] = useState<Date | null>(null);
+    const router = useRouter();
 
     const handleCheckInOut = () => {
         if (isCheckedIn) {
@@ -237,6 +240,29 @@ export default function Home() {
         }
     };
 
+    // Navigation handlers for Quick Actions
+    const handleCreateOrder = () => {
+        router.push('/createOrder');
+    };
+
+    const handleTourPlan = () => {
+        // Navigate to tour plan page (you'll need to create this route)
+        console.log('Navigate to Tour Plan');
+        // router.push('/tourPlan');
+    };
+
+    const handleApplyLeave = () => {
+        // Navigate to apply leave page (you'll need to create this route)
+        console.log('Navigate to Apply Leave');
+        // router.push('/applyLeave');
+    };
+
+    const handleExpenseClaim = () => {
+        // Navigate to expense claim page (you'll need to create this route)
+        console.log('Navigate to Expense Claim');
+        // router.push('/expenseClaim');
+    };
+
     return (
         <StyledScrollView className='flex-1 bg-white' showsVerticalScrollIndicator={false}>
 
@@ -254,8 +280,6 @@ export default function Home() {
                     })}
                 </StyledText>
             </StyledView>
-
-
 
             {/* Check-In Button */}
             <StyledView className="bg-gray-50 px-5 py-6">
@@ -320,13 +344,37 @@ export default function Home() {
                 </StyledText>
 
                 <StyledView className="flex-row justify-around mb-3" style={{ height: 120 }}>
-                    <QuickActionCard icon="clipboard-outline" label="Create Order" color="#E6F3FA" iconColor="#0077B6" />
-                    <QuickActionCard icon="calendar-outline" label="Tour Plan" color="#E6F9FD" iconColor="#00B4D8" />
+                    <QuickActionCard
+                        icon="clipboard-outline"
+                        label="Create Order"
+                        color="#E6F3FA"
+                        iconColor="#0077B6"
+                        onPress={handleCreateOrder}
+                    />
+                    <QuickActionCard
+                        icon="calendar-outline"
+                        label="Tour Plan"
+                        color="#E6F9FD"
+                        iconColor="#00B4D8"
+                        onPress={handleTourPlan}
+                    />
                 </StyledView>
 
                 <StyledView className="flex-row justify-around" style={{ height: 120 }}>
-                    <QuickActionCard icon="calendar" label="Apply Leave" color="#FFF8E1" iconColor="#FFA000" />
-                    <QuickActionCard icon="wallet-outline" label="Expense Claim" color="#E8F5E9" iconColor="#28A745" />
+                    <QuickActionCard
+                        icon="calendar"
+                        label="Apply Leave"
+                        color="#FFF8E1"
+                        iconColor="#FFA000"
+                        onPress={handleApplyLeave}
+                    />
+                    <QuickActionCard
+                        icon="wallet-outline"
+                        label="Expense Claim"
+                        color="#E8F5E9"
+                        iconColor="#28A745"
+                        onPress={handleExpenseClaim}
+                    />
                 </StyledView>
             </StyledView>
 

@@ -8,20 +8,28 @@ const StyledView = styled(View);
 const StyledText = styled(Text);
 const StyledTouchableOpacity = styled(TouchableOpacity);
 
+interface QuickActionCardProps {
+  icon: keyof typeof Ionicons.glyphMap;
+  label: string;
+  color: string;
+  iconColor: string;
+  onPress?: () => void;
+}
 
-export default function QuickActionCard({ icon, label, color, iconColor }: any) {
+export default function QuickActionCard({ icon, label, color, iconColor, onPress }: QuickActionCardProps) {
   return (
     <StyledTouchableOpacity
       className="bg-white p-5 rounded-xl items-center justify-center"
       style={{
         width: '40%',
-        // paddingTop:20,
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.05,
         shadowRadius: 8,
         elevation: 3,
       }}
+      onPress={onPress}
+      activeOpacity={0.7}
     >
       <StyledView
         className="w-10 h-12 rounded-xl items-center justify-center mb-3"
