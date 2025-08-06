@@ -1,24 +1,29 @@
-import SchemaManagementService from '../services/SchemaManagementService.ts'
+import SchemaManagementService from '../services/SchemaManagementService';
 import bcrypt from 'bcrypt';
 
 interface OrganizationData {
   name: string;
-  email: string;
+  email: string; // Contact email for the organization
   address?: string;
   website?: string;
-  adminEmail: string;
+  adminEmail: string; // Admin user's email
   adminPassword: string;
   adminFirstName: string;
   adminLastName?: string;
 }
 
-async function onboardNewOrganization(organizationData: OrganizationData) {
-  const schemaService = new SchemaManagementService();
+/**
+ * Onboards a new organization by creating its record, schema, and initial admin user.
+ * @param organizationData Data for the new organization and its admin user.
+ * @returns An object containing the new organization's ID, schema name, and admin user ID.
+ */
+export async function onboardNewOrganization(organizationData: OrganizationData) {
 
   try {
-    console.log('Starting organization onboarding...');
+    console.log('Starting organization onboarding process...');
 
-    // 1. Create organization in shared schema
+    // 1. Create the organization record in the shared database schema
+    const schemaService = SchemaManagementService.getInstance();
     const org = await schemaService.sharedDb.organization.create({
       data: {
         name: organizationData.name,
@@ -28,53 +33,48 @@ async function onboardNewOrganization(organizationData: OrganizationData) {
       }
     });
 
-    console.log(`Organization created with ID: ${org.id}`);
+    console.log(`Organization record created with ID: ${org.id}`);
 
-    // 2. Create schema for organization
+    // 2. Create the dedicated PostgreSQL schema for the organization and run its initial migrations
+    // This internally uses the loaded migration files from schemaService.initializeMigrations()
     const schemaName = await schemaService.createOrganizationSchema(
       org.id,
       organizationData.name
     );
 
-    // 3. Create admin user in shared schema ONLY
+    console.log(`Dedicated schema "${schemaName}" created and initialized for organization ID: ${org.id}`);
+
+    // 3. Create the initial admin user record in the shared database schema
+    // The admin user is linked to the organization via organizationId.
     const hashedPassword = await bcrypt.hash(organizationData.adminPassword, 10);
 
-    const adminUser = await schemaService.sharedDb.employee.create({
+    const adminUser = await schemaService.sharedDb.user.create({
       data: {
         email: organizationData.adminEmail,
         password: hashedPassword,
-        firstName: organizationData.adminFirstName,
-        lastName: organizationData.adminLastName,
         role: 'SYSTEM_ADMINISTRATOR',
         organizationId: org.id,
         isActive: true
       }
     });
 
-    console.log('Admin user created successfully in shared schema');
+    console.log(`Admin user "${adminUser.email}" created successfully in shared schema for organization: ${org.name}`);
 
-    // 4. Initialize any default data in tenant schema if needed
-    const tenantDb = await schemaService.getTenantClient(org.id);
-
-    // Example: Create default team
-    await tenantDb.team.create({
+    const tenantDb = await schemaService.getTenantClient(schemaName);
+    const adminEmployee = await tenantDb.employee.create({
       data: {
-        teamName: 'Default Team',
-        leadId: adminUser.id,
-        isActive: true
+        organizationId: org.id,
+        email: organizationData.adminEmail,
+        passwordHash: hashedPassword,
+        firstName: organizationData.adminFirstName,
+        lastName: organizationData.adminLastName,
+        role: 'SYSTEM_ADMINISTRATOR',
+        isActive: true,
       }
     });
 
-    // Update admin user with team ID in shared schema
-    await schemaService.sharedDb.employee.update({
-      where: { id: adminUser.id },
-      data: { teamId: adminUser.id } // Using same ID for simplicity
-    });
+    console.log(`Admin employee "${adminEmployee.email}" created successfully in tenant schema: ${schemaName}`);
 
-    await tenantDb.$disconnect();
-
-    // 5. Close connections
-    await schemaService.closeAllConnections();
 
     return {
       success: true,
@@ -84,8 +84,8 @@ async function onboardNewOrganization(organizationData: OrganizationData) {
     };
 
   } catch (error) {
-    console.error('Onboarding error:', error);
-    await schemaService.closeAllConnections();
+    console.error('❌ Onboarding process failed:', error);
+    // Re-throw the error so it can be caught by the calling controller
     throw error;
   }
 }

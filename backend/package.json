@@ -10,10 +10,10 @@
     "dev:nodemon": "nodemon",
     "build": "tsc",
     "prisma:generate": "npm run prisma:generate:shared && npm run prisma:generate:tenant",
-    "prisma:generate:shared": "prisma generate --schema=./prisma/schema.shared.prisma",
-    "prisma:generate:tenant": "prisma generate --schema=./prisma/schema.tenant.prisma",
-    "prisma:migrate:shared": "prisma migrate dev --schema=./prisma/schema.shared.prisma",
-    "prisma:migrate:tenant": "prisma migrate dev --schema=./prisma/schema.tenant.prisma",
+    "prisma:generate:shared": "prisma generate --schema=./prisma-shared/schema.prisma",
+    "prisma:migrate:shared": "prisma migrate dev --schema=./prisma-shared/schema.prisma",
+    "prisma:generate:tenant": "prisma generate --schema=./prisma-tenant/schema.prisma",
+    "prisma:sql:tenant": "prisma migrate diff --from-empty --to-schema-datamodel ./prisma-tenant/schema.prisma --script > ./tenant-migrations/schema.sql",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -25,8 +25,11 @@
     "cors": "^2.8.5",
     "dotenv": "^17.2.0",
     "express": "^5.1.0",
+    "google-auth-library": "^10.2.0",
     "jsonwebtoken": "^9.0.2",
-    "pg": "^8.16.3"
+    "nodemailer": "^6.9.0",
+    "pg": "^8.16.3",
+    "uuid": "^11.1.0"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
@@ -34,6 +37,7 @@
     "@types/express": "^5.0.3",
     "@types/jsonwebtoken": "^9.0.8",
     "@types/node": "^24.0.14",
+    "@types/nodemailer": "^6.4.17",
     "nodemon": "^3.1.10",
     "prisma": "^6.12.0",
     "ts-node": "^10.9.2",

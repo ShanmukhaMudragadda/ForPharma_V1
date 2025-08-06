@@ -120,6 +120,29 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
+exports.Prisma.EmployeeScalarFieldEnum = {
+  id: 'id',
+  organizationId: 'organizationId',
+  email: 'email',
+  passwordHash: 'passwordHash',
+  firstName: 'firstName',
+  lastName: 'lastName',
+  phone: 'phone',
+  profilePic: 'profilePic',
+  role: 'role',
+  reportingManagerId: 'reportingManagerId',
+  teamId: 'teamId',
+  employeeCode: 'employeeCode',
+  city: 'city',
+  state: 'state',
+  assignedLatitude: 'assignedLatitude',
+  assignedLongitude: 'assignedLongitude',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  lastLoginAt: 'lastLoginAt',
+  isActive: 'isActive'
+};
+
 exports.Prisma.TeamScalarFieldEnum = {
   id: 'id',
   teamName: 'teamName',
@@ -134,9 +157,19 @@ exports.Prisma.TerritoryScalarFieldEnum = {
   organizationId: 'organizationId',
   name: 'name',
   type: 'type',
+  parentTerritoryId: 'parentTerritoryId',
   boundaries: 'boundaries',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
+};
+
+exports.Prisma.EmployeeTerritoryScalarFieldEnum = {
+  id: 'id',
+  employeeId: 'employeeId',
+  territoryId: 'territoryId',
+  assignedAt: 'assignedAt',
+  unassignedAt: 'unassignedAt',
+  isPrimary: 'isPrimary'
 };
 
 exports.Prisma.EmployeeTrainingRecordScalarFieldEnum = {
@@ -176,6 +209,7 @@ exports.Prisma.HospitalScalarFieldEnum = {
   id: 'id',
   organizationId: 'organizationId',
   hospitalChainId: 'hospitalChainId',
+  territoryId: 'territoryId',
   name: 'name',
   type: 'type',
   address: 'address',
@@ -197,6 +231,7 @@ exports.Prisma.DoctorScalarFieldEnum = {
   id: 'id',
   organizationId: 'organizationId',
   name: 'name',
+  designation: 'designation',
   specialization: 'specialization',
   email: 'email',
   phone: 'phone',
@@ -290,6 +325,7 @@ exports.Prisma.ChemistScalarFieldEnum = {
   id: 'id',
   organizationId: 'organizationId',
   chemistChainId: 'chemistChainId',
+  territoryId: 'territoryId',
   name: 'name',
   type: 'type',
   email: 'email',
@@ -628,6 +664,12 @@ exports.Prisma.JsonNullValueFilter = {
   JsonNull: Prisma.JsonNull,
   AnyNull: Prisma.AnyNull
 };
+exports.EmployeeRole = exports.$Enums.EmployeeRole = {
+  MEDICAL_REPRESENTATIVE: 'MEDICAL_REPRESENTATIVE',
+  SALES_MANAGER: 'SALES_MANAGER',
+  SYSTEM_ADMINISTRATOR: 'SYSTEM_ADMINISTRATOR'
+};
+
 exports.DayOfWeek = exports.$Enums.DayOfWeek = {
   MONDAY: 'MONDAY',
   TUESDAY: 'TUESDAY',
@@ -684,12 +726,6 @@ exports.TaskStatus = exports.$Enums.TaskStatus = {
   RESCHEDULED: 'RESCHEDULED'
 };
 
-exports.EmployeeRole = exports.$Enums.EmployeeRole = {
-  MEDICAL_REPRESENTATIVE: 'MEDICAL_REPRESENTATIVE',
-  SALES_MANAGER: 'SALES_MANAGER',
-  SYSTEM_ADMINISTRATOR: 'SYSTEM_ADMINISTRATOR'
-};
-
 exports.ExpenseClaimStatus = exports.$Enums.ExpenseClaimStatus = {
   PENDING: 'PENDING',
   APPROVED: 'APPROVED',
@@ -697,8 +733,10 @@ exports.ExpenseClaimStatus = exports.$Enums.ExpenseClaimStatus = {
 };
 
 exports.Prisma.ModelName = {
+  Employee: 'Employee',
   Team: 'Team',
   Territory: 'Territory',
+  EmployeeTerritory: 'EmployeeTerritory',
   EmployeeTrainingRecord: 'EmployeeTrainingRecord',
   HospitalChain: 'HospitalChain',
   ChemistChain: 'ChemistChain',

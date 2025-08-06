@@ -19,10 +19,10 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
  */
 export type Organization = $Result.DefaultSelection<Prisma.$OrganizationPayload>
 /**
- * Model Employee
+ * Model User
  * 
  */
-export type Employee = $Result.DefaultSelection<Prisma.$EmployeePayload>
+export type User = $Result.DefaultSelection<Prisma.$UserPayload>
 
 /**
  * Enums
@@ -178,14 +178,14 @@ export class PrismaClient<
   get organization(): Prisma.OrganizationDelegate<ExtArgs, ClientOptions>;
 
   /**
-   * `prisma.employee`: Exposes CRUD operations for the **Employee** model.
+   * `prisma.user`: Exposes CRUD operations for the **User** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more Employees
-    * const employees = await prisma.employee.findMany()
+    * // Fetch zero or more Users
+    * const users = await prisma.user.findMany()
     * ```
     */
-  get employee(): Prisma.EmployeeDelegate<ExtArgs, ClientOptions>;
+  get user(): Prisma.UserDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -627,7 +627,7 @@ export namespace Prisma {
 
   export const ModelName: {
     Organization: 'Organization',
-    Employee: 'Employee'
+    User: 'User'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -646,7 +646,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "organization" | "employee"
+      modelProps: "organization" | "user"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -724,77 +724,77 @@ export namespace Prisma {
           }
         }
       }
-      Employee: {
-        payload: Prisma.$EmployeePayload<ExtArgs>
-        fields: Prisma.EmployeeFieldRefs
+      User: {
+        payload: Prisma.$UserPayload<ExtArgs>
+        fields: Prisma.UserFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.EmployeeFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$EmployeePayload> | null
+            args: Prisma.UserFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.EmployeeFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$EmployeePayload>
+            args: Prisma.UserFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>
           }
           findFirst: {
-            args: Prisma.EmployeeFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$EmployeePayload> | null
+            args: Prisma.UserFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.EmployeeFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$EmployeePayload>
+            args: Prisma.UserFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>
           }
           findMany: {
-            args: Prisma.EmployeeFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$EmployeePayload>[]
+            args: Prisma.UserFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>[]
           }
           create: {
-            args: Prisma.EmployeeCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$EmployeePayload>
+            args: Prisma.UserCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>
           }
           createMany: {
-            args: Prisma.EmployeeCreateManyArgs<ExtArgs>
+            args: Prisma.UserCreateManyArgs<ExtArgs>
             result: BatchPayload
           }
           createManyAndReturn: {
-            args: Prisma.EmployeeCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$EmployeePayload>[]
+            args: Prisma.UserCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>[]
           }
           delete: {
-            args: Prisma.EmployeeDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$EmployeePayload>
+            args: Prisma.UserDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>
           }
           update: {
-            args: Prisma.EmployeeUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$EmployeePayload>
+            args: Prisma.UserUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>
           }
           deleteMany: {
-            args: Prisma.EmployeeDeleteManyArgs<ExtArgs>
+            args: Prisma.UserDeleteManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateMany: {
-            args: Prisma.EmployeeUpdateManyArgs<ExtArgs>
+            args: Prisma.UserUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateManyAndReturn: {
-            args: Prisma.EmployeeUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$EmployeePayload>[]
+            args: Prisma.UserUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>[]
           }
           upsert: {
-            args: Prisma.EmployeeUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$EmployeePayload>
+            args: Prisma.UserUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>
           }
           aggregate: {
-            args: Prisma.EmployeeAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateEmployee>
+            args: Prisma.UserAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateUser>
           }
           groupBy: {
-            args: Prisma.EmployeeGroupByArgs<ExtArgs>
-            result: $Utils.Optional<EmployeeGroupByOutputType>[]
+            args: Prisma.UserGroupByArgs<ExtArgs>
+            result: $Utils.Optional<UserGroupByOutputType>[]
           }
           count: {
-            args: Prisma.EmployeeCountArgs<ExtArgs>
-            result: $Utils.Optional<EmployeeCountAggregateOutputType> | number
+            args: Prisma.UserCountArgs<ExtArgs>
+            result: $Utils.Optional<UserCountAggregateOutputType> | number
           }
         }
       }
@@ -883,7 +883,7 @@ export namespace Prisma {
   }
   export type GlobalOmitConfig = {
     organization?: OrganizationOmit
-    employee?: EmployeeOmit
+    user?: UserOmit
   }
 
   /* Types for Logging */
@@ -978,11 +978,11 @@ export namespace Prisma {
    */
 
   export type OrganizationCountOutputType = {
-    employees: number
+    user: number
   }
 
   export type OrganizationCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    employees?: boolean | OrganizationCountOutputTypeCountEmployeesArgs
+    user?: boolean | OrganizationCountOutputTypeCountUserArgs
   }
 
   // Custom InputTypes
@@ -999,39 +999,8 @@ export namespace Prisma {
   /**
    * OrganizationCountOutputType without action
    */
-  export type OrganizationCountOutputTypeCountEmployeesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: EmployeeWhereInput
-  }
-
-
-  /**
-   * Count Type EmployeeCountOutputType
-   */
-
-  export type EmployeeCountOutputType = {
-    subordinates: number
-  }
-
-  export type EmployeeCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    subordinates?: boolean | EmployeeCountOutputTypeCountSubordinatesArgs
-  }
-
-  // Custom InputTypes
-  /**
-   * EmployeeCountOutputType without action
-   */
-  export type EmployeeCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the EmployeeCountOutputType
-     */
-    select?: EmployeeCountOutputTypeSelect<ExtArgs> | null
-  }
-
-  /**
-   * EmployeeCountOutputType without action
-   */
-  export type EmployeeCountOutputTypeCountSubordinatesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: EmployeeWhereInput
+  export type OrganizationCountOutputTypeCountUserArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserWhereInput
   }
 
 
@@ -1247,7 +1216,7 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     isActive?: boolean
-    employees?: boolean | Organization$employeesArgs<ExtArgs>
+    user?: boolean | Organization$userArgs<ExtArgs>
     _count?: boolean | OrganizationCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["organization"]>
 
@@ -1295,7 +1264,7 @@ export namespace Prisma {
 
   export type OrganizationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "schemaName" | "address" | "contactEmail" | "contactPhone" | "website" | "settings" | "createdAt" | "updatedAt" | "isActive", ExtArgs["result"]["organization"]>
   export type OrganizationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    employees?: boolean | Organization$employeesArgs<ExtArgs>
+    user?: boolean | Organization$userArgs<ExtArgs>
     _count?: boolean | OrganizationCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type OrganizationIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -1304,7 +1273,7 @@ export namespace Prisma {
   export type $OrganizationPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Organization"
     objects: {
-      employees: Prisma.$EmployeePayload<ExtArgs>[]
+      user: Prisma.$UserPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -1712,7 +1681,7 @@ export namespace Prisma {
    */
   export interface Prisma__OrganizationClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    employees<T extends Organization$employeesArgs<ExtArgs> = {}>(args?: Subset<T, Organization$employeesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    user<T extends Organization$userArgs<ExtArgs> = {}>(args?: Subset<T, Organization$userArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2141,27 +2110,27 @@ export namespace Prisma {
   }
 
   /**
-   * Organization.employees
+   * Organization.user
    */
-  export type Organization$employeesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Organization$userArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Employee
+     * Select specific fields to fetch from the User
      */
-    select?: EmployeeSelect<ExtArgs> | null
+    select?: UserSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Employee
+     * Omit specific fields from the User
      */
-    omit?: EmployeeOmit<ExtArgs> | null
+    omit?: UserOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: EmployeeInclude<ExtArgs> | null
-    where?: EmployeeWhereInput
-    orderBy?: EmployeeOrderByWithRelationInput | EmployeeOrderByWithRelationInput[]
-    cursor?: EmployeeWhereUniqueInput
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
+    cursor?: UserWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: EmployeeScalarFieldEnum | EmployeeScalarFieldEnum[]
+    distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
   }
 
   /**
@@ -2184,90 +2153,45 @@ export namespace Prisma {
 
 
   /**
-   * Model Employee
+   * Model User
    */
 
-  export type AggregateEmployee = {
-    _count: EmployeeCountAggregateOutputType | null
-    _avg: EmployeeAvgAggregateOutputType | null
-    _sum: EmployeeSumAggregateOutputType | null
-    _min: EmployeeMinAggregateOutputType | null
-    _max: EmployeeMaxAggregateOutputType | null
+  export type AggregateUser = {
+    _count: UserCountAggregateOutputType | null
+    _min: UserMinAggregateOutputType | null
+    _max: UserMaxAggregateOutputType | null
   }
 
-  export type EmployeeAvgAggregateOutputType = {
-    assignedLatitude: Decimal | null
-    assignedLongitude: Decimal | null
-  }
-
-  export type EmployeeSumAggregateOutputType = {
-    assignedLatitude: Decimal | null
-    assignedLongitude: Decimal | null
-  }
-
-  export type EmployeeMinAggregateOutputType = {
+  export type UserMinAggregateOutputType = {
     id: string | null
     organizationId: string | null
+    role: $Enums.EmployeeRole | null
     email: string | null
     password: string | null
-    firstName: string | null
-    lastName: string | null
-    phone: string | null
-    profilePic: string | null
-    role: $Enums.EmployeeRole | null
-    reportingManagerId: string | null
-    teamId: string | null
-    employeeCode: string | null
-    city: string | null
-    state: string | null
-    assignedLatitude: Decimal | null
-    assignedLongitude: Decimal | null
     createdAt: Date | null
     updatedAt: Date | null
     lastLoginAt: Date | null
     isActive: boolean | null
   }
 
-  export type EmployeeMaxAggregateOutputType = {
+  export type UserMaxAggregateOutputType = {
     id: string | null
     organizationId: string | null
+    role: $Enums.EmployeeRole | null
     email: string | null
     password: string | null
-    firstName: string | null
-    lastName: string | null
-    phone: string | null
-    profilePic: string | null
-    role: $Enums.EmployeeRole | null
-    reportingManagerId: string | null
-    teamId: string | null
-    employeeCode: string | null
-    city: string | null
-    state: string | null
-    assignedLatitude: Decimal | null
-    assignedLongitude: Decimal | null
     createdAt: Date | null
     updatedAt: Date | null
     lastLoginAt: Date | null
     isActive: boolean | null
   }
 
-  export type EmployeeCountAggregateOutputType = {
+  export type UserCountAggregateOutputType = {
     id: number
     organizationId: number
+    role: number
     email: number
     password: number
-    firstName: number
-    lastName: number
-    phone: number
-    profilePic: number
-    role: number
-    reportingManagerId: number
-    teamId: number
-    employeeCode: number
-    city: number
-    state: number
-    assignedLatitude: number
-    assignedLongitude: number
     createdAt: number
     updatedAt: number
     lastLoginAt: number
@@ -2276,79 +2200,36 @@ export namespace Prisma {
   }
 
 
-  export type EmployeeAvgAggregateInputType = {
-    assignedLatitude?: true
-    assignedLongitude?: true
-  }
-
-  export type EmployeeSumAggregateInputType = {
-    assignedLatitude?: true
-    assignedLongitude?: true
-  }
-
-  export type EmployeeMinAggregateInputType = {
+  export type UserMinAggregateInputType = {
     id?: true
     organizationId?: true
+    role?: true
     email?: true
     password?: true
-    firstName?: true
-    lastName?: true
-    phone?: true
-    profilePic?: true
-    role?: true
-    reportingManagerId?: true
-    teamId?: true
-    employeeCode?: true
-    city?: true
-    state?: true
-    assignedLatitude?: true
-    assignedLongitude?: true
     createdAt?: true
     updatedAt?: true
     lastLoginAt?: true
     isActive?: true
   }
 
-  export type EmployeeMaxAggregateInputType = {
+  export type UserMaxAggregateInputType = {
     id?: true
     organizationId?: true
+    role?: true
     email?: true
     password?: true
-    firstName?: true
-    lastName?: true
-    phone?: true
-    profilePic?: true
-    role?: true
-    reportingManagerId?: true
-    teamId?: true
-    employeeCode?: true
-    city?: true
-    state?: true
-    assignedLatitude?: true
-    assignedLongitude?: true
     createdAt?: true
     updatedAt?: true
     lastLoginAt?: true
     isActive?: true
   }
 
-  export type EmployeeCountAggregateInputType = {
+  export type UserCountAggregateInputType = {
     id?: true
     organizationId?: true
+    role?: true
     email?: true
     password?: true
-    firstName?: true
-    lastName?: true
-    phone?: true
-    profilePic?: true
-    role?: true
-    reportingManagerId?: true
-    teamId?: true
-    employeeCode?: true
-    city?: true
-    state?: true
-    assignedLatitude?: true
-    assignedLongitude?: true
     createdAt?: true
     updatedAt?: true
     lastLoginAt?: true
@@ -2356,408 +2237,314 @@ export namespace Prisma {
     _all?: true
   }
 
-  export type EmployeeAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which Employee to aggregate.
+     * Filter which User to aggregate.
      */
-    where?: EmployeeWhereInput
+    where?: UserWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Employees to fetch.
+     * Determine the order of Users to fetch.
      */
-    orderBy?: EmployeeOrderByWithRelationInput | EmployeeOrderByWithRelationInput[]
+    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: EmployeeWhereUniqueInput
+    cursor?: UserWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Employees from the position of the cursor.
+     * Take `±n` Users from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Employees.
+     * Skip the first `n` Users.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned Employees
+     * Count returned Users
     **/
-    _count?: true | EmployeeCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: EmployeeAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: EmployeeSumAggregateInputType
+    _count?: true | UserCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: EmployeeMinAggregateInputType
+    _min?: UserMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: EmployeeMaxAggregateInputType
+    _max?: UserMaxAggregateInputType
   }
 
-  export type GetEmployeeAggregateType<T extends EmployeeAggregateArgs> = {
-        [P in keyof T & keyof AggregateEmployee]: P extends '_count' | 'count'
+  export type GetUserAggregateType<T extends UserAggregateArgs> = {
+        [P in keyof T & keyof AggregateUser]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateEmployee[P]>
-      : GetScalarType<T[P], AggregateEmployee[P]>
+        : GetScalarType<T[P], AggregateUser[P]>
+      : GetScalarType<T[P], AggregateUser[P]>
   }
 
 
 
 
-  export type EmployeeGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: EmployeeWhereInput
-    orderBy?: EmployeeOrderByWithAggregationInput | EmployeeOrderByWithAggregationInput[]
-    by: EmployeeScalarFieldEnum[] | EmployeeScalarFieldEnum
-    having?: EmployeeScalarWhereWithAggregatesInput
+  export type UserGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserWhereInput
+    orderBy?: UserOrderByWithAggregationInput | UserOrderByWithAggregationInput[]
+    by: UserScalarFieldEnum[] | UserScalarFieldEnum
+    having?: UserScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: EmployeeCountAggregateInputType | true
-    _avg?: EmployeeAvgAggregateInputType
-    _sum?: EmployeeSumAggregateInputType
-    _min?: EmployeeMinAggregateInputType
-    _max?: EmployeeMaxAggregateInputType
+    _count?: UserCountAggregateInputType | true
+    _min?: UserMinAggregateInputType
+    _max?: UserMaxAggregateInputType
   }
 
-  export type EmployeeGroupByOutputType = {
+  export type UserGroupByOutputType = {
     id: string
     organizationId: string
+    role: $Enums.EmployeeRole
     email: string
     password: string
-    firstName: string
-    lastName: string | null
-    phone: string | null
-    profilePic: string | null
-    role: $Enums.EmployeeRole
-    reportingManagerId: string | null
-    teamId: string | null
-    employeeCode: string | null
-    city: string | null
-    state: string | null
-    assignedLatitude: Decimal | null
-    assignedLongitude: Decimal | null
     createdAt: Date
     updatedAt: Date
     lastLoginAt: Date | null
     isActive: boolean
-    _count: EmployeeCountAggregateOutputType | null
-    _avg: EmployeeAvgAggregateOutputType | null
-    _sum: EmployeeSumAggregateOutputType | null
-    _min: EmployeeMinAggregateOutputType | null
-    _max: EmployeeMaxAggregateOutputType | null
+    _count: UserCountAggregateOutputType | null
+    _min: UserMinAggregateOutputType | null
+    _max: UserMaxAggregateOutputType | null
   }
 
-  type GetEmployeeGroupByPayload<T extends EmployeeGroupByArgs> = Prisma.PrismaPromise<
+  type GetUserGroupByPayload<T extends UserGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<EmployeeGroupByOutputType, T['by']> &
+      PickEnumerable<UserGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof EmployeeGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof UserGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], EmployeeGroupByOutputType[P]>
-            : GetScalarType<T[P], EmployeeGroupByOutputType[P]>
+              : GetScalarType<T[P], UserGroupByOutputType[P]>
+            : GetScalarType<T[P], UserGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type EmployeeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type UserSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     organizationId?: boolean
+    role?: boolean
     email?: boolean
     password?: boolean
-    firstName?: boolean
-    lastName?: boolean
-    phone?: boolean
-    profilePic?: boolean
-    role?: boolean
-    reportingManagerId?: boolean
-    teamId?: boolean
-    employeeCode?: boolean
-    city?: boolean
-    state?: boolean
-    assignedLatitude?: boolean
-    assignedLongitude?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     lastLoginAt?: boolean
     isActive?: boolean
     organization?: boolean | OrganizationDefaultArgs<ExtArgs>
-    reportingManager?: boolean | Employee$reportingManagerArgs<ExtArgs>
-    subordinates?: boolean | Employee$subordinatesArgs<ExtArgs>
-    _count?: boolean | EmployeeCountOutputTypeDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["employee"]>
+  }, ExtArgs["result"]["user"]>
 
-  export type EmployeeSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type UserSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     organizationId?: boolean
+    role?: boolean
     email?: boolean
     password?: boolean
-    firstName?: boolean
-    lastName?: boolean
-    phone?: boolean
-    profilePic?: boolean
-    role?: boolean
-    reportingManagerId?: boolean
-    teamId?: boolean
-    employeeCode?: boolean
-    city?: boolean
-    state?: boolean
-    assignedLatitude?: boolean
-    assignedLongitude?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     lastLoginAt?: boolean
     isActive?: boolean
     organization?: boolean | OrganizationDefaultArgs<ExtArgs>
-    reportingManager?: boolean | Employee$reportingManagerArgs<ExtArgs>
-  }, ExtArgs["result"]["employee"]>
+  }, ExtArgs["result"]["user"]>
 
-  export type EmployeeSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     organizationId?: boolean
+    role?: boolean
     email?: boolean
     password?: boolean
-    firstName?: boolean
-    lastName?: boolean
-    phone?: boolean
-    profilePic?: boolean
-    role?: boolean
-    reportingManagerId?: boolean
-    teamId?: boolean
-    employeeCode?: boolean
-    city?: boolean
-    state?: boolean
-    assignedLatitude?: boolean
-    assignedLongitude?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     lastLoginAt?: boolean
     isActive?: boolean
     organization?: boolean | OrganizationDefaultArgs<ExtArgs>
-    reportingManager?: boolean | Employee$reportingManagerArgs<ExtArgs>
-  }, ExtArgs["result"]["employee"]>
+  }, ExtArgs["result"]["user"]>
 
-  export type EmployeeSelectScalar = {
+  export type UserSelectScalar = {
     id?: boolean
     organizationId?: boolean
+    role?: boolean
     email?: boolean
     password?: boolean
-    firstName?: boolean
-    lastName?: boolean
-    phone?: boolean
-    profilePic?: boolean
-    role?: boolean
-    reportingManagerId?: boolean
-    teamId?: boolean
-    employeeCode?: boolean
-    city?: boolean
-    state?: boolean
-    assignedLatitude?: boolean
-    assignedLongitude?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     lastLoginAt?: boolean
     isActive?: boolean
   }
 
-  export type EmployeeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "organizationId" | "email" | "password" | "firstName" | "lastName" | "phone" | "profilePic" | "role" | "reportingManagerId" | "teamId" | "employeeCode" | "city" | "state" | "assignedLatitude" | "assignedLongitude" | "createdAt" | "updatedAt" | "lastLoginAt" | "isActive", ExtArgs["result"]["employee"]>
-  export type EmployeeInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "organizationId" | "role" | "email" | "password" | "createdAt" | "updatedAt" | "lastLoginAt" | "isActive", ExtArgs["result"]["user"]>
+  export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     organization?: boolean | OrganizationDefaultArgs<ExtArgs>
-    reportingManager?: boolean | Employee$reportingManagerArgs<ExtArgs>
-    subordinates?: boolean | Employee$subordinatesArgs<ExtArgs>
-    _count?: boolean | EmployeeCountOutputTypeDefaultArgs<ExtArgs>
   }
-  export type EmployeeIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     organization?: boolean | OrganizationDefaultArgs<ExtArgs>
-    reportingManager?: boolean | Employee$reportingManagerArgs<ExtArgs>
   }
-  export type EmployeeIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     organization?: boolean | OrganizationDefaultArgs<ExtArgs>
-    reportingManager?: boolean | Employee$reportingManagerArgs<ExtArgs>
   }
 
-  export type $EmployeePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "Employee"
+  export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "User"
     objects: {
       organization: Prisma.$OrganizationPayload<ExtArgs>
-      reportingManager: Prisma.$EmployeePayload<ExtArgs> | null
-      subordinates: Prisma.$EmployeePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       organizationId: string
+      role: $Enums.EmployeeRole
       email: string
       password: string
-      firstName: string
-      lastName: string | null
-      phone: string | null
-      profilePic: string | null
-      role: $Enums.EmployeeRole
-      reportingManagerId: string | null
-      teamId: string | null
-      employeeCode: string | null
-      city: string | null
-      state: string | null
-      assignedLatitude: Prisma.Decimal | null
-      assignedLongitude: Prisma.Decimal | null
       createdAt: Date
       updatedAt: Date
       lastLoginAt: Date | null
       isActive: boolean
-    }, ExtArgs["result"]["employee"]>
+    }, ExtArgs["result"]["user"]>
     composites: {}
   }
 
-  type EmployeeGetPayload<S extends boolean | null | undefined | EmployeeDefaultArgs> = $Result.GetResult<Prisma.$EmployeePayload, S>
+  type UserGetPayload<S extends boolean | null | undefined | UserDefaultArgs> = $Result.GetResult<Prisma.$UserPayload, S>
 
-  type EmployeeCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<EmployeeFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: EmployeeCountAggregateInputType | true
+  type UserCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<UserFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: UserCountAggregateInputType | true
     }
 
-  export interface EmployeeDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Employee'], meta: { name: 'Employee' } }
+  export interface UserDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['User'], meta: { name: 'User' } }
     /**
-     * Find zero or one Employee that matches the filter.
-     * @param {EmployeeFindUniqueArgs} args - Arguments to find a Employee
+     * Find zero or one User that matches the filter.
+     * @param {UserFindUniqueArgs} args - Arguments to find a User
      * @example
-     * // Get one Employee
-     * const employee = await prisma.employee.findUnique({
+     * // Get one User
+     * const user = await prisma.user.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUnique<T extends EmployeeFindUniqueArgs>(args: SelectSubset<T, EmployeeFindUniqueArgs<ExtArgs>>): Prisma__EmployeeClient<$Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findUnique<T extends UserFindUniqueArgs>(args: SelectSubset<T, UserFindUniqueArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one Employee that matches the filter or throw an error with `error.code='P2025'`
+     * Find one User that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
-     * @param {EmployeeFindUniqueOrThrowArgs} args - Arguments to find a Employee
+     * @param {UserFindUniqueOrThrowArgs} args - Arguments to find a User
      * @example
-     * // Get one Employee
-     * const employee = await prisma.employee.findUniqueOrThrow({
+     * // Get one User
+     * const user = await prisma.user.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUniqueOrThrow<T extends EmployeeFindUniqueOrThrowArgs>(args: SelectSubset<T, EmployeeFindUniqueOrThrowArgs<ExtArgs>>): Prisma__EmployeeClient<$Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findUniqueOrThrow<T extends UserFindUniqueOrThrowArgs>(args: SelectSubset<T, UserFindUniqueOrThrowArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first Employee that matches the filter.
+     * Find the first User that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {EmployeeFindFirstArgs} args - Arguments to find a Employee
+     * @param {UserFindFirstArgs} args - Arguments to find a User
      * @example
-     * // Get one Employee
-     * const employee = await prisma.employee.findFirst({
+     * // Get one User
+     * const user = await prisma.user.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirst<T extends EmployeeFindFirstArgs>(args?: SelectSubset<T, EmployeeFindFirstArgs<ExtArgs>>): Prisma__EmployeeClient<$Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findFirst<T extends UserFindFirstArgs>(args?: SelectSubset<T, UserFindFirstArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first Employee that matches the filter or
+     * Find the first User that matches the filter or
      * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {EmployeeFindFirstOrThrowArgs} args - Arguments to find a Employee
+     * @param {UserFindFirstOrThrowArgs} args - Arguments to find a User
      * @example
-     * // Get one Employee
-     * const employee = await prisma.employee.findFirstOrThrow({
+     * // Get one User
+     * const user = await prisma.user.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirstOrThrow<T extends EmployeeFindFirstOrThrowArgs>(args?: SelectSubset<T, EmployeeFindFirstOrThrowArgs<ExtArgs>>): Prisma__EmployeeClient<$Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findFirstOrThrow<T extends UserFindFirstOrThrowArgs>(args?: SelectSubset<T, UserFindFirstOrThrowArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find zero or more Employees that matches the filter.
+     * Find zero or more Users that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {EmployeeFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @param {UserFindManyArgs} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all Employees
-     * const employees = await prisma.employee.findMany()
+     * // Get all Users
+     * const users = await prisma.user.findMany()
      * 
-     * // Get first 10 Employees
-     * const employees = await prisma.employee.findMany({ take: 10 })
+     * // Get first 10 Users
+     * const users = await prisma.user.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const employeeWithIdOnly = await prisma.employee.findMany({ select: { id: true } })
+     * const userWithIdOnly = await prisma.user.findMany({ select: { id: true } })
      * 
      */
-    findMany<T extends EmployeeFindManyArgs>(args?: SelectSubset<T, EmployeeFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+    findMany<T extends UserFindManyArgs>(args?: SelectSubset<T, UserFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
     /**
-     * Create a Employee.
-     * @param {EmployeeCreateArgs} args - Arguments to create a Employee.
+     * Create a User.
+     * @param {UserCreateArgs} args - Arguments to create a User.
      * @example
-     * // Create one Employee
-     * const Employee = await prisma.employee.create({
+     * // Create one User
+     * const User = await prisma.user.create({
      *   data: {
-     *     // ... data to create a Employee
+     *     // ... data to create a User
      *   }
      * })
      * 
      */
-    create<T extends EmployeeCreateArgs>(args: SelectSubset<T, EmployeeCreateArgs<ExtArgs>>): Prisma__EmployeeClient<$Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    create<T extends UserCreateArgs>(args: SelectSubset<T, UserCreateArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Create many Employees.
-     * @param {EmployeeCreateManyArgs} args - Arguments to create many Employees.
+     * Create many Users.
+     * @param {UserCreateManyArgs} args - Arguments to create many Users.
      * @example
-     * // Create many Employees
-     * const employee = await prisma.employee.createMany({
+     * // Create many Users
+     * const user = await prisma.user.createMany({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      *     
      */
-    createMany<T extends EmployeeCreateManyArgs>(args?: SelectSubset<T, EmployeeCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    createMany<T extends UserCreateManyArgs>(args?: SelectSubset<T, UserCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create many Employees and returns the data saved in the database.
-     * @param {EmployeeCreateManyAndReturnArgs} args - Arguments to create many Employees.
+     * Create many Users and returns the data saved in the database.
+     * @param {UserCreateManyAndReturnArgs} args - Arguments to create many Users.
      * @example
-     * // Create many Employees
-     * const employee = await prisma.employee.createManyAndReturn({
+     * // Create many Users
+     * const user = await prisma.user.createManyAndReturn({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      * 
-     * // Create many Employees and only return the `id`
-     * const employeeWithIdOnly = await prisma.employee.createManyAndReturn({
+     * // Create many Users and only return the `id`
+     * const userWithIdOnly = await prisma.user.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -2767,28 +2554,28 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    createManyAndReturn<T extends EmployeeCreateManyAndReturnArgs>(args?: SelectSubset<T, EmployeeCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+    createManyAndReturn<T extends UserCreateManyAndReturnArgs>(args?: SelectSubset<T, UserCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Delete a Employee.
-     * @param {EmployeeDeleteArgs} args - Arguments to delete one Employee.
+     * Delete a User.
+     * @param {UserDeleteArgs} args - Arguments to delete one User.
      * @example
-     * // Delete one Employee
-     * const Employee = await prisma.employee.delete({
+     * // Delete one User
+     * const User = await prisma.user.delete({
      *   where: {
-     *     // ... filter to delete one Employee
+     *     // ... filter to delete one User
      *   }
      * })
      * 
      */
-    delete<T extends EmployeeDeleteArgs>(args: SelectSubset<T, EmployeeDeleteArgs<ExtArgs>>): Prisma__EmployeeClient<$Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    delete<T extends UserDeleteArgs>(args: SelectSubset<T, UserDeleteArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Update one Employee.
-     * @param {EmployeeUpdateArgs} args - Arguments to update one Employee.
+     * Update one User.
+     * @param {UserUpdateArgs} args - Arguments to update one User.
      * @example
-     * // Update one Employee
-     * const employee = await prisma.employee.update({
+     * // Update one User
+     * const user = await prisma.user.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -2798,30 +2585,30 @@ export namespace Prisma {
      * })
      * 
      */
-    update<T extends EmployeeUpdateArgs>(args: SelectSubset<T, EmployeeUpdateArgs<ExtArgs>>): Prisma__EmployeeClient<$Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    update<T extends UserUpdateArgs>(args: SelectSubset<T, UserUpdateArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Delete zero or more Employees.
-     * @param {EmployeeDeleteManyArgs} args - Arguments to filter Employees to delete.
+     * Delete zero or more Users.
+     * @param {UserDeleteManyArgs} args - Arguments to filter Users to delete.
      * @example
-     * // Delete a few Employees
-     * const { count } = await prisma.employee.deleteMany({
+     * // Delete a few Users
+     * const { count } = await prisma.user.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
      */
-    deleteMany<T extends EmployeeDeleteManyArgs>(args?: SelectSubset<T, EmployeeDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    deleteMany<T extends UserDeleteManyArgs>(args?: SelectSubset<T, UserDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more Employees.
+     * Update zero or more Users.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {EmployeeUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {UserUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many Employees
-     * const employee = await prisma.employee.updateMany({
+     * // Update many Users
+     * const user = await prisma.user.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -2831,14 +2618,14 @@ export namespace Prisma {
      * })
      * 
      */
-    updateMany<T extends EmployeeUpdateManyArgs>(args: SelectSubset<T, EmployeeUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    updateMany<T extends UserUpdateManyArgs>(args: SelectSubset<T, UserUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more Employees and returns the data updated in the database.
-     * @param {EmployeeUpdateManyAndReturnArgs} args - Arguments to update many Employees.
+     * Update zero or more Users and returns the data updated in the database.
+     * @param {UserUpdateManyAndReturnArgs} args - Arguments to update many Users.
      * @example
-     * // Update many Employees
-     * const employee = await prisma.employee.updateManyAndReturn({
+     * // Update many Users
+     * const user = await prisma.user.updateManyAndReturn({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -2847,8 +2634,8 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more Employees and only return the `id`
-     * const employeeWithIdOnly = await prisma.employee.updateManyAndReturn({
+     * // Update zero or more Users and only return the `id`
+     * const userWithIdOnly = await prisma.user.updateManyAndReturn({
      *   select: { id: true },
      *   where: {
      *     // ... provide filter here
@@ -2861,56 +2648,56 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    updateManyAndReturn<T extends EmployeeUpdateManyAndReturnArgs>(args: SelectSubset<T, EmployeeUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+    updateManyAndReturn<T extends UserUpdateManyAndReturnArgs>(args: SelectSubset<T, UserUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Create or update one Employee.
-     * @param {EmployeeUpsertArgs} args - Arguments to update or create a Employee.
+     * Create or update one User.
+     * @param {UserUpsertArgs} args - Arguments to update or create a User.
      * @example
-     * // Update or create a Employee
-     * const employee = await prisma.employee.upsert({
+     * // Update or create a User
+     * const user = await prisma.user.upsert({
      *   create: {
-     *     // ... data to create a Employee
+     *     // ... data to create a User
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the Employee we want to update
+     *     // ... the filter for the User we want to update
      *   }
      * })
      */
-    upsert<T extends EmployeeUpsertArgs>(args: SelectSubset<T, EmployeeUpsertArgs<ExtArgs>>): Prisma__EmployeeClient<$Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    upsert<T extends UserUpsertArgs>(args: SelectSubset<T, UserUpsertArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
 
     /**
-     * Count the number of Employees.
+     * Count the number of Users.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {EmployeeCountArgs} args - Arguments to filter Employees to count.
+     * @param {UserCountArgs} args - Arguments to filter Users to count.
      * @example
-     * // Count the number of Employees
-     * const count = await prisma.employee.count({
+     * // Count the number of Users
+     * const count = await prisma.user.count({
      *   where: {
-     *     // ... the filter for the Employees we want to count
+     *     // ... the filter for the Users we want to count
      *   }
      * })
     **/
-    count<T extends EmployeeCountArgs>(
-      args?: Subset<T, EmployeeCountArgs>,
+    count<T extends UserCountArgs>(
+      args?: Subset<T, UserCountArgs>,
     ): Prisma.PrismaPromise<
       T extends $Utils.Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], EmployeeCountAggregateOutputType>
+          : GetScalarType<T['select'], UserCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a Employee.
+     * Allows you to perform aggregations operations on a User.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {EmployeeAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {UserAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -2930,13 +2717,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends EmployeeAggregateArgs>(args: Subset<T, EmployeeAggregateArgs>): Prisma.PrismaPromise<GetEmployeeAggregateType<T>>
+    aggregate<T extends UserAggregateArgs>(args: Subset<T, UserAggregateArgs>): Prisma.PrismaPromise<GetUserAggregateType<T>>
 
     /**
-     * Group by Employee.
+     * Group by User.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {EmployeeGroupByArgs} args - Group by arguments.
+     * @param {UserGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -2951,14 +2738,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends EmployeeGroupByArgs,
+      T extends UserGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: EmployeeGroupByArgs['orderBy'] }
-        : { orderBy?: EmployeeGroupByArgs['orderBy'] },
+        ? { orderBy: UserGroupByArgs['orderBy'] }
+        : { orderBy?: UserGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends MaybeTupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -3007,24 +2794,22 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, EmployeeGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetEmployeeGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, UserGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUserGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
   /**
-   * Fields of the Employee model
+   * Fields of the User model
    */
-  readonly fields: EmployeeFieldRefs;
+  readonly fields: UserFieldRefs;
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for Employee.
+   * The delegate class that acts as a "Promise-like" for User.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__EmployeeClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+  export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     organization<T extends OrganizationDefaultArgs<ExtArgs> = {}>(args?: Subset<T, OrganizationDefaultArgs<ExtArgs>>): Prisma__OrganizationClient<$Result.GetResult<Prisma.$OrganizationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    reportingManager<T extends Employee$reportingManagerArgs<ExtArgs> = {}>(args?: Subset<T, Employee$reportingManagerArgs<ExtArgs>>): Prisma__EmployeeClient<$Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    subordinates<T extends Employee$subordinatesArgs<ExtArgs> = {}>(args?: Subset<T, Employee$subordinatesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3051,483 +2836,429 @@ export namespace Prisma {
 
 
   /**
-   * Fields of the Employee model
+   * Fields of the User model
    */
-  interface EmployeeFieldRefs {
-    readonly id: FieldRef<"Employee", 'String'>
-    readonly organizationId: FieldRef<"Employee", 'String'>
-    readonly email: FieldRef<"Employee", 'String'>
-    readonly password: FieldRef<"Employee", 'String'>
-    readonly firstName: FieldRef<"Employee", 'String'>
-    readonly lastName: FieldRef<"Employee", 'String'>
-    readonly phone: FieldRef<"Employee", 'String'>
-    readonly profilePic: FieldRef<"Employee", 'String'>
-    readonly role: FieldRef<"Employee", 'EmployeeRole'>
-    readonly reportingManagerId: FieldRef<"Employee", 'String'>
-    readonly teamId: FieldRef<"Employee", 'String'>
-    readonly employeeCode: FieldRef<"Employee", 'String'>
-    readonly city: FieldRef<"Employee", 'String'>
-    readonly state: FieldRef<"Employee", 'String'>
-    readonly assignedLatitude: FieldRef<"Employee", 'Decimal'>
-    readonly assignedLongitude: FieldRef<"Employee", 'Decimal'>
-    readonly createdAt: FieldRef<"Employee", 'DateTime'>
-    readonly updatedAt: FieldRef<"Employee", 'DateTime'>
-    readonly lastLoginAt: FieldRef<"Employee", 'DateTime'>
-    readonly isActive: FieldRef<"Employee", 'Boolean'>
+  interface UserFieldRefs {
+    readonly id: FieldRef<"User", 'String'>
+    readonly organizationId: FieldRef<"User", 'String'>
+    readonly role: FieldRef<"User", 'EmployeeRole'>
+    readonly email: FieldRef<"User", 'String'>
+    readonly password: FieldRef<"User", 'String'>
+    readonly createdAt: FieldRef<"User", 'DateTime'>
+    readonly updatedAt: FieldRef<"User", 'DateTime'>
+    readonly lastLoginAt: FieldRef<"User", 'DateTime'>
+    readonly isActive: FieldRef<"User", 'Boolean'>
   }
     
 
   // Custom InputTypes
   /**
-   * Employee findUnique
+   * User findUnique
    */
-  export type EmployeeFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Employee
+     * Select specific fields to fetch from the User
      */
-    select?: EmployeeSelect<ExtArgs> | null
+    select?: UserSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Employee
+     * Omit specific fields from the User
      */
-    omit?: EmployeeOmit<ExtArgs> | null
+    omit?: UserOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: EmployeeInclude<ExtArgs> | null
+    include?: UserInclude<ExtArgs> | null
     /**
-     * Filter, which Employee to fetch.
+     * Filter, which User to fetch.
      */
-    where: EmployeeWhereUniqueInput
+    where: UserWhereUniqueInput
   }
 
   /**
-   * Employee findUniqueOrThrow
+   * User findUniqueOrThrow
    */
-  export type EmployeeFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Employee
+     * Select specific fields to fetch from the User
      */
-    select?: EmployeeSelect<ExtArgs> | null
+    select?: UserSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Employee
+     * Omit specific fields from the User
      */
-    omit?: EmployeeOmit<ExtArgs> | null
+    omit?: UserOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: EmployeeInclude<ExtArgs> | null
+    include?: UserInclude<ExtArgs> | null
     /**
-     * Filter, which Employee to fetch.
+     * Filter, which User to fetch.
      */
-    where: EmployeeWhereUniqueInput
+    where: UserWhereUniqueInput
   }
 
   /**
-   * Employee findFirst
+   * User findFirst
    */
-  export type EmployeeFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Employee
+     * Select specific fields to fetch from the User
      */
-    select?: EmployeeSelect<ExtArgs> | null
+    select?: UserSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Employee
+     * Omit specific fields from the User
      */
-    omit?: EmployeeOmit<ExtArgs> | null
+    omit?: UserOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: EmployeeInclude<ExtArgs> | null
+    include?: UserInclude<ExtArgs> | null
     /**
-     * Filter, which Employee to fetch.
+     * Filter, which User to fetch.
      */
-    where?: EmployeeWhereInput
+    where?: UserWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Employees to fetch.
+     * Determine the order of Users to fetch.
      */
-    orderBy?: EmployeeOrderByWithRelationInput | EmployeeOrderByWithRelationInput[]
+    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for Employees.
+     * Sets the position for searching for Users.
      */
-    cursor?: EmployeeWhereUniqueInput
+    cursor?: UserWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Employees from the position of the cursor.
+     * Take `±n` Users from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Employees.
+     * Skip the first `n` Users.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of Employees.
+     * Filter by unique combinations of Users.
      */
-    distinct?: EmployeeScalarFieldEnum | EmployeeScalarFieldEnum[]
+    distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
   }
 
   /**
-   * Employee findFirstOrThrow
+   * User findFirstOrThrow
    */
-  export type EmployeeFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Employee
+     * Select specific fields to fetch from the User
      */
-    select?: EmployeeSelect<ExtArgs> | null
+    select?: UserSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Employee
+     * Omit specific fields from the User
      */
-    omit?: EmployeeOmit<ExtArgs> | null
+    omit?: UserOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: EmployeeInclude<ExtArgs> | null
+    include?: UserInclude<ExtArgs> | null
     /**
-     * Filter, which Employee to fetch.
+     * Filter, which User to fetch.
      */
-    where?: EmployeeWhereInput
+    where?: UserWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Employees to fetch.
+     * Determine the order of Users to fetch.
      */
-    orderBy?: EmployeeOrderByWithRelationInput | EmployeeOrderByWithRelationInput[]
+    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for Employees.
+     * Sets the position for searching for Users.
      */
-    cursor?: EmployeeWhereUniqueInput
+    cursor?: UserWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Employees from the position of the cursor.
+     * Take `±n` Users from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Employees.
+     * Skip the first `n` Users.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of Employees.
+     * Filter by unique combinations of Users.
      */
-    distinct?: EmployeeScalarFieldEnum | EmployeeScalarFieldEnum[]
+    distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
   }
 
   /**
-   * Employee findMany
+   * User findMany
    */
-  export type EmployeeFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Employee
+     * Select specific fields to fetch from the User
      */
-    select?: EmployeeSelect<ExtArgs> | null
+    select?: UserSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Employee
+     * Omit specific fields from the User
      */
-    omit?: EmployeeOmit<ExtArgs> | null
+    omit?: UserOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: EmployeeInclude<ExtArgs> | null
+    include?: UserInclude<ExtArgs> | null
     /**
-     * Filter, which Employees to fetch.
+     * Filter, which Users to fetch.
      */
-    where?: EmployeeWhereInput
+    where?: UserWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Employees to fetch.
+     * Determine the order of Users to fetch.
      */
-    orderBy?: EmployeeOrderByWithRelationInput | EmployeeOrderByWithRelationInput[]
+    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing Employees.
+     * Sets the position for listing Users.
      */
-    cursor?: EmployeeWhereUniqueInput
+    cursor?: UserWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Employees from the position of the cursor.
+     * Take `±n` Users from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Employees.
+     * Skip the first `n` Users.
      */
     skip?: number
-    distinct?: EmployeeScalarFieldEnum | EmployeeScalarFieldEnum[]
+    distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
   }
 
   /**
-   * Employee create
+   * User create
    */
-  export type EmployeeCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Employee
+     * Select specific fields to fetch from the User
      */
-    select?: EmployeeSelect<ExtArgs> | null
+    select?: UserSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Employee
+     * Omit specific fields from the User
      */
-    omit?: EmployeeOmit<ExtArgs> | null
+    omit?: UserOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: EmployeeInclude<ExtArgs> | null
+    include?: UserInclude<ExtArgs> | null
     /**
-     * The data needed to create a Employee.
+     * The data needed to create a User.
      */
-    data: XOR<EmployeeCreateInput, EmployeeUncheckedCreateInput>
+    data: XOR<UserCreateInput, UserUncheckedCreateInput>
   }
 
   /**
-   * Employee createMany
+   * User createMany
    */
-  export type EmployeeCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to create many Employees.
+     * The data used to create many Users.
      */
-    data: EmployeeCreateManyInput | EmployeeCreateManyInput[]
+    data: UserCreateManyInput | UserCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * Employee createManyAndReturn
+   * User createManyAndReturn
    */
-  export type EmployeeCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Employee
+     * Select specific fields to fetch from the User
      */
-    select?: EmployeeSelectCreateManyAndReturn<ExtArgs> | null
+    select?: UserSelectCreateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the Employee
+     * Omit specific fields from the User
      */
-    omit?: EmployeeOmit<ExtArgs> | null
+    omit?: UserOmit<ExtArgs> | null
     /**
-     * The data used to create many Employees.
+     * The data used to create many Users.
      */
-    data: EmployeeCreateManyInput | EmployeeCreateManyInput[]
+    data: UserCreateManyInput | UserCreateManyInput[]
     skipDuplicates?: boolean
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: EmployeeIncludeCreateManyAndReturn<ExtArgs> | null
+    include?: UserIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * Employee update
+   * User update
    */
-  export type EmployeeUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Employee
+     * Select specific fields to fetch from the User
      */
-    select?: EmployeeSelect<ExtArgs> | null
+    select?: UserSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Employee
+     * Omit specific fields from the User
      */
-    omit?: EmployeeOmit<ExtArgs> | null
+    omit?: UserOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: EmployeeInclude<ExtArgs> | null
+    include?: UserInclude<ExtArgs> | null
     /**
-     * The data needed to update a Employee.
+     * The data needed to update a User.
      */
-    data: XOR<EmployeeUpdateInput, EmployeeUncheckedUpdateInput>
+    data: XOR<UserUpdateInput, UserUncheckedUpdateInput>
     /**
-     * Choose, which Employee to update.
+     * Choose, which User to update.
      */
-    where: EmployeeWhereUniqueInput
+    where: UserWhereUniqueInput
   }
 
   /**
-   * Employee updateMany
+   * User updateMany
    */
-  export type EmployeeUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to update Employees.
+     * The data used to update Users.
      */
-    data: XOR<EmployeeUpdateManyMutationInput, EmployeeUncheckedUpdateManyInput>
+    data: XOR<UserUpdateManyMutationInput, UserUncheckedUpdateManyInput>
     /**
-     * Filter which Employees to update
+     * Filter which Users to update
      */
-    where?: EmployeeWhereInput
+    where?: UserWhereInput
     /**
-     * Limit how many Employees to update.
+     * Limit how many Users to update.
      */
     limit?: number
   }
 
   /**
-   * Employee updateManyAndReturn
+   * User updateManyAndReturn
    */
-  export type EmployeeUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Employee
+     * Select specific fields to fetch from the User
      */
-    select?: EmployeeSelectUpdateManyAndReturn<ExtArgs> | null
+    select?: UserSelectUpdateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the Employee
+     * Omit specific fields from the User
      */
-    omit?: EmployeeOmit<ExtArgs> | null
+    omit?: UserOmit<ExtArgs> | null
     /**
-     * The data used to update Employees.
+     * The data used to update Users.
      */
-    data: XOR<EmployeeUpdateManyMutationInput, EmployeeUncheckedUpdateManyInput>
+    data: XOR<UserUpdateManyMutationInput, UserUncheckedUpdateManyInput>
     /**
-     * Filter which Employees to update
+     * Filter which Users to update
      */
-    where?: EmployeeWhereInput
+    where?: UserWhereInput
     /**
-     * Limit how many Employees to update.
+     * Limit how many Users to update.
      */
     limit?: number
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: EmployeeIncludeUpdateManyAndReturn<ExtArgs> | null
+    include?: UserIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * Employee upsert
+   * User upsert
    */
-  export type EmployeeUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Employee
+     * Select specific fields to fetch from the User
      */
-    select?: EmployeeSelect<ExtArgs> | null
+    select?: UserSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Employee
+     * Omit specific fields from the User
      */
-    omit?: EmployeeOmit<ExtArgs> | null
+    omit?: UserOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: EmployeeInclude<ExtArgs> | null
+    include?: UserInclude<ExtArgs> | null
     /**
-     * The filter to search for the Employee to update in case it exists.
+     * The filter to search for the User to update in case it exists.
      */
-    where: EmployeeWhereUniqueInput
+    where: UserWhereUniqueInput
     /**
-     * In case the Employee found by the `where` argument doesn't exist, create a new Employee with this data.
+     * In case the User found by the `where` argument doesn't exist, create a new User with this data.
      */
-    create: XOR<EmployeeCreateInput, EmployeeUncheckedCreateInput>
+    create: XOR<UserCreateInput, UserUncheckedCreateInput>
     /**
-     * In case the Employee was found with the provided `where` argument, update it with this data.
+     * In case the User was found with the provided `where` argument, update it with this data.
      */
-    update: XOR<EmployeeUpdateInput, EmployeeUncheckedUpdateInput>
+    update: XOR<UserUpdateInput, UserUncheckedUpdateInput>
   }
 
   /**
-   * Employee delete
+   * User delete
    */
-  export type EmployeeDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Employee
+     * Select specific fields to fetch from the User
      */
-    select?: EmployeeSelect<ExtArgs> | null
+    select?: UserSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Employee
+     * Omit specific fields from the User
      */
-    omit?: EmployeeOmit<ExtArgs> | null
+    omit?: UserOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: EmployeeInclude<ExtArgs> | null
+    include?: UserInclude<ExtArgs> | null
     /**
-     * Filter which Employee to delete.
+     * Filter which User to delete.
      */
-    where: EmployeeWhereUniqueInput
+    where: UserWhereUniqueInput
   }
 
   /**
-   * Employee deleteMany
+   * User deleteMany
    */
-  export type EmployeeDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which Employees to delete
+     * Filter which Users to delete
      */
-    where?: EmployeeWhereInput
+    where?: UserWhereInput
     /**
-     * Limit how many Employees to delete.
+     * Limit how many Users to delete.
      */
     limit?: number
   }
 
   /**
-   * Employee.reportingManager
+   * User without action
    */
-  export type Employee$reportingManagerArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Employee
+     * Select specific fields to fetch from the User
      */
-    select?: EmployeeSelect<ExtArgs> | null
+    select?: UserSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Employee
+     * Omit specific fields from the User
      */
-    omit?: EmployeeOmit<ExtArgs> | null
+    omit?: UserOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: EmployeeInclude<ExtArgs> | null
-    where?: EmployeeWhereInput
-  }
-
-  /**
-   * Employee.subordinates
-   */
-  export type Employee$subordinatesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Employee
-     */
-    select?: EmployeeSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Employee
-     */
-    omit?: EmployeeOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: EmployeeInclude<ExtArgs> | null
-    where?: EmployeeWhereInput
-    orderBy?: EmployeeOrderByWithRelationInput | EmployeeOrderByWithRelationInput[]
-    cursor?: EmployeeWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: EmployeeScalarFieldEnum | EmployeeScalarFieldEnum[]
-  }
-
-  /**
-   * Employee without action
-   */
-  export type EmployeeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Employee
-     */
-    select?: EmployeeSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Employee
-     */
-    omit?: EmployeeOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: EmployeeInclude<ExtArgs> | null
+    include?: UserInclude<ExtArgs> | null
   }
 
 
@@ -3562,30 +3293,19 @@ export namespace Prisma {
   export type OrganizationScalarFieldEnum = (typeof OrganizationScalarFieldEnum)[keyof typeof OrganizationScalarFieldEnum]
 
 
-  export const EmployeeScalarFieldEnum: {
+  export const UserScalarFieldEnum: {
     id: 'id',
     organizationId: 'organizationId',
+    role: 'role',
     email: 'email',
     password: 'password',
-    firstName: 'firstName',
-    lastName: 'lastName',
-    phone: 'phone',
-    profilePic: 'profilePic',
-    role: 'role',
-    reportingManagerId: 'reportingManagerId',
-    teamId: 'teamId',
-    employeeCode: 'employeeCode',
-    city: 'city',
-    state: 'state',
-    assignedLatitude: 'assignedLatitude',
-    assignedLongitude: 'assignedLongitude',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
     lastLoginAt: 'lastLoginAt',
     isActive: 'isActive'
   };
 
-  export type EmployeeScalarFieldEnum = (typeof EmployeeScalarFieldEnum)[keyof typeof EmployeeScalarFieldEnum]
+  export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -3698,20 +3418,6 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'Decimal'
-   */
-  export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal'>
-    
-
-
-  /**
-   * Reference to a field of type 'Decimal[]'
-   */
-  export type ListDecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal[]'>
-    
-
-
-  /**
    * Reference to a field of type 'Int'
    */
   export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
@@ -3743,7 +3449,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Organization"> | Date | string
     updatedAt?: DateTimeFilter<"Organization"> | Date | string
     isActive?: BoolFilter<"Organization"> | boolean
-    employees?: EmployeeListRelationFilter
+    user?: UserListRelationFilter
   }
 
   export type OrganizationOrderByWithRelationInput = {
@@ -3758,16 +3464,16 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     isActive?: SortOrder
-    employees?: EmployeeOrderByRelationAggregateInput
+    user?: UserOrderByRelationAggregateInput
   }
 
   export type OrganizationWhereUniqueInput = Prisma.AtLeast<{
     id?: string
+    name?: string
     schemaName?: string
     AND?: OrganizationWhereInput | OrganizationWhereInput[]
     OR?: OrganizationWhereInput[]
     NOT?: OrganizationWhereInput | OrganizationWhereInput[]
-    name?: StringFilter<"Organization"> | string
     address?: StringNullableFilter<"Organization"> | string | null
     contactEmail?: StringFilter<"Organization"> | string
     contactPhone?: StringNullableFilter<"Organization"> | string | null
@@ -3776,8 +3482,8 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Organization"> | Date | string
     updatedAt?: DateTimeFilter<"Organization"> | Date | string
     isActive?: BoolFilter<"Organization"> | boolean
-    employees?: EmployeeListRelationFilter
-  }, "id" | "schemaName">
+    user?: UserListRelationFilter
+  }, "id" | "name" | "schemaName">
 
   export type OrganizationOrderByWithAggregationInput = {
     id?: SortOrder
@@ -3813,142 +3519,79 @@ export namespace Prisma {
     isActive?: BoolWithAggregatesFilter<"Organization"> | boolean
   }
 
-  export type EmployeeWhereInput = {
-    AND?: EmployeeWhereInput | EmployeeWhereInput[]
-    OR?: EmployeeWhereInput[]
-    NOT?: EmployeeWhereInput | EmployeeWhereInput[]
-    id?: StringFilter<"Employee"> | string
-    organizationId?: StringFilter<"Employee"> | string
-    email?: StringFilter<"Employee"> | string
-    password?: StringFilter<"Employee"> | string
-    firstName?: StringFilter<"Employee"> | string
-    lastName?: StringNullableFilter<"Employee"> | string | null
-    phone?: StringNullableFilter<"Employee"> | string | null
-    profilePic?: StringNullableFilter<"Employee"> | string | null
-    role?: EnumEmployeeRoleFilter<"Employee"> | $Enums.EmployeeRole
-    reportingManagerId?: StringNullableFilter<"Employee"> | string | null
-    teamId?: StringNullableFilter<"Employee"> | string | null
-    employeeCode?: StringNullableFilter<"Employee"> | string | null
-    city?: StringNullableFilter<"Employee"> | string | null
-    state?: StringNullableFilter<"Employee"> | string | null
-    assignedLatitude?: DecimalNullableFilter<"Employee"> | Decimal | DecimalJsLike | number | string | null
-    assignedLongitude?: DecimalNullableFilter<"Employee"> | Decimal | DecimalJsLike | number | string | null
-    createdAt?: DateTimeFilter<"Employee"> | Date | string
-    updatedAt?: DateTimeFilter<"Employee"> | Date | string
-    lastLoginAt?: DateTimeNullableFilter<"Employee"> | Date | string | null
-    isActive?: BoolFilter<"Employee"> | boolean
+  export type UserWhereInput = {
+    AND?: UserWhereInput | UserWhereInput[]
+    OR?: UserWhereInput[]
+    NOT?: UserWhereInput | UserWhereInput[]
+    id?: StringFilter<"User"> | string
+    organizationId?: StringFilter<"User"> | string
+    role?: EnumEmployeeRoleFilter<"User"> | $Enums.EmployeeRole
+    email?: StringFilter<"User"> | string
+    password?: StringFilter<"User"> | string
+    createdAt?: DateTimeFilter<"User"> | Date | string
+    updatedAt?: DateTimeFilter<"User"> | Date | string
+    lastLoginAt?: DateTimeNullableFilter<"User"> | Date | string | null
+    isActive?: BoolFilter<"User"> | boolean
     organization?: XOR<OrganizationScalarRelationFilter, OrganizationWhereInput>
-    reportingManager?: XOR<EmployeeNullableScalarRelationFilter, EmployeeWhereInput> | null
-    subordinates?: EmployeeListRelationFilter
   }
 
-  export type EmployeeOrderByWithRelationInput = {
+  export type UserOrderByWithRelationInput = {
     id?: SortOrder
     organizationId?: SortOrder
+    role?: SortOrder
     email?: SortOrder
     password?: SortOrder
-    firstName?: SortOrder
-    lastName?: SortOrderInput | SortOrder
-    phone?: SortOrderInput | SortOrder
-    profilePic?: SortOrderInput | SortOrder
-    role?: SortOrder
-    reportingManagerId?: SortOrderInput | SortOrder
-    teamId?: SortOrderInput | SortOrder
-    employeeCode?: SortOrderInput | SortOrder
-    city?: SortOrderInput | SortOrder
-    state?: SortOrderInput | SortOrder
-    assignedLatitude?: SortOrderInput | SortOrder
-    assignedLongitude?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     lastLoginAt?: SortOrderInput | SortOrder
     isActive?: SortOrder
     organization?: OrganizationOrderByWithRelationInput
-    reportingManager?: EmployeeOrderByWithRelationInput
-    subordinates?: EmployeeOrderByRelationAggregateInput
   }
 
-  export type EmployeeWhereUniqueInput = Prisma.AtLeast<{
+  export type UserWhereUniqueInput = Prisma.AtLeast<{
     id?: string
     email?: string
-    AND?: EmployeeWhereInput | EmployeeWhereInput[]
-    OR?: EmployeeWhereInput[]
-    NOT?: EmployeeWhereInput | EmployeeWhereInput[]
-    organizationId?: StringFilter<"Employee"> | string
-    password?: StringFilter<"Employee"> | string
-    firstName?: StringFilter<"Employee"> | string
-    lastName?: StringNullableFilter<"Employee"> | string | null
-    phone?: StringNullableFilter<"Employee"> | string | null
-    profilePic?: StringNullableFilter<"Employee"> | string | null
-    role?: EnumEmployeeRoleFilter<"Employee"> | $Enums.EmployeeRole
-    reportingManagerId?: StringNullableFilter<"Employee"> | string | null
-    teamId?: StringNullableFilter<"Employee"> | string | null
-    employeeCode?: StringNullableFilter<"Employee"> | string | null
-    city?: StringNullableFilter<"Employee"> | string | null
-    state?: StringNullableFilter<"Employee"> | string | null
-    assignedLatitude?: DecimalNullableFilter<"Employee"> | Decimal | DecimalJsLike | number | string | null
-    assignedLongitude?: DecimalNullableFilter<"Employee"> | Decimal | DecimalJsLike | number | string | null
-    createdAt?: DateTimeFilter<"Employee"> | Date | string
-    updatedAt?: DateTimeFilter<"Employee"> | Date | string
-    lastLoginAt?: DateTimeNullableFilter<"Employee"> | Date | string | null
-    isActive?: BoolFilter<"Employee"> | boolean
+    AND?: UserWhereInput | UserWhereInput[]
+    OR?: UserWhereInput[]
+    NOT?: UserWhereInput | UserWhereInput[]
+    organizationId?: StringFilter<"User"> | string
+    role?: EnumEmployeeRoleFilter<"User"> | $Enums.EmployeeRole
+    password?: StringFilter<"User"> | string
+    createdAt?: DateTimeFilter<"User"> | Date | string
+    updatedAt?: DateTimeFilter<"User"> | Date | string
+    lastLoginAt?: DateTimeNullableFilter<"User"> | Date | string | null
+    isActive?: BoolFilter<"User"> | boolean
     organization?: XOR<OrganizationScalarRelationFilter, OrganizationWhereInput>
-    reportingManager?: XOR<EmployeeNullableScalarRelationFilter, EmployeeWhereInput> | null
-    subordinates?: EmployeeListRelationFilter
   }, "id" | "email">
 
-  export type EmployeeOrderByWithAggregationInput = {
+  export type UserOrderByWithAggregationInput = {
     id?: SortOrder
     organizationId?: SortOrder
+    role?: SortOrder
     email?: SortOrder
     password?: SortOrder
-    firstName?: SortOrder
-    lastName?: SortOrderInput | SortOrder
-    phone?: SortOrderInput | SortOrder
-    profilePic?: SortOrderInput | SortOrder
-    role?: SortOrder
-    reportingManagerId?: SortOrderInput | SortOrder
-    teamId?: SortOrderInput | SortOrder
-    employeeCode?: SortOrderInput | SortOrder
-    city?: SortOrderInput | SortOrder
-    state?: SortOrderInput | SortOrder
-    assignedLatitude?: SortOrderInput | SortOrder
-    assignedLongitude?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     lastLoginAt?: SortOrderInput | SortOrder
     isActive?: SortOrder
-    _count?: EmployeeCountOrderByAggregateInput
-    _avg?: EmployeeAvgOrderByAggregateInput
-    _max?: EmployeeMaxOrderByAggregateInput
-    _min?: EmployeeMinOrderByAggregateInput
-    _sum?: EmployeeSumOrderByAggregateInput
+    _count?: UserCountOrderByAggregateInput
+    _max?: UserMaxOrderByAggregateInput
+    _min?: UserMinOrderByAggregateInput
   }
 
-  export type EmployeeScalarWhereWithAggregatesInput = {
-    AND?: EmployeeScalarWhereWithAggregatesInput | EmployeeScalarWhereWithAggregatesInput[]
-    OR?: EmployeeScalarWhereWithAggregatesInput[]
-    NOT?: EmployeeScalarWhereWithAggregatesInput | EmployeeScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"Employee"> | string
-    organizationId?: StringWithAggregatesFilter<"Employee"> | string
-    email?: StringWithAggregatesFilter<"Employee"> | string
-    password?: StringWithAggregatesFilter<"Employee"> | string
-    firstName?: StringWithAggregatesFilter<"Employee"> | string
-    lastName?: StringNullableWithAggregatesFilter<"Employee"> | string | null
-    phone?: StringNullableWithAggregatesFilter<"Employee"> | string | null
-    profilePic?: StringNullableWithAggregatesFilter<"Employee"> | string | null
-    role?: EnumEmployeeRoleWithAggregatesFilter<"Employee"> | $Enums.EmployeeRole
-    reportingManagerId?: StringNullableWithAggregatesFilter<"Employee"> | string | null
-    teamId?: StringNullableWithAggregatesFilter<"Employee"> | string | null
-    employeeCode?: StringNullableWithAggregatesFilter<"Employee"> | string | null
-    city?: StringNullableWithAggregatesFilter<"Employee"> | string | null
-    state?: StringNullableWithAggregatesFilter<"Employee"> | string | null
-    assignedLatitude?: DecimalNullableWithAggregatesFilter<"Employee"> | Decimal | DecimalJsLike | number | string | null
-    assignedLongitude?: DecimalNullableWithAggregatesFilter<"Employee"> | Decimal | DecimalJsLike | number | string | null
-    createdAt?: DateTimeWithAggregatesFilter<"Employee"> | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter<"Employee"> | Date | string
-    lastLoginAt?: DateTimeNullableWithAggregatesFilter<"Employee"> | Date | string | null
-    isActive?: BoolWithAggregatesFilter<"Employee"> | boolean
+  export type UserScalarWhereWithAggregatesInput = {
+    AND?: UserScalarWhereWithAggregatesInput | UserScalarWhereWithAggregatesInput[]
+    OR?: UserScalarWhereWithAggregatesInput[]
+    NOT?: UserScalarWhereWithAggregatesInput | UserScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"User"> | string
+    organizationId?: StringWithAggregatesFilter<"User"> | string
+    role?: EnumEmployeeRoleWithAggregatesFilter<"User"> | $Enums.EmployeeRole
+    email?: StringWithAggregatesFilter<"User"> | string
+    password?: StringWithAggregatesFilter<"User"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
+    lastLoginAt?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
+    isActive?: BoolWithAggregatesFilter<"User"> | boolean
   }
 
   export type OrganizationCreateInput = {
@@ -3963,7 +3606,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     isActive?: boolean
-    employees?: EmployeeCreateNestedManyWithoutOrganizationInput
+    user?: UserCreateNestedManyWithoutOrganizationInput
   }
 
   export type OrganizationUncheckedCreateInput = {
@@ -3978,7 +3621,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     isActive?: boolean
-    employees?: EmployeeUncheckedCreateNestedManyWithoutOrganizationInput
+    user?: UserUncheckedCreateNestedManyWithoutOrganizationInput
   }
 
   export type OrganizationUpdateInput = {
@@ -3993,7 +3636,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
-    employees?: EmployeeUpdateManyWithoutOrganizationNestedInput
+    user?: UserUpdateManyWithoutOrganizationNestedInput
   }
 
   export type OrganizationUncheckedUpdateInput = {
@@ -4008,7 +3651,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
-    employees?: EmployeeUncheckedUpdateManyWithoutOrganizationNestedInput
+    user?: UserUncheckedUpdateManyWithoutOrganizationNestedInput
   }
 
   export type OrganizationCreateManyInput = {
@@ -4053,163 +3696,83 @@ export namespace Prisma {
     isActive?: BoolFieldUpdateOperationsInput | boolean
   }
 
-  export type EmployeeCreateInput = {
+  export type UserCreateInput = {
     id?: string
+    role: $Enums.EmployeeRole
     email: string
     password: string
-    firstName: string
-    lastName?: string | null
-    phone?: string | null
-    profilePic?: string | null
-    role: $Enums.EmployeeRole
-    teamId?: string | null
-    employeeCode?: string | null
-    city?: string | null
-    state?: string | null
-    assignedLatitude?: Decimal | DecimalJsLike | number | string | null
-    assignedLongitude?: Decimal | DecimalJsLike | number | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     lastLoginAt?: Date | string | null
     isActive?: boolean
-    organization: OrganizationCreateNestedOneWithoutEmployeesInput
-    reportingManager?: EmployeeCreateNestedOneWithoutSubordinatesInput
-    subordinates?: EmployeeCreateNestedManyWithoutReportingManagerInput
+    organization: OrganizationCreateNestedOneWithoutUserInput
   }
 
-  export type EmployeeUncheckedCreateInput = {
+  export type UserUncheckedCreateInput = {
     id?: string
     organizationId: string
+    role: $Enums.EmployeeRole
     email: string
     password: string
-    firstName: string
-    lastName?: string | null
-    phone?: string | null
-    profilePic?: string | null
-    role: $Enums.EmployeeRole
-    reportingManagerId?: string | null
-    teamId?: string | null
-    employeeCode?: string | null
-    city?: string | null
-    state?: string | null
-    assignedLatitude?: Decimal | DecimalJsLike | number | string | null
-    assignedLongitude?: Decimal | DecimalJsLike | number | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     lastLoginAt?: Date | string | null
     isActive?: boolean
-    subordinates?: EmployeeUncheckedCreateNestedManyWithoutReportingManagerInput
   }
 
-  export type EmployeeUpdateInput = {
+  export type UserUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    role?: EnumEmployeeRoleFieldUpdateOperationsInput | $Enums.EmployeeRole
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    firstName?: StringFieldUpdateOperationsInput | string
-    lastName?: NullableStringFieldUpdateOperationsInput | string | null
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
-    profilePic?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: EnumEmployeeRoleFieldUpdateOperationsInput | $Enums.EmployeeRole
-    teamId?: NullableStringFieldUpdateOperationsInput | string | null
-    employeeCode?: NullableStringFieldUpdateOperationsInput | string | null
-    city?: NullableStringFieldUpdateOperationsInput | string | null
-    state?: NullableStringFieldUpdateOperationsInput | string | null
-    assignedLatitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    assignedLongitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
-    organization?: OrganizationUpdateOneRequiredWithoutEmployeesNestedInput
-    reportingManager?: EmployeeUpdateOneWithoutSubordinatesNestedInput
-    subordinates?: EmployeeUpdateManyWithoutReportingManagerNestedInput
+    organization?: OrganizationUpdateOneRequiredWithoutUserNestedInput
   }
 
-  export type EmployeeUncheckedUpdateInput = {
+  export type UserUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     organizationId?: StringFieldUpdateOperationsInput | string
+    role?: EnumEmployeeRoleFieldUpdateOperationsInput | $Enums.EmployeeRole
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    firstName?: StringFieldUpdateOperationsInput | string
-    lastName?: NullableStringFieldUpdateOperationsInput | string | null
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
-    profilePic?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: EnumEmployeeRoleFieldUpdateOperationsInput | $Enums.EmployeeRole
-    reportingManagerId?: NullableStringFieldUpdateOperationsInput | string | null
-    teamId?: NullableStringFieldUpdateOperationsInput | string | null
-    employeeCode?: NullableStringFieldUpdateOperationsInput | string | null
-    city?: NullableStringFieldUpdateOperationsInput | string | null
-    state?: NullableStringFieldUpdateOperationsInput | string | null
-    assignedLatitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    assignedLongitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
-    subordinates?: EmployeeUncheckedUpdateManyWithoutReportingManagerNestedInput
   }
 
-  export type EmployeeCreateManyInput = {
+  export type UserCreateManyInput = {
     id?: string
     organizationId: string
+    role: $Enums.EmployeeRole
     email: string
     password: string
-    firstName: string
-    lastName?: string | null
-    phone?: string | null
-    profilePic?: string | null
-    role: $Enums.EmployeeRole
-    reportingManagerId?: string | null
-    teamId?: string | null
-    employeeCode?: string | null
-    city?: string | null
-    state?: string | null
-    assignedLatitude?: Decimal | DecimalJsLike | number | string | null
-    assignedLongitude?: Decimal | DecimalJsLike | number | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     lastLoginAt?: Date | string | null
     isActive?: boolean
   }
 
-  export type EmployeeUpdateManyMutationInput = {
+  export type UserUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
+    role?: EnumEmployeeRoleFieldUpdateOperationsInput | $Enums.EmployeeRole
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    firstName?: StringFieldUpdateOperationsInput | string
-    lastName?: NullableStringFieldUpdateOperationsInput | string | null
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
-    profilePic?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: EnumEmployeeRoleFieldUpdateOperationsInput | $Enums.EmployeeRole
-    teamId?: NullableStringFieldUpdateOperationsInput | string | null
-    employeeCode?: NullableStringFieldUpdateOperationsInput | string | null
-    city?: NullableStringFieldUpdateOperationsInput | string | null
-    state?: NullableStringFieldUpdateOperationsInput | string | null
-    assignedLatitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    assignedLongitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
   }
 
-  export type EmployeeUncheckedUpdateManyInput = {
+  export type UserUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     organizationId?: StringFieldUpdateOperationsInput | string
+    role?: EnumEmployeeRoleFieldUpdateOperationsInput | $Enums.EmployeeRole
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    firstName?: StringFieldUpdateOperationsInput | string
-    lastName?: NullableStringFieldUpdateOperationsInput | string | null
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
-    profilePic?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: EnumEmployeeRoleFieldUpdateOperationsInput | $Enums.EmployeeRole
-    reportingManagerId?: NullableStringFieldUpdateOperationsInput | string | null
-    teamId?: NullableStringFieldUpdateOperationsInput | string | null
-    employeeCode?: NullableStringFieldUpdateOperationsInput | string | null
-    city?: NullableStringFieldUpdateOperationsInput | string | null
-    state?: NullableStringFieldUpdateOperationsInput | string | null
-    assignedLatitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    assignedLongitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -4285,10 +3848,10 @@ export namespace Prisma {
     not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
-  export type EmployeeListRelationFilter = {
-    every?: EmployeeWhereInput
-    some?: EmployeeWhereInput
-    none?: EmployeeWhereInput
+  export type UserListRelationFilter = {
+    every?: UserWhereInput
+    some?: UserWhereInput
+    none?: UserWhereInput
   }
 
   export type SortOrderInput = {
@@ -4296,7 +3859,7 @@ export namespace Prisma {
     nulls?: NullsOrder
   }
 
-  export type EmployeeOrderByRelationAggregateInput = {
+  export type UserOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -4431,17 +3994,6 @@ export namespace Prisma {
     not?: NestedEnumEmployeeRoleFilter<$PrismaModel> | $Enums.EmployeeRole
   }
 
-  export type DecimalNullableFilter<$PrismaModel = never> = {
-    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
-    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
-    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
-    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    not?: NestedDecimalNullableFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string | null
-  }
-
   export type DateTimeNullableFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
@@ -4458,88 +4010,40 @@ export namespace Prisma {
     isNot?: OrganizationWhereInput
   }
 
-  export type EmployeeNullableScalarRelationFilter = {
-    is?: EmployeeWhereInput | null
-    isNot?: EmployeeWhereInput | null
-  }
-
-  export type EmployeeCountOrderByAggregateInput = {
+  export type UserCountOrderByAggregateInput = {
     id?: SortOrder
     organizationId?: SortOrder
+    role?: SortOrder
     email?: SortOrder
     password?: SortOrder
-    firstName?: SortOrder
-    lastName?: SortOrder
-    phone?: SortOrder
-    profilePic?: SortOrder
-    role?: SortOrder
-    reportingManagerId?: SortOrder
-    teamId?: SortOrder
-    employeeCode?: SortOrder
-    city?: SortOrder
-    state?: SortOrder
-    assignedLatitude?: SortOrder
-    assignedLongitude?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     lastLoginAt?: SortOrder
     isActive?: SortOrder
   }
 
-  export type EmployeeAvgOrderByAggregateInput = {
-    assignedLatitude?: SortOrder
-    assignedLongitude?: SortOrder
-  }
-
-  export type EmployeeMaxOrderByAggregateInput = {
+  export type UserMaxOrderByAggregateInput = {
     id?: SortOrder
     organizationId?: SortOrder
+    role?: SortOrder
     email?: SortOrder
     password?: SortOrder
-    firstName?: SortOrder
-    lastName?: SortOrder
-    phone?: SortOrder
-    profilePic?: SortOrder
-    role?: SortOrder
-    reportingManagerId?: SortOrder
-    teamId?: SortOrder
-    employeeCode?: SortOrder
-    city?: SortOrder
-    state?: SortOrder
-    assignedLatitude?: SortOrder
-    assignedLongitude?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     lastLoginAt?: SortOrder
     isActive?: SortOrder
   }
 
-  export type EmployeeMinOrderByAggregateInput = {
+  export type UserMinOrderByAggregateInput = {
     id?: SortOrder
     organizationId?: SortOrder
+    role?: SortOrder
     email?: SortOrder
     password?: SortOrder
-    firstName?: SortOrder
-    lastName?: SortOrder
-    phone?: SortOrder
-    profilePic?: SortOrder
-    role?: SortOrder
-    reportingManagerId?: SortOrder
-    teamId?: SortOrder
-    employeeCode?: SortOrder
-    city?: SortOrder
-    state?: SortOrder
-    assignedLatitude?: SortOrder
-    assignedLongitude?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     lastLoginAt?: SortOrder
     isActive?: SortOrder
-  }
-
-  export type EmployeeSumOrderByAggregateInput = {
-    assignedLatitude?: SortOrder
-    assignedLongitude?: SortOrder
   }
 
   export type EnumEmployeeRoleWithAggregatesFilter<$PrismaModel = never> = {
@@ -4550,22 +4054,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumEmployeeRoleFilter<$PrismaModel>
     _max?: NestedEnumEmployeeRoleFilter<$PrismaModel>
-  }
-
-  export type DecimalNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
-    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
-    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
-    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    not?: NestedDecimalNullableWithAggregatesFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _avg?: NestedDecimalNullableFilter<$PrismaModel>
-    _sum?: NestedDecimalNullableFilter<$PrismaModel>
-    _min?: NestedDecimalNullableFilter<$PrismaModel>
-    _max?: NestedDecimalNullableFilter<$PrismaModel>
   }
 
   export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -4582,18 +4070,18 @@ export namespace Prisma {
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
-  export type EmployeeCreateNestedManyWithoutOrganizationInput = {
-    create?: XOR<EmployeeCreateWithoutOrganizationInput, EmployeeUncheckedCreateWithoutOrganizationInput> | EmployeeCreateWithoutOrganizationInput[] | EmployeeUncheckedCreateWithoutOrganizationInput[]
-    connectOrCreate?: EmployeeCreateOrConnectWithoutOrganizationInput | EmployeeCreateOrConnectWithoutOrganizationInput[]
-    createMany?: EmployeeCreateManyOrganizationInputEnvelope
-    connect?: EmployeeWhereUniqueInput | EmployeeWhereUniqueInput[]
+  export type UserCreateNestedManyWithoutOrganizationInput = {
+    create?: XOR<UserCreateWithoutOrganizationInput, UserUncheckedCreateWithoutOrganizationInput> | UserCreateWithoutOrganizationInput[] | UserUncheckedCreateWithoutOrganizationInput[]
+    connectOrCreate?: UserCreateOrConnectWithoutOrganizationInput | UserCreateOrConnectWithoutOrganizationInput[]
+    createMany?: UserCreateManyOrganizationInputEnvelope
+    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
   }
 
-  export type EmployeeUncheckedCreateNestedManyWithoutOrganizationInput = {
-    create?: XOR<EmployeeCreateWithoutOrganizationInput, EmployeeUncheckedCreateWithoutOrganizationInput> | EmployeeCreateWithoutOrganizationInput[] | EmployeeUncheckedCreateWithoutOrganizationInput[]
-    connectOrCreate?: EmployeeCreateOrConnectWithoutOrganizationInput | EmployeeCreateOrConnectWithoutOrganizationInput[]
-    createMany?: EmployeeCreateManyOrganizationInputEnvelope
-    connect?: EmployeeWhereUniqueInput | EmployeeWhereUniqueInput[]
+  export type UserUncheckedCreateNestedManyWithoutOrganizationInput = {
+    create?: XOR<UserCreateWithoutOrganizationInput, UserUncheckedCreateWithoutOrganizationInput> | UserCreateWithoutOrganizationInput[] | UserUncheckedCreateWithoutOrganizationInput[]
+    connectOrCreate?: UserCreateOrConnectWithoutOrganizationInput | UserCreateOrConnectWithoutOrganizationInput[]
+    createMany?: UserCreateManyOrganizationInputEnvelope
+    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -4612,120 +4100,54 @@ export namespace Prisma {
     set?: boolean
   }
 
-  export type EmployeeUpdateManyWithoutOrganizationNestedInput = {
-    create?: XOR<EmployeeCreateWithoutOrganizationInput, EmployeeUncheckedCreateWithoutOrganizationInput> | EmployeeCreateWithoutOrganizationInput[] | EmployeeUncheckedCreateWithoutOrganizationInput[]
-    connectOrCreate?: EmployeeCreateOrConnectWithoutOrganizationInput | EmployeeCreateOrConnectWithoutOrganizationInput[]
-    upsert?: EmployeeUpsertWithWhereUniqueWithoutOrganizationInput | EmployeeUpsertWithWhereUniqueWithoutOrganizationInput[]
-    createMany?: EmployeeCreateManyOrganizationInputEnvelope
-    set?: EmployeeWhereUniqueInput | EmployeeWhereUniqueInput[]
-    disconnect?: EmployeeWhereUniqueInput | EmployeeWhereUniqueInput[]
-    delete?: EmployeeWhereUniqueInput | EmployeeWhereUniqueInput[]
-    connect?: EmployeeWhereUniqueInput | EmployeeWhereUniqueInput[]
-    update?: EmployeeUpdateWithWhereUniqueWithoutOrganizationInput | EmployeeUpdateWithWhereUniqueWithoutOrganizationInput[]
-    updateMany?: EmployeeUpdateManyWithWhereWithoutOrganizationInput | EmployeeUpdateManyWithWhereWithoutOrganizationInput[]
-    deleteMany?: EmployeeScalarWhereInput | EmployeeScalarWhereInput[]
+  export type UserUpdateManyWithoutOrganizationNestedInput = {
+    create?: XOR<UserCreateWithoutOrganizationInput, UserUncheckedCreateWithoutOrganizationInput> | UserCreateWithoutOrganizationInput[] | UserUncheckedCreateWithoutOrganizationInput[]
+    connectOrCreate?: UserCreateOrConnectWithoutOrganizationInput | UserCreateOrConnectWithoutOrganizationInput[]
+    upsert?: UserUpsertWithWhereUniqueWithoutOrganizationInput | UserUpsertWithWhereUniqueWithoutOrganizationInput[]
+    createMany?: UserCreateManyOrganizationInputEnvelope
+    set?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    disconnect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    delete?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    update?: UserUpdateWithWhereUniqueWithoutOrganizationInput | UserUpdateWithWhereUniqueWithoutOrganizationInput[]
+    updateMany?: UserUpdateManyWithWhereWithoutOrganizationInput | UserUpdateManyWithWhereWithoutOrganizationInput[]
+    deleteMany?: UserScalarWhereInput | UserScalarWhereInput[]
   }
 
-  export type EmployeeUncheckedUpdateManyWithoutOrganizationNestedInput = {
-    create?: XOR<EmployeeCreateWithoutOrganizationInput, EmployeeUncheckedCreateWithoutOrganizationInput> | EmployeeCreateWithoutOrganizationInput[] | EmployeeUncheckedCreateWithoutOrganizationInput[]
-    connectOrCreate?: EmployeeCreateOrConnectWithoutOrganizationInput | EmployeeCreateOrConnectWithoutOrganizationInput[]
-    upsert?: EmployeeUpsertWithWhereUniqueWithoutOrganizationInput | EmployeeUpsertWithWhereUniqueWithoutOrganizationInput[]
-    createMany?: EmployeeCreateManyOrganizationInputEnvelope
-    set?: EmployeeWhereUniqueInput | EmployeeWhereUniqueInput[]
-    disconnect?: EmployeeWhereUniqueInput | EmployeeWhereUniqueInput[]
-    delete?: EmployeeWhereUniqueInput | EmployeeWhereUniqueInput[]
-    connect?: EmployeeWhereUniqueInput | EmployeeWhereUniqueInput[]
-    update?: EmployeeUpdateWithWhereUniqueWithoutOrganizationInput | EmployeeUpdateWithWhereUniqueWithoutOrganizationInput[]
-    updateMany?: EmployeeUpdateManyWithWhereWithoutOrganizationInput | EmployeeUpdateManyWithWhereWithoutOrganizationInput[]
-    deleteMany?: EmployeeScalarWhereInput | EmployeeScalarWhereInput[]
+  export type UserUncheckedUpdateManyWithoutOrganizationNestedInput = {
+    create?: XOR<UserCreateWithoutOrganizationInput, UserUncheckedCreateWithoutOrganizationInput> | UserCreateWithoutOrganizationInput[] | UserUncheckedCreateWithoutOrganizationInput[]
+    connectOrCreate?: UserCreateOrConnectWithoutOrganizationInput | UserCreateOrConnectWithoutOrganizationInput[]
+    upsert?: UserUpsertWithWhereUniqueWithoutOrganizationInput | UserUpsertWithWhereUniqueWithoutOrganizationInput[]
+    createMany?: UserCreateManyOrganizationInputEnvelope
+    set?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    disconnect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    delete?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    update?: UserUpdateWithWhereUniqueWithoutOrganizationInput | UserUpdateWithWhereUniqueWithoutOrganizationInput[]
+    updateMany?: UserUpdateManyWithWhereWithoutOrganizationInput | UserUpdateManyWithWhereWithoutOrganizationInput[]
+    deleteMany?: UserScalarWhereInput | UserScalarWhereInput[]
   }
 
-  export type OrganizationCreateNestedOneWithoutEmployeesInput = {
-    create?: XOR<OrganizationCreateWithoutEmployeesInput, OrganizationUncheckedCreateWithoutEmployeesInput>
-    connectOrCreate?: OrganizationCreateOrConnectWithoutEmployeesInput
+  export type OrganizationCreateNestedOneWithoutUserInput = {
+    create?: XOR<OrganizationCreateWithoutUserInput, OrganizationUncheckedCreateWithoutUserInput>
+    connectOrCreate?: OrganizationCreateOrConnectWithoutUserInput
     connect?: OrganizationWhereUniqueInput
-  }
-
-  export type EmployeeCreateNestedOneWithoutSubordinatesInput = {
-    create?: XOR<EmployeeCreateWithoutSubordinatesInput, EmployeeUncheckedCreateWithoutSubordinatesInput>
-    connectOrCreate?: EmployeeCreateOrConnectWithoutSubordinatesInput
-    connect?: EmployeeWhereUniqueInput
-  }
-
-  export type EmployeeCreateNestedManyWithoutReportingManagerInput = {
-    create?: XOR<EmployeeCreateWithoutReportingManagerInput, EmployeeUncheckedCreateWithoutReportingManagerInput> | EmployeeCreateWithoutReportingManagerInput[] | EmployeeUncheckedCreateWithoutReportingManagerInput[]
-    connectOrCreate?: EmployeeCreateOrConnectWithoutReportingManagerInput | EmployeeCreateOrConnectWithoutReportingManagerInput[]
-    createMany?: EmployeeCreateManyReportingManagerInputEnvelope
-    connect?: EmployeeWhereUniqueInput | EmployeeWhereUniqueInput[]
-  }
-
-  export type EmployeeUncheckedCreateNestedManyWithoutReportingManagerInput = {
-    create?: XOR<EmployeeCreateWithoutReportingManagerInput, EmployeeUncheckedCreateWithoutReportingManagerInput> | EmployeeCreateWithoutReportingManagerInput[] | EmployeeUncheckedCreateWithoutReportingManagerInput[]
-    connectOrCreate?: EmployeeCreateOrConnectWithoutReportingManagerInput | EmployeeCreateOrConnectWithoutReportingManagerInput[]
-    createMany?: EmployeeCreateManyReportingManagerInputEnvelope
-    connect?: EmployeeWhereUniqueInput | EmployeeWhereUniqueInput[]
   }
 
   export type EnumEmployeeRoleFieldUpdateOperationsInput = {
     set?: $Enums.EmployeeRole
   }
 
-  export type NullableDecimalFieldUpdateOperationsInput = {
-    set?: Decimal | DecimalJsLike | number | string | null
-    increment?: Decimal | DecimalJsLike | number | string
-    decrement?: Decimal | DecimalJsLike | number | string
-    multiply?: Decimal | DecimalJsLike | number | string
-    divide?: Decimal | DecimalJsLike | number | string
-  }
-
   export type NullableDateTimeFieldUpdateOperationsInput = {
     set?: Date | string | null
   }
 
-  export type OrganizationUpdateOneRequiredWithoutEmployeesNestedInput = {
-    create?: XOR<OrganizationCreateWithoutEmployeesInput, OrganizationUncheckedCreateWithoutEmployeesInput>
-    connectOrCreate?: OrganizationCreateOrConnectWithoutEmployeesInput
-    upsert?: OrganizationUpsertWithoutEmployeesInput
+  export type OrganizationUpdateOneRequiredWithoutUserNestedInput = {
+    create?: XOR<OrganizationCreateWithoutUserInput, OrganizationUncheckedCreateWithoutUserInput>
+    connectOrCreate?: OrganizationCreateOrConnectWithoutUserInput
+    upsert?: OrganizationUpsertWithoutUserInput
     connect?: OrganizationWhereUniqueInput
-    update?: XOR<XOR<OrganizationUpdateToOneWithWhereWithoutEmployeesInput, OrganizationUpdateWithoutEmployeesInput>, OrganizationUncheckedUpdateWithoutEmployeesInput>
-  }
-
-  export type EmployeeUpdateOneWithoutSubordinatesNestedInput = {
-    create?: XOR<EmployeeCreateWithoutSubordinatesInput, EmployeeUncheckedCreateWithoutSubordinatesInput>
-    connectOrCreate?: EmployeeCreateOrConnectWithoutSubordinatesInput
-    upsert?: EmployeeUpsertWithoutSubordinatesInput
-    disconnect?: EmployeeWhereInput | boolean
-    delete?: EmployeeWhereInput | boolean
-    connect?: EmployeeWhereUniqueInput
-    update?: XOR<XOR<EmployeeUpdateToOneWithWhereWithoutSubordinatesInput, EmployeeUpdateWithoutSubordinatesInput>, EmployeeUncheckedUpdateWithoutSubordinatesInput>
-  }
-
-  export type EmployeeUpdateManyWithoutReportingManagerNestedInput = {
-    create?: XOR<EmployeeCreateWithoutReportingManagerInput, EmployeeUncheckedCreateWithoutReportingManagerInput> | EmployeeCreateWithoutReportingManagerInput[] | EmployeeUncheckedCreateWithoutReportingManagerInput[]
-    connectOrCreate?: EmployeeCreateOrConnectWithoutReportingManagerInput | EmployeeCreateOrConnectWithoutReportingManagerInput[]
-    upsert?: EmployeeUpsertWithWhereUniqueWithoutReportingManagerInput | EmployeeUpsertWithWhereUniqueWithoutReportingManagerInput[]
-    createMany?: EmployeeCreateManyReportingManagerInputEnvelope
-    set?: EmployeeWhereUniqueInput | EmployeeWhereUniqueInput[]
-    disconnect?: EmployeeWhereUniqueInput | EmployeeWhereUniqueInput[]
-    delete?: EmployeeWhereUniqueInput | EmployeeWhereUniqueInput[]
-    connect?: EmployeeWhereUniqueInput | EmployeeWhereUniqueInput[]
-    update?: EmployeeUpdateWithWhereUniqueWithoutReportingManagerInput | EmployeeUpdateWithWhereUniqueWithoutReportingManagerInput[]
-    updateMany?: EmployeeUpdateManyWithWhereWithoutReportingManagerInput | EmployeeUpdateManyWithWhereWithoutReportingManagerInput[]
-    deleteMany?: EmployeeScalarWhereInput | EmployeeScalarWhereInput[]
-  }
-
-  export type EmployeeUncheckedUpdateManyWithoutReportingManagerNestedInput = {
-    create?: XOR<EmployeeCreateWithoutReportingManagerInput, EmployeeUncheckedCreateWithoutReportingManagerInput> | EmployeeCreateWithoutReportingManagerInput[] | EmployeeUncheckedCreateWithoutReportingManagerInput[]
-    connectOrCreate?: EmployeeCreateOrConnectWithoutReportingManagerInput | EmployeeCreateOrConnectWithoutReportingManagerInput[]
-    upsert?: EmployeeUpsertWithWhereUniqueWithoutReportingManagerInput | EmployeeUpsertWithWhereUniqueWithoutReportingManagerInput[]
-    createMany?: EmployeeCreateManyReportingManagerInputEnvelope
-    set?: EmployeeWhereUniqueInput | EmployeeWhereUniqueInput[]
-    disconnect?: EmployeeWhereUniqueInput | EmployeeWhereUniqueInput[]
-    delete?: EmployeeWhereUniqueInput | EmployeeWhereUniqueInput[]
-    connect?: EmployeeWhereUniqueInput | EmployeeWhereUniqueInput[]
-    update?: EmployeeUpdateWithWhereUniqueWithoutReportingManagerInput | EmployeeUpdateWithWhereUniqueWithoutReportingManagerInput[]
-    updateMany?: EmployeeUpdateManyWithWhereWithoutReportingManagerInput | EmployeeUpdateManyWithWhereWithoutReportingManagerInput[]
-    deleteMany?: EmployeeScalarWhereInput | EmployeeScalarWhereInput[]
+    update?: XOR<XOR<OrganizationUpdateToOneWithWhereWithoutUserInput, OrganizationUpdateWithoutUserInput>, OrganizationUncheckedUpdateWithoutUserInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -4880,17 +4302,6 @@ export namespace Prisma {
     not?: NestedEnumEmployeeRoleFilter<$PrismaModel> | $Enums.EmployeeRole
   }
 
-  export type NestedDecimalNullableFilter<$PrismaModel = never> = {
-    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
-    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
-    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
-    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    not?: NestedDecimalNullableFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string | null
-  }
-
   export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
@@ -4912,22 +4323,6 @@ export namespace Prisma {
     _max?: NestedEnumEmployeeRoleFilter<$PrismaModel>
   }
 
-  export type NestedDecimalNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
-    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
-    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
-    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    not?: NestedDecimalNullableWithAggregatesFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _avg?: NestedDecimalNullableFilter<$PrismaModel>
-    _sum?: NestedDecimalNullableFilter<$PrismaModel>
-    _min?: NestedDecimalNullableFilter<$PrismaModel>
-    _max?: NestedDecimalNullableFilter<$PrismaModel>
-  }
-
   export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
@@ -4942,105 +4337,70 @@ export namespace Prisma {
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
-  export type EmployeeCreateWithoutOrganizationInput = {
+  export type UserCreateWithoutOrganizationInput = {
     id?: string
+    role: $Enums.EmployeeRole
     email: string
     password: string
-    firstName: string
-    lastName?: string | null
-    phone?: string | null
-    profilePic?: string | null
-    role: $Enums.EmployeeRole
-    teamId?: string | null
-    employeeCode?: string | null
-    city?: string | null
-    state?: string | null
-    assignedLatitude?: Decimal | DecimalJsLike | number | string | null
-    assignedLongitude?: Decimal | DecimalJsLike | number | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     lastLoginAt?: Date | string | null
     isActive?: boolean
-    reportingManager?: EmployeeCreateNestedOneWithoutSubordinatesInput
-    subordinates?: EmployeeCreateNestedManyWithoutReportingManagerInput
   }
 
-  export type EmployeeUncheckedCreateWithoutOrganizationInput = {
+  export type UserUncheckedCreateWithoutOrganizationInput = {
     id?: string
+    role: $Enums.EmployeeRole
     email: string
     password: string
-    firstName: string
-    lastName?: string | null
-    phone?: string | null
-    profilePic?: string | null
-    role: $Enums.EmployeeRole
-    reportingManagerId?: string | null
-    teamId?: string | null
-    employeeCode?: string | null
-    city?: string | null
-    state?: string | null
-    assignedLatitude?: Decimal | DecimalJsLike | number | string | null
-    assignedLongitude?: Decimal | DecimalJsLike | number | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     lastLoginAt?: Date | string | null
     isActive?: boolean
-    subordinates?: EmployeeUncheckedCreateNestedManyWithoutReportingManagerInput
   }
 
-  export type EmployeeCreateOrConnectWithoutOrganizationInput = {
-    where: EmployeeWhereUniqueInput
-    create: XOR<EmployeeCreateWithoutOrganizationInput, EmployeeUncheckedCreateWithoutOrganizationInput>
+  export type UserCreateOrConnectWithoutOrganizationInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutOrganizationInput, UserUncheckedCreateWithoutOrganizationInput>
   }
 
-  export type EmployeeCreateManyOrganizationInputEnvelope = {
-    data: EmployeeCreateManyOrganizationInput | EmployeeCreateManyOrganizationInput[]
+  export type UserCreateManyOrganizationInputEnvelope = {
+    data: UserCreateManyOrganizationInput | UserCreateManyOrganizationInput[]
     skipDuplicates?: boolean
   }
 
-  export type EmployeeUpsertWithWhereUniqueWithoutOrganizationInput = {
-    where: EmployeeWhereUniqueInput
-    update: XOR<EmployeeUpdateWithoutOrganizationInput, EmployeeUncheckedUpdateWithoutOrganizationInput>
-    create: XOR<EmployeeCreateWithoutOrganizationInput, EmployeeUncheckedCreateWithoutOrganizationInput>
+  export type UserUpsertWithWhereUniqueWithoutOrganizationInput = {
+    where: UserWhereUniqueInput
+    update: XOR<UserUpdateWithoutOrganizationInput, UserUncheckedUpdateWithoutOrganizationInput>
+    create: XOR<UserCreateWithoutOrganizationInput, UserUncheckedCreateWithoutOrganizationInput>
   }
 
-  export type EmployeeUpdateWithWhereUniqueWithoutOrganizationInput = {
-    where: EmployeeWhereUniqueInput
-    data: XOR<EmployeeUpdateWithoutOrganizationInput, EmployeeUncheckedUpdateWithoutOrganizationInput>
+  export type UserUpdateWithWhereUniqueWithoutOrganizationInput = {
+    where: UserWhereUniqueInput
+    data: XOR<UserUpdateWithoutOrganizationInput, UserUncheckedUpdateWithoutOrganizationInput>
   }
 
-  export type EmployeeUpdateManyWithWhereWithoutOrganizationInput = {
-    where: EmployeeScalarWhereInput
-    data: XOR<EmployeeUpdateManyMutationInput, EmployeeUncheckedUpdateManyWithoutOrganizationInput>
+  export type UserUpdateManyWithWhereWithoutOrganizationInput = {
+    where: UserScalarWhereInput
+    data: XOR<UserUpdateManyMutationInput, UserUncheckedUpdateManyWithoutOrganizationInput>
   }
 
-  export type EmployeeScalarWhereInput = {
-    AND?: EmployeeScalarWhereInput | EmployeeScalarWhereInput[]
-    OR?: EmployeeScalarWhereInput[]
-    NOT?: EmployeeScalarWhereInput | EmployeeScalarWhereInput[]
-    id?: StringFilter<"Employee"> | string
-    organizationId?: StringFilter<"Employee"> | string
-    email?: StringFilter<"Employee"> | string
-    password?: StringFilter<"Employee"> | string
-    firstName?: StringFilter<"Employee"> | string
-    lastName?: StringNullableFilter<"Employee"> | string | null
-    phone?: StringNullableFilter<"Employee"> | string | null
-    profilePic?: StringNullableFilter<"Employee"> | string | null
-    role?: EnumEmployeeRoleFilter<"Employee"> | $Enums.EmployeeRole
-    reportingManagerId?: StringNullableFilter<"Employee"> | string | null
-    teamId?: StringNullableFilter<"Employee"> | string | null
-    employeeCode?: StringNullableFilter<"Employee"> | string | null
-    city?: StringNullableFilter<"Employee"> | string | null
-    state?: StringNullableFilter<"Employee"> | string | null
-    assignedLatitude?: DecimalNullableFilter<"Employee"> | Decimal | DecimalJsLike | number | string | null
-    assignedLongitude?: DecimalNullableFilter<"Employee"> | Decimal | DecimalJsLike | number | string | null
-    createdAt?: DateTimeFilter<"Employee"> | Date | string
-    updatedAt?: DateTimeFilter<"Employee"> | Date | string
-    lastLoginAt?: DateTimeNullableFilter<"Employee"> | Date | string | null
-    isActive?: BoolFilter<"Employee"> | boolean
+  export type UserScalarWhereInput = {
+    AND?: UserScalarWhereInput | UserScalarWhereInput[]
+    OR?: UserScalarWhereInput[]
+    NOT?: UserScalarWhereInput | UserScalarWhereInput[]
+    id?: StringFilter<"User"> | string
+    organizationId?: StringFilter<"User"> | string
+    role?: EnumEmployeeRoleFilter<"User"> | $Enums.EmployeeRole
+    email?: StringFilter<"User"> | string
+    password?: StringFilter<"User"> | string
+    createdAt?: DateTimeFilter<"User"> | Date | string
+    updatedAt?: DateTimeFilter<"User"> | Date | string
+    lastLoginAt?: DateTimeNullableFilter<"User"> | Date | string | null
+    isActive?: BoolFilter<"User"> | boolean
   }
 
-  export type OrganizationCreateWithoutEmployeesInput = {
+  export type OrganizationCreateWithoutUserInput = {
     id?: string
     name: string
     schemaName?: string | null
@@ -5054,7 +4414,7 @@ export namespace Prisma {
     isActive?: boolean
   }
 
-  export type OrganizationUncheckedCreateWithoutEmployeesInput = {
+  export type OrganizationUncheckedCreateWithoutUserInput = {
     id?: string
     name: string
     schemaName?: string | null
@@ -5068,130 +4428,23 @@ export namespace Prisma {
     isActive?: boolean
   }
 
-  export type OrganizationCreateOrConnectWithoutEmployeesInput = {
+  export type OrganizationCreateOrConnectWithoutUserInput = {
     where: OrganizationWhereUniqueInput
-    create: XOR<OrganizationCreateWithoutEmployeesInput, OrganizationUncheckedCreateWithoutEmployeesInput>
+    create: XOR<OrganizationCreateWithoutUserInput, OrganizationUncheckedCreateWithoutUserInput>
   }
 
-  export type EmployeeCreateWithoutSubordinatesInput = {
-    id?: string
-    email: string
-    password: string
-    firstName: string
-    lastName?: string | null
-    phone?: string | null
-    profilePic?: string | null
-    role: $Enums.EmployeeRole
-    teamId?: string | null
-    employeeCode?: string | null
-    city?: string | null
-    state?: string | null
-    assignedLatitude?: Decimal | DecimalJsLike | number | string | null
-    assignedLongitude?: Decimal | DecimalJsLike | number | string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    lastLoginAt?: Date | string | null
-    isActive?: boolean
-    organization: OrganizationCreateNestedOneWithoutEmployeesInput
-    reportingManager?: EmployeeCreateNestedOneWithoutSubordinatesInput
-  }
-
-  export type EmployeeUncheckedCreateWithoutSubordinatesInput = {
-    id?: string
-    organizationId: string
-    email: string
-    password: string
-    firstName: string
-    lastName?: string | null
-    phone?: string | null
-    profilePic?: string | null
-    role: $Enums.EmployeeRole
-    reportingManagerId?: string | null
-    teamId?: string | null
-    employeeCode?: string | null
-    city?: string | null
-    state?: string | null
-    assignedLatitude?: Decimal | DecimalJsLike | number | string | null
-    assignedLongitude?: Decimal | DecimalJsLike | number | string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    lastLoginAt?: Date | string | null
-    isActive?: boolean
-  }
-
-  export type EmployeeCreateOrConnectWithoutSubordinatesInput = {
-    where: EmployeeWhereUniqueInput
-    create: XOR<EmployeeCreateWithoutSubordinatesInput, EmployeeUncheckedCreateWithoutSubordinatesInput>
-  }
-
-  export type EmployeeCreateWithoutReportingManagerInput = {
-    id?: string
-    email: string
-    password: string
-    firstName: string
-    lastName?: string | null
-    phone?: string | null
-    profilePic?: string | null
-    role: $Enums.EmployeeRole
-    teamId?: string | null
-    employeeCode?: string | null
-    city?: string | null
-    state?: string | null
-    assignedLatitude?: Decimal | DecimalJsLike | number | string | null
-    assignedLongitude?: Decimal | DecimalJsLike | number | string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    lastLoginAt?: Date | string | null
-    isActive?: boolean
-    organization: OrganizationCreateNestedOneWithoutEmployeesInput
-    subordinates?: EmployeeCreateNestedManyWithoutReportingManagerInput
-  }
-
-  export type EmployeeUncheckedCreateWithoutReportingManagerInput = {
-    id?: string
-    organizationId: string
-    email: string
-    password: string
-    firstName: string
-    lastName?: string | null
-    phone?: string | null
-    profilePic?: string | null
-    role: $Enums.EmployeeRole
-    teamId?: string | null
-    employeeCode?: string | null
-    city?: string | null
-    state?: string | null
-    assignedLatitude?: Decimal | DecimalJsLike | number | string | null
-    assignedLongitude?: Decimal | DecimalJsLike | number | string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    lastLoginAt?: Date | string | null
-    isActive?: boolean
-    subordinates?: EmployeeUncheckedCreateNestedManyWithoutReportingManagerInput
-  }
-
-  export type EmployeeCreateOrConnectWithoutReportingManagerInput = {
-    where: EmployeeWhereUniqueInput
-    create: XOR<EmployeeCreateWithoutReportingManagerInput, EmployeeUncheckedCreateWithoutReportingManagerInput>
-  }
-
-  export type EmployeeCreateManyReportingManagerInputEnvelope = {
-    data: EmployeeCreateManyReportingManagerInput | EmployeeCreateManyReportingManagerInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type OrganizationUpsertWithoutEmployeesInput = {
-    update: XOR<OrganizationUpdateWithoutEmployeesInput, OrganizationUncheckedUpdateWithoutEmployeesInput>
-    create: XOR<OrganizationCreateWithoutEmployeesInput, OrganizationUncheckedCreateWithoutEmployeesInput>
+  export type OrganizationUpsertWithoutUserInput = {
+    update: XOR<OrganizationUpdateWithoutUserInput, OrganizationUncheckedUpdateWithoutUserInput>
+    create: XOR<OrganizationCreateWithoutUserInput, OrganizationUncheckedCreateWithoutUserInput>
     where?: OrganizationWhereInput
   }
 
-  export type OrganizationUpdateToOneWithWhereWithoutEmployeesInput = {
+  export type OrganizationUpdateToOneWithWhereWithoutUserInput = {
     where?: OrganizationWhereInput
-    data: XOR<OrganizationUpdateWithoutEmployeesInput, OrganizationUncheckedUpdateWithoutEmployeesInput>
+    data: XOR<OrganizationUpdateWithoutUserInput, OrganizationUncheckedUpdateWithoutUserInput>
   }
 
-  export type OrganizationUpdateWithoutEmployeesInput = {
+  export type OrganizationUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     schemaName?: NullableStringFieldUpdateOperationsInput | string | null
@@ -5205,7 +4458,7 @@ export namespace Prisma {
     isActive?: BoolFieldUpdateOperationsInput | boolean
   }
 
-  export type OrganizationUncheckedUpdateWithoutEmployeesInput = {
+  export type OrganizationUncheckedUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     schemaName?: NullableStringFieldUpdateOperationsInput | string | null
@@ -5219,253 +4472,44 @@ export namespace Prisma {
     isActive?: BoolFieldUpdateOperationsInput | boolean
   }
 
-  export type EmployeeUpsertWithoutSubordinatesInput = {
-    update: XOR<EmployeeUpdateWithoutSubordinatesInput, EmployeeUncheckedUpdateWithoutSubordinatesInput>
-    create: XOR<EmployeeCreateWithoutSubordinatesInput, EmployeeUncheckedCreateWithoutSubordinatesInput>
-    where?: EmployeeWhereInput
-  }
-
-  export type EmployeeUpdateToOneWithWhereWithoutSubordinatesInput = {
-    where?: EmployeeWhereInput
-    data: XOR<EmployeeUpdateWithoutSubordinatesInput, EmployeeUncheckedUpdateWithoutSubordinatesInput>
-  }
-
-  export type EmployeeUpdateWithoutSubordinatesInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    firstName?: StringFieldUpdateOperationsInput | string
-    lastName?: NullableStringFieldUpdateOperationsInput | string | null
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
-    profilePic?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: EnumEmployeeRoleFieldUpdateOperationsInput | $Enums.EmployeeRole
-    teamId?: NullableStringFieldUpdateOperationsInput | string | null
-    employeeCode?: NullableStringFieldUpdateOperationsInput | string | null
-    city?: NullableStringFieldUpdateOperationsInput | string | null
-    state?: NullableStringFieldUpdateOperationsInput | string | null
-    assignedLatitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    assignedLongitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    isActive?: BoolFieldUpdateOperationsInput | boolean
-    organization?: OrganizationUpdateOneRequiredWithoutEmployeesNestedInput
-    reportingManager?: EmployeeUpdateOneWithoutSubordinatesNestedInput
-  }
-
-  export type EmployeeUncheckedUpdateWithoutSubordinatesInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    organizationId?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    firstName?: StringFieldUpdateOperationsInput | string
-    lastName?: NullableStringFieldUpdateOperationsInput | string | null
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
-    profilePic?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: EnumEmployeeRoleFieldUpdateOperationsInput | $Enums.EmployeeRole
-    reportingManagerId?: NullableStringFieldUpdateOperationsInput | string | null
-    teamId?: NullableStringFieldUpdateOperationsInput | string | null
-    employeeCode?: NullableStringFieldUpdateOperationsInput | string | null
-    city?: NullableStringFieldUpdateOperationsInput | string | null
-    state?: NullableStringFieldUpdateOperationsInput | string | null
-    assignedLatitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    assignedLongitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    isActive?: BoolFieldUpdateOperationsInput | boolean
-  }
-
-  export type EmployeeUpsertWithWhereUniqueWithoutReportingManagerInput = {
-    where: EmployeeWhereUniqueInput
-    update: XOR<EmployeeUpdateWithoutReportingManagerInput, EmployeeUncheckedUpdateWithoutReportingManagerInput>
-    create: XOR<EmployeeCreateWithoutReportingManagerInput, EmployeeUncheckedCreateWithoutReportingManagerInput>
-  }
-
-  export type EmployeeUpdateWithWhereUniqueWithoutReportingManagerInput = {
-    where: EmployeeWhereUniqueInput
-    data: XOR<EmployeeUpdateWithoutReportingManagerInput, EmployeeUncheckedUpdateWithoutReportingManagerInput>
-  }
-
-  export type EmployeeUpdateManyWithWhereWithoutReportingManagerInput = {
-    where: EmployeeScalarWhereInput
-    data: XOR<EmployeeUpdateManyMutationInput, EmployeeUncheckedUpdateManyWithoutReportingManagerInput>
-  }
-
-  export type EmployeeCreateManyOrganizationInput = {
+  export type UserCreateManyOrganizationInput = {
     id?: string
+    role: $Enums.EmployeeRole
     email: string
     password: string
-    firstName: string
-    lastName?: string | null
-    phone?: string | null
-    profilePic?: string | null
-    role: $Enums.EmployeeRole
-    reportingManagerId?: string | null
-    teamId?: string | null
-    employeeCode?: string | null
-    city?: string | null
-    state?: string | null
-    assignedLatitude?: Decimal | DecimalJsLike | number | string | null
-    assignedLongitude?: Decimal | DecimalJsLike | number | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     lastLoginAt?: Date | string | null
     isActive?: boolean
   }
 
-  export type EmployeeUpdateWithoutOrganizationInput = {
+  export type UserUpdateWithoutOrganizationInput = {
     id?: StringFieldUpdateOperationsInput | string
+    role?: EnumEmployeeRoleFieldUpdateOperationsInput | $Enums.EmployeeRole
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    firstName?: StringFieldUpdateOperationsInput | string
-    lastName?: NullableStringFieldUpdateOperationsInput | string | null
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
-    profilePic?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: EnumEmployeeRoleFieldUpdateOperationsInput | $Enums.EmployeeRole
-    teamId?: NullableStringFieldUpdateOperationsInput | string | null
-    employeeCode?: NullableStringFieldUpdateOperationsInput | string | null
-    city?: NullableStringFieldUpdateOperationsInput | string | null
-    state?: NullableStringFieldUpdateOperationsInput | string | null
-    assignedLatitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    assignedLongitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    isActive?: BoolFieldUpdateOperationsInput | boolean
-    reportingManager?: EmployeeUpdateOneWithoutSubordinatesNestedInput
-    subordinates?: EmployeeUpdateManyWithoutReportingManagerNestedInput
-  }
-
-  export type EmployeeUncheckedUpdateWithoutOrganizationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    firstName?: StringFieldUpdateOperationsInput | string
-    lastName?: NullableStringFieldUpdateOperationsInput | string | null
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
-    profilePic?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: EnumEmployeeRoleFieldUpdateOperationsInput | $Enums.EmployeeRole
-    reportingManagerId?: NullableStringFieldUpdateOperationsInput | string | null
-    teamId?: NullableStringFieldUpdateOperationsInput | string | null
-    employeeCode?: NullableStringFieldUpdateOperationsInput | string | null
-    city?: NullableStringFieldUpdateOperationsInput | string | null
-    state?: NullableStringFieldUpdateOperationsInput | string | null
-    assignedLatitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    assignedLongitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    isActive?: BoolFieldUpdateOperationsInput | boolean
-    subordinates?: EmployeeUncheckedUpdateManyWithoutReportingManagerNestedInput
-  }
-
-  export type EmployeeUncheckedUpdateManyWithoutOrganizationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    firstName?: StringFieldUpdateOperationsInput | string
-    lastName?: NullableStringFieldUpdateOperationsInput | string | null
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
-    profilePic?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: EnumEmployeeRoleFieldUpdateOperationsInput | $Enums.EmployeeRole
-    reportingManagerId?: NullableStringFieldUpdateOperationsInput | string | null
-    teamId?: NullableStringFieldUpdateOperationsInput | string | null
-    employeeCode?: NullableStringFieldUpdateOperationsInput | string | null
-    city?: NullableStringFieldUpdateOperationsInput | string | null
-    state?: NullableStringFieldUpdateOperationsInput | string | null
-    assignedLatitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    assignedLongitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
   }
 
-  export type EmployeeCreateManyReportingManagerInput = {
-    id?: string
-    organizationId: string
-    email: string
-    password: string
-    firstName: string
-    lastName?: string | null
-    phone?: string | null
-    profilePic?: string | null
-    role: $Enums.EmployeeRole
-    teamId?: string | null
-    employeeCode?: string | null
-    city?: string | null
-    state?: string | null
-    assignedLatitude?: Decimal | DecimalJsLike | number | string | null
-    assignedLongitude?: Decimal | DecimalJsLike | number | string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    lastLoginAt?: Date | string | null
-    isActive?: boolean
-  }
-
-  export type EmployeeUpdateWithoutReportingManagerInput = {
+  export type UserUncheckedUpdateWithoutOrganizationInput = {
     id?: StringFieldUpdateOperationsInput | string
+    role?: EnumEmployeeRoleFieldUpdateOperationsInput | $Enums.EmployeeRole
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    firstName?: StringFieldUpdateOperationsInput | string
-    lastName?: NullableStringFieldUpdateOperationsInput | string | null
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
-    profilePic?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: EnumEmployeeRoleFieldUpdateOperationsInput | $Enums.EmployeeRole
-    teamId?: NullableStringFieldUpdateOperationsInput | string | null
-    employeeCode?: NullableStringFieldUpdateOperationsInput | string | null
-    city?: NullableStringFieldUpdateOperationsInput | string | null
-    state?: NullableStringFieldUpdateOperationsInput | string | null
-    assignedLatitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    assignedLongitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
-    organization?: OrganizationUpdateOneRequiredWithoutEmployeesNestedInput
-    subordinates?: EmployeeUpdateManyWithoutReportingManagerNestedInput
   }
 
-  export type EmployeeUncheckedUpdateWithoutReportingManagerInput = {
+  export type UserUncheckedUpdateManyWithoutOrganizationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    organizationId?: StringFieldUpdateOperationsInput | string
+    role?: EnumEmployeeRoleFieldUpdateOperationsInput | $Enums.EmployeeRole
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    firstName?: StringFieldUpdateOperationsInput | string
-    lastName?: NullableStringFieldUpdateOperationsInput | string | null
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
-    profilePic?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: EnumEmployeeRoleFieldUpdateOperationsInput | $Enums.EmployeeRole
-    teamId?: NullableStringFieldUpdateOperationsInput | string | null
-    employeeCode?: NullableStringFieldUpdateOperationsInput | string | null
-    city?: NullableStringFieldUpdateOperationsInput | string | null
-    state?: NullableStringFieldUpdateOperationsInput | string | null
-    assignedLatitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    assignedLongitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    isActive?: BoolFieldUpdateOperationsInput | boolean
-    subordinates?: EmployeeUncheckedUpdateManyWithoutReportingManagerNestedInput
-  }
-
-  export type EmployeeUncheckedUpdateManyWithoutReportingManagerInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    organizationId?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    firstName?: StringFieldUpdateOperationsInput | string
-    lastName?: NullableStringFieldUpdateOperationsInput | string | null
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
-    profilePic?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: EnumEmployeeRoleFieldUpdateOperationsInput | $Enums.EmployeeRole
-    teamId?: NullableStringFieldUpdateOperationsInput | string | null
-    employeeCode?: NullableStringFieldUpdateOperationsInput | string | null
-    city?: NullableStringFieldUpdateOperationsInput | string | null
-    state?: NullableStringFieldUpdateOperationsInput | string | null
-    assignedLatitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    assignedLongitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null

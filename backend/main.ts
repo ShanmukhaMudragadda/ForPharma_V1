@@ -1,20 +1,27 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import { loginController } from './src/controllers/authController.ts';
-import { createOrganizationController } from './src/controllers/organizationController.ts';
-import employeeRoutes from './src/routes/employeeRoutes.ts';
+import SchemaManagementService from './src/services/SchemaManagementService.ts';
+import organizationRoutes from './src/routes/organizationRoutes.ts'
+import authRoutes from './src/routes/authRoutes.ts'
+import doctorRoutes from './src/routes/doctorRoutes.ts'
+import chemistRoutes from './src/routes/chemistRoutes.ts'
 import { cleanupMiddleware } from './src/middlewares/tenantMiddleware.ts';
+import orderRoutes from './src/routes/orderRoutes.ts';
 
-// Load environment variables
+
+
+
 dotenv.config();
 
 const app = express();
-
-// Middleware
-app.use(cors());
-app.use(express.json());
+const schemaService = SchemaManagementService.getInstance();
+app.use(cors({
+  origin: '*', // In production, specify your app's URL
+  credentials: true
+})); app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+const PORT = process.env.PORT || 3000;
 
 // Request logging middleware
 app.use((req, res, next) => {
@@ -22,7 +29,7 @@ app.use((req, res, next) => {
   next();
 });
 
-// Health check
+// Health check endpoint
 app.get('/', (req, res) => {
   res.json({
     status: 'ok',
@@ -31,15 +38,31 @@ app.get('/', (req, res) => {
   });
 });
 
-// Public routes (no auth required)
-app.post('/api/auth/login', loginController);
-app.post('/api/auth/register', createOrganizationController); // Alternative endpoint
-app.post('/api/organizations', createOrganizationController);
 
-// Protected routes (need tenant middleware)
-app.use('/api', employeeRoutes);
+// Organization Routes
 
-// 404 handler
+app.use('/api/organizations', organizationRoutes);
+
+
+
+// Auth routes
+app.use('/api/user', authRoutes);
+
+//doctor Routes
+app.use('/api/doctors', doctorRoutes);
+
+
+//chemist routes
+app.use('/api/chemists', chemistRoutes);
+
+// Order Routes
+app.use('/api/orders', orderRoutes);
+
+
+
+
+
+// 404 Not Found handler
 app.use((req, res) => {
   res.status(404).json({
     error: 'Not Found',
@@ -47,52 +70,58 @@ app.use((req, res) => {
   });
 });
 
-// Error handling middleware
+// Centralized Error handling middleware
 app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
   console.error('Error:', err);
 
-  // Prisma error handling
   if (err.code === 'P2002') {
     return res.status(409).json({
       error: 'Duplicate entry',
       field: err.meta?.target
     });
   }
-
   if (err.code === 'P2025') {
     return res.status(404).json({
-      error: 'Record not found'
+      error: 'Record not found',
+      details: err.meta?.cause || 'The requested record could not be found.'
     });
   }
 
   res.status(500).json({
     error: 'Internal Server Error',
-    message: process.env.NODE_ENV === 'development' ? err.message : 'Something went wrong'
+    message: process.env.NODE_ENV === 'development' ? err.message : 'Something went wrong on the server.'
   });
 });
 
-const PORT = process.env.PORT || 3000;
+// Start the HTTP server
+// const server = app.listen(PORT, () => {
+//   console.log(`
+// 🚀 ForPharma Backend Server is running!
+// 📡 API URL: http://localhost:${PORT}
+// 🌍 Environment: ${process.env.NODE_ENV || 'development'}
+// 📅 Started at: ${new Date().toISOString()}
+//       `);
+// });
 
-const server = app.listen(PORT, () => {
-  console.log(`
-🚀 ForPharma Backend Server is running!
-📡 API URL: http://localhost:${PORT}
-🌍 Environment: ${process.env.NODE_ENV || 'development'}
-📅 Started at: ${new Date().toISOString()}
-  `);
+const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
+
+const server = app.listen(3000, '0.0.0.0', () => {
+  console.log('Server running on 192.168.24.215:3000');
 });
 
-// Graceful shutdown
+
+// Graceful shutdown procedures
 const gracefulShutdown = async (signal: string) => {
   console.log(`\n${signal} signal received: closing HTTP server`);
   server.close(async () => {
     console.log('HTTP server closed');
     try {
       await cleanupMiddleware();
-      console.log('Database connections closed');
+      await schemaService.closeAllConnections();
+      console.log('Database connections closed.');
       process.exit(0);
     } catch (error) {
-      console.error('Error during shutdown:', error);
+      console.error('❌ Error during graceful shutdown:', error);
       process.exit(1);
     }
   });
@@ -100,3 +129,7 @@ const gracefulShutdown = async (signal: string) => {
 
 process.on('SIGTERM', () => gracefulShutdown('SIGTERM'));
 process.on('SIGINT', () => gracefulShutdown('SIGINT'));
+
+
+
+

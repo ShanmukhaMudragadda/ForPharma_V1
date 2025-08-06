@@ -17,6 +17,16 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
 import { useRouter } from 'expo-router';
 
+import * as SecureStore from 'expo-secure-store';
+import * as AuthSession from 'expo-auth-session';
+import * as Google from 'expo-auth-session/providers/google';
+import * as WebBrowser from 'expo-web-browser';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import { loginWithEmail, loginWithGoogle } from '../api/api';
+
+WebBrowser.maybeCompleteAuthSession();
+
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -25,20 +35,48 @@ const Login = () => {
   const [rememberMe, setRememberMe] = useState(false);
   const router = useRouter();
 
+  const [request, response, promptAsync] = Google.useAuthRequest({
+    clientId: '1030595062945-g6stfe7vrfibabd5mibc6gg5qjr36m85.apps.googleusercontent.com',
+    scopes: ['openid', 'profile', 'email'],
+    responseType: 'id_token', // ensure id_token is returned
+
+  });
+
   const handleLogin = async () => {
     if (!email || !password) {
       Alert.alert('Error', 'Please fill in all fields');
       return;
     }
-
     setLoading(true);
+    // ❌ DELETE THIS LINE: router.replace('/(tabs)/');
+    try {
+      console.log("sign in pressed")
+      const data = await loginWithEmail(email, password);
+      console.log(data.token)
+      // await AsyncStorage.setItem('token', data.token);
+      // console.log('Token saved successfully!');
+      // await AsyncStorage.setItem('user', JSON.stringify(data.user));
 
-    // Simulate API call
-    setTimeout(() => {
+      // await SecureStore.setItemAsync('token', data.token);
+      // await SecureStore.setItemAsync('user', JSON.stringify(data.user));
+      if (Platform.OS == 'web') {
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('user', JSON.stringify(data.user));
+      }
+      else {
+        await AsyncStorage.setItem('token', data.token);
+        console.log('Token saved successfully!');
+        await AsyncStorage.setItem('user', JSON.stringify(data.user));
+      }
+
+      console.log('Token saved successfully!');
+
+      router.replace('/(tabs)/'); // ✅ Keep only this one
+    } catch (error: any) {
+      // ... error handling
+    } finally {
       setLoading(false);
-      // Navigate to home page
-      router.replace('/(tabs)/');
-    }, 2000);
+    }
   };
 
 
@@ -47,8 +85,42 @@ const Login = () => {
   };
 
   //Google auth initiation
-  const handleGoogleLogin = () => {
-    Alert.alert('Google Login', 'Google Login initiated');
+  const handleGoogleLogin = async () => {
+    if (!request) {
+      Alert.alert('Error', 'Google Login Failed');
+      return;
+    }
+
+    try {
+      const result = await promptAsync();
+
+      if (result.type === 'success' && result.authentication) {
+        const idToken = result.authentication.idToken;
+
+        if (!idToken) {
+          Alert.alert('Google Login Failed', 'No ID token received.');
+          return;
+        }
+
+        setLoading(true);
+        try {
+          const res = await loginWithGoogle(idToken);
+          await SecureStore.setItemAsync('token', res.token);
+          await SecureStore.setItemAsync('user', JSON.stringify(res.user));
+          router.replace('/(tabs)/');
+        } catch (error: any) {
+          const backendErrorMsg = error.response?.data?.error || 'An error occurred';
+          Alert.alert('Google Login Failed', backendErrorMsg);
+        } finally {
+          setLoading(false);
+        }
+      } else if (result.type === 'error') {
+        Alert.alert('Google Login Failed', 'Authentication failed.');
+      }
+      // No alert for 'cancel' or unexpected types to reduce noise
+    } catch {
+      Alert.alert('Google Login Failed', 'An unexpected error occurred during login.');
+    }
   };
 
   return (

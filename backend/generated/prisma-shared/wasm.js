@@ -134,23 +134,12 @@ exports.Prisma.OrganizationScalarFieldEnum = {
   isActive: 'isActive'
 };
 
-exports.Prisma.EmployeeScalarFieldEnum = {
+exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
   organizationId: 'organizationId',
+  role: 'role',
   email: 'email',
   password: 'password',
-  firstName: 'firstName',
-  lastName: 'lastName',
-  phone: 'phone',
-  profilePic: 'profilePic',
-  role: 'role',
-  reportingManagerId: 'reportingManagerId',
-  teamId: 'teamId',
-  employeeCode: 'employeeCode',
-  city: 'city',
-  state: 'state',
-  assignedLatitude: 'assignedLatitude',
-  assignedLongitude: 'assignedLongitude',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   lastLoginAt: 'lastLoginAt',
@@ -190,7 +179,7 @@ exports.EmployeeRole = exports.$Enums.EmployeeRole = {
 
 exports.Prisma.ModelName = {
   Organization: 'Organization',
-  Employee: 'Employee'
+  User: 'User'
 };
 
 /**
