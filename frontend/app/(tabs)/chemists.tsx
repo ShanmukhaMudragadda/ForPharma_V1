@@ -3,7 +3,7 @@ import { View, Text, ScrollView, TouchableOpacity, StatusBar, Alert, SafeAreaVie
 import { styled } from 'nativewind'
 import { useRouter, Link, Redirect } from 'expo-router'
 import { Ionicons } from '@expo/vector-icons'
-import DoctorCard from '../../components/doctorListCard';
+import DoctorCard from "../../components/";
 import chemistService, { Chemist } from '../../services/chemistService';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
