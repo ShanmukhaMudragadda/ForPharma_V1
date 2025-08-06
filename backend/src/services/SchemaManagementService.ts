@@ -97,9 +97,9 @@ class SchemaManagementService {
    * Ensures the service is initialized before executing any operations
    * @throws Error if not initialized
    */
-  private ensureInitialized(): void {
+  private async ensureInitialized(): Promise<void> {
     if (!this.initialized) {
-      throw new Error('SchemaManagementService not initialized. Call initializeMigrations() first.');
+      await this.initializeMigrations();
     }
   }
 
@@ -393,7 +393,8 @@ class SchemaManagementService {
   }
 
   public async getTenantClient(schemaName: string): Promise<TenantPrismaClient> {
-    this.ensureInitialized();
+    console.log(`Getting tenant client for schema: ${schemaName}`);
+    // this.ensureInitialized();
 
     // Check cache
     if (this.tenantConnections.has(schemaName)) {

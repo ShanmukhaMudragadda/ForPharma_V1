@@ -7,6 +7,7 @@ import authRoutes from './src/routes/authRoutes.ts'
 import doctorRoutes from './src/routes/doctorRoutes.ts'
 import chemistRoutes from './src/routes/chemistRoutes.ts'
 import { cleanupMiddleware } from './src/middlewares/tenantMiddleware.ts';
+import orderRoutes from './src/routes/orderRoutes.ts';
 
 
 
@@ -53,6 +54,9 @@ app.use('/api/doctors', doctorRoutes);
 
 //chemist routes
 app.use('/api/chemists', chemistRoutes);
+
+// Order Routes
+app.use('/api/orders', orderRoutes);
 
 
 
@@ -105,14 +109,6 @@ const server = app.listen(3000, '0.0.0.0', () => {
   console.log('Server running on 192.168.24.215:3000');
 });
 
-// const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
-// const server = app.listen(port, '0.0.0.0', () => {
-//   console.log(`Server is running on http://0.0.0.0:${port}`);
-// });
-
-// const server = app.listen(3000, '0.0.0.0', () => {
-//   console.log('Server running on port 3000');
-// });
 
 // Graceful shutdown procedures
 const gracefulShutdown = async (signal: string) => {

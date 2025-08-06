@@ -1,5 +1,6 @@
 import { useState, useEffect, createContext, useContext } from 'react';
 import { User, Organization, GoogleUser, SignupData } from '../types/auth';
+import { AdminService } from '../services/admin.services';
 
 interface AuthContextType {
   user: User | null;
@@ -49,69 +50,80 @@ export const useAuthProvider = () => {
       console.error('Error parsing stored data:', error);
       setAuthMode('login');
     }
-    
+
     setIsLoading(false);
   }, []);
 
   const login = async (email: string, password: string) => {
     setIsLoading(true);
-    // Simulate API call to check credentials
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    // Mock organization check
-    const mockOrg: Organization = {
-      id: '1',
-      name: 'Acme Corporation',
-      domain: 'acme.com',
-      address: '123 Business St',
-      phone: '+1-555-0123',
-      email: 'info@acme.com',
-      settings: {
-        allowUserRegistration: true,
-        requireEmailVerification: false,
-        sessionTimeout: 8
+    try {
+      console.log('Logging in with email:', email);
+      if (!email || !password) {
+        throw new Error('Email and password are required');
       }
-    };
+      // Simulate API call to check credentials
+      const adminService = new AdminService();
+      const response = await adminService.login(email, password);
+      console.log('Login response:', response);
+      // Validate response structure     
 
-    const mockUser: User = {
-      id: '1',
-      email,
-      firstName: 'John',
-      lastName: 'Doe',
-      roles: [{
-        id: '1',
-        name: 'Employee',
-        description: 'Basic access',
-        permissions: [],
-        createdAt: new Date().toISOString()
-      }],
-      createdAt: new Date().toISOString(),
-      isActive: true
-    };
+      if (!response || !response.user || !response.user.organization) {
+        throw new Error('Invalid login response');
+      }
+      const orgDetails = response.user.organization;
+      console.log('Organization details:', orgDetails);
+      const organization: Organization = {
+        id: orgDetails.id,
+        name: orgDetails.name,
+        website: orgDetails.website || '',
+        address: orgDetails.address || '',
+        phone: orgDetails.phone || '',
+        email: orgDetails.email || '',
+        settings: {
+          allowUserRegistration: true,
+          requireEmailVerification: false,
+          sessionTimeout: 8
+        }
+      };
 
-    setUser(mockUser);
-    setOrganization(mockOrg);
-    localStorage.setItem('user_data', JSON.stringify(mockUser));
-    localStorage.setItem('org_data', JSON.stringify(mockOrg));
-    setAuthMode('authenticated');
-    setIsLoading(false);
+      const user: User = {
+        id: response.user.id,
+        email: response.user.email,
+        firstName: response.user.firstName,
+        lastName: response.user.lastName,
+        roles: response.user.role || [],
+        createdAt: response.user.createdAt || new Date().toISOString(),
+        isActive: response.user.isActive !== undefined ? response.user.isActive : true
+      };
+      setUser(user);
+      setOrganization(organization);
+      localStorage.setItem('user_data', JSON.stringify(user));
+      localStorage.setItem('org_data', JSON.stringify(organization));
+      setAuthMode('authenticated');
+    } catch (error) {
+      console.error('Login error:', error);
+      setAuthMode('login');
+      throw error;
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const loginWithGoogle = async (googleUser: GoogleUser) => {
     setIsLoading(true);
     // Simulate API call to check if user's email domain exists in any organization
     await new Promise(resolve => setTimeout(resolve, 1500));
-    
+
     // Check if user's email domain matches any existing organization
     const emailDomain = googleUser.email.split('@')[1];
     const knownDomains = ['acme.com', 'company.com', 'business.org'];
-    
+
     if (knownDomains.includes(emailDomain)) {
       // Organization exists - login user
       const mockOrg: Organization = {
         id: '1',
         name: 'Acme Corporation',
-        domain: emailDomain,
+        website: `https://${emailDomain}`,
         address: '123 Business St',
         phone: '+1-555-0123',
         email: `info@${emailDomain}`,
@@ -149,34 +161,52 @@ export const useAuthProvider = () => {
       localStorage.setItem('google_user_temp', JSON.stringify(googleUser));
       setAuthMode('signup');
     }
-    
+
     setIsLoading(false);
   };
 
   const signup = async (signupData: SignupData) => {
     setIsLoading(true);
     // Simulate API call to create user and organization
-    await new Promise(resolve => setTimeout(resolve, 2000));
+    const adminService = new AdminService();
 
-    const mockOrg: Organization = {
-      id: '1',
-      ...signupData.organization,
+    const orgPayload = {
+      name: signupData.organization.name,
+      email: signupData.organization.email,
+      address: signupData.organization.address,
+      website: signupData.organization.website,
+      adminEmail: signupData.user.email,
+      adminPassword: signupData.user.password || 'defaultPassword123',
+      adminFirstName: signupData.user.firstName,
+      adminLastName: signupData.user.lastName || ''
+    };
+    console.log('Submitting organization data:', orgPayload);
+    const orgDetails = await adminService.createOrganization(orgPayload);
+    console.log('Organization created:', orgDetails);
+
+    const organization: Organization = {
+      id: orgDetails.organizationId,
+      name: orgPayload.name,
+      website: orgPayload.website,
+      address: orgPayload.address,
+      phone: signupData.organization.phone,
+      email: orgPayload.email,
       settings: {
-        allowUserRegistration: false,
-        requireEmailVerification: true,
+        allowUserRegistration: true,
+        requireEmailVerification: false,
         sessionTimeout: 8
       }
     };
 
-    const mockUser: User = {
-      id: '1',
-      email: signupData.user.email,
-      firstName: signupData.user.firstName,
-      lastName: signupData.user.lastName,
+    const user: User = {
+      id: orgDetails.adminUserId,
+      email: orgPayload.adminEmail,
+      firstName: orgPayload.adminFirstName,
+      lastName: orgPayload.adminLastName,
       roles: [{
         id: '1',
-        name: 'Super Admin',
-        description: 'Full system access',
+        name: 'System Administrator',
+        description: 'Full access to all features',
         permissions: [],
         createdAt: new Date().toISOString()
       }],
@@ -184,13 +214,13 @@ export const useAuthProvider = () => {
       isActive: true
     };
 
-    setOrganization(mockOrg);
-    setUser(mockUser);
-    
-    localStorage.setItem('org_data', JSON.stringify(mockOrg));
-    localStorage.setItem('user_data', JSON.stringify(mockUser));
+    setOrganization(organization);
+    setUser(user);
+
+    localStorage.setItem('org_data', JSON.stringify(organization));
+    localStorage.setItem('user_data', JSON.stringify(user));
     setAuthMode('authenticated');
-    
+
     setIsLoading(false);
   };
 

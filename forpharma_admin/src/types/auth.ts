@@ -28,7 +28,7 @@ export interface Permission {
 export interface Organization {
   id: string;
   name: string;
-  domain: string;
+  website: string;
   address: string;
   phone: string;
   email: string;
@@ -50,7 +50,7 @@ export interface AdminSetup {
   };
   organization: {
     name: string;
-    domain: string;
+    website: string;
     address: string;
     phone: string;
     email: string;
@@ -76,7 +76,7 @@ export interface SignupData {
   };
   organization: {
     name: string;
-    domain: string;
+    website: string;
     address: string;
     phone: string;
     email: string;
@@ -94,4 +94,5 @@ interface AuthContextType {
   signup: (signupData: SignupData) => Promise<void>;
   logout: () => void;
   setAuthMode: (mode: 'login' | 'signup' | 'setup' | 'authenticated') => void;
+  completeSetup: (setupData: AdminSetup) => Promise<void>;
 }

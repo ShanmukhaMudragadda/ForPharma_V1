@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { useAuthProvider, AuthContext } from './hooks/useAuth';
 import Login from './components/Auth/Login';
 import Signup from './components/Auth/Signup';
@@ -12,6 +13,7 @@ import DoctorsView from './components/Data/DoctorsView';
 import ChemistsView from './components/Data/ChemistsView';
 import HospitalsView from './components/Data/HospitalsView';
 import TerritoriesView from './components/Data/TerritoriesView';
+import ResetPassword from './Pages/ActivateAccount';
 
 function App() {
   const auth = useAuthProvider();
@@ -83,24 +85,35 @@ function App() {
 
   return (
     <AuthContext.Provider value={auth}>
-      <div className="min-h-screen bg-background-tertiary">
-        <div className="flex">
-          <Sidebar
-            activeTab={activeTab}
-            onTabChange={setActiveTab}
+      <Routes>
+        <Route path="/activate-account" element={<ResetPassword />} />
+
+        {/* ✅ Protected app layout */}
+        {auth.isAuthenticated && (
+          <Route
+            path="*"
+            element={
+              <div className="min-h-screen bg-background-tertiary">
+                <div className="flex">
+                  <Sidebar activeTab={activeTab} onTabChange={setActiveTab} />
+                  <div className="flex-1 min-w-0 flex flex-col ml-64">
+                    <Header />
+                    <main className="flex-1 p-6 overflow-auto bg-background-tertiary">
+                      {renderContent()}
+                    </main>
+                  </div>
+                </div>
+              </div>
+            }
           />
-        
-          <div className="flex-1 min-w-0 flex flex-col ml-64">
-            <Header />
-          
-            <main className="flex-1 p-6 overflow-auto bg-background-tertiary">
-              {renderContent()}
-            </main>
-          </div>
-        </div>
-      </div>
+        )}
+
+        {/* ✅ Catch-all redirect if not logged in */}
+        {!auth.isAuthenticated && <Route path="*" element={<Navigate to="/" />} />}
+      </Routes>
     </AuthContext.Provider>
   );
+
 }
 
 export default App;

@@ -17,29 +17,30 @@ import {
 } from '../controllers/doctors/doctorHospitalAssociation'
 
 import {
-
-
-
-
     // DoctorConsultationSchedule
     createDoctorConsultationSchedule,
     getDoctorSchedules,
     updateDoctorConsultationSchedule,
     deleteDoctorConsultationSchedule,
     toggleScheduleStatus,
+} from '../controllers/doctors/doctorConsultationController'
+
+import {
     // DoctorNote
     createDoctorNote,
     getNotesForDoctor,
     getNotesByEmployee,
     updateDoctorNote,
     deleteDoctorNote,
+} from '../controllers/doctors/doctorNoteController'
+import {
     // DoctorInteraction
     createDoctorInteraction,
     getInteractionsForDoctor,
     getInteractionsByEmployee,
     updateDoctorInteraction,
     deleteDoctorInteraction
-} from '../controllers/doctorController';
+} from '../controllers/doctors/doctorIntreactionController'
 import tenantMiddleware from '../middlewares/tenantMiddleware';
 
 const router = express.Router();

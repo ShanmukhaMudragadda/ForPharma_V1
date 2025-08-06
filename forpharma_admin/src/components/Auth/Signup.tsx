@@ -18,7 +18,7 @@ const Signup: React.FC = () => {
     },
     organization: {
       name: '',
-      domain: '',
+      website: '',
       address: '',
       phone: '',
       email: ''
@@ -82,7 +82,33 @@ const Signup: React.FC = () => {
   };
 
   const handleSubmit = async () => {
-    await signup(signupData);
+    
+    try {
+      // Prepare data for API
+      // Prepare data for API in signupData format
+      const orgPayload = {
+        user: {
+          firstName: signupData.user.firstName,
+          lastName: signupData.user.lastName,
+          email: signupData.user.email,
+          password: signupData.user.password ?? '',
+          isGoogleAuth: signupData.user.isGoogleAuth
+        },
+        organization: {
+          name: signupData.organization.name,
+          website: signupData.organization.website,
+          address: signupData.organization.address,
+          phone: signupData.organization.phone,
+          email: signupData.organization.email
+        }
+      };
+      console.log('Submitting organization data:', orgPayload);
+      
+      await signup(orgPayload);
+    } catch (error) {
+      console.error('Signup failed:', error);
+    }
+    console.log('Submitting signup data:', signupData);
   };
 
   const handleGoogleSuccess = async (googleUser: any) => {
@@ -128,28 +154,26 @@ const Signup: React.FC = () => {
               const Icon = step.icon;
               const isActive = currentStep === step.id;
               const isCompleted = currentStep > step.id;
-              
+
               return (
                 <React.Fragment key={step.id}>
                   <div className="flex flex-col items-center">
                     <div className={`
                       w-12 h-12 rounded-full flex items-center justify-center mb-2
-                      ${isCompleted ? 'bg-success text-white' : 
-                        isActive ? 'bg-primary-500 text-white' : 
-                        'bg-gray-200 text-text-secondary'}
+                      ${isCompleted ? 'bg-success text-white' :
+                        isActive ? 'bg-primary-500 text-white' :
+                          'bg-gray-200 text-text-secondary'}
                     `}>
                       <Icon className="w-6 h-6" />
                     </div>
-                    <span className={`text-sm font-medium ${
-                      isActive ? 'text-primary-500' : 'text-text-secondary'
-                    }`}>
+                    <span className={`text-sm font-medium ${isActive ? 'text-primary-500' : 'text-text-secondary'
+                      }`}>
                       {step.title}
                     </span>
                   </div>
                   {index < steps.length - 1 && (
-                    <div className={`w-16 h-0.5 mb-6 mx-4 ${
-                      currentStep > step.id ? 'bg-success' : 'bg-gray-200'
-                    }`} />
+                    <div className={`w-16 h-0.5 mb-6 mx-4 ${currentStep > step.id ? 'bg-success' : 'bg-gray-200'
+                      }`} />
                   )}
                 </React.Fragment>
               );
@@ -167,7 +191,7 @@ const Signup: React.FC = () => {
               {!isGoogleUser && (
                 <>
                   <GoogleAuthButton onSuccess={handleGoogleSuccess} />
-                  
+
                   <div className="relative my-6">
                     <div className="absolute inset-0 flex items-center">
                       <div className="w-full border-t border-border"></div>
@@ -283,12 +307,12 @@ const Signup: React.FC = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <label className="block text-sm font-medium text-text-primary mb-2">
-                      Domain
+                      Website
                     </label>
                     <input
                       type="text"
-                      value={signupData.organization.domain}
-                      onChange={(e) => updateOrgData('domain', e.target.value)}
+                      value={signupData.organization.website}
+                      onChange={(e) => updateOrgData('website', e.target.value)}
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                       placeholder="example.com"
                       required

@@ -3469,11 +3469,11 @@ export namespace Prisma {
 
   export type OrganizationWhereUniqueInput = Prisma.AtLeast<{
     id?: string
+    name?: string
     schemaName?: string
     AND?: OrganizationWhereInput | OrganizationWhereInput[]
     OR?: OrganizationWhereInput[]
     NOT?: OrganizationWhereInput | OrganizationWhereInput[]
-    name?: StringFilter<"Organization"> | string
     address?: StringNullableFilter<"Organization"> | string | null
     contactEmail?: StringFilter<"Organization"> | string
     contactPhone?: StringNullableFilter<"Organization"> | string | null
@@ -3483,7 +3483,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Organization"> | Date | string
     isActive?: BoolFilter<"Organization"> | boolean
     user?: UserListRelationFilter
-  }, "id" | "schemaName">
+  }, "id" | "name" | "schemaName">
 
   export type OrganizationOrderByWithAggregationInput = {
     id?: SortOrder

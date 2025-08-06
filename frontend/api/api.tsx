@@ -1,39 +1,3 @@
-// // frontend/api/api.ts
-// import axios from 'axios';
-
-// const API_BASE_URL = 'http://192.168.11.22:3000'; // <-- Replace with your backend URL
-
-// export interface LoginResponse {
-//   token: string;
-//   user: {
-//     id: string;
-//     email: string;
-//     firstName: string;
-//     lastName: string;
-//     role: string;
-//     organization: {
-//       id: string;
-//       name: string;
-//     };
-//   };
-// }
-
-// export async function loginWithEmail(email: string, password: string): Promise<LoginResponse> {
-//   console.log("inside login with email ")
-//   const response = await axios.post(`${API_BASE_URL}/api/user/login`, {
-//     email,
-//     password,
-//   });
-//   return response.data;
-// }
-// export async function loginWithGoogle(idToken: string): Promise<LoginResponse> {
-//   const response = await axios.post(`${API_BASE_URL}/api/auth/googlelogin`, {
-//     idToken,
-//   });
-//   return response.data;
-// }
-
-
 
 import axios from 'axios';
 import axiosInstance from './axiosConfig'; // Import the configured Axios instance
@@ -79,7 +43,7 @@ export async function loginWithEmail(email: string, password: string): Promise<L
  * @returns A promise that resolves to the login response data.
  */
 export async function loginWithGoogle(idToken: string): Promise<LoginResponse> {
-  const response = await axiosInstance.post(`/api/auth/googlelogin`, {
+  const response = await axiosInstance.post(`/api/user/google_login`, {
     idToken,
   });
   return response.data;

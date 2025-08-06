@@ -6,25 +6,35 @@ import {
     updateChemist,
     deleteChemist,
     getChemistListController,
-    getChemistDetails,
+    getChemistDetails
+} from '../controllers/chemists/chemistController'
+
+import {
     // ChemistNote Controllers
     createChemistNote,
     getNotesForChemist,
     getChemistNotesByEmployee,
     updateChemistNote,
-    deleteChemistNote,
+    deleteChemistNote
+} from '../controllers/chemists/chemistNoteController'
+
+import {
     // ChemistInteraction Controllers
     createChemistInteraction,
     getInteractionsForChemist,
     getChemistInteractionsByEmployee,
     updateChemistInteraction,
     deleteChemistInteraction,
+} from '../controllers/chemists/chemistInteractionController'
+import {
+
+
     // DoctorChemistRelation Controllers
     createDoctorChemistRelation,
     getChemistsForDoctor,
     getDoctorsForChemist,
     deleteDoctorChemistRelation
-} from '../controllers/chemistController';
+} from '../controllers/chemists/doctorChemistRelationController'
 
 const router = express.Router();
 const schemaService = SchemaManagementService.getInstance();
