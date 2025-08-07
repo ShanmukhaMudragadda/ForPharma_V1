@@ -287,11 +287,8 @@ export type InteractionType = (typeof InteractionType)[keyof typeof InteractionT
 
 
 export const OrderStatus: {
-  PENDING: 'PENDING',
   CONFIRMED: 'CONFIRMED',
-  DISPATCHED: 'DISPATCHED',
-  DELIVERED: 'DELIVERED',
-  CANCELLED: 'CANCELLED'
+  DRAFT: 'DRAFT'
 };
 
 export type OrderStatus = (typeof OrderStatus)[keyof typeof OrderStatus]
@@ -352,6 +349,14 @@ export const ChemistType: {
 
 export type ChemistType = (typeof ChemistType)[keyof typeof ChemistType]
 
+
+export const ReportingPeriod: {
+  WEEKLY: 'WEEKLY',
+  MONTHLY: 'MONTHLY'
+};
+
+export type ReportingPeriod = (typeof ReportingPeriod)[keyof typeof ReportingPeriod]
+
 }
 
 export type EmployeeRole = $Enums.EmployeeRole
@@ -409,6 +414,10 @@ export const TaskTypeReference: typeof $Enums.TaskTypeReference
 export type ChemistType = $Enums.ChemistType
 
 export const ChemistType: typeof $Enums.ChemistType
+
+export type ReportingPeriod = $Enums.ReportingPeriod
+
+export const ReportingPeriod: typeof $Enums.ReportingPeriod
 
 /**
  * ##  Prisma Client ʲˢ
@@ -31874,8 +31883,18 @@ export namespace Prisma {
 
   export type AggregateRcpaReport = {
     _count: RcpaReportCountAggregateOutputType | null
+    _avg: RcpaReportAvgAggregateOutputType | null
+    _sum: RcpaReportSumAggregateOutputType | null
     _min: RcpaReportMinAggregateOutputType | null
     _max: RcpaReportMaxAggregateOutputType | null
+  }
+
+  export type RcpaReportAvgAggregateOutputType = {
+    totalPrescription: number | null
+  }
+
+  export type RcpaReportSumAggregateOutputType = {
+    totalPrescription: number | null
   }
 
   export type RcpaReportMinAggregateOutputType = {
@@ -31883,6 +31902,10 @@ export namespace Prisma {
     organizationId: string | null
     employeeId: string | null
     chemistId: string | null
+    reportingPeriod: $Enums.ReportingPeriod | null
+    startDate: Date | null
+    endDate: Date | null
+    totalPrescription: number | null
     remarks: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -31893,6 +31916,10 @@ export namespace Prisma {
     organizationId: string | null
     employeeId: string | null
     chemistId: string | null
+    reportingPeriod: $Enums.ReportingPeriod | null
+    startDate: Date | null
+    endDate: Date | null
+    totalPrescription: number | null
     remarks: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -31903,6 +31930,10 @@ export namespace Prisma {
     organizationId: number
     employeeId: number
     chemistId: number
+    reportingPeriod: number
+    startDate: number
+    endDate: number
+    totalPrescription: number
     remarks: number
     createdAt: number
     updatedAt: number
@@ -31910,11 +31941,23 @@ export namespace Prisma {
   }
 
 
+  export type RcpaReportAvgAggregateInputType = {
+    totalPrescription?: true
+  }
+
+  export type RcpaReportSumAggregateInputType = {
+    totalPrescription?: true
+  }
+
   export type RcpaReportMinAggregateInputType = {
     id?: true
     organizationId?: true
     employeeId?: true
     chemistId?: true
+    reportingPeriod?: true
+    startDate?: true
+    endDate?: true
+    totalPrescription?: true
     remarks?: true
     createdAt?: true
     updatedAt?: true
@@ -31925,6 +31968,10 @@ export namespace Prisma {
     organizationId?: true
     employeeId?: true
     chemistId?: true
+    reportingPeriod?: true
+    startDate?: true
+    endDate?: true
+    totalPrescription?: true
     remarks?: true
     createdAt?: true
     updatedAt?: true
@@ -31935,6 +31982,10 @@ export namespace Prisma {
     organizationId?: true
     employeeId?: true
     chemistId?: true
+    reportingPeriod?: true
+    startDate?: true
+    endDate?: true
+    totalPrescription?: true
     remarks?: true
     createdAt?: true
     updatedAt?: true
@@ -31979,6 +32030,18 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
+     * Select which fields to average
+    **/
+    _avg?: RcpaReportAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: RcpaReportSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: RcpaReportMinAggregateInputType
@@ -32009,6 +32072,8 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: RcpaReportCountAggregateInputType | true
+    _avg?: RcpaReportAvgAggregateInputType
+    _sum?: RcpaReportSumAggregateInputType
     _min?: RcpaReportMinAggregateInputType
     _max?: RcpaReportMaxAggregateInputType
   }
@@ -32018,10 +32083,16 @@ export namespace Prisma {
     organizationId: string
     employeeId: string
     chemistId: string
+    reportingPeriod: $Enums.ReportingPeriod
+    startDate: Date
+    endDate: Date
+    totalPrescription: number | null
     remarks: string | null
     createdAt: Date
     updatedAt: Date
     _count: RcpaReportCountAggregateOutputType | null
+    _avg: RcpaReportAvgAggregateOutputType | null
+    _sum: RcpaReportSumAggregateOutputType | null
     _min: RcpaReportMinAggregateOutputType | null
     _max: RcpaReportMaxAggregateOutputType | null
   }
@@ -32045,6 +32116,10 @@ export namespace Prisma {
     organizationId?: boolean
     employeeId?: boolean
     chemistId?: boolean
+    reportingPeriod?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    totalPrescription?: boolean
     remarks?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -32059,6 +32134,10 @@ export namespace Prisma {
     organizationId?: boolean
     employeeId?: boolean
     chemistId?: boolean
+    reportingPeriod?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    totalPrescription?: boolean
     remarks?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -32071,6 +32150,10 @@ export namespace Prisma {
     organizationId?: boolean
     employeeId?: boolean
     chemistId?: boolean
+    reportingPeriod?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    totalPrescription?: boolean
     remarks?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -32083,12 +32166,16 @@ export namespace Prisma {
     organizationId?: boolean
     employeeId?: boolean
     chemistId?: boolean
+    reportingPeriod?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    totalPrescription?: boolean
     remarks?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type RcpaReportOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "organizationId" | "employeeId" | "chemistId" | "remarks" | "createdAt" | "updatedAt", ExtArgs["result"]["rcpaReport"]>
+  export type RcpaReportOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "organizationId" | "employeeId" | "chemistId" | "reportingPeriod" | "startDate" | "endDate" | "totalPrescription" | "remarks" | "createdAt" | "updatedAt", ExtArgs["result"]["rcpaReport"]>
   export type RcpaReportInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     employee?: boolean | EmployeeDefaultArgs<ExtArgs>
     chemist?: boolean | ChemistDefaultArgs<ExtArgs>
@@ -32116,6 +32203,10 @@ export namespace Prisma {
       organizationId: string
       employeeId: string
       chemistId: string
+      reportingPeriod: $Enums.ReportingPeriod
+      startDate: Date
+      endDate: Date
+      totalPrescription: number | null
       remarks: string | null
       createdAt: Date
       updatedAt: Date
@@ -32549,6 +32640,10 @@ export namespace Prisma {
     readonly organizationId: FieldRef<"RcpaReport", 'String'>
     readonly employeeId: FieldRef<"RcpaReport", 'String'>
     readonly chemistId: FieldRef<"RcpaReport", 'String'>
+    readonly reportingPeriod: FieldRef<"RcpaReport", 'ReportingPeriod'>
+    readonly startDate: FieldRef<"RcpaReport", 'DateTime'>
+    readonly endDate: FieldRef<"RcpaReport", 'DateTime'>
+    readonly totalPrescription: FieldRef<"RcpaReport", 'Int'>
     readonly remarks: FieldRef<"RcpaReport", 'String'>
     readonly createdAt: FieldRef<"RcpaReport", 'DateTime'>
     readonly updatedAt: FieldRef<"RcpaReport", 'DateTime'>
@@ -33019,6 +33114,8 @@ export namespace Prisma {
     competitorDrugName: string | null
     ownQuantity: number | null
     competitorQuantity: number | null
+    ownPackSize: string | null
+    competitorPackSize: string | null
     createdAt: Date | null
   }
 
@@ -33029,6 +33126,8 @@ export namespace Prisma {
     competitorDrugName: string | null
     ownQuantity: number | null
     competitorQuantity: number | null
+    ownPackSize: string | null
+    competitorPackSize: string | null
     createdAt: Date | null
   }
 
@@ -33039,6 +33138,8 @@ export namespace Prisma {
     competitorDrugName: number
     ownQuantity: number
     competitorQuantity: number
+    ownPackSize: number
+    competitorPackSize: number
     createdAt: number
     _all: number
   }
@@ -33061,6 +33162,8 @@ export namespace Prisma {
     competitorDrugName?: true
     ownQuantity?: true
     competitorQuantity?: true
+    ownPackSize?: true
+    competitorPackSize?: true
     createdAt?: true
   }
 
@@ -33071,6 +33174,8 @@ export namespace Prisma {
     competitorDrugName?: true
     ownQuantity?: true
     competitorQuantity?: true
+    ownPackSize?: true
+    competitorPackSize?: true
     createdAt?: true
   }
 
@@ -33081,6 +33186,8 @@ export namespace Prisma {
     competitorDrugName?: true
     ownQuantity?: true
     competitorQuantity?: true
+    ownPackSize?: true
+    competitorPackSize?: true
     createdAt?: true
     _all?: true
   }
@@ -33178,6 +33285,8 @@ export namespace Prisma {
     competitorDrugName: string | null
     ownQuantity: number
     competitorQuantity: number
+    ownPackSize: string
+    competitorPackSize: string
     createdAt: Date
     _count: RcpaDrugDataCountAggregateOutputType | null
     _avg: RcpaDrugDataAvgAggregateOutputType | null
@@ -33207,6 +33316,8 @@ export namespace Prisma {
     competitorDrugName?: boolean
     ownQuantity?: boolean
     competitorQuantity?: boolean
+    ownPackSize?: boolean
+    competitorPackSize?: boolean
     createdAt?: boolean
     rcpaReport?: boolean | RcpaReportDefaultArgs<ExtArgs>
     drug?: boolean | RcpaDrugData$drugArgs<ExtArgs>
@@ -33219,6 +33330,8 @@ export namespace Prisma {
     competitorDrugName?: boolean
     ownQuantity?: boolean
     competitorQuantity?: boolean
+    ownPackSize?: boolean
+    competitorPackSize?: boolean
     createdAt?: boolean
     rcpaReport?: boolean | RcpaReportDefaultArgs<ExtArgs>
     drug?: boolean | RcpaDrugData$drugArgs<ExtArgs>
@@ -33231,6 +33344,8 @@ export namespace Prisma {
     competitorDrugName?: boolean
     ownQuantity?: boolean
     competitorQuantity?: boolean
+    ownPackSize?: boolean
+    competitorPackSize?: boolean
     createdAt?: boolean
     rcpaReport?: boolean | RcpaReportDefaultArgs<ExtArgs>
     drug?: boolean | RcpaDrugData$drugArgs<ExtArgs>
@@ -33243,10 +33358,12 @@ export namespace Prisma {
     competitorDrugName?: boolean
     ownQuantity?: boolean
     competitorQuantity?: boolean
+    ownPackSize?: boolean
+    competitorPackSize?: boolean
     createdAt?: boolean
   }
 
-  export type RcpaDrugDataOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "rcpaReportId" | "drugId" | "competitorDrugName" | "ownQuantity" | "competitorQuantity" | "createdAt", ExtArgs["result"]["rcpaDrugData"]>
+  export type RcpaDrugDataOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "rcpaReportId" | "drugId" | "competitorDrugName" | "ownQuantity" | "competitorQuantity" | "ownPackSize" | "competitorPackSize" | "createdAt", ExtArgs["result"]["rcpaDrugData"]>
   export type RcpaDrugDataInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     rcpaReport?: boolean | RcpaReportDefaultArgs<ExtArgs>
     drug?: boolean | RcpaDrugData$drugArgs<ExtArgs>
@@ -33273,6 +33390,8 @@ export namespace Prisma {
       competitorDrugName: string | null
       ownQuantity: number
       competitorQuantity: number
+      ownPackSize: string
+      competitorPackSize: string
       createdAt: Date
     }, ExtArgs["result"]["rcpaDrugData"]>
     composites: {}
@@ -33705,6 +33824,8 @@ export namespace Prisma {
     readonly competitorDrugName: FieldRef<"RcpaDrugData", 'String'>
     readonly ownQuantity: FieldRef<"RcpaDrugData", 'Int'>
     readonly competitorQuantity: FieldRef<"RcpaDrugData", 'Int'>
+    readonly ownPackSize: FieldRef<"RcpaDrugData", 'String'>
+    readonly competitorPackSize: FieldRef<"RcpaDrugData", 'String'>
     readonly createdAt: FieldRef<"RcpaDrugData", 'DateTime'>
   }
     
@@ -54226,6 +54347,10 @@ export namespace Prisma {
     organizationId: 'organizationId',
     employeeId: 'employeeId',
     chemistId: 'chemistId',
+    reportingPeriod: 'reportingPeriod',
+    startDate: 'startDate',
+    endDate: 'endDate',
+    totalPrescription: 'totalPrescription',
     remarks: 'remarks',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
@@ -54241,6 +54366,8 @@ export namespace Prisma {
     competitorDrugName: 'competitorDrugName',
     ownQuantity: 'ownQuantity',
     competitorQuantity: 'competitorQuantity',
+    ownPackSize: 'ownPackSize',
+    competitorPackSize: 'competitorPackSize',
     createdAt: 'createdAt'
   };
 
@@ -54724,6 +54851,20 @@ export namespace Prisma {
    * Reference to a field of type 'TaskTypeReference[]'
    */
   export type ListEnumTaskTypeReferenceFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TaskTypeReference[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'ReportingPeriod'
+   */
+  export type EnumReportingPeriodFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ReportingPeriod'>
+    
+
+
+  /**
+   * Reference to a field of type 'ReportingPeriod[]'
+   */
+  export type ListEnumReportingPeriodFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ReportingPeriod[]'>
     
 
 
@@ -56821,6 +56962,10 @@ export namespace Prisma {
     organizationId?: StringFilter<"RcpaReport"> | string
     employeeId?: StringFilter<"RcpaReport"> | string
     chemistId?: StringFilter<"RcpaReport"> | string
+    reportingPeriod?: EnumReportingPeriodFilter<"RcpaReport"> | $Enums.ReportingPeriod
+    startDate?: DateTimeFilter<"RcpaReport"> | Date | string
+    endDate?: DateTimeFilter<"RcpaReport"> | Date | string
+    totalPrescription?: IntNullableFilter<"RcpaReport"> | number | null
     remarks?: StringNullableFilter<"RcpaReport"> | string | null
     createdAt?: DateTimeFilter<"RcpaReport"> | Date | string
     updatedAt?: DateTimeFilter<"RcpaReport"> | Date | string
@@ -56834,6 +56979,10 @@ export namespace Prisma {
     organizationId?: SortOrder
     employeeId?: SortOrder
     chemistId?: SortOrder
+    reportingPeriod?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    totalPrescription?: SortOrderInput | SortOrder
     remarks?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -56850,6 +56999,10 @@ export namespace Prisma {
     organizationId?: StringFilter<"RcpaReport"> | string
     employeeId?: StringFilter<"RcpaReport"> | string
     chemistId?: StringFilter<"RcpaReport"> | string
+    reportingPeriod?: EnumReportingPeriodFilter<"RcpaReport"> | $Enums.ReportingPeriod
+    startDate?: DateTimeFilter<"RcpaReport"> | Date | string
+    endDate?: DateTimeFilter<"RcpaReport"> | Date | string
+    totalPrescription?: IntNullableFilter<"RcpaReport"> | number | null
     remarks?: StringNullableFilter<"RcpaReport"> | string | null
     createdAt?: DateTimeFilter<"RcpaReport"> | Date | string
     updatedAt?: DateTimeFilter<"RcpaReport"> | Date | string
@@ -56863,12 +57016,18 @@ export namespace Prisma {
     organizationId?: SortOrder
     employeeId?: SortOrder
     chemistId?: SortOrder
+    reportingPeriod?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    totalPrescription?: SortOrderInput | SortOrder
     remarks?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: RcpaReportCountOrderByAggregateInput
+    _avg?: RcpaReportAvgOrderByAggregateInput
     _max?: RcpaReportMaxOrderByAggregateInput
     _min?: RcpaReportMinOrderByAggregateInput
+    _sum?: RcpaReportSumOrderByAggregateInput
   }
 
   export type RcpaReportScalarWhereWithAggregatesInput = {
@@ -56879,6 +57038,10 @@ export namespace Prisma {
     organizationId?: StringWithAggregatesFilter<"RcpaReport"> | string
     employeeId?: StringWithAggregatesFilter<"RcpaReport"> | string
     chemistId?: StringWithAggregatesFilter<"RcpaReport"> | string
+    reportingPeriod?: EnumReportingPeriodWithAggregatesFilter<"RcpaReport"> | $Enums.ReportingPeriod
+    startDate?: DateTimeWithAggregatesFilter<"RcpaReport"> | Date | string
+    endDate?: DateTimeWithAggregatesFilter<"RcpaReport"> | Date | string
+    totalPrescription?: IntNullableWithAggregatesFilter<"RcpaReport"> | number | null
     remarks?: StringNullableWithAggregatesFilter<"RcpaReport"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"RcpaReport"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"RcpaReport"> | Date | string
@@ -56894,6 +57057,8 @@ export namespace Prisma {
     competitorDrugName?: StringNullableFilter<"RcpaDrugData"> | string | null
     ownQuantity?: IntFilter<"RcpaDrugData"> | number
     competitorQuantity?: IntFilter<"RcpaDrugData"> | number
+    ownPackSize?: StringFilter<"RcpaDrugData"> | string
+    competitorPackSize?: StringFilter<"RcpaDrugData"> | string
     createdAt?: DateTimeFilter<"RcpaDrugData"> | Date | string
     rcpaReport?: XOR<RcpaReportScalarRelationFilter, RcpaReportWhereInput>
     drug?: XOR<DrugNullableScalarRelationFilter, DrugWhereInput> | null
@@ -56906,6 +57071,8 @@ export namespace Prisma {
     competitorDrugName?: SortOrderInput | SortOrder
     ownQuantity?: SortOrder
     competitorQuantity?: SortOrder
+    ownPackSize?: SortOrder
+    competitorPackSize?: SortOrder
     createdAt?: SortOrder
     rcpaReport?: RcpaReportOrderByWithRelationInput
     drug?: DrugOrderByWithRelationInput
@@ -56921,6 +57088,8 @@ export namespace Prisma {
     competitorDrugName?: StringNullableFilter<"RcpaDrugData"> | string | null
     ownQuantity?: IntFilter<"RcpaDrugData"> | number
     competitorQuantity?: IntFilter<"RcpaDrugData"> | number
+    ownPackSize?: StringFilter<"RcpaDrugData"> | string
+    competitorPackSize?: StringFilter<"RcpaDrugData"> | string
     createdAt?: DateTimeFilter<"RcpaDrugData"> | Date | string
     rcpaReport?: XOR<RcpaReportScalarRelationFilter, RcpaReportWhereInput>
     drug?: XOR<DrugNullableScalarRelationFilter, DrugWhereInput> | null
@@ -56933,6 +57102,8 @@ export namespace Prisma {
     competitorDrugName?: SortOrderInput | SortOrder
     ownQuantity?: SortOrder
     competitorQuantity?: SortOrder
+    ownPackSize?: SortOrder
+    competitorPackSize?: SortOrder
     createdAt?: SortOrder
     _count?: RcpaDrugDataCountOrderByAggregateInput
     _avg?: RcpaDrugDataAvgOrderByAggregateInput
@@ -56951,6 +57122,8 @@ export namespace Prisma {
     competitorDrugName?: StringNullableWithAggregatesFilter<"RcpaDrugData"> | string | null
     ownQuantity?: IntWithAggregatesFilter<"RcpaDrugData"> | number
     competitorQuantity?: IntWithAggregatesFilter<"RcpaDrugData"> | number
+    ownPackSize?: StringWithAggregatesFilter<"RcpaDrugData"> | string
+    competitorPackSize?: StringWithAggregatesFilter<"RcpaDrugData"> | string
     createdAt?: DateTimeWithAggregatesFilter<"RcpaDrugData"> | Date | string
   }
 
@@ -60573,6 +60746,10 @@ export namespace Prisma {
   export type RcpaReportCreateInput = {
     id?: string
     organizationId: string
+    reportingPeriod: $Enums.ReportingPeriod
+    startDate: Date | string
+    endDate: Date | string
+    totalPrescription?: number | null
     remarks?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -60586,6 +60763,10 @@ export namespace Prisma {
     organizationId: string
     employeeId: string
     chemistId: string
+    reportingPeriod: $Enums.ReportingPeriod
+    startDate: Date | string
+    endDate: Date | string
+    totalPrescription?: number | null
     remarks?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -60595,6 +60776,10 @@ export namespace Prisma {
   export type RcpaReportUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     organizationId?: StringFieldUpdateOperationsInput | string
+    reportingPeriod?: EnumReportingPeriodFieldUpdateOperationsInput | $Enums.ReportingPeriod
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    totalPrescription?: NullableIntFieldUpdateOperationsInput | number | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -60608,6 +60793,10 @@ export namespace Prisma {
     organizationId?: StringFieldUpdateOperationsInput | string
     employeeId?: StringFieldUpdateOperationsInput | string
     chemistId?: StringFieldUpdateOperationsInput | string
+    reportingPeriod?: EnumReportingPeriodFieldUpdateOperationsInput | $Enums.ReportingPeriod
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    totalPrescription?: NullableIntFieldUpdateOperationsInput | number | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -60619,6 +60808,10 @@ export namespace Prisma {
     organizationId: string
     employeeId: string
     chemistId: string
+    reportingPeriod: $Enums.ReportingPeriod
+    startDate: Date | string
+    endDate: Date | string
+    totalPrescription?: number | null
     remarks?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -60627,6 +60820,10 @@ export namespace Prisma {
   export type RcpaReportUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     organizationId?: StringFieldUpdateOperationsInput | string
+    reportingPeriod?: EnumReportingPeriodFieldUpdateOperationsInput | $Enums.ReportingPeriod
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    totalPrescription?: NullableIntFieldUpdateOperationsInput | number | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -60637,6 +60834,10 @@ export namespace Prisma {
     organizationId?: StringFieldUpdateOperationsInput | string
     employeeId?: StringFieldUpdateOperationsInput | string
     chemistId?: StringFieldUpdateOperationsInput | string
+    reportingPeriod?: EnumReportingPeriodFieldUpdateOperationsInput | $Enums.ReportingPeriod
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    totalPrescription?: NullableIntFieldUpdateOperationsInput | number | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -60647,6 +60848,8 @@ export namespace Prisma {
     competitorDrugName?: string | null
     ownQuantity: number
     competitorQuantity: number
+    ownPackSize: string
+    competitorPackSize: string
     createdAt?: Date | string
     rcpaReport: RcpaReportCreateNestedOneWithoutDrugDataInput
     drug?: DrugCreateNestedOneWithoutRcpaDataInput
@@ -60659,6 +60862,8 @@ export namespace Prisma {
     competitorDrugName?: string | null
     ownQuantity: number
     competitorQuantity: number
+    ownPackSize: string
+    competitorPackSize: string
     createdAt?: Date | string
   }
 
@@ -60667,6 +60872,8 @@ export namespace Prisma {
     competitorDrugName?: NullableStringFieldUpdateOperationsInput | string | null
     ownQuantity?: IntFieldUpdateOperationsInput | number
     competitorQuantity?: IntFieldUpdateOperationsInput | number
+    ownPackSize?: StringFieldUpdateOperationsInput | string
+    competitorPackSize?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     rcpaReport?: RcpaReportUpdateOneRequiredWithoutDrugDataNestedInput
     drug?: DrugUpdateOneWithoutRcpaDataNestedInput
@@ -60679,6 +60886,8 @@ export namespace Prisma {
     competitorDrugName?: NullableStringFieldUpdateOperationsInput | string | null
     ownQuantity?: IntFieldUpdateOperationsInput | number
     competitorQuantity?: IntFieldUpdateOperationsInput | number
+    ownPackSize?: StringFieldUpdateOperationsInput | string
+    competitorPackSize?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -60689,6 +60898,8 @@ export namespace Prisma {
     competitorDrugName?: string | null
     ownQuantity: number
     competitorQuantity: number
+    ownPackSize: string
+    competitorPackSize: string
     createdAt?: Date | string
   }
 
@@ -60697,6 +60908,8 @@ export namespace Prisma {
     competitorDrugName?: NullableStringFieldUpdateOperationsInput | string | null
     ownQuantity?: IntFieldUpdateOperationsInput | number
     competitorQuantity?: IntFieldUpdateOperationsInput | number
+    ownPackSize?: StringFieldUpdateOperationsInput | string
+    competitorPackSize?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -60707,6 +60920,8 @@ export namespace Prisma {
     competitorDrugName?: NullableStringFieldUpdateOperationsInput | string | null
     ownQuantity?: IntFieldUpdateOperationsInput | number
     competitorQuantity?: IntFieldUpdateOperationsInput | number
+    ownPackSize?: StringFieldUpdateOperationsInput | string
+    competitorPackSize?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -63943,14 +64158,29 @@ export namespace Prisma {
     _max?: NestedEnumTaskTypeReferenceNullableFilter<$PrismaModel>
   }
 
+  export type EnumReportingPeriodFilter<$PrismaModel = never> = {
+    equals?: $Enums.ReportingPeriod | EnumReportingPeriodFieldRefInput<$PrismaModel>
+    in?: $Enums.ReportingPeriod[] | ListEnumReportingPeriodFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ReportingPeriod[] | ListEnumReportingPeriodFieldRefInput<$PrismaModel>
+    not?: NestedEnumReportingPeriodFilter<$PrismaModel> | $Enums.ReportingPeriod
+  }
+
   export type RcpaReportCountOrderByAggregateInput = {
     id?: SortOrder
     organizationId?: SortOrder
     employeeId?: SortOrder
     chemistId?: SortOrder
+    reportingPeriod?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    totalPrescription?: SortOrder
     remarks?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+  }
+
+  export type RcpaReportAvgOrderByAggregateInput = {
+    totalPrescription?: SortOrder
   }
 
   export type RcpaReportMaxOrderByAggregateInput = {
@@ -63958,6 +64188,10 @@ export namespace Prisma {
     organizationId?: SortOrder
     employeeId?: SortOrder
     chemistId?: SortOrder
+    reportingPeriod?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    totalPrescription?: SortOrder
     remarks?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -63968,9 +64202,27 @@ export namespace Prisma {
     organizationId?: SortOrder
     employeeId?: SortOrder
     chemistId?: SortOrder
+    reportingPeriod?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    totalPrescription?: SortOrder
     remarks?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+  }
+
+  export type RcpaReportSumOrderByAggregateInput = {
+    totalPrescription?: SortOrder
+  }
+
+  export type EnumReportingPeriodWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ReportingPeriod | EnumReportingPeriodFieldRefInput<$PrismaModel>
+    in?: $Enums.ReportingPeriod[] | ListEnumReportingPeriodFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ReportingPeriod[] | ListEnumReportingPeriodFieldRefInput<$PrismaModel>
+    not?: NestedEnumReportingPeriodWithAggregatesFilter<$PrismaModel> | $Enums.ReportingPeriod
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumReportingPeriodFilter<$PrismaModel>
+    _max?: NestedEnumReportingPeriodFilter<$PrismaModel>
   }
 
   export type RcpaReportScalarRelationFilter = {
@@ -63990,6 +64242,8 @@ export namespace Prisma {
     competitorDrugName?: SortOrder
     ownQuantity?: SortOrder
     competitorQuantity?: SortOrder
+    ownPackSize?: SortOrder
+    competitorPackSize?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -64005,6 +64259,8 @@ export namespace Prisma {
     competitorDrugName?: SortOrder
     ownQuantity?: SortOrder
     competitorQuantity?: SortOrder
+    ownPackSize?: SortOrder
+    competitorPackSize?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -64015,6 +64271,8 @@ export namespace Prisma {
     competitorDrugName?: SortOrder
     ownQuantity?: SortOrder
     competitorQuantity?: SortOrder
+    ownPackSize?: SortOrder
+    competitorPackSize?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -67845,6 +68103,10 @@ export namespace Prisma {
     connect?: RcpaDrugDataWhereUniqueInput | RcpaDrugDataWhereUniqueInput[]
   }
 
+  export type EnumReportingPeriodFieldUpdateOperationsInput = {
+    set?: $Enums.ReportingPeriod
+  }
+
   export type EmployeeUpdateOneRequiredWithoutRcpaReportsNestedInput = {
     create?: XOR<EmployeeCreateWithoutRcpaReportsInput, EmployeeUncheckedCreateWithoutRcpaReportsInput>
     connectOrCreate?: EmployeeCreateOrConnectWithoutRcpaReportsInput
@@ -69564,6 +69826,23 @@ export namespace Prisma {
     _max?: NestedEnumTaskTypeReferenceNullableFilter<$PrismaModel>
   }
 
+  export type NestedEnumReportingPeriodFilter<$PrismaModel = never> = {
+    equals?: $Enums.ReportingPeriod | EnumReportingPeriodFieldRefInput<$PrismaModel>
+    in?: $Enums.ReportingPeriod[] | ListEnumReportingPeriodFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ReportingPeriod[] | ListEnumReportingPeriodFieldRefInput<$PrismaModel>
+    not?: NestedEnumReportingPeriodFilter<$PrismaModel> | $Enums.ReportingPeriod
+  }
+
+  export type NestedEnumReportingPeriodWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ReportingPeriod | EnumReportingPeriodFieldRefInput<$PrismaModel>
+    in?: $Enums.ReportingPeriod[] | ListEnumReportingPeriodFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ReportingPeriod[] | ListEnumReportingPeriodFieldRefInput<$PrismaModel>
+    not?: NestedEnumReportingPeriodWithAggregatesFilter<$PrismaModel> | $Enums.ReportingPeriod
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumReportingPeriodFilter<$PrismaModel>
+    _max?: NestedEnumReportingPeriodFilter<$PrismaModel>
+  }
+
   export type NestedEnumTaskPlannerStatusFilter<$PrismaModel = never> = {
     equals?: $Enums.TaskPlannerStatus | EnumTaskPlannerStatusFieldRefInput<$PrismaModel>
     in?: $Enums.TaskPlannerStatus[] | ListEnumTaskPlannerStatusFieldRefInput<$PrismaModel>
@@ -70120,6 +70399,10 @@ export namespace Prisma {
   export type RcpaReportCreateWithoutEmployeeInput = {
     id?: string
     organizationId: string
+    reportingPeriod: $Enums.ReportingPeriod
+    startDate: Date | string
+    endDate: Date | string
+    totalPrescription?: number | null
     remarks?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -70131,6 +70414,10 @@ export namespace Prisma {
     id?: string
     organizationId: string
     chemistId: string
+    reportingPeriod: $Enums.ReportingPeriod
+    startDate: Date | string
+    endDate: Date | string
+    totalPrescription?: number | null
     remarks?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -71272,6 +71559,10 @@ export namespace Prisma {
     organizationId?: StringFilter<"RcpaReport"> | string
     employeeId?: StringFilter<"RcpaReport"> | string
     chemistId?: StringFilter<"RcpaReport"> | string
+    reportingPeriod?: EnumReportingPeriodFilter<"RcpaReport"> | $Enums.ReportingPeriod
+    startDate?: DateTimeFilter<"RcpaReport"> | Date | string
+    endDate?: DateTimeFilter<"RcpaReport"> | Date | string
+    totalPrescription?: IntNullableFilter<"RcpaReport"> | number | null
     remarks?: StringNullableFilter<"RcpaReport"> | string | null
     createdAt?: DateTimeFilter<"RcpaReport"> | Date | string
     updatedAt?: DateTimeFilter<"RcpaReport"> | Date | string
@@ -75460,6 +75751,8 @@ export namespace Prisma {
     competitorDrugName?: string | null
     ownQuantity: number
     competitorQuantity: number
+    ownPackSize: string
+    competitorPackSize: string
     createdAt?: Date | string
     rcpaReport: RcpaReportCreateNestedOneWithoutDrugDataInput
   }
@@ -75470,6 +75763,8 @@ export namespace Prisma {
     competitorDrugName?: string | null
     ownQuantity: number
     competitorQuantity: number
+    ownPackSize: string
+    competitorPackSize: string
     createdAt?: Date | string
   }
 
@@ -75708,6 +76003,8 @@ export namespace Prisma {
     competitorDrugName?: StringNullableFilter<"RcpaDrugData"> | string | null
     ownQuantity?: IntFilter<"RcpaDrugData"> | number
     competitorQuantity?: IntFilter<"RcpaDrugData"> | number
+    ownPackSize?: StringFilter<"RcpaDrugData"> | string
+    competitorPackSize?: StringFilter<"RcpaDrugData"> | string
     createdAt?: DateTimeFilter<"RcpaDrugData"> | Date | string
   }
 
@@ -76052,6 +76349,10 @@ export namespace Prisma {
   export type RcpaReportCreateWithoutChemistInput = {
     id?: string
     organizationId: string
+    reportingPeriod: $Enums.ReportingPeriod
+    startDate: Date | string
+    endDate: Date | string
+    totalPrescription?: number | null
     remarks?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -76063,6 +76364,10 @@ export namespace Prisma {
     id?: string
     organizationId: string
     employeeId: string
+    reportingPeriod: $Enums.ReportingPeriod
+    startDate: Date | string
+    endDate: Date | string
+    totalPrescription?: number | null
     remarks?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -78789,6 +79094,8 @@ export namespace Prisma {
     competitorDrugName?: string | null
     ownQuantity: number
     competitorQuantity: number
+    ownPackSize: string
+    competitorPackSize: string
     createdAt?: Date | string
     drug?: DrugCreateNestedOneWithoutRcpaDataInput
   }
@@ -78799,6 +79106,8 @@ export namespace Prisma {
     competitorDrugName?: string | null
     ownQuantity: number
     competitorQuantity: number
+    ownPackSize: string
+    competitorPackSize: string
     createdAt?: Date | string
   }
 
@@ -79009,6 +79318,10 @@ export namespace Prisma {
   export type RcpaReportCreateWithoutDrugDataInput = {
     id?: string
     organizationId: string
+    reportingPeriod: $Enums.ReportingPeriod
+    startDate: Date | string
+    endDate: Date | string
+    totalPrescription?: number | null
     remarks?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -79021,6 +79334,10 @@ export namespace Prisma {
     organizationId: string
     employeeId: string
     chemistId: string
+    reportingPeriod: $Enums.ReportingPeriod
+    startDate: Date | string
+    endDate: Date | string
+    totalPrescription?: number | null
     remarks?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -79102,6 +79419,10 @@ export namespace Prisma {
   export type RcpaReportUpdateWithoutDrugDataInput = {
     id?: StringFieldUpdateOperationsInput | string
     organizationId?: StringFieldUpdateOperationsInput | string
+    reportingPeriod?: EnumReportingPeriodFieldUpdateOperationsInput | $Enums.ReportingPeriod
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    totalPrescription?: NullableIntFieldUpdateOperationsInput | number | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -79114,6 +79435,10 @@ export namespace Prisma {
     organizationId?: StringFieldUpdateOperationsInput | string
     employeeId?: StringFieldUpdateOperationsInput | string
     chemistId?: StringFieldUpdateOperationsInput | string
+    reportingPeriod?: EnumReportingPeriodFieldUpdateOperationsInput | $Enums.ReportingPeriod
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    totalPrescription?: NullableIntFieldUpdateOperationsInput | number | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -84298,6 +84623,10 @@ export namespace Prisma {
     id?: string
     organizationId: string
     chemistId: string
+    reportingPeriod: $Enums.ReportingPeriod
+    startDate: Date | string
+    endDate: Date | string
+    totalPrescription?: number | null
     remarks?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -84874,6 +85203,10 @@ export namespace Prisma {
   export type RcpaReportUpdateWithoutEmployeeInput = {
     id?: StringFieldUpdateOperationsInput | string
     organizationId?: StringFieldUpdateOperationsInput | string
+    reportingPeriod?: EnumReportingPeriodFieldUpdateOperationsInput | $Enums.ReportingPeriod
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    totalPrescription?: NullableIntFieldUpdateOperationsInput | number | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -84885,6 +85218,10 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     organizationId?: StringFieldUpdateOperationsInput | string
     chemistId?: StringFieldUpdateOperationsInput | string
+    reportingPeriod?: EnumReportingPeriodFieldUpdateOperationsInput | $Enums.ReportingPeriod
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    totalPrescription?: NullableIntFieldUpdateOperationsInput | number | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -84895,6 +85232,10 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     organizationId?: StringFieldUpdateOperationsInput | string
     chemistId?: StringFieldUpdateOperationsInput | string
+    reportingPeriod?: EnumReportingPeriodFieldUpdateOperationsInput | $Enums.ReportingPeriod
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    totalPrescription?: NullableIntFieldUpdateOperationsInput | number | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -86734,6 +87075,8 @@ export namespace Prisma {
     competitorDrugName?: string | null
     ownQuantity: number
     competitorQuantity: number
+    ownPackSize: string
+    competitorPackSize: string
     createdAt?: Date | string
   }
 
@@ -86786,6 +87129,8 @@ export namespace Prisma {
     competitorDrugName?: NullableStringFieldUpdateOperationsInput | string | null
     ownQuantity?: IntFieldUpdateOperationsInput | number
     competitorQuantity?: IntFieldUpdateOperationsInput | number
+    ownPackSize?: StringFieldUpdateOperationsInput | string
+    competitorPackSize?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     rcpaReport?: RcpaReportUpdateOneRequiredWithoutDrugDataNestedInput
   }
@@ -86796,6 +87141,8 @@ export namespace Prisma {
     competitorDrugName?: NullableStringFieldUpdateOperationsInput | string | null
     ownQuantity?: IntFieldUpdateOperationsInput | number
     competitorQuantity?: IntFieldUpdateOperationsInput | number
+    ownPackSize?: StringFieldUpdateOperationsInput | string
+    competitorPackSize?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -86805,6 +87152,8 @@ export namespace Prisma {
     competitorDrugName?: NullableStringFieldUpdateOperationsInput | string | null
     ownQuantity?: IntFieldUpdateOperationsInput | number
     competitorQuantity?: IntFieldUpdateOperationsInput | number
+    ownPackSize?: StringFieldUpdateOperationsInput | string
+    competitorPackSize?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -86916,6 +87265,10 @@ export namespace Prisma {
     id?: string
     organizationId: string
     employeeId: string
+    reportingPeriod: $Enums.ReportingPeriod
+    startDate: Date | string
+    endDate: Date | string
+    totalPrescription?: number | null
     remarks?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -87064,6 +87417,10 @@ export namespace Prisma {
   export type RcpaReportUpdateWithoutChemistInput = {
     id?: StringFieldUpdateOperationsInput | string
     organizationId?: StringFieldUpdateOperationsInput | string
+    reportingPeriod?: EnumReportingPeriodFieldUpdateOperationsInput | $Enums.ReportingPeriod
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    totalPrescription?: NullableIntFieldUpdateOperationsInput | number | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -87075,6 +87432,10 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     organizationId?: StringFieldUpdateOperationsInput | string
     employeeId?: StringFieldUpdateOperationsInput | string
+    reportingPeriod?: EnumReportingPeriodFieldUpdateOperationsInput | $Enums.ReportingPeriod
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    totalPrescription?: NullableIntFieldUpdateOperationsInput | number | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -87085,6 +87446,10 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     organizationId?: StringFieldUpdateOperationsInput | string
     employeeId?: StringFieldUpdateOperationsInput | string
+    reportingPeriod?: EnumReportingPeriodFieldUpdateOperationsInput | $Enums.ReportingPeriod
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    totalPrescription?: NullableIntFieldUpdateOperationsInput | number | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -87168,6 +87533,8 @@ export namespace Prisma {
     competitorDrugName?: string | null
     ownQuantity: number
     competitorQuantity: number
+    ownPackSize: string
+    competitorPackSize: string
     createdAt?: Date | string
   }
 
@@ -87176,6 +87543,8 @@ export namespace Prisma {
     competitorDrugName?: NullableStringFieldUpdateOperationsInput | string | null
     ownQuantity?: IntFieldUpdateOperationsInput | number
     competitorQuantity?: IntFieldUpdateOperationsInput | number
+    ownPackSize?: StringFieldUpdateOperationsInput | string
+    competitorPackSize?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     drug?: DrugUpdateOneWithoutRcpaDataNestedInput
   }
@@ -87186,6 +87555,8 @@ export namespace Prisma {
     competitorDrugName?: NullableStringFieldUpdateOperationsInput | string | null
     ownQuantity?: IntFieldUpdateOperationsInput | number
     competitorQuantity?: IntFieldUpdateOperationsInput | number
+    ownPackSize?: StringFieldUpdateOperationsInput | string
+    competitorPackSize?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -87195,6 +87566,8 @@ export namespace Prisma {
     competitorDrugName?: NullableStringFieldUpdateOperationsInput | string | null
     ownQuantity?: IntFieldUpdateOperationsInput | number
     competitorQuantity?: IntFieldUpdateOperationsInput | number
+    ownPackSize?: StringFieldUpdateOperationsInput | string
+    competitorPackSize?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 

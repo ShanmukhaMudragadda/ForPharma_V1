@@ -22,6 +22,7 @@ interface InputProps extends React.ComponentProps<typeof TextInput> {
     isDateInput?: boolean;
     dateValue?: Date;
     onDateChange?: (date: Date) => void;
+    allowPastDates?: boolean; // Add the new prop
 }
 
 export default function Input({
@@ -36,6 +37,7 @@ export default function Input({
     isDateInput = false,
     dateValue,
     onDateChange,
+    allowPastDates = false, // Set default to false
     ...props
 }: InputProps) {
     const [showDatePicker, setShowDatePicker] = useState(false);
@@ -182,7 +184,7 @@ export default function Input({
                     mode="date"
                     display={Platform.OS === 'ios' ? 'spinner' : 'default'}
                     onChange={handleDatePickerChange}
-                    minimumDate={new Date()} // Prevent past dates
+                    minimumDate={allowPastDates ? undefined : new Date()} // Use the new prop here
                 />
             )}
         </View>

@@ -8,9 +8,8 @@ import { Platform } from 'react-native';
 const router = useRouter();
 // Create axios instance
 const axiosInstance = axios.create({
-    // baseURL: 'http://192.168.11.22:3000/api', // Using your backend URL
-    // baseURL: 'http://192.168.137.1:3000/api',
-    baseURL: 'http://192.168.0.106:3000/api',
+
+    baseURL: 'http://192.168.11.51:3000/api',
     // baseURL: 'http://192.168.1.29:3000/api',
     timeout: 30000,
     headers: {

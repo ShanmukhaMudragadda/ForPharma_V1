@@ -419,6 +419,10 @@ exports.Prisma.RcpaReportScalarFieldEnum = {
   organizationId: 'organizationId',
   employeeId: 'employeeId',
   chemistId: 'chemistId',
+  reportingPeriod: 'reportingPeriod',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  totalPrescription: 'totalPrescription',
   remarks: 'remarks',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -431,6 +435,8 @@ exports.Prisma.RcpaDrugDataScalarFieldEnum = {
   competitorDrugName: 'competitorDrugName',
   ownQuantity: 'ownQuantity',
   competitorQuantity: 'competitorQuantity',
+  ownPackSize: 'ownPackSize',
+  competitorPackSize: 'competitorPackSize',
   createdAt: 'createdAt'
 };
 
@@ -700,17 +706,19 @@ exports.ChemistType = exports.$Enums.ChemistType = {
 };
 
 exports.OrderStatus = exports.$Enums.OrderStatus = {
-  PENDING: 'PENDING',
   CONFIRMED: 'CONFIRMED',
-  DISPATCHED: 'DISPATCHED',
-  DELIVERED: 'DELIVERED',
-  CANCELLED: 'CANCELLED'
+  DRAFT: 'DRAFT'
 };
 
 exports.TaskTypeReference = exports.$Enums.TaskTypeReference = {
   DOCTOR_TASK: 'DOCTOR_TASK',
   CHEMIST_TASK: 'CHEMIST_TASK',
   TOUR_PLAN_TASK: 'TOUR_PLAN_TASK'
+};
+
+exports.ReportingPeriod = exports.$Enums.ReportingPeriod = {
+  WEEKLY: 'WEEKLY',
+  MONTHLY: 'MONTHLY'
 };
 
 exports.TaskPlannerStatus = exports.$Enums.TaskPlannerStatus = {
