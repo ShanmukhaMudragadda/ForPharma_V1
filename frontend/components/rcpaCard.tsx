@@ -37,103 +37,59 @@ export default function RCPACard({ data, onPress }: RCPACardProps): JSX.Element 
 
   return (
     <StyledTouchableOpacity
+      className="bg-white rounded-xl p-4 mb-3 shadow-sm border border-gray-100"
       onPress={handlePress}
       activeOpacity={0.7}
-      style={{
-        backgroundColor: '#FFFFFF',
-        borderRadius: 12,
-        padding: 16,
-        marginBottom: 12,
-        shadowColor: '#000',
-        shadowOffset: {
-          width: 0,
-          height: 2,
-        },
-        shadowOpacity: 0.05,
-        shadowRadius: 8,
-        elevation: 2,
-        borderWidth: 1,
-        borderColor: '#F0F0F0',
-      }}
     >
       {/* RCPA Header */}
-      <StyledView style={{
-        marginBottom: 8
-      }}>
-        {/* RCPA ID */}
-        <StyledText style={{
-          fontSize: 16,
-          fontWeight: '600',
-          color: '#0077B6'
-        }}>
-          #{data.id}
-        </StyledText>
+      <StyledView className="mb-2">
+        {/* RCPA ID - with proper flex handling for long IDs */}
+        <StyledView className="flex-1">
+          <StyledText 
+            className="text-base font-semibold text-[#0077B6]"
+            numberOfLines={1}
+            ellipsizeMode="tail"
+          >
+            #{data.id}
+          </StyledText>
+        </StyledView>
       </StyledView>
 
       {/* Chemist Name with Contact Icon */}
-      <StyledView style={{ 
-        marginBottom: 12,
-        flexDirection: 'row',
-        alignItems: 'center'
-      }}>
+      <StyledView className="mb-3 flex-row items-center">
         <Ionicons 
           name="business-outline" 
           size={20} 
           color="#6C757D" 
-          style={{ marginRight: 8 }}
+          className="mr-2"
         />
-        <StyledText style={{
-          fontSize: 16,
-          fontWeight: '600',
-          color: '#212529',
-          flex: 1
-        }}>
+        <StyledText 
+          className="text-base font-semibold text-gray-800 flex-1 ml-3"
+          numberOfLines={2}
+          ellipsizeMode="tail"
+        >
           {data.chemistName}
         </StyledText>
       </StyledView>
 
       {/* RCPA Details Grid */}
-      <StyledView style={{
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        marginTop: 12
-      }}>
+      <StyledView className="flex-row justify-between mt-3">
         {/* Observation Date */}
         <StyledView>
-          <StyledText style={{
-            fontSize: 12,
-            color: '#6C757D',
-            marginBottom: 2,
-            textTransform: 'uppercase',
-            fontWeight: '500'
-          }}>
+          <StyledText className="text-xs text-gray-500 mb-1 uppercase font-medium">
             OBSERVATION DATE
           </StyledText>
-          <StyledText style={{
-            fontSize: 14,
-            color: '#212529',
-            fontWeight: '500'
-          }}>
+          <StyledText className="text-sm text-gray-800 font-medium">
             {formatDate(data.observationDate)}
           </StyledText>
         </StyledView>
 
         {/* Total Prescriptions */}
         <StyledView>
-          <StyledText style={{
-            fontSize: 12,
-            color: '#6C757D',
-            marginBottom: 2,
-            textTransform: 'uppercase',
-            fontWeight: '500'
-          }}>
+          <StyledText className="text-xs text-gray-500 mb-1 uppercase font-medium">
             TOTAL PRESCRIPTIONS
           </StyledText>
-          <StyledText style={{
-            fontSize: 18,
-            fontWeight: '700',
-            color: '#212529'
-          }}>
+          <StyledText className="text-lg font-bold text-[#0077B6]">
             {data.totalPrescriptions}
           </StyledText>
         </StyledView>

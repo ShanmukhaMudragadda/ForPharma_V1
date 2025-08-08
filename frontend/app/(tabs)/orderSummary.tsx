@@ -98,7 +98,7 @@ export default function OrderSummary() {
                         quantity: item.quantity,
                         unitPrice: item.unitPrice
                     })),
-                    action: 'save' // Save as PENDING status
+                    action: 'save' // Save as DRAFT status
                 };
 
                 const result = await OrderService.updateOrder(orderId, updateRequest);
@@ -129,7 +129,7 @@ export default function OrderSummary() {
                         quantity: item.quantity,
                         unitPrice: item.unitPrice
                     })),
-                    action: 'save' // This will save as PENDING status
+                    action: 'save' // This will save as DRAFT status
                 };
 
                 const result = await OrderService.createOrder(orderRequest);

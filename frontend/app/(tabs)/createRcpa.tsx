@@ -5,6 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import Input from '../../components/input';
 import AuditItemsSection from '../../components/AuditItemsSection';
+import RcpaService, { Chemist, Drug, CreateRcpaAuditItem } from '../../services/rcpaService';
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -20,19 +21,14 @@ interface Customer {
     subtitle: string;
 }
 
-interface Drug {
-    id: string;
-    name: string;
-    packSize: string;
-}
-
 interface AuditItem {
     id: string;
     companyDrug: Drug | null;
     companyQuantity: number;
+    companyPackSize: string; // User will enter this manually
     competitorDrug: string;
     competitorQuantity: number;
-    competitorPackSize: string;
+    competitorPackSize: string; // User will enter this manually
 }
 
 export default function CreateRCPA() {
@@ -41,9 +37,10 @@ export default function CreateRCPA() {
 
     // State management
     const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(null);
-    const [selectedPeriod, setSelectedPeriod] = useState<'weekly' | 'monthly' | ''>('');
+    const [selectedPeriod, setSelectedPeriod] = useState<'WEEKLY' | 'MONTHLY' | ''>('');
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
+    const [totalPrescriptions, setTotalPrescriptions] = useState('');
     const [briefRemarks, setBriefRemarks] = useState('');
     const [auditItems, setAuditItems] = useState<AuditItem[]>([]);
     const [isEditMode, setIsEditMode] = useState(false);
@@ -56,57 +53,27 @@ export default function CreateRCPA() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
-    // Mock data - replace with actual service calls
+    // Load data from backend
     const loadData = async () => {
         try {
             setError(null);
             setLoading(true);
 
-            // Mock customer data
-            const customers: Customer[] = [
-                {
-                    id: '1',
-                    label: 'Apollo Pharmacy, Sarita Vihar',
-                    value: '1',
-                    subtitle: 'Pharmacy - South Delhi'
-                },
-                {
-                    id: '2',
-                    label: 'MedPlus Pharmacy, Lajpat Nagar',
-                    value: '2',
-                    subtitle: 'Pharmacy - South Delhi'
-                },
-                {
-                    id: '3',
-                    label: 'Guardian Pharmacy, Defence Colony',
-                    value: '3',
-                    subtitle: 'Pharmacy - South Delhi'
-                },
-                {
-                    id: '4',
-                    label: 'City Medical Store, CP',
-                    value: '4',
-                    subtitle: 'Medical Store - Central Delhi'
-                },
-                {
-                    id: '5',
-                    label: 'Wellness Pharmacy, GK-1',
-                    value: '5',
-                    subtitle: 'Pharmacy - South Delhi'
-                }
-            ];
+            // Load chemists and drugs concurrently
+            const [chemists, drugs] = await Promise.all([
+                RcpaService.getChemistsForRcpa(),
+                RcpaService.getDrugsForRcpa()
+            ]);
 
-            // Mock drug data
-            const drugs: Drug[] = [
-                { id: '1', name: 'Amlodipine 5mg', packSize: '10x10 tablets' },
-                { id: '2', name: 'Metformin 500mg', packSize: '10x15 tablets' },
-                { id: '3', name: 'Atorvastatin 20mg', packSize: '10x10 tablets' },
-                { id: '4', name: 'Paracetamol 500mg', packSize: '20x10 tablets' },
-                { id: '5', name: 'Omeprazole 20mg', packSize: '10x14 capsules' },
-                { id: '6', name: 'Aspirin 75mg', packSize: '10x10 tablets' }
-            ];
+            // Transform chemists to customer options
+            const customerOpts = chemists.map(chemist => ({
+                id: chemist.chemistId,
+                label: chemist.chemistName,
+                value: chemist.chemistId,
+                subtitle: chemist.address || `${chemist.type} - ${chemist.territoryName}`
+            }));
 
-            setCustomerOptions(customers);
+            setCustomerOptions(customerOpts);
             setAvailableDrugs(drugs);
 
         } catch (error: any) {
@@ -123,23 +90,72 @@ export default function CreateRCPA() {
         loadData();
     }, []);
 
+    // Handle edit mode data population (if needed in future)
+    useEffect(() => {
+        if (params.editData && customerOptions.length > 0 && availableDrugs.length > 0) {
+            try {
+                const editData = JSON.parse(params.editData as string);
+                console.log('🔄 Loading RCPA edit data:', editData);
+
+                setIsEditMode(true);
+                setEditRcpaId(editData.rcpaId);
+
+                // Set customer
+                const customer = customerOptions.find(c => c.label === editData.chemistName || c.id === editData.chemistId);
+                if (customer) {
+                    setSelectedCustomer(customer);
+                }
+
+                // Set other fields
+                setSelectedPeriod(editData.reportingPeriod);
+                setStartDate(editData.startDate);
+                setEndDate(editData.endDate);
+                setTotalPrescriptions(editData.totalPrescriptions?.toString() || '');
+                setBriefRemarks(editData.briefRemarks || '');
+
+                // Set audit items if available
+                if (editData.auditItems) {
+                    // Transform audit items to match frontend format
+                    const transformedItems = editData.auditItems.map((item: any) => ({
+                        id: item.id,
+                        companyDrug: availableDrugs.find(d => d.id === item.ourProduct.id) || null,
+                        companyQuantity: item.ourProduct.quantity,
+                        companyPackSize: item.ourProduct.packSize || '', // User entered pack size
+                        competitorDrug: item.competitor.name,
+                        competitorQuantity: item.competitor.quantity,
+                        competitorPackSize: item.competitor.packSize
+                    }));
+                    setAuditItems(transformedItems);
+                }
+            } catch (error) {
+                console.error("Failed to parse editData from params:", error);
+            }
+        }
+    }, [params.editData, customerOptions, availableDrugs]);
+
     // Validation
     const isViewSummaryEnabled = useMemo(() => {
         const hasCustomer = selectedCustomer !== null;
         const hasPeriod = selectedPeriod !== '';
         const hasDates = startDate !== '' && endDate !== '';
+        const hasTotalPrescriptions = totalPrescriptions !== '' && parseInt(totalPrescriptions) > 0;
         const hasValidItems = auditItems.length > 0 && auditItems.some(item =>
-            item.companyDrug !== null && item.companyQuantity > 0
+            item.companyDrug !== null && 
+            item.companyQuantity > 0 && 
+            item.companyPackSize.trim() !== '' &&
+            item.competitorDrug.trim() !== '' &&
+            item.competitorQuantity > 0 &&
+            item.competitorPackSize.trim() !== ''
         );
-        return hasCustomer && hasPeriod && hasDates && hasValidItems;
-    }, [selectedCustomer, selectedPeriod, startDate, endDate, auditItems]);
+        return hasCustomer && hasPeriod && hasDates && hasTotalPrescriptions && hasValidItems;
+    }, [selectedCustomer, selectedPeriod, startDate, endDate, totalPrescriptions, auditItems]);
 
-    const handlePeriodChange = (period: 'weekly' | 'monthly') => {
+    const handlePeriodChange = (period: 'WEEKLY' | 'MONTHLY') => {
         setSelectedPeriod(period);
 
         // Auto-set date ranges based on period
         const today = new Date();
-        if (period === 'weekly') {
+        if (period === 'WEEKLY') {
             const startOfWeek = new Date(today);
             startOfWeek.setDate(today.getDate() - today.getDay());
             const endOfWeek = new Date(startOfWeek);
@@ -149,7 +165,7 @@ export default function CreateRCPA() {
                 const day = date.getDate().toString().padStart(2, '0');
                 const month = (date.getMonth() + 1).toString().padStart(2, '0');
                 const year = date.getFullYear();
-                return `${day} - ${month} - ${year}`;
+                return `${day}/${month}/${year}`;
             };
 
             setStartDate(formatDate(startOfWeek));
@@ -162,7 +178,7 @@ export default function CreateRCPA() {
                 const day = date.getDate().toString().padStart(2, '0');
                 const month = (date.getMonth() + 1).toString().padStart(2, '0');
                 const year = date.getFullYear();
-                return `${day} - ${month} - ${year}`;
+                return `${day}/${month}/${year}`;
             };
 
             setStartDate(formatDate(startOfMonth));
@@ -170,18 +186,34 @@ export default function CreateRCPA() {
         }
     };
 
+    const handleTotalPrescriptionsChange = (value: string) => {
+        // Only allow numeric input
+        const numericValue = value.replace(/[^0-9]/g, '');
+        setTotalPrescriptions(numericValue);
+    };
+
     const handleAuditItemsUpdate = (items: AuditItem[]) => {
         setAuditItems(items);
     };
 
+    // Convert DD/MM/YYYY to YYYY-MM-DD for backend
+    const convertDateFormat = (dateStr: string): string => {
+        if (!dateStr) return '';
+        const parts = dateStr.split('/');
+        if (parts.length === 3) {
+            return `${parts[2]}-${parts[1]}-${parts[0]}`;
+        }
+        return dateStr;
+    };
+
     const handleCancel = () => {
         Alert.alert(
-            'Cancel RCPA',
-            'Are you sure you want to cancel? All unsaved changes will be lost.',
+            isEditMode ? 'Cancel Editing' : 'Cancel RCPA',
+            isEditMode ? 'Are you sure you want to cancel? All changes will be lost.' : 'Are you sure you want to cancel? All unsaved changes will be lost.',
             [
                 { text: 'Continue', style: 'cancel' },
                 {
-                    text: 'Cancel RCPA',
+                    text: isEditMode ? 'Discard Changes' : 'Cancel RCPA',
                     style: 'destructive',
                     onPress: () => router.back()
                 }
@@ -193,12 +225,31 @@ export default function CreateRCPA() {
         if (!isViewSummaryEnabled) return;
 
         const summaryData = {
+            action: isEditMode ? 'edit' : 'create',
+            rcpaId: isEditMode ? editRcpaId : undefined,
             customer: selectedCustomer,
             period: selectedPeriod,
-            startDate,
-            endDate,
+            startDate: convertDateFormat(startDate),
+            endDate: convertDateFormat(endDate),
+            totalPrescriptions: parseInt(totalPrescriptions),
             briefRemarks: briefRemarks.trim(),
-            auditItems: auditItems.filter(item => item.companyDrug !== null && item.companyQuantity > 0),
+            auditItems: auditItems.filter(item => 
+                item.companyDrug !== null && 
+                item.companyQuantity > 0 &&
+                item.companyPackSize.trim() !== '' &&
+                item.competitorDrug.trim() !== '' &&
+                item.competitorQuantity > 0 &&
+                item.competitorPackSize.trim() !== ''
+            ).map(item => ({
+                id: item.id,
+                drugId: item.companyDrug!.id,
+                drugName: item.companyDrug!.name,
+                ownQuantity: item.companyQuantity,
+                ownPackSize: item.companyPackSize, // User entered pack size
+                competitorDrugName: item.competitorDrug,
+                competitorQuantity: item.competitorQuantity,
+                competitorPackSize: item.competitorPackSize
+            })),
             createdDate: new Date().toLocaleDateString('en-US', {
                 year: 'numeric',
                 month: 'long',
@@ -213,14 +264,6 @@ export default function CreateRCPA() {
             }
         });
     };
-
-    // Transform customer options for dropdown
-    const customerDropdownItems = customerOptions.map(customer => ({
-        id: customer.id,
-        label: customer.label,
-        value: customer.value,
-        subtitle: customer.subtitle
-    }));
 
     // Loading state
     if (loading) {
@@ -291,7 +334,7 @@ export default function CreateRCPA() {
                 contentContainerStyle={{ padding: 20, paddingBottom: 100 }}
                 keyboardShouldPersistTaps="handled"
             >
-                {/* Customer Selection - Custom dropdown like createOrder */}
+                {/* Customer Selection - Custom dropdown */}
                 <StyledView style={{ marginBottom: 20 }}>
                     <StyledText style={{ marginBottom: 6, fontWeight: '500', fontSize: 16, color: '#111827' }}>
                         Choose Customer <StyledText style={{ color: '#EF4444' }}>*</StyledText>
@@ -383,25 +426,25 @@ export default function CreateRCPA() {
                     </StyledText>
                     <StyledView className="flex-row gap-2">
                         <StyledTouchableOpacity
-                            className={`flex-1 py-3 px-4 rounded-lg border ${selectedPeriod === 'weekly'
+                            className={`flex-1 py-3 px-4 rounded-lg border ${selectedPeriod === 'WEEKLY'
                                     ? 'bg-[#0077B6] border-[#0077B6]'
                                     : 'bg-white border-gray-300'
                                 }`}
-                            onPress={() => handlePeriodChange('weekly')}
+                            onPress={() => handlePeriodChange('WEEKLY')}
                         >
-                            <StyledText className={`text-center font-semibold ${selectedPeriod === 'weekly' ? 'text-white' : 'text-gray-700'
+                            <StyledText className={`text-center font-semibold ${selectedPeriod === 'WEEKLY' ? 'text-white' : 'text-gray-700'
                                 }`}>
                                 Weekly
                             </StyledText>
                         </StyledTouchableOpacity>
                         <StyledTouchableOpacity
-                            className={`flex-1 py-3 px-4 rounded-lg border ${selectedPeriod === 'monthly'
+                            className={`flex-1 py-3 px-4 rounded-lg border ${selectedPeriod === 'MONTHLY'
                                     ? 'bg-[#0077B6] border-[#0077B6]'
                                     : 'bg-white border-gray-300'
                                 }`}
-                            onPress={() => handlePeriodChange('monthly')}
+                            onPress={() => handlePeriodChange('MONTHLY')}
                         >
-                            <StyledText className={`text-center font-semibold ${selectedPeriod === 'monthly' ? 'text-white' : 'text-gray-700'
+                            <StyledText className={`text-center font-semibold ${selectedPeriod === 'MONTHLY' ? 'text-white' : 'text-gray-700'
                                 }`}>
                                 Monthly
                             </StyledText>
@@ -413,7 +456,7 @@ export default function CreateRCPA() {
                 {selectedPeriod && (
                     <>
                         <StyledText className="text-base font-medium text-gray-900 mb-2">
-                            {selectedPeriod === 'weekly' ? 'Select Week Range' : 'Select Month Range'}
+                            {selectedPeriod === 'WEEKLY' ? 'Select Week Range' : 'Select Month Range'}
                             <StyledText className="text-red-500 ml-1">*</StyledText>
                         </StyledText>
                         <StyledView className="flex-row gap-3 mb-4">
@@ -422,14 +465,14 @@ export default function CreateRCPA() {
                                 <Input
                                     value={startDate}
                                     onChangeText={setStartDate}
-                                    placeholder="dd - mm - yyyy"
+                                    placeholder="dd/mm/yyyy"
                                     isDateInput
                                     allowPastDates
                                     onDateChange={(date) => {
-                                        const formatted = `${date.getDate().toString().padStart(2, '0')} - ${(date.getMonth() + 1).toString().padStart(2, '0')} - ${date.getFullYear()}`;
+                                        const formatted = `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear()}`;
                                         setStartDate(formatted);
                                     }}
-                                    dateValue={startDate ? new Date(startDate.split(' - ').reverse().join('-')) : undefined}
+                                    dateValue={startDate ? new Date(startDate.split('/').reverse().join('-')) : undefined}
                                 />
                             </StyledView>
                             <StyledView className="flex-1">
@@ -437,19 +480,32 @@ export default function CreateRCPA() {
                                 <Input
                                     value={endDate}
                                     onChangeText={setEndDate}
-                                    placeholder="dd - mm - yyyy"
+                                    placeholder="dd/mm/yyyy"
                                     isDateInput
                                     allowPastDates
                                     onDateChange={(date) => {
-                                        const formatted = `${date.getDate().toString().padStart(2, '0')} - ${(date.getMonth() + 1).toString().padStart(2, '0')} - ${date.getFullYear()}`;
+                                        const formatted = `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear()}`;
                                         setEndDate(formatted);
                                     }}
-                                    dateValue={endDate ? new Date(endDate.split(' - ').reverse().join('-')) : undefined}
+                                    dateValue={endDate ? new Date(endDate.split('/').reverse().join('-')) : undefined}
                                 />
                             </StyledView>
                         </StyledView>
                     </>
                 )}
+
+                {/* Total Prescriptions Field */}
+                <StyledView className="mb-4">
+                    <Input
+                        label="Total Prescriptions"
+                        placeholder="Enter total number of prescriptions"
+                        value={totalPrescriptions}
+                        onChangeText={handleTotalPrescriptionsChange}
+                        keyboardType="numeric"
+                        required
+                        maxLength={6}
+                    />
+                </StyledView>
 
                 {/* Brief Remarks */}
                 <Input
@@ -485,7 +541,7 @@ export default function CreateRCPA() {
                     activeOpacity={0.7}
                 >
                     <StyledText className="text-gray-600 font-semibold text-base">
-                        Cancel
+                        {isEditMode ? 'Cancel' : 'Cancel'}
                     </StyledText>
                 </StyledTouchableOpacity>
 
@@ -498,7 +554,7 @@ export default function CreateRCPA() {
                 >
                     <StyledText className={`font-semibold text-base ${isViewSummaryEnabled ? 'text-white' : 'text-gray-500'
                         }`}>
-                        View Summary
+                        {isEditMode ? 'Save Changes' : 'View Summary'}
                     </StyledText>
                 </StyledTouchableOpacity>
             </StyledView>

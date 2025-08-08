@@ -80,10 +80,10 @@ export default function Orders() {
             setError(null);
             const ordersData = await OrderService.getOrderList();
 
-            // Convert backend status to display status
+            // Convert backend status to display status - Updated for new schema
             const processedOrders = ordersData.map(order => ({
                 ...order,
-                status: order.status === 'PENDING' ? 'Draft' : order.status === 'CONFIRMED' ? 'Confirmed' : 'Draft'
+                status: order.status === 'DRAFT' ? 'Draft' : order.status === 'CONFIRMED' ? 'Confirmed' : 'Draft'
             }));
 
             setOrders(processedOrders);

@@ -3,10 +3,16 @@ import * as Print from 'expo-print';
 import * as Sharing from 'expo-sharing';
 import * as FileSystem from 'expo-file-system';
 import { OrderDetails, OrderItem } from './orderService';
+import { RCPADetailsResponse, AuditItem } from './rcpaService';
 
 export interface PDFOptions {
     orderDetails: OrderDetails;
     displayStatus: string;
+}
+
+export interface RCPAPDFOptions {
+    rcpaDetails: RCPADetailsResponse;
+    formatDate: (dateString: string) => string;
 }
 
 class PDFService {
@@ -366,6 +372,329 @@ class PDFService {
     `;
     }
 
+    private generateRcpaHTML(rcpaDetails: RCPADetailsResponse, formatDate: (dateString: string) => string): string {
+        const currentDate = new Date().toLocaleDateString();
+
+        // Generate audit items HTML
+        const auditItemsHTML = rcpaDetails.auditItems.map((item: AuditItem) => `
+      <div style="margin-bottom: 20px; background: #f9fafb; padding: 16px; border-radius: 8px;">
+        <div style="display: flex; gap: 16px;">
+          <!-- Our Product -->
+          <div style="flex: 1; background: white; padding: 16px; border-radius: 6px; border-left: 4px solid #0077B6;">
+            <div style="font-size: 12px; font-weight: 600; color: #0077B6; text-transform: uppercase; margin-bottom: 8px;">
+              Our Product
+            </div>
+            <div style="font-size: 14px; font-weight: 600; color: #0077B6; margin-bottom: 12px;">
+              ${item.ourProduct.name}
+            </div>
+            <div style="font-size: 12px; color: #6b7280; margin-bottom: 4px;">
+              Qty: ${item.ourProduct.quantity} units
+            </div>
+            <div style="font-size: 12px; color: #6b7280; margin-bottom: 4px;">
+              Pack: ${item.ourProduct.packSize}
+            </div>
+            <div style="font-size: 12px; color: #6b7280;">
+              Manufacturer: ${item.ourProduct.manufacturer}
+            </div>
+          </div>
+          
+          <!-- Competitor Product -->
+          <div style="flex: 1; background: white; padding: 16px; border-radius: 6px; border-left: 4px solid #DC3545;">
+            <div style="font-size: 12px; font-weight: 600; color: #DC3545; text-transform: uppercase; margin-bottom: 8px;">
+              Competitor
+            </div>
+            <div style="font-size: 14px; font-weight: 600; color: #111827; margin-bottom: 12px;">
+              ${item.competitor.name}
+            </div>
+            <div style="font-size: 12px; color: #6b7280; margin-bottom: 4px;">
+              Qty: ${item.competitor.quantity} units
+            </div>
+            <div style="font-size: 12px; color: #6b7280; margin-bottom: 4px;">
+              Pack: ${item.competitor.packSize}
+            </div>
+            <div style="font-size: 12px; color: #6b7280;">
+              Manufacturer: ${item.competitor.manufacturer}
+            </div>
+          </div>
+        </div>
+      </div>
+    `).join('');
+
+        return `
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <title>RCPA Report - ${rcpaDetails.rcpaId}</title>
+          <style>
+            * {
+              box-sizing: border-box;
+              margin: 0;
+              padding: 0;
+            }
+            
+            body {
+              font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+              line-height: 1.5;
+              color: #374151;
+              background-color: #f9fafb;
+              padding: 20px;
+            }
+            
+            .container {
+              max-width: 800px;
+              margin: 0 auto;
+              background: white;
+              border-radius: 8px;
+              overflow: hidden;
+              box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            }
+            
+            .header {
+              background: #0077B6;
+              color: white;
+              padding: 24px;
+              text-align: center;
+            }
+            
+            .header h1 {
+              font-size: 28px;
+              font-weight: 700;
+              margin-bottom: 8px;
+            }
+            
+            .header p {
+              font-size: 14px;
+              opacity: 0.9;
+            }
+            
+            .rcpa-id-section {
+              background: #f8fafc;
+              padding: 24px;
+              text-align: center;
+              border-bottom: 1px solid #e5e7eb;
+            }
+            
+            .rcpa-id {
+              font-size: 24px;
+              font-weight: 700;
+              color: #0077B6;
+              margin-bottom: 4px;
+            }
+            
+            .rcpa-id-label {
+              font-size: 12px;
+              color: #6b7280;
+              text-transform: uppercase;
+              letter-spacing: 0.05em;
+              font-weight: 500;
+            }
+            
+            .details-section {
+              padding: 24px;
+            }
+            
+            .section-title {
+              font-size: 18px;
+              font-weight: 600;
+              color: #111827;
+              margin-bottom: 16px;
+              border-bottom: 2px solid #0077B6;
+              padding-bottom: 8px;
+            }
+            
+            .detail-row {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              padding: 12px 0;
+              border-bottom: 1px solid #f3f4f6;
+            }
+            
+            .detail-row:last-child {
+              border-bottom: none;
+            }
+            
+            .detail-label {
+              font-weight: 500;
+              color: #6b7280;
+              flex-shrink: 0;
+            }
+            
+            .detail-value {
+              font-weight: 600;
+              color: #111827;
+              text-align: right;
+              max-width: 60%;
+            }
+            
+            .stats-section {
+              display: flex;
+              gap: 16px;
+              margin-bottom: 24px;
+            }
+            
+            .stat-card {
+              flex: 1;
+              background: white;
+              padding: 24px;
+              border-radius: 8px;
+              border: 1px solid #f0f0f0;
+              text-align: center;
+            }
+            
+            .stat-number {
+              font-size: 32px;
+              font-weight: 700;
+              color: #0077B6;
+              margin-bottom: 8px;
+            }
+            
+            .stat-label {
+              font-size: 12px;
+              color: #6b7280;
+              text-transform: uppercase;
+              letter-spacing: 0.05em;
+              font-weight: 500;
+            }
+            
+            .instructions-section {
+              background: #f9fafb;
+              padding: 16px;
+              border-radius: 8px;
+              margin-top: 16px;
+            }
+            
+            .instructions-text {
+              font-size: 14px;
+              line-height: 1.6;
+              color: #4b5563;
+            }
+            
+            .no-instructions {
+              font-style: italic;
+              color: #9ca3af;
+              text-align: center;
+              padding: 24px;
+            }
+            
+            .footer {
+              text-align: center;
+              padding: 24px;
+              border-top: 1px solid #e5e7eb;
+              background: #f9fafb;
+              font-size: 12px;
+              color: #6b7280;
+            }
+            
+            @media print {
+              body {
+                padding: 0;
+                background: white;
+              }
+              
+              .container {
+                box-shadow: none;
+                border-radius: 0;
+              }
+              
+              .stats-section {
+                display: flex !important;
+              }
+            }
+          </style>
+        </head>
+        <body>
+          <div class="container">
+            <!-- Header -->
+            <div class="header">
+              <h1>RCPA Report</h1>
+              <p>Generated on ${currentDate}</p>
+            </div>
+            
+            <!-- RCPA ID Section -->
+            <div class="rcpa-id-section">
+              <div class="rcpa-id">#${rcpaDetails.rcpaId}</div>
+              <div class="rcpa-id-label">RCPA ID</div>
+            </div>
+            
+            <!-- RCPA Details -->
+            <div class="details-section">
+              <h2 class="section-title">Report Information</h2>
+              
+              <div class="detail-row">
+                <span class="detail-label">Chemist</span>
+                <span class="detail-value">${rcpaDetails.chemistName}</span>
+              </div>
+              
+              <div class="detail-row">
+                <span class="detail-label">Created By</span>
+                <span class="detail-value">${rcpaDetails.createdBy.name}</span>
+              </div>
+              
+              <div class="detail-row">
+                <span class="detail-label">Observation Date</span>
+                <span class="detail-value">${formatDate(rcpaDetails.observationDate)}</span>
+              </div>
+              
+              <div class="detail-row">
+                <span class="detail-label">Total Prescriptions</span>
+                <span class="detail-value">${rcpaDetails.totalPrescriptions}</span>
+              </div>
+              
+              <div class="detail-row">
+                <span class="detail-label">Region</span>
+                <span class="detail-value">${rcpaDetails.region}</span>
+              </div>
+            </div>
+            
+            <!-- Summary Statistics -->
+            <div class="details-section">
+              <h2 class="section-title">Summary Statistics</h2>
+              <div class="stats-section">
+                <div class="stat-card">
+                  <div class="stat-number">${rcpaDetails.itemsAudited}</div>
+                  <div class="stat-label">Items Audited</div>
+                </div>
+                <div class="stat-card">
+                  <div class="stat-number">${rcpaDetails.competitorsFound}</div>
+                  <div class="stat-label">Competitors Found</div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Audit Items Section -->
+            <div class="details-section">
+              <h2 class="section-title">Audit Items</h2>
+              
+              ${rcpaDetails.auditItems.length > 0 ? auditItemsHTML : `
+                <p style="text-align: center; color: #6b7280; padding: 24px;">No audit items found for this RCPA report.</p>
+              `}
+            </div>
+            
+            <!-- Brief Remarks -->
+            <div class="details-section">
+              <h2 class="section-title">Brief Remarks</h2>
+              <div class="instructions-section">
+                ${rcpaDetails.briefRemarks && rcpaDetails.briefRemarks.trim().length > 0 ? `
+                  <div class="instructions-text">${rcpaDetails.briefRemarks}</div>
+                ` : `
+                  <div class="no-instructions">No remarks provided for this RCPA report.</div>
+                `}
+              </div>
+            </div>
+            
+            <!-- Footer -->
+            <div class="footer">
+              <p>This is a system-generated RCPA report. No signature required.</p>
+            </div>
+          </div>
+        </body>
+      </html>
+    `;
+    }
+
     async generateOrderPDF({ orderDetails, displayStatus }: PDFOptions): Promise<string> {
         try {
             const html = this.generateOrderHTML(orderDetails, displayStatus);
@@ -400,6 +729,40 @@ class PDFService {
         }
     }
 
+    async generateRcpaPDF({ rcpaDetails, formatDate }: RCPAPDFOptions): Promise<string> {
+        try {
+            const html = this.generateRcpaHTML(rcpaDetails, formatDate);
+
+            const { uri } = await Print.printToFileAsync({
+                html,
+                base64: false,
+                width: 612, // 8.5 inches * 72 points/inch
+                height: 792, // 11 inches * 72 points/inch
+                margins: {
+                    left: 20,
+                    top: 20,
+                    right: 20,
+                    bottom: 20,
+                },
+            });
+
+            // Generate a meaningful filename
+            const fileName = `RCPA_${rcpaDetails.rcpaId}_${new Date().toISOString().split('T')[0]}.pdf`;
+            const fileUri = `${FileSystem.documentDirectory}${fileName}`;
+
+            // Move the file to a permanent location with a proper name
+            await FileSystem.moveAsync({
+                from: uri,
+                to: fileUri,
+            });
+
+            return fileUri;
+        } catch (error) {
+            console.error('Error generating RCPA PDF:', error);
+            throw new Error('Failed to generate RCPA PDF');
+        }
+    }
+
     async shareOrderPDF(pdfUri: string): Promise<void> {
         try {
             const isAvailable = await Sharing.isAvailableAsync();
@@ -419,12 +782,41 @@ class PDFService {
         }
     }
 
+    async shareRcpaPDF(pdfUri: string): Promise<void> {
+        try {
+            const isAvailable = await Sharing.isAvailableAsync();
+
+            if (!isAvailable) {
+                throw new Error('Sharing is not available on this device');
+            }
+
+            await Sharing.shareAsync(pdfUri, {
+                mimeType: 'application/pdf',
+                dialogTitle: 'Share RCPA Report',
+                UTI: 'com.adobe.pdf',
+            });
+        } catch (error) {
+            console.error('Error sharing RCPA PDF:', error);
+            throw new Error('Failed to share RCPA PDF');
+        }
+    }
+
     async generateAndShareOrderPDF(options: PDFOptions): Promise<void> {
         try {
             const pdfUri = await this.generateOrderPDF(options);
             await this.shareOrderPDF(pdfUri);
         } catch (error) {
             console.error('Error in generateAndShareOrderPDF:', error);
+            throw error;
+        }
+    }
+
+    async generateAndShareRcpaPDF(options: RCPAPDFOptions): Promise<void> {
+        try {
+            const pdfUri = await this.generateRcpaPDF(options);
+            await this.shareRcpaPDF(pdfUri);
+        } catch (error) {
+            console.error('Error in generateAndShareRcpaPDF:', error);
             throw error;
         }
     }

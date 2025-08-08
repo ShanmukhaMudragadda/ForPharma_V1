@@ -53,10 +53,10 @@ export default function OrderDetailsPage(): JSX.Element {
         loadOrderDetails();
     }, [orderId]);
 
-    // Convert backend status to display status
+    // Convert backend status to display status - Updated for new schema
     const getDisplayStatus = (backendStatus: string) => {
         switch (backendStatus) {
-            case 'PENDING':
+            case 'DRAFT':
                 return 'Draft';
             case 'CONFIRMED':
                 return 'Confirmed';
@@ -246,10 +246,7 @@ export default function OrderDetailsPage(): JSX.Element {
                                         onPress={() => setShowOptionsMenu(false)}
                                         activeOpacity={1}
                                     />
-                                    <StyledView
-                                        className="absolute top-10 right-0 bg-white rounded-lg shadow-lg border border-gray-200 min-w-[150px] z-[9999]"
-                                        style={{ elevation: 10 }}
-                                    >
+                                    <StyledView className="absolute top-10 right-0 bg-white rounded-lg shadow-lg border border-gray-200 min-w-[150px] z-[9999]">
                                         <StyledTouchableOpacity
                                             className="flex-row items-center px-4 py-3 border-b border-gray-100"
                                             onPress={handleEdit}
@@ -296,27 +293,27 @@ export default function OrderDetailsPage(): JSX.Element {
                         <StyledView className="flex-row justify-between items-center py-4 border-b border-gray-100">
                             <StyledText className="text-base font-medium text-gray-600 flex-shrink-0">Customer</StyledText>
                             <StyledTouchableOpacity className="flex-1 ml-4" onPress={() => console.log('Open customer details')}>
-                                <StyledText className="text-base font-semibold text-[#0077B6] text-right underline" numberOfLines={1} ellipsizeMode="tail">
+                                <StyledText className="text-base font-semibold text-[#0077B6] text-right underline">
                                     {orderDetails.customer.name}
                                 </StyledText>
                             </StyledTouchableOpacity>
                         </StyledView>
                         <StyledView className="flex-row justify-between items-center py-4 border-b border-gray-100">
                             <StyledText className="text-base font-medium text-gray-600 flex-shrink-0">Created By</StyledText>
-                            <StyledText className="text-base font-semibold text-gray-900 text-right flex-1 ml-4" numberOfLines={1} ellipsizeMode="tail">
+                            <StyledText className="text-base font-semibold text-gray-900 text-right flex-1 ml-4">
                                 {orderDetails.createdBy.name}
                             </StyledText>
                         </StyledView>
                         <StyledView className="flex-row justify-between items-center py-4 border-b border-gray-100">
                             <StyledText className="text-base font-medium text-gray-600 flex-shrink-0">Order Placed</StyledText>
-                            <StyledText className="text-base font-semibold text-gray-900 text-right flex-1 ml-4" numberOfLines={1} ellipsizeMode="tail">
+                            <StyledText className="text-base font-semibold text-gray-900 text-right flex-1 ml-4">
                                 {orderDetails.orderDate}
                             </StyledText>
                         </StyledView>
                         {orderDetails.expectedDeliveryDate && (
                             <StyledView className="flex-row justify-between items-center py-4 border-b border-gray-100">
                                 <StyledText className="text-base font-medium text-gray-600 flex-shrink-0">Expected Delivery</StyledText>
-                                <StyledText className="text-base font-semibold text-gray-900 text-right flex-1 ml-4" numberOfLines={1} ellipsizeMode="tail">
+                                <StyledText className="text-base font-semibold text-gray-900 text-right flex-1 ml-4">
                                     {orderDetails.expectedDeliveryDate}
                                 </StyledText>
                             </StyledView>
@@ -342,19 +339,27 @@ export default function OrderDetailsPage(): JSX.Element {
                                     <StyledView className="flex-row bg-gray-50 py-3 px-2 rounded-md mb-2">
                                         <StyledText className="flex-1 text-xs font-semibold text-gray-500 uppercase">Drug Name</StyledText>
                                         <StyledText className="w-10 text-xs font-semibold text-gray-500 uppercase text-center">Qty</StyledText>
+                                        <StyledView className="w-px bg-gray-300 mx-2 h-4" />
                                         <StyledText className="w-[70px] text-xs font-semibold text-gray-500 uppercase text-right">Unit Price</StyledText>
+                                        <StyledView className="w-px bg-gray-300 mx-2 h-4" />
                                         <StyledText className="w-[70px] text-xs font-semibold text-gray-500 uppercase text-right">Subtotal</StyledText>
                                     </StyledView>
                                     {orderDetails.items.map((item: OrderItem, index: number) => (
                                         <StyledView key={item.id} className={`flex-row items-center py-3 px-2 ${index < orderDetails.items.length - 1 ? 'border-b border-gray-100' : ''}`}>
                                             <StyledView className="flex-1">
-                                                <StyledText className="text-base font-medium text-[#0077B6]">{item.name}</StyledText>
+                                                <StyledText className="text-base font-medium text-[#0077B6]">
+                                                    {item.name}
+                                                </StyledText>
                                                 {item.manufacturer && (
-                                                    <StyledText className="text-xs text-gray-500 mt-1">{item.manufacturer}</StyledText>
+                                                    <StyledText className="text-xs text-gray-500 mt-1">
+                                                        {item.manufacturer}
+                                                    </StyledText>
                                                 )}
                                             </StyledView>
                                             <StyledText className="w-10 text-sm text-gray-900 text-center">{item.quantity}</StyledText>
+                                            <StyledView className="w-px bg-gray-200 mx-2 self-stretch" />
                                             <StyledText className="w-[70px] text-sm text-gray-900 text-right">₹{item.unitPrice.toFixed(2)}</StyledText>
+                                            <StyledView className="w-px bg-gray-200 mx-2 self-stretch" />
                                             <StyledText className="w-[70px] text-sm text-gray-900 text-right">₹{item.subtotal.toFixed(2)}</StyledText>
                                         </StyledView>
                                     ))}

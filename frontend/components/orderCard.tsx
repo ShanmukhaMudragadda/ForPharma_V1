@@ -32,7 +32,7 @@ const OrderCard: React.FC<OrderCardProps> = ({
                 };
             case 'confirmed':
                 return {
-                    color: '#0077B6' // Green color
+                    color: '#0077B6' // Blue color
                 };
             default:
                 return {
@@ -45,64 +45,37 @@ const OrderCard: React.FC<OrderCardProps> = ({
 
     return (
         <StyledTouchableOpacity
+            className="bg-white rounded-xl p-4 mb-3 shadow-sm border border-gray-100"
             onPress={onPress}
             activeOpacity={0.7}
-            style={{
-                backgroundColor: '#FFFFFF',
-                borderRadius: 12,
-                padding: 16,
-                marginBottom: 12,
-                shadowColor: '#000',
-                shadowOffset: {
-                    width: 0,
-                    height: 2,
-                },
-                shadowOpacity: 0.05,
-                shadowRadius: 8,
-                elevation: 2,
-                borderWidth: 1,
-                borderColor: '#F0F0F0',
-            }}
         >
             {/* Order Header with Status */}
-            <StyledView style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                marginBottom: 8
-            }}>
-                {/* Order ID */}
-                <StyledText style={{
-                    fontSize: 16,
-                    fontWeight: '600',
-                    color: '#0077B6'
-                }}>
-                    {orderId}
-                </StyledText>
+            <StyledView className="flex-row justify-between items-center mb-2">
+                {/* Order ID - with proper flex handling for long IDs */}
+                <StyledView className="flex-1 mr-3">
+                    <StyledText 
+                        className="text-base font-semibold text-[#0077B6]"
+                        numberOfLines={1}
+                        ellipsizeMode="tail"
+                    >
+                        {orderId}
+                    </StyledText>
+                </StyledView>
 
-                {/* Status with Bullet Point and Border */}
+                {/* Status with Border */}
                 {status && (
-                    <StyledView style={{
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        borderWidth: 1,
-                        borderColor: statusStyles?.color,
-                        borderRadius: 12,
-                        paddingHorizontal: 8,
-                        paddingVertical: 4
-                    }}>
-                        <StyledText style={{
-                            fontSize: 12,
-                            color: statusStyles?.color,
-                            marginRight: 1
-                        }}>
-                        </StyledText>
-                        <StyledText style={{
-                            fontSize: 12,
-                            fontWeight: '600',
-                            color: statusStyles?.color,
-                            textTransform: 'capitalize'
-                        }}>
+                    <StyledView 
+                        className="flex-row items-center border rounded-xl px-2 py-1"
+                        style={{
+                            borderColor: statusStyles?.color
+                        }}
+                    >
+                        <StyledText 
+                            className="text-xs font-semibold capitalize"
+                            style={{
+                                color: statusStyles?.color
+                            }}
+                        >
                             {status}
                         </StyledText>
                     </StyledView>
@@ -110,56 +83,32 @@ const OrderCard: React.FC<OrderCardProps> = ({
             </StyledView>
 
             {/* Customer Name */}
-            <StyledView style={{ marginBottom: 12 }}>
-                <StyledText style={{
-                    fontSize: 16,
-                    fontWeight: '600',
-                    color: '#212529'
-                }}>
+            <StyledView className="mb-3">
+                <StyledText 
+                    className="text-base font-semibold text-gray-800"
+                    numberOfLines={2}
+                    ellipsizeMode="tail"
+                >
                     {customerName}
                 </StyledText>
             </StyledView>
 
             {/* Order Details Grid */}
-            <StyledView style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                marginTop: 12
-            }}>
+            <StyledView className="flex-row justify-between mt-3">
                 <StyledView>
-                    <StyledText style={{
-                        fontSize: 12,
-                        color: '#6C757D',
-                        marginBottom: 2,
-                        textTransform: 'uppercase',
-                        fontWeight: '500'
-                    }}>
+                    <StyledText className="text-xs text-gray-500 mb-1 uppercase font-medium">
                         DATE
                     </StyledText>
-                    <StyledText style={{
-                        fontSize: 14,
-                        color: '#212529',
-                        fontWeight: '500'
-                    }}>
+                    <StyledText className="text-sm text-gray-800 font-medium">
                         {date}
                     </StyledText>
                 </StyledView>
 
                 <StyledView>
-                    <StyledText style={{
-                        fontSize: 12,
-                        color: '#6C757D',
-                        marginBottom: 2,
-                        textTransform: 'uppercase',
-                        fontWeight: '500'
-                    }}>
+                    <StyledText className="text-xs text-gray-500 mb-1 uppercase font-medium">
                         AMOUNT
                     </StyledText>
-                    <StyledText style={{
-                        fontSize: 18,
-                        fontWeight: '700',
-                        color: '#28A745'
-                    }}>
+                    <StyledText className="text-lg font-bold text-green-600">
                         {amount}
                     </StyledText>
                 </StyledView>
