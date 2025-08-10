@@ -1,42 +1,146 @@
-import React, { useState } from 'react';
-import { View, Text, SafeAreaView, TouchableOpacity, StatusBar, ScrollView, Modal, Alert } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, SafeAreaView, TouchableOpacity, StatusBar, ScrollView, Alert, ActivityIndicator } from 'react-native';
 import { styled } from 'nativewind';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { Card } from 'react-native-paper';
 import Drawer from '../../components/drawer';
+import DCRService, { DCRDetails } from '../../services/dcrService';
+import PDFService from '../../services/pdfService';
 
 const StyledSafeAreaView = styled(SafeAreaView);
 const StyledView = styled(View);
 const StyledText = styled(Text);
 const StyledTouchableOpacity = styled(TouchableOpacity);
 const StyledScrollView = styled(ScrollView);
-const StyledModal = styled(Modal);
 
 export default function DCRDetailsPage(): JSX.Element {
   const router = useRouter();
   const params = useLocalSearchParams();
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
-  const [showShareDialog, setShowShareDialog] = useState<boolean>(false);
   const [showOptionsMenu, setShowOptionsMenu] = useState<boolean>(false);
+  const [isSharing, setIsSharing] = useState<boolean>(false);
 
-  // Get data from route params or use defaults
-  const dcrData = {
-    id: params.dcrId ? `${params.dcrId}` : 'DCR-2024-1201',
-    customer: params.customerName?.toString().split(' - ')[0] || 'Dr. Rajesh Sharma',
-    createdBy: 'Rajesh Kumar',
-    visitDate: params.date?.toString() || 'December 18, 2024',
-    timings: params.timings?.toString() || '09:00 AM - 10:15 AM',
-    location: params.customerName?.toString().includes(' - ') 
-      ? params.customerName?.toString().split(' - ')[1] || 'Apollo Hospital, Sarita Vihar, New Delhi'
-      : 'Apollo Hospital, Sarita Vihar, New Delhi',
-    status: params.status?.toString() || 'Completed',
-    productsPromoted: `1. Amlodipine 5mg Tablets - Cardiovascular medication for hypertension management
-2. Atorvastatin 20mg Tablets - Cholesterol management and heart disease prevention
-3. Metformin 500mg Tablets - Diabetes management supplement`,
-    comments: `Dr. ${params.customerName?.toString().split(' - ')[0]?.split(' ')[1] || 'Sharma'} showed great interest in our new Amlodipine formulation. He mentioned that his current patients are responding well to similar medications but is looking for better compliance options. Discussed the once-daily dosing advantage and cost-effectiveness. He agreed to try prescribing it for 5-10 new hypertensive patients next month.
+  // Backend data states
+  const [dcrDetails, setDcrDetails] = useState<DCRDetails | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-He also requested clinical trial data for the Atorvastatin combination therapy. Promised to send detailed literature by end of week. Overall very productive meeting - doctor is receptive to our products and sees value in the therapeutic benefits we discussed.`
+  const dcrId = params.dcrId as string;
+
+  // Load DCR details from backend
+  const loadDCRDetails = async () => {
+    try {
+      setError(null);
+      const details = await DCRService.getDCRDetails(dcrId);
+      setDcrDetails(details);
+    } catch (error: any) {
+      console.error('Error loading DCR details:', error);
+      setError(error.message || 'Failed to load DCR details');
+      Alert.alert('Error', 'Failed to load DCR details. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Load details on component mount
+  useEffect(() => {
+    if (dcrId) {
+      loadDCRDetails();
+    } else {
+      setError('DCR ID not provided');
+      setLoading(false);
+    }
+  }, [dcrId]);
+
+  // Get the appropriate label based on task type
+  const getCustomerLabel = (taskType?: string) => {
+    switch (taskType) {
+      case 'DOCTOR_TASK':
+        return 'Doctor';
+      case 'CHEMIST_TASK':
+        return 'Chemist';
+      case 'TOUR_PLAN_TASK':
+        return 'Tour';
+      default:
+        return 'Customer';
+    }
+  };
+
+  // Get customer name and address from task details
+  const getCustomerInfo = (taskType?: string, taskDetails?: any) => {
+    if (!taskDetails) {
+      return { name: 'Unknown', address: 'Address not available' };
+    }
+
+    switch (taskType) {
+      case 'DOCTOR_TASK':
+        const hospital = taskDetails.doctor?.hospitalAssociations?.[0]?.hospital;
+        return {
+          name: taskDetails.doctor?.name || 'Unknown Doctor',
+          address: hospital
+            ? `${hospital.name}, ${hospital.address}, ${hospital.city || ''}, ${hospital.state || ''}`.replace(/, ,/g, ',').replace(/,$/, '')
+            : 'Hospital address not available'
+        };
+
+      case 'CHEMIST_TASK':
+        return {
+          name: taskDetails.chemist?.name || 'Unknown Chemist',
+          address: taskDetails.chemist
+            ? `${taskDetails.chemist.address || ''}, ${taskDetails.chemist.city || ''}, ${taskDetails.chemist.state || ''}`.replace(/^, |, ,|,$/, '').replace(/^,/, '') || 'Address not available'
+            : 'Chemist address not available'
+        };
+
+      case 'TOUR_PLAN_TASK':
+        return {
+          name: taskDetails.tourPlan?.name || 'Tour Plan',
+          address: taskDetails.location || 'Location not specified'
+        };
+
+      default:
+        return { name: 'Unknown', address: 'Address not available' };
+    }
+  };
+
+  // Get task timings from task details - FIXED
+  const getTaskTimings = (taskType?: string, taskDetails?: any) => {
+    if (!taskDetails) {
+      return 'Not specified';
+    }
+
+    const formatTime = (timeStr: string) => {
+      try {
+        // Handle different time formats
+        let timeToFormat = timeStr;
+
+        // If it's an ISO string, extract just the time part
+        if (timeStr.includes('T')) {
+          timeToFormat = timeStr.split('T')[1].substring(0, 5);
+        }
+
+        const [hours, minutes] = timeToFormat.split(':');
+        const hour = parseInt(hours);
+        const ampm = hour >= 12 ? 'PM' : 'AM';
+        const displayHour = hour === 0 ? 12 : hour > 12 ? hour - 12 : hour;
+        return `${displayHour}:${minutes} ${ampm}`;
+      } catch (error) {
+        console.warn('Error formatting time:', timeStr, error);
+        return timeStr; // Return original if formatting fails
+      }
+    };
+
+    try {
+      // The task details now include startTime and endTime directly
+      if (taskDetails.startTime && taskDetails.endTime) {
+        const startTime = formatTime(taskDetails.startTime);
+        const endTime = formatTime(taskDetails.endTime);
+        return `${startTime} - ${endTime}`;
+      }
+    } catch (error) {
+      console.warn('Error formatting task timings:', error);
+    }
+
+    return 'Time not available';
   };
 
   const handleMenuPress = (): void => {
@@ -51,53 +155,67 @@ He also requested clinical trial data for the Atorvastatin combination therapy. 
     router.push('/(tabs)/dcr'); // Navigate back to DCR list
   };
 
-  const handleSharePress = (): void => {
-    setShowShareDialog(true);
-  };
+  const handleSharePress = async (): void => {
+    if (!dcrDetails || isSharing) return;
 
-  const handleCloseShareDialog = (): void => {
-    setShowShareDialog(false);
-  };
+    try {
+      setIsSharing(true);
 
-  const handleShareOption = (method: string): void => {
-    setShowShareDialog(false);
-    
-    switch(method) {
-      case 'email':
-        Alert.alert('Email', 'Opening email client...');
-        break;
-      case 'whatsapp':
-        Alert.alert('WhatsApp', 'Sharing via WhatsApp...');
-        break;
-      case 'pdf':
-        Alert.alert('PDF Export', 'Generating PDF...');
-        break;
-      case 'link':
-        Alert.alert('Link Copied', 'Link copied to clipboard!');
-        break;
+      const customerInfo = getCustomerInfo(dcrDetails.taskType, dcrDetails.taskDetails);
+      const taskTimings = getTaskTimings(dcrDetails.taskType, dcrDetails.taskDetails);
+      const customerLabel = getCustomerLabel(dcrDetails.taskType);
+
+      // Generate and share PDF
+      await PDFService.generateAndShareDcrPDF({
+        dcrDetails,
+        customerInfo,
+        taskTimings,
+        customerLabel
+      });
+
+      console.log('DCR PDF shared successfully');
+    } catch (error: any) {
+      console.error('Error sharing DCR:', error);
+      Alert.alert(
+        'Share Failed',
+        error.message || 'Failed to generate or share the DCR PDF. Please try again.',
+        [{ text: 'OK' }]
+      );
+    } finally {
+      setIsSharing(false);
     }
   };
 
   const handleCustomerPress = (): void => {
-    Alert.alert('Customer Details', `Opening details for ${dcrData.customer}`);
+    if (dcrDetails) {
+      const customerInfo = getCustomerInfo(dcrDetails.taskType, dcrDetails.taskDetails);
+      Alert.alert(`${getCustomerLabel(dcrDetails.taskType)} Details`, `Opening details for ${customerInfo.name}`);
+    }
   };
 
   const handleEdit = (): void => {
     setShowOptionsMenu(false);
-    // Navigate to create DCR page with edit data
-    router.push({
-      pathname: '/createDcr',
-      params: {
-        editMode: 'true',
-        dcrId: dcrData.id,
-        customerName: params.customerName?.toString() || `${dcrData.customer} - ${dcrData.location}`,
-        date: dcrData.visitDate,
-        timings: dcrData.timings,
-        status: dcrData.status,
-        productsPromoted: dcrData.productsPromoted,
-        comments: dcrData.comments
-      }
-    });
+    if (dcrDetails) {
+      const customerInfo = getCustomerInfo(dcrDetails.taskType, dcrDetails.taskDetails);
+      const taskTimings = getTaskTimings(dcrDetails.taskType, dcrDetails.taskDetails);
+
+      // Navigate to create DCR page with edit mode and all necessary data
+      router.push({
+        pathname: '/createDcr',
+        params: {
+          editMode: 'true',
+          dcrId: dcrDetails.dcrId,
+          taskId: dcrDetails.taskId || '',
+          taskType: dcrDetails.taskType || '',
+          customerName: customerInfo.name,
+          customerAddress: customerInfo.address,
+          taskDate: dcrDetails.reportDate,
+          taskTimings: taskTimings,
+          productsPromoted: dcrDetails.productsDiscussed || '',
+          comments: dcrDetails.comments || ''
+        }
+      });
+    }
   };
 
   const handleDelete = (): void => {
@@ -113,16 +231,17 @@ He also requested clinical trial data for the Atorvastatin combination therapy. 
           style: 'destructive',
           onPress: async () => {
             try {
-              // Add your delete API call here
-              console.log('Deleting DCR:', dcrData.id);
-              Alert.alert('Success', 'DCR deleted successfully', [
-                {
-                  text: 'OK',
-                  onPress: () => router.push('/(tabs)/dcr')
-                }
-              ]);
+              if (dcrDetails) {
+                await DCRService.deleteDCR(dcrDetails.dcrId);
+                Alert.alert('Success', 'DCR deleted successfully', [
+                  {
+                    text: 'OK',
+                    onPress: () => router.push('/(tabs)/dcr')
+                  }
+                ]);
+              }
             } catch (error: any) {
-              Alert.alert('Error', 'Failed to delete DCR. Please try again.');
+              Alert.alert('Error', error.message || 'Failed to delete DCR. Please try again.');
             }
           }
         }
@@ -134,8 +253,6 @@ He also requested clinical trial data for the Atorvastatin combination therapy. 
     switch (status.toLowerCase()) {
       case 'completed':
         return 'Completed';
-      case 'pending':
-        return 'Pending';
       case 'draft':
         return 'Draft';
       default:
@@ -146,8 +263,7 @@ He also requested clinical trial data for the Atorvastatin combination therapy. 
   const getStatusColor = (status: string): string => {
     switch (status.toLowerCase()) {
       case 'completed': return 'text-green-600';
-      case 'pending': return 'text-orange-600';
-      case 'draft': return 'text-gray-600';
+      case 'draft': return 'text-orange-600';
       default: return 'text-gray-600';
     }
   };
@@ -155,13 +271,89 @@ He also requested clinical trial data for the Atorvastatin combination therapy. 
   const getStatusBgColor = (status: string): string => {
     switch (status.toLowerCase()) {
       case 'completed': return 'bg-green-100';
-      case 'pending': return 'bg-orange-100';
-      case 'draft': return 'bg-gray-100';
+      case 'draft': return 'bg-orange-100';
       default: return 'bg-gray-100';
     }
   };
 
-  const displayStatus = getDisplayStatus(dcrData.status);
+  // Loading state
+  if (loading) {
+    return (
+      <StyledSafeAreaView className="flex-1 bg-white">
+        <StatusBar backgroundColor="#0077B6" barStyle="light-content" />
+
+        {/* Title Bar */}
+        <StyledView className="bg-white px-5 py-4 flex-row justify-between items-center border-b border-gray-200">
+          <StyledView className="flex-row items-center gap-3">
+            <StyledTouchableOpacity
+              className="w-9 h-9 rounded-lg bg-gray-100 items-center justify-center"
+              onPress={handleBackPress}
+            >
+              <Ionicons name="arrow-back" size={18} color="#6C757D" />
+            </StyledTouchableOpacity>
+
+            <StyledText className="text-xl font-semibold text-gray-900">
+              DCR Details
+            </StyledText>
+          </StyledView>
+        </StyledView>
+
+        {/* Loading Indicator */}
+        <StyledView className="flex-1 justify-center items-center">
+          <ActivityIndicator size="large" color="#0077B6" />
+          <StyledText className="text-gray-600 mt-4">Loading DCR details...</StyledText>
+        </StyledView>
+      </StyledSafeAreaView>
+    );
+  }
+
+  // Error state
+  if (error || !dcrDetails) {
+    return (
+      <StyledSafeAreaView className="flex-1 bg-white">
+        <StatusBar backgroundColor="#0077B6" barStyle="light-content" />
+
+        {/* Title Bar */}
+        <StyledView className="bg-white px-5 py-4 flex-row justify-between items-center border-b border-gray-200">
+          <StyledView className="flex-row items-center gap-3">
+            <StyledTouchableOpacity
+              className="w-9 h-9 rounded-lg bg-gray-100 items-center justify-center"
+              onPress={handleBackPress}
+            >
+              <Ionicons name="arrow-back" size={18} color="#6C757D" />
+            </StyledTouchableOpacity>
+
+            <StyledText className="text-xl font-semibold text-gray-900">
+              DCR Details
+            </StyledText>
+          </StyledView>
+        </StyledView>
+
+        {/* Error State */}
+        <StyledView className="flex-1 justify-center items-center px-5">
+          <StyledText className="text-5xl mb-4">⚠️</StyledText>
+          <StyledText className="text-lg font-semibold text-gray-900 mb-2 text-center">
+            Error Loading DCR Details
+          </StyledText>
+          <StyledText className="text-sm text-gray-600 text-center mb-4">
+            {error || 'DCR details not found'}
+          </StyledText>
+          <StyledTouchableOpacity
+            className="bg-[#0077B6] px-6 py-3 rounded-lg"
+            onPress={loadDCRDetails}
+          >
+            <StyledText className="text-white font-semibold">
+              Try Again
+            </StyledText>
+          </StyledTouchableOpacity>
+        </StyledView>
+      </StyledSafeAreaView>
+    );
+  }
+
+  const customerInfo = getCustomerInfo(dcrDetails.taskType, dcrDetails.taskDetails);
+  const displayStatus = getDisplayStatus(dcrDetails.status);
+  const taskTimings = getTaskTimings(dcrDetails.taskType, dcrDetails.taskDetails);
 
   return (
     <StyledSafeAreaView className="flex-1 bg-gray-50">
@@ -184,12 +376,17 @@ He also requested clinical trial data for the Atorvastatin combination therapy. 
 
         {/* Conditional Options Menu */}
         <StyledView className="flex-row gap-2">
-          {/* Share Button */}
+          {/* Share button with loading state */}
           <StyledTouchableOpacity
-            className="w-9 h-9 rounded-lg bg-gray-100 items-center justify-center"
+            className={`w-9 h-9 rounded-lg ${isSharing ? 'bg-blue-100' : 'bg-gray-100'} items-center justify-center`}
             onPress={handleSharePress}
+            disabled={isSharing}
           >
-            <Ionicons name="share-outline" size={18} color="#6C757D" />
+            {isSharing ? (
+              <ActivityIndicator size="small" color="#0077B6" />
+            ) : (
+              <Ionicons name="share-outline" size={18} color="#6C757D" />
+            )}
           </StyledTouchableOpacity>
 
           {/* Ellipsis button and dropdown only for Draft status */}
@@ -244,7 +441,7 @@ He also requested clinical trial data for the Atorvastatin combination therapy. 
         <StyledView className="bg-white px-5 py-6 border-b border-gray-200">
           <StyledView className="items-center">
             <StyledText className="text-2xl font-bold text-[#0077B6] mb-1">
-              {dcrData.id}
+              {dcrDetails.dcrId}
             </StyledText>
             <StyledText className="text-xs font-medium text-gray-500 uppercase tracking-wide">
               DCR ID
@@ -256,10 +453,12 @@ He also requested clinical trial data for the Atorvastatin combination therapy. 
         <StyledView className="bg-white px-5 py-6 mb-5">
           <StyledView className="space-y-4">
             <StyledView className="flex-row justify-between items-center py-4 border-b border-gray-100">
-              <StyledText className="text-base font-medium text-gray-600 flex-shrink-0">Customer</StyledText>
+              <StyledText className="text-base font-medium text-gray-600 flex-shrink-0">
+                {getCustomerLabel(dcrDetails.taskType)}
+              </StyledText>
               <StyledTouchableOpacity className="flex-1 ml-4" onPress={handleCustomerPress}>
                 <StyledText className="text-base font-semibold text-[#0077B6] text-right underline" numberOfLines={1} ellipsizeMode="tail">
-                  {dcrData.customer}
+                  {customerInfo.name}
                 </StyledText>
               </StyledTouchableOpacity>
             </StyledView>
@@ -267,21 +466,21 @@ He also requested clinical trial data for the Atorvastatin combination therapy. 
             <StyledView className="flex-row justify-between items-center py-4 border-b border-gray-100">
               <StyledText className="text-base font-medium text-gray-600 flex-shrink-0">Created By</StyledText>
               <StyledText className="text-base font-semibold text-gray-900 text-right flex-1 ml-4" numberOfLines={1} ellipsizeMode="tail">
-                {dcrData.createdBy}
+                {dcrDetails.createdBy.name}
               </StyledText>
             </StyledView>
 
             <StyledView className="flex-row justify-between items-center py-4 border-b border-gray-100">
-              <StyledText className="text-base font-medium text-gray-600 flex-shrink-0">Visit Date & Time</StyledText>
+              <StyledText className="text-base font-medium text-gray-600 flex-shrink-0">Task Date & Time</StyledText>
               <StyledText className="text-base font-semibold text-gray-900 text-right flex-1 ml-4" numberOfLines={2} ellipsizeMode="tail">
-                {dcrData.visitDate} • {dcrData.timings}
+                {dcrDetails.reportDate} • {taskTimings}
               </StyledText>
             </StyledView>
 
             <StyledView className="flex-row justify-between items-center py-4 border-b border-gray-100">
               <StyledText className="text-base font-medium text-gray-600 flex-shrink-0">Location</StyledText>
               <StyledText className="text-base font-semibold text-gray-900 text-right flex-1 ml-4" numberOfLines={2} ellipsizeMode="tail">
-                {dcrData.location}
+                {customerInfo.address}
               </StyledText>
             </StyledView>
 
@@ -311,7 +510,7 @@ He also requested clinical trial data for the Atorvastatin combination therapy. 
                 </StyledText>
                 <StyledView className="bg-gray-50 p-3 rounded-lg border-l-4 border-[#0077B6]">
                   <StyledText className="text-sm text-gray-900 leading-6">
-                    {dcrData.productsPromoted}
+                    {dcrDetails.productsDiscussed || 'No products discussed recorded.'}
                   </StyledText>
                 </StyledView>
               </StyledView>
@@ -323,7 +522,7 @@ He also requested clinical trial data for the Atorvastatin combination therapy. 
                 </StyledText>
                 <StyledView className="bg-gray-50 p-3 rounded-lg border-l-4 border-[#0077B6]">
                   <StyledText className="text-sm text-gray-900 leading-6">
-                    {dcrData.comments}
+                    {dcrDetails.comments || 'No additional comments recorded.'}
                   </StyledText>
                 </StyledView>
               </StyledView>
@@ -331,65 +530,6 @@ He also requested clinical trial data for the Atorvastatin combination therapy. 
           </Card>
         </StyledView>
       </StyledScrollView>
-
-      {/* Share Dialog */}
-      <StyledModal
-        visible={showShareDialog}
-        transparent={true}
-        animationType="fade"
-        onRequestClose={handleCloseShareDialog}
-      >
-        <StyledView className="flex-1 bg-black/50 justify-center items-center px-6">
-          <StyledView className="bg-white rounded-2xl p-6 w-full max-w-sm shadow-lg">
-            <StyledText className="text-lg font-semibold text-gray-900 text-center mb-4">
-              Share DCR Report
-            </StyledText>
-
-            {/* Share Options */}
-            <StyledView className="gap-2 mb-4">
-              <StyledTouchableOpacity
-                className="flex-row items-center p-3 bg-gray-50 rounded-lg border border-gray-200"
-                onPress={() => handleShareOption('email')}
-              >
-                <StyledText className="text-xl mr-3">📧</StyledText>
-                <StyledText className="text-sm font-medium text-gray-900">Email</StyledText>
-              </StyledTouchableOpacity>
-
-              <StyledTouchableOpacity
-                className="flex-row items-center p-3 bg-gray-50 rounded-lg border border-gray-200"
-                onPress={() => handleShareOption('whatsapp')}
-              >
-                <StyledText className="text-xl mr-3">💬</StyledText>
-                <StyledText className="text-sm font-medium text-gray-900">WhatsApp</StyledText>
-              </StyledTouchableOpacity>
-
-              <StyledTouchableOpacity
-                className="flex-row items-center p-3 bg-gray-50 rounded-lg border border-gray-200"
-                onPress={() => handleShareOption('pdf')}
-              >
-                <StyledText className="text-xl mr-3">📄</StyledText>
-                <StyledText className="text-sm font-medium text-gray-900">Export as PDF</StyledText>
-              </StyledTouchableOpacity>
-
-              <StyledTouchableOpacity
-                className="flex-row items-center p-3 bg-gray-50 rounded-lg border border-gray-200"
-                onPress={() => handleShareOption('link')}
-              >
-                <StyledText className="text-xl mr-3">🔗</StyledText>
-                <StyledText className="text-sm font-medium text-gray-900">Copy Link</StyledText>
-              </StyledTouchableOpacity>
-            </StyledView>
-
-            {/* Close Button */}
-            <StyledTouchableOpacity
-              className="w-full py-3 bg-gray-600 rounded-lg items-center justify-center"
-              onPress={handleCloseShareDialog}
-            >
-              <StyledText className="text-white font-semibold">Close</StyledText>
-            </StyledTouchableOpacity>
-          </StyledView>
-        </StyledView>
-      </StyledModal>
 
       {/* Drawer */}
       <Drawer isOpen={isDrawerOpen} onClose={handleDrawerClose} />

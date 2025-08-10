@@ -646,11 +646,6 @@ model DcrReport {
   taskId         String?            @map("task_id")
   taskType       TaskTypeReference? @map("task_type")
 
-  // Optional: Direct relations for type safety with unique constraint names
-  doctorTask   DoctorTask?   @relation("DcrReportDoctorTask", fields: [taskId], references: [id], map: "dcr_reports_doctor_task_fkey")
-  chemistTask  ChemistTask?  @relation("DcrReportChemistTask", fields: [taskId], references: [id], map: "dcr_reports_chemist_task_fkey")
-  tourPlanTask TourPlanTask? @relation("DcrReportTourPlanTask", fields: [taskId], references: [id], map: "dcr_reports_tour_plan_task_fkey")
-
   reportDate        DateTime @map("report_date") @db.Date
   productsDiscussed String?  @map("products_discussed") @db.Text
   comments          String?  @db.Text
@@ -768,7 +763,6 @@ model DoctorTask {
   updatedAt DateTime @updatedAt @map("updated_at")
 
   doctorInteractions DoctorInteraction[]
-  dcrReports         DcrReport[]         @relation("DcrReportDoctorTask")
 
   @@map("doctor_tasks")
 }
@@ -791,7 +785,6 @@ model ChemistTask {
   updatedAt DateTime @updatedAt @map("updated_at")
 
   chemistInteractions ChemistInteraction[]
-  dcrReports          DcrReport[]          @relation("DcrReportChemistTask")
 
   @@map("chemist_tasks")
 }
@@ -815,7 +808,6 @@ model TourPlanTask {
   updatedAt DateTime @updatedAt @map("updated_at")
 
   tourPlanReports TourPlanReport[]
-  dcrReports      DcrReport[]      @relation("DcrReportTourPlanTask")
 
   @@map("tour_plan_tasks")
 }

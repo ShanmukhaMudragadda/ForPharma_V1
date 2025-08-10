@@ -1,6 +1,11 @@
-import SchemaManagementService from './src/services/SchemaManagementService.js';
+import { PrismaClient as SharedPrismaClient } from './generated/prisma-shared/index.js';
+import { PrismaClient as TenantPrismaClient } from './generated/prisma-tenant/index.js';
 import bcrypt from 'bcrypt';
 import { faker } from '@faker-js/faker';
+
+// Initialize Prisma clients
+const sharedPrisma = new SharedPrismaClient();
+const tenantPrisma = new TenantPrismaClient();
 
 // Helper functions
 const hashPassword = async (password: string) => {
@@ -16,217 +21,280 @@ const getRandomElements = <T>(array: T[], count: number): T[] => {
     return shuffled.slice(0, count);
 };
 
-// Truncate text to fit column constraints
-const truncateText = (text: string, maxLength: number): string => {
-    return text.length > maxLength ? text.substring(0, maxLength) : text;
-};
-
-// Create proper time objects for @db.Time fields
-const createTimeObject = (hours: number, minutes: number = 0): Date => {
-    const date = new Date();
-    date.setHours(hours, minutes, 0, 0);
-    return date;
+const addDays = (date: Date, days: number): Date => {
+    const result = new Date(date);
+    result.setDate(result.getDate() + days);
+    return result;
 };
 
 // Constants
-const ORG_ID = '7c65dff4-7631-4e8a-acdf-5a8324acf6a9';
-const SCHEMA_NAME = 'org_healthtech_pharma_1754553794138';
+const ADMIN_EMAIL = 'admin@medicarepharma.com';
+const ADMIN_PASSWORD = 'Admin@123';
 
+// Generate Indian cities and states
 const indianCities = ['Mumbai', 'Delhi', 'Bangalore', 'Chennai', 'Kolkata', 'Hyderabad', 'Pune', 'Ahmedabad'];
 const indianStates = ['Maharashtra', 'Delhi', 'Karnataka', 'Tamil Nadu', 'West Bengal', 'Telangana', 'Gujarat', 'Rajasthan'];
+
+// Medical specializations
 const specializations = [
     'General Physician', 'Cardiologist', 'Neurologist', 'Pediatrician',
-    'Orthopedic', 'Dermatologist', 'Gynecologist', 'Psychiatrist', 'Oncologist', 'Gastroenterologist'
+    'Orthopedic', 'Dermatologist', 'Gynecologist', 'Psychiatrist'
 ];
+
+// Hospital types
 const hospitalTypes = ['Government', 'Private', 'Multi-Specialty', 'Clinic', 'Nursing Home'];
 
-// DATA CLEANUP FUNCTIONS
-async function cleanupAllData(tenantDb: any) {
-    console.log('🧹 Cleaning up existing data...');
-    
-    try {
-        // Delete in reverse dependency order to avoid foreign key constraints
-        await tenantDb.dcrReport.deleteMany({});
-        await tenantDb.rcpaDrugData.deleteMany({});
-        await tenantDb.rcpaReport.deleteMany({});
-        await tenantDb.orderItem.deleteMany({});
-        await tenantDb.order.deleteMany({});
-        await tenantDb.doctorDistributionDrugItem.deleteMany({});
-        await tenantDb.doctorDistributionGiftItem.deleteMany({});
-        await tenantDb.doctorDistribution.deleteMany({});
-        await tenantDb.userDrugInventory.deleteMany({});
-        await tenantDb.userGiftInventory.deleteMany({});
-        await tenantDb.gift.deleteMany({});
-        await tenantDb.tourPlanReport.deleteMany({});
-        await tenantDb.doctorTask.deleteMany({});
-        await tenantDb.chemistTask.deleteMany({});
-        await tenantDb.tourPlanTask.deleteMany({});
-        await tenantDb.taskPlanner.deleteMany({});
-        await tenantDb.tourPlan.deleteMany({});
-        await tenantDb.expenseClaim.deleteMany({});
-        await tenantDb.expenseRoleConfig.deleteMany({});
-        await tenantDb.expenseType.deleteMany({});
-        await tenantDb.checkIn.deleteMany({});
-        await tenantDb.doctorInteraction.deleteMany({});
-        await tenantDb.chemistInteraction.deleteMany({});
-        await tenantDb.doctorNote.deleteMany({});
-        await tenantDb.chemistNote.deleteMany({});
-        await tenantDb.doctorChemistRelation.deleteMany({});
-        await tenantDb.doctorConsultationSchedule.deleteMany({});
-        await tenantDb.doctorHospitalAssociation.deleteMany({});
-        await tenantDb.doctor.deleteMany({});
-        await tenantDb.chemist.deleteMany({});
-        await tenantDb.hospital.deleteMany({});
-        await tenantDb.hospitalChain.deleteMany({});
-        await tenantDb.chemistChain.deleteMany({});
-        await tenantDb.drug.deleteMany({});
-        await tenantDb.employeeTerritory.deleteMany({});
-        await tenantDb.territory.deleteMany({});
-        await tenantDb.employeeTrainingRecord.deleteMany({});
-        await tenantDb.team.deleteMany({});
-        await tenantDb.auditLog.deleteMany({});
-        
-        console.log('✅ Cleanup completed');
-    } catch (error) {
-        console.error('❌ Error during cleanup:', error);
-        throw error;
-    }
-}
+// Drug compositions and categories
+const drugData = [
+    { name: 'Paracetamol 500mg', composition: 'Paracetamol 500mg', category: 'Analgesic', manufacturer: 'MediCare Pharma' },
+    { name: 'Amoxicillin 250mg', composition: 'Amoxicillin 250mg', category: 'Antibiotic', manufacturer: 'MediCare Pharma' },
+    { name: 'Omeprazole 20mg', composition: 'Omeprazole 20mg', category: 'PPI', manufacturer: 'MediCare Pharma' },
+    { name: 'Metformin 500mg', composition: 'Metformin HCl 500mg', category: 'Antidiabetic', manufacturer: 'MediCare Pharma' },
+    { name: 'Amlodipine 5mg', composition: 'Amlodipine 5mg', category: 'Antihypertensive', manufacturer: 'MediCare Pharma' },
+    { name: 'Atorvastatin 10mg', composition: 'Atorvastatin 10mg', category: 'Statin', manufacturer: 'MediCare Pharma' },
+    { name: 'Cetirizine 10mg', composition: 'Cetirizine HCl 10mg', category: 'Antihistamine', manufacturer: 'MediCare Pharma' },
+    { name: 'Azithromycin 500mg', composition: 'Azithromycin 500mg', category: 'Antibiotic', manufacturer: 'MediCare Pharma' },
+    { name: 'Diclofenac 50mg', composition: 'Diclofenac Sodium 50mg', category: 'NSAID', manufacturer: 'MediCare Pharma' },
+    { name: 'Ranitidine 150mg', composition: 'Ranitidine 150mg', category: 'H2 Blocker', manufacturer: 'MediCare Pharma' },
+    { name: 'Vitamin D3 60K', composition: 'Cholecalciferol 60000 IU', category: 'Vitamin', manufacturer: 'MediCare Pharma' },
+    { name: 'B-Complex Forte', composition: 'Vitamin B Complex', category: 'Vitamin', manufacturer: 'MediCare Pharma' }
+];
 
-async function createTerritories(tenantDb: any) {
-    console.log('\n📍 Creating territories...');
+async function seedSharedDatabase() {
+    console.log('🌱 Seeding shared database...');
 
-    const westRegion = await tenantDb.territory.create({
+    // Create organization
+    const org = await sharedPrisma.organization.create({
         data: {
-            organizationId: ORG_ID,
-            name: truncateText('West Region', 255),
-            type: truncateText('region', 100)
+            name: 'MediCare Pharmaceuticals',
+            schemaName: 'Forsys', // Pre-created schema name
+            address: '123, Pharma Park, Mumbai, Maharashtra 400001',
+            contactEmail: 'info@medicarepharma.com',
+            contactPhone: '+91-22-12345678',
+            website: 'www.medicarepharma.com',
+            settings: {
+                timezone: 'Asia/Kolkata',
+                currency: 'INR',
+                financialYear: 'April-March'
+            },
+            isActive: true
         }
     });
 
-    const maharashtra = await tenantDb.territory.create({
+    // Create admin user in shared database
+    const hashedPassword = await hashPassword(ADMIN_PASSWORD);
+    const adminUser = await sharedPrisma.user.create({
         data: {
-            organizationId: ORG_ID,
-            name: truncateText('Maharashtra', 255),
-            type: truncateText('state', 100),
+            organizationId: org.id,
+            role: 'SYSTEM_ADMINISTRATOR',
+            email: ADMIN_EMAIL,
+            password: hashedPassword,
+            isActive: true
+        }
+    });
+
+    console.log('✅ Organization and admin user created in shared database');
+    console.log(`   - Organization: ${org.name} (ID: ${org.id})`);
+    console.log(`   - Admin Email: ${adminUser.email}`);
+
+    return { organization: org, adminUser, hashedPassword };
+}
+
+async function seedTenantDatabase(organizationId: string, hashedPassword: string) {
+    console.log('\n🌱 Seeding tenant database...');
+
+    // Step 1: Create admin employee in tenant schema
+    const adminEmployee = await tenantPrisma.employee.create({
+        data: {
+            organizationId: organizationId,
+            email: ADMIN_EMAIL,
+            passwordHash: hashedPassword,
+            firstName: 'System',
+            lastName: 'Administrator',
+            phone: '+91-9876543210',
+            role: 'SYSTEM_ADMINISTRATOR',
+            employeeCode: 'EMP001',
+            city: 'Mumbai',
+            state: 'Maharashtra',
+            isActive: true
+        }
+    });
+    console.log('✅ Admin employee created in tenant database');
+
+    // Step 2: Create territories (hierarchical structure)
+    console.log('\n📍 Creating territories...');
+
+    // Create region
+    const westRegion = await tenantPrisma.territory.create({
+        data: {
+            organizationId: organizationId,
+            name: 'West Region',
+            type: 'region'
+        }
+    });
+
+    // Create state
+    const maharashtra = await tenantPrisma.territory.create({
+        data: {
+            organizationId: organizationId,
+            name: 'Maharashtra',
+            type: 'state',
             parentTerritoryId: westRegion.id
         }
     });
 
-    const mumbai = await tenantDb.territory.create({
+    // Create cities
+    const mumbai = await tenantPrisma.territory.create({
         data: {
-            organizationId: ORG_ID,
-            name: truncateText('Mumbai', 255),
-            type: truncateText('city', 100),
+            organizationId: organizationId,
+            name: 'Mumbai',
+            type: 'city',
             parentTerritoryId: maharashtra.id
         }
     });
 
-    const pune = await tenantDb.territory.create({
+    const pune = await tenantPrisma.territory.create({
         data: {
-            organizationId: ORG_ID,
-            name: truncateText('Pune', 255),
-            type: truncateText('city', 100),
+            organizationId: organizationId,
+            name: 'Pune',
+            type: 'city',
             parentTerritoryId: maharashtra.id
         }
     });
 
-    console.log('✅ Created 4 territories');
-    return { westRegion, maharashtra, mumbai, pune };
-}
+    // Assign territory to admin
+    await tenantPrisma.employeeTerritory.create({
+        data: {
+            employeeId: adminEmployee.id,
+            territoryId: westRegion.id,
+            assignedAt: new Date(),
+            isPrimary: true
+        }
+    });
 
-async function assignTerritories(tenantDb: any, territories: any, employees: any) {
-    console.log('\n🗺️ Assigning territories...');
+    console.log('✅ Territories created and assigned');
 
-    await tenantDb.employeeTerritory.createMany({
+    // Step 3: Create additional employees for testing
+    console.log('\n👥 Creating additional employees...');
+
+    // Sales Manager
+    const salesManager = await tenantPrisma.employee.create({
+        data: {
+            organizationId: organizationId,
+            email: 'sales.manager@medicarepharma.com',
+            passwordHash: await hashPassword('Manager@123'),
+            firstName: 'Rajesh',
+            lastName: 'Kumar',
+            phone: '+91-9876543211',
+            role: 'SALES_MANAGER',
+            employeeCode: 'EMP002',
+            city: 'Mumbai',
+            state: 'Maharashtra',
+            reportingManagerId: adminEmployee.id,
+            isActive: true
+        }
+    });
+
+    // Medical Representatives - Assign specific territories
+    const mr1 = await tenantPrisma.employee.create({
+        data: {
+            organizationId: organizationId,
+            email: 'amit.patel@medicarepharma.com',
+            passwordHash: await hashPassword('MR@123456'),
+            firstName: 'Amit',
+            lastName: 'Patel',
+            phone: '+91-9876543212',
+            role: 'MEDICAL_REPRESENTATIVE',
+            employeeCode: 'EMP003',
+            city: 'Mumbai',
+            state: 'Maharashtra',
+            reportingManagerId: salesManager.id,
+            isActive: true
+        }
+    });
+
+    const mr2 = await tenantPrisma.employee.create({
+        data: {
+            organizationId: organizationId,
+            email: 'priya.shah@medicarepharma.com',
+            passwordHash: await hashPassword('MR@123456'),
+            firstName: 'Priya',
+            lastName: 'Shah',
+            phone: '+91-9876543213',
+            role: 'MEDICAL_REPRESENTATIVE',
+            employeeCode: 'EMP004',
+            city: 'Pune',
+            state: 'Maharashtra',
+            reportingManagerId: salesManager.id,
+            isActive: true
+        }
+    });
+
+    // Assign territories to employees - MR1 to Mumbai, MR2 to Pune
+    await tenantPrisma.employeeTerritory.createMany({
         data: [
             {
-                employeeId: employees.adminEmployee.id,
-                territoryId: territories.westRegion.id,
+                employeeId: salesManager.id,
+                territoryId: maharashtra.id,
                 assignedAt: new Date(),
                 isPrimary: true
             },
             {
-                employeeId: employees.salesManager.id,
-                territoryId: territories.westRegion.id,
+                employeeId: mr1.id,
+                territoryId: mumbai.id,
                 assignedAt: new Date(),
                 isPrimary: true
             },
             {
-                employeeId: employees.mr1.id,
-                territoryId: territories.mumbai.id,
-                assignedAt: new Date(),
-                isPrimary: true
-            },
-            {
-                employeeId: employees.mr2.id,
-                territoryId: territories.pune.id,
+                employeeId: mr2.id,
+                territoryId: pune.id,
                 assignedAt: new Date(),
                 isPrimary: true
             }
         ]
     });
 
-    console.log('✅ Territories assigned to employees');
-}
+    console.log('✅ Employees created with proper territory assignments');
 
-async function createHospitalChains(tenantDb: any) {
+    // Step 4: Create hospital chains
     console.log('\n🏥 Creating hospital chains...');
 
-    const hospitalChain1 = await tenantDb.hospitalChain.create({
+    const hospitalChain = await tenantPrisma.hospitalChain.create({
         data: {
-            organizationId: ORG_ID,
-            name: truncateText('Apollo Hospitals', 255),
-            headquartersAddress: truncateText('Chennai, Tamil Nadu', 1000),
-            contactEmail: truncateText('info@apollohospitals.com', 255),
-            contactPhone: truncateText('+91-44-12345678', 20),
+            organizationId: organizationId,
+            name: 'Apollo Hospitals',
+            headquartersAddress: 'Chennai, Tamil Nadu',
+            contactEmail: 'info@apollohospitals.com',
+            contactPhone: '+91-44-12345678',
             isActive: true
         }
     });
 
-    const hospitalChain2 = await tenantDb.hospitalChain.create({
-        data: {
-            organizationId: ORG_ID,
-            name: truncateText('Fortis Healthcare', 255),
-            headquartersAddress: truncateText('Gurugram, Haryana', 1000),
-            contactEmail: truncateText('info@fortishealthcare.com', 255),
-            contactPhone: truncateText('+91-124-1234567', 20),
-            isActive: true
-        }
-    });
-
-    console.log('✅ Created 2 hospital chains');
-    return { hospitalChain1, hospitalChain2 };
-}
-
-async function createHospitals(tenantDb: any, chains: any, territories: any) {
+    // Step 5: Create hospitals
     console.log('\n🏥 Creating hospitals...');
 
     const hospitals = [];
     const hospitalData = [
-        { name: 'Apollo Hospital Mumbai', chainId: chains.hospitalChain1.id, city: 'Mumbai', territory: territories.mumbai },
-        { name: 'Fortis Hospital Mumbai', chainId: chains.hospitalChain2.id, city: 'Mumbai', territory: territories.mumbai },
-        { name: 'City General Hospital', chainId: null, city: 'Mumbai', territory: territories.mumbai },
-        { name: 'Apollo Hospital Pune', chainId: chains.hospitalChain1.id, city: 'Pune', territory: territories.pune },
-        { name: 'Ruby Hall Clinic', chainId: null, city: 'Pune', territory: territories.pune },
-        { name: 'Fortis Hospital Pune', chainId: chains.hospitalChain2.id, city: 'Pune', territory: territories.pune }
+        { name: 'Apollo Hospital Mumbai', chainId: hospitalChain.id, city: 'Mumbai', territory: mumbai },
+        { name: 'City General Hospital', chainId: null, city: 'Mumbai', territory: mumbai },
+        { name: 'Apollo Hospital Pune', chainId: hospitalChain.id, city: 'Pune', territory: pune },
+        { name: 'Ruby Hall Clinic', chainId: null, city: 'Pune', territory: pune }
     ];
 
     for (const hosp of hospitalData) {
-        const hospital = await tenantDb.hospital.create({
+        const hospital = await tenantPrisma.hospital.create({
             data: {
-                organizationId: ORG_ID,
-                name: truncateText(hosp.name, 255),
-                type: truncateText(getRandomElement(hospitalTypes), 100),
-                address: truncateText(faker.location.streetAddress(), 1000),
-                city: truncateText(hosp.city, 100),
-                state: truncateText('Maharashtra', 100),
-                pincode: truncateText(faker.location.zipCode('######'), 10),
+                organizationId: organizationId,
+                name: hosp.name,
+                type: getRandomElement(hospitalTypes),
+                address: faker.location.streetAddress(),
+                city: hosp.city,
+                state: 'Maharashtra',
+                pincode: faker.location.zipCode('######'),
                 latitude: hosp.city === 'Mumbai' ? 19.0760 : 18.5204,
                 longitude: hosp.city === 'Mumbai' ? 72.8777 : 73.8567,
-                phone: truncateText(faker.phone.number('+91-##-########'), 20),
-                email: truncateText(faker.internet.email(), 255),
-                website: truncateText(`https://www.${hosp.name.toLowerCase().replace(/\s/g, '')}.com`, 255),
+                phone: faker.phone.number('+91-##-#####'),
+                email: faker.internet.email(),
                 hospitalChainId: hosp.chainId,
                 territoryId: hosp.territory.id,
                 isActive: true
@@ -234,134 +302,134 @@ async function createHospitals(tenantDb: any, chains: any, territories: any) {
         });
         hospitals.push(hospital);
     }
-    
     console.log(`✅ Created ${hospitals.length} hospitals`);
-    return hospitals;
-}
 
-async function createDoctors(tenantDb: any, hospitals: any, adminEmployee: any) {
+    // Step 6: Create doctors - Split between Mumbai and Pune
     console.log('\n👨‍⚕️ Creating doctors...');
 
     const doctors = [];
-    for (let i = 0; i < 15; i++) {
-        const firstName = faker.person.firstName();
-        const lastName = faker.person.lastName();
-        const doctorName = `Dr. ${firstName} ${lastName}`;
-        
-        const doctor = await tenantDb.doctor.create({
+    const mumbaiHospitals = hospitals.filter(h => h.city === 'Mumbai');
+    const puneHospitals = hospitals.filter(h => h.city === 'Pune');
+
+    // Create 5 doctors in Mumbai
+    for (let i = 0; i < 5; i++) {
+        const doctor = await tenantPrisma.doctor.create({
             data: {
-                organizationId: ORG_ID,
-                name: truncateText(doctorName, 255),
-                designation: truncateText(faker.helpers.arrayElement(['Senior Consultant', 'Consultant', 'Junior Consultant', 'HOD']), 255),
-                specialization: truncateText(getRandomElement(specializations), 255),
-                email: truncateText(faker.internet.email({ firstName: firstName.substring(0, 10), lastName: lastName.substring(0, 10) }), 255),
-                phone: truncateText(faker.phone.number('+91-##########'), 20),
-                qualification: truncateText(faker.helpers.arrayElement(['MBBS, MD', 'MBBS, MS', 'MBBS, DM', 'MBBS, MCh']), 255),
-                experienceYears: faker.number.int({ min: 2, max: 25 }),
-                description: truncateText(faker.lorem.sentence({ min: 5, max: 15 }), 1000),
-                profilePictureUrl: truncateText(`https://example.com/doctors/${i+1}.jpg`, 500),
+                organizationId: organizationId,
+                name: `Dr. ${faker.person.firstName()} ${faker.person.lastName()}`,
+                designation: faker.helpers.arrayElement(['Senior Consultant', 'Consultant', 'Junior Consultant']),
+                specialization: getRandomElement(specializations),
+                email: faker.internet.email(),
+                phone: faker.phone.number('+91-98#######'),
+                qualification: faker.helpers.arrayElement(['MBBS, MD', 'MBBS, MS', 'MBBS, DM']),
+                experienceYears: faker.number.int({ min: 2, max: 20 }),
+                description: faker.lorem.sentence(),
                 createdById: adminEmployee.id,
                 isActive: true
             }
         });
         doctors.push(doctor);
 
-        // Create hospital associations
-        const associatedHospitals = getRandomElements(hospitals, faker.number.int({ min: 1, max: 3 }));
-        for (let j = 0; j < associatedHospitals.length; j++) {
-            await tenantDb.doctorHospitalAssociation.create({
+        // Associate with Mumbai hospitals
+        const selectedHospitals = getRandomElements(mumbaiHospitals, faker.number.int({ min: 1, max: 2 }));
+        for (let j = 0; j < selectedHospitals.length; j++) {
+            await tenantPrisma.doctorHospitalAssociation.create({
                 data: {
                     doctorId: doctor.id,
-                    hospitalId: associatedHospitals[j].id,
-                    department: truncateText(doctor.specialization, 255),
-                    position: truncateText(doctor.designation, 255),
+                    hospitalId: selectedHospitals[j].id,
+                    department: doctor.specialization,
+                    position: doctor.designation,
                     isPrimary: j === 0,
                     associationStartDate: faker.date.past()
                 }
             });
-
-            // Create consultation schedules
-            const daysOfWeek = ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY'];
-            const selectedDays = getRandomElements(daysOfWeek, 3);
-
-            for (const day of selectedDays) {
-                await tenantDb.doctorConsultationSchedule.create({
-                    data: {
-                        doctorId: doctor.id,
-                        hospitalId: associatedHospitals[j].id,
-                        dayOfWeek: day as any,
-                        startTime: createTimeObject(10, 0), // 10:00 AM
-                        endTime: createTimeObject(13, 0),   // 1:00 PM
-                        consultationType: 'OPD',
-                        isActive: true
-                    }
-                });
-            }
         }
     }
-    
-    console.log(`✅ Created ${doctors.length} doctors with associations and schedules`);
-    return doctors;
-}
 
-async function createChemistChains(tenantDb: any) {
+    // Create 5 doctors in Pune
+    for (let i = 0; i < 5; i++) {
+        const doctor = await tenantPrisma.doctor.create({
+            data: {
+                organizationId: organizationId,
+                name: `Dr. ${faker.person.firstName()} ${faker.person.lastName()}`,
+                designation: faker.helpers.arrayElement(['Senior Consultant', 'Consultant', 'Junior Consultant']),
+                specialization: getRandomElement(specializations),
+                email: faker.internet.email(),
+                phone: faker.phone.number('+91-98#######'),
+                qualification: faker.helpers.arrayElement(['MBBS, MD', 'MBBS, MS', 'MBBS, DM']),
+                experienceYears: faker.number.int({ min: 2, max: 20 }),
+                description: faker.lorem.sentence(),
+                createdById: adminEmployee.id,
+                isActive: true
+            }
+        });
+        doctors.push(doctor);
+
+        // Associate with Pune hospitals
+        const selectedHospitals = getRandomElements(puneHospitals, faker.number.int({ min: 1, max: 2 }));
+        for (let j = 0; j < selectedHospitals.length; j++) {
+            await tenantPrisma.doctorHospitalAssociation.create({
+                data: {
+                    doctorId: doctor.id,
+                    hospitalId: selectedHospitals[j].id,
+                    department: doctor.specialization,
+                    position: doctor.designation,
+                    isPrimary: j === 0,
+                    associationStartDate: faker.date.past()
+                }
+            });
+        }
+    }
+
+    const mumbaiDoctors = doctors.slice(0, 5);
+    const puneDoctors = doctors.slice(5, 10);
+
+    console.log(`✅ Created ${doctors.length} doctors (5 Mumbai, 5 Pune)`);
+
+    // Step 7: Create chemist chain
     console.log('\n💊 Creating chemist chains...');
 
-    const chemistChain1 = await tenantDb.chemistChain.create({
+    const chemistChain = await tenantPrisma.chemistChain.create({
         data: {
-            organizationId: ORG_ID,
-            name: truncateText('MedPlus', 255),
-            headquartersAddress: truncateText('Hyderabad, Telangana', 1000),
-            contactEmail: truncateText('info@medplus.com', 255),
-            contactPhone: truncateText('+91-40-12345678', 20),
+            organizationId: organizationId,
+            name: 'MedPlus',
+            headquartersAddress: 'Hyderabad, Telangana',
+            contactEmail: 'info@medplus.com',
+            contactPhone: '+91-40-12345678',
             isActive: true
         }
     });
 
-    const chemistChain2 = await tenantDb.chemistChain.create({
-        data: {
-            organizationId: ORG_ID,
-            name: truncateText('Apollo Pharmacy', 255),
-            headquartersAddress: truncateText('Chennai, Tamil Nadu', 1000),
-            contactEmail: truncateText('info@apollopharmacy.com', 255),
-            contactPhone: truncateText('+91-44-87654321', 20),
-            isActive: true
-        }
-    });
-
-    console.log('✅ Created 2 chemist chains');
-    return { chemistChain1, chemistChain2 };
-}
-
-async function createChemists(tenantDb: any, chains: any, territories: any, adminEmployee: any) {
-    console.log('\n💊 Creating chemists...');
+    // Step 8: Create 6 chemists - 3 in Mumbai, 3 in Pune
+    console.log('\n💊 Creating 6 chemists...');
 
     const chemists = [];
     const chemistData = [
-        { name: 'MedPlus Andheri', chainId: chains.chemistChain1.id, city: 'Mumbai', territory: territories.mumbai },
-        { name: 'Apollo Pharmacy Bandra', chainId: chains.chemistChain2.id, city: 'Mumbai', territory: territories.mumbai },
-        { name: 'Wellness Forever', chainId: null, city: 'Mumbai', territory: territories.mumbai },
-        { name: 'MedPlus Pune', chainId: chains.chemistChain1.id, city: 'Pune', territory: territories.pune },
-        { name: 'Apollo Pharmacy Pune', chainId: chains.chemistChain2.id, city: 'Pune', territory: territories.pune },
-        { name: 'Noble Medical Stores', chainId: null, city: 'Pune', territory: territories.pune }
+        // Mumbai chemists
+        { name: 'MedPlus Andheri', chainId: chemistChain.id, city: 'Mumbai', territory: mumbai },
+        { name: 'Wellness Forever Bandra', chainId: null, city: 'Mumbai', territory: mumbai },
+        { name: 'Apollo Pharmacy Mumbai', chainId: null, city: 'Mumbai', territory: mumbai },
+        // Pune chemists
+        { name: 'MedPlus Pune', chainId: chemistChain.id, city: 'Pune', territory: pune },
+        { name: 'Noble Medical Stores', chainId: null, city: 'Pune', territory: pune },
+        { name: 'Health Plus Pharmacy', chainId: null, city: 'Pune', territory: pune }
     ];
 
     for (const chem of chemistData) {
-        const chemist = await tenantDb.chemist.create({
+        const chemist = await tenantPrisma.chemist.create({
             data: {
-                organizationId: ORG_ID,
-                name: truncateText(chem.name, 255),
+                organizationId: organizationId,
+                name: chem.name,
                 type: faker.helpers.arrayElement(['CHEMIST', 'STOCKIST']) as any,
-                email: truncateText(faker.internet.email(), 255),
-                phone: truncateText(faker.phone.number('+91-##-########'), 20),
-                address: truncateText(faker.location.streetAddress(), 1000),
-                city: truncateText(chem.city, 100),
-                state: truncateText('Maharashtra', 100),
-                pincode: truncateText(faker.location.zipCode('######'), 10),
+                email: faker.internet.email(),
+                phone: faker.phone.number('+91-##-#####'),
+                address: faker.location.streetAddress(),
+                city: chem.city,
+                state: 'Maharashtra',
+                pincode: faker.location.zipCode('######'),
                 latitude: chem.city === 'Mumbai' ? 19.0760 : 18.5204,
                 longitude: chem.city === 'Mumbai' ? 72.8777 : 73.8567,
-                visitingHours: truncateText('9:00 AM - 9:00 PM', 255),
-                profilePictureUrl: truncateText(`https://example.com/chemists/${chem.name.toLowerCase().replace(/\s/g, '-')}.jpg`, 500),
+                visitingHours: '9:00 AM - 9:00 PM',
                 chemistChainId: chem.chainId,
                 territoryId: chem.territory.id,
                 createdById: adminEmployee.id,
@@ -370,509 +438,652 @@ async function createChemists(tenantDb: any, chains: any, territories: any, admi
         });
         chemists.push(chemist);
     }
-    
-    console.log(`✅ Created ${chemists.length} chemists`);
-    return chemists;
-}
 
-async function createDoctorChemistRelations(tenantDb: any, doctors: any, chemists: any, employees: any) {
+    const mumbaiChemists = chemists.slice(0, 3);
+    const puneChemists = chemists.slice(3, 6);
+
+    console.log(`✅ Created ${chemists.length} chemists (3 Mumbai, 3 Pune)`);
+
+    // Step 9: Create 12 drugs
+    console.log('\n💊 Creating 12 drugs...');
+
+    const drugs = [];
+    for (const drug of drugData) {
+        const createdDrug = await tenantPrisma.drug.create({
+            data: {
+                organizationId: organizationId,
+                name: drug.name,
+                composition: drug.composition,
+                manufacturer: drug.manufacturer,
+                category: drug.category,
+                price: faker.number.float({ min: 50, max: 500, multipleOf: 0.01 }),
+                indications: faker.lorem.sentence(),
+                sideEffects: faker.lorem.sentence(),
+                safetyAdvice: faker.lorem.sentence(),
+                dosageForms: ['Tablet', 'Capsule', 'Syrup'],
+                schedule: faker.helpers.arrayElement(['H', 'H1', 'X', null]),
+                isAvailable: true,
+                createdById: adminEmployee.id,
+                isActive: true
+            }
+        });
+        drugs.push(createdDrug);
+    }
+    console.log(`✅ Created ${drugs.length} drugs`);
+
+    // Step 10: Create orders - 5 for each MR with their territory chemists
+    console.log('\n📦 Creating orders...');
+
+    const orders = [];
+
+    // Create 5 orders for MR1 (Mumbai) with Mumbai chemists
+    for (let i = 0; i < 5; i++) {
+        const chemist = getRandomElement(mumbaiChemists);
+        const order = await tenantPrisma.order.create({
+            data: {
+                organizationId: organizationId,
+                chemistId: chemist.id,
+                totalAmount: 0, // Will update after adding items
+                status: faker.helpers.arrayElement(['CONFIRMED', 'DRAFT']) as any,
+                orderDate: faker.date.recent({ days: 30 }),
+                deliveryDate: faker.date.soon({ days: 7 }),
+                specialInstructions: faker.lorem.sentence(),
+                createdById: mr1.id
+            }
+        });
+
+        // Add 2-4 order items per order
+        const itemCount = faker.number.int({ min: 2, max: 4 });
+        const selectedDrugs = getRandomElements(drugs, itemCount);
+        let totalAmount = 0;
+
+        for (const drug of selectedDrugs) {
+            const quantity = faker.number.int({ min: 10, max: 100 });
+            const unitPrice = drug.price || 100;
+            const subtotal = quantity * Number(unitPrice);
+            totalAmount += subtotal;
+
+            await tenantPrisma.orderItem.create({
+                data: {
+                    orderId: order.id,
+                    drugId: drug.id,
+                    quantity: quantity,
+                    unitPrice: unitPrice,
+                    subtotal: subtotal
+                }
+            });
+        }
+
+        // Update order total
+        await tenantPrisma.order.update({
+            where: { id: order.id },
+            data: { totalAmount: totalAmount }
+        });
+
+        orders.push(order);
+    }
+
+    // Create 5 orders for MR2 (Pune) with Pune chemists
+    for (let i = 0; i < 5; i++) {
+        const chemist = getRandomElement(puneChemists);
+        const order = await tenantPrisma.order.create({
+            data: {
+                organizationId: organizationId,
+                chemistId: chemist.id,
+                totalAmount: 0, // Will update after adding items
+                status: faker.helpers.arrayElement(['CONFIRMED', 'DRAFT']) as any,
+                orderDate: faker.date.recent({ days: 30 }),
+                deliveryDate: faker.date.soon({ days: 7 }),
+                specialInstructions: faker.lorem.sentence(),
+                createdById: mr2.id
+            }
+        });
+
+        // Add 2-4 order items per order
+        const itemCount = faker.number.int({ min: 2, max: 4 });
+        const selectedDrugs = getRandomElements(drugs, itemCount);
+        let totalAmount = 0;
+
+        for (const drug of selectedDrugs) {
+            const quantity = faker.number.int({ min: 10, max: 100 });
+            const unitPrice = drug.price || 100;
+            const subtotal = quantity * Number(unitPrice);
+            totalAmount += subtotal;
+
+            await tenantPrisma.orderItem.create({
+                data: {
+                    orderId: order.id,
+                    drugId: drug.id,
+                    quantity: quantity,
+                    unitPrice: unitPrice,
+                    subtotal: subtotal
+                }
+            });
+        }
+
+        // Update order total
+        await tenantPrisma.order.update({
+            where: { id: order.id },
+            data: { totalAmount: totalAmount }
+        });
+
+        orders.push(order);
+    }
+
+    console.log(`✅ Created ${orders.length} orders with items`);
+
+    // Step 11: Create RCPA Reports
+    console.log('\n📊 Creating RCPA reports...');
+
+    const rcpaReports = [];
+
+    // Create RCPA reports for MR1 with Mumbai chemists
+    for (const chemist of mumbaiChemists) {
+        const startDate = faker.date.recent({ days: 30 });
+        const endDate = addDays(startDate, 7);
+
+        const rcpaReport = await tenantPrisma.rcpaReport.create({
+            data: {
+                organizationId: organizationId,
+                employeeId: mr1.id,
+                chemistId: chemist.id,
+                reportingPeriod: 'WEEKLY',
+                startDate: startDate,
+                endDate: endDate,
+                totalPrescription: faker.number.int({ min: 50, max: 200 }),
+                remarks: faker.lorem.sentence()
+            }
+        });
+
+        // Add drug data for RCPA
+        const rcpaDrugs = getRandomElements(drugs, 3);
+        for (const drug of rcpaDrugs) {
+            await tenantPrisma.rcpaDrugData.create({
+                data: {
+                    rcpaReportId: rcpaReport.id,
+                    drugId: drug.id,
+                    competitorDrugName: faker.commerce.productName(),
+                    ownQuantity: faker.number.int({ min: 10, max: 50 }),
+                    competitorQuantity: faker.number.int({ min: 5, max: 40 }),
+                    ownPackSize: '10 Tablets',
+                    competitorPackSize: '10 Tablets'
+                }
+            });
+        }
+
+        rcpaReports.push(rcpaReport);
+    }
+
+    // Create RCPA reports for MR2 with Pune chemists
+    for (const chemist of puneChemists) {
+        const startDate = faker.date.recent({ days: 30 });
+        const endDate = addDays(startDate, 7);
+
+        const rcpaReport = await tenantPrisma.rcpaReport.create({
+            data: {
+                organizationId: organizationId,
+                employeeId: mr2.id,
+                chemistId: chemist.id,
+                reportingPeriod: 'WEEKLY',
+                startDate: startDate,
+                endDate: endDate,
+                totalPrescription: faker.number.int({ min: 50, max: 200 }),
+                remarks: faker.lorem.sentence()
+            }
+        });
+
+        // Add drug data for RCPA
+        const rcpaDrugs = getRandomElements(drugs, 3);
+        for (const drug of rcpaDrugs) {
+            await tenantPrisma.rcpaDrugData.create({
+                data: {
+                    rcpaReportId: rcpaReport.id,
+                    drugId: drug.id,
+                    competitorDrugName: faker.commerce.productName(),
+                    ownQuantity: faker.number.int({ min: 10, max: 50 }),
+                    competitorQuantity: faker.number.int({ min: 5, max: 40 }),
+                    ownPackSize: '10 Tablets',
+                    competitorPackSize: '10 Tablets'
+                }
+            });
+        }
+
+        rcpaReports.push(rcpaReport);
+    }
+
+    console.log(`✅ Created ${rcpaReports.length} RCPA reports with drug data`);
+
+    // Step 12: Create Task Planners
+    console.log('\n📅 Creating task planners...');
+
+    const startDate = new Date();
+    startDate.setDate(1); // Start of current month
+    const endDate = new Date();
+    endDate.setDate(7); // First week
+
+    // Task planner for MR1 (Mumbai)
+    const taskPlannerMR1 = await tenantPrisma.taskPlanner.create({
+        data: {
+            employeeId: mr1.id,
+            startDate: startDate,
+            endDate: endDate,
+            status: 'APPROVED'
+        }
+    });
+
+    // Task planner for MR2 (Pune)
+    const taskPlannerMR2 = await tenantPrisma.taskPlanner.create({
+        data: {
+            employeeId: mr2.id,
+            startDate: startDate,
+            endDate: endDate,
+            status: 'APPROVED'
+        }
+    });
+
+    console.log('✅ Created task planners for both MRs');
+
+    // Step 13: Create Tour Plans
+    console.log('\n🗺️ Creating tour plans...');
+
+    const tourPlanMumbai = await tenantPrisma.tourPlan.create({
+        data: {
+            name: 'Mumbai Central Area Visit',
+            description: 'Coverage of central Mumbai area hospitals and clinics'
+        }
+    });
+
+    const tourPlanPune = await tenantPrisma.tourPlan.create({
+        data: {
+            name: 'Pune City Tour',
+            description: 'Coverage of Pune city hospitals and clinics'
+        }
+    });
+
+    // Step 14: Create Doctor Tasks (10 for each MR with their territory doctors)
+    console.log('\n👨‍⚕️ Creating doctor tasks...');
+
+    const doctorTasks = [];
+
+    // Create 10 doctor tasks for MR1 (Mumbai doctors)
+    for (let i = 0; i < 10; i++) {
+        const doctor = getRandomElement(mumbaiDoctors);
+        const taskDate = addDays(startDate, i % 7);
+
+        const doctorTask = await tenantPrisma.doctorTask.create({
+            data: {
+                plannerId: taskPlannerMR1.id,
+                employeeId: mr1.id,
+                doctorId: doctor.id,
+                taskDate: taskDate,
+                startTime: new Date(`2024-01-01T10:00:00`),
+                endTime: new Date(`2024-01-01T10:30:00`),
+                taskStatus: faker.helpers.arrayElement(['PENDING', 'COMPLETED']) as any
+            }
+        });
+        doctorTasks.push(doctorTask);
+    }
+
+    // Create 10 doctor tasks for MR2 (Pune doctors)
+    for (let i = 0; i < 10; i++) {
+        const doctor = getRandomElement(puneDoctors);
+        const taskDate = addDays(startDate, i % 7);
+
+        const doctorTask = await tenantPrisma.doctorTask.create({
+            data: {
+                plannerId: taskPlannerMR2.id,
+                employeeId: mr2.id,
+                doctorId: doctor.id,
+                taskDate: taskDate,
+                startTime: new Date(`2024-01-01T11:00:00`),
+                endTime: new Date(`2024-01-01T11:30:00`),
+                taskStatus: faker.helpers.arrayElement(['PENDING', 'COMPLETED']) as any
+            }
+        });
+        doctorTasks.push(doctorTask);
+    }
+
+    console.log(`✅ Created ${doctorTasks.length} doctor tasks`);
+
+    // Step 15: Create Chemist Tasks (10 for each MR with their territory chemists)
+    console.log('\n💊 Creating chemist tasks...');
+
+    const chemistTasks = [];
+
+    // Create 10 chemist tasks for MR1 (Mumbai chemists)
+    for (let i = 0; i < 10; i++) {
+        const chemist = getRandomElement(mumbaiChemists);
+        const taskDate = addDays(startDate, i % 7);
+
+        const chemistTask = await tenantPrisma.chemistTask.create({
+            data: {
+                plannerId: taskPlannerMR1.id,
+                employeeId: mr1.id,
+                chemistId: chemist.id,
+                taskDate: taskDate,
+                startTime: new Date(`2024-01-01T14:00:00`),
+                endTime: new Date(`2024-01-01T14:30:00`),
+                taskStatus: faker.helpers.arrayElement(['PENDING', 'COMPLETED']) as any
+            }
+        });
+        chemistTasks.push(chemistTask);
+    }
+
+    // Create 10 chemist tasks for MR2 (Pune chemists)
+    for (let i = 0; i < 10; i++) {
+        const chemist = getRandomElement(puneChemists);
+        const taskDate = addDays(startDate, i % 7);
+
+        const chemistTask = await tenantPrisma.chemistTask.create({
+            data: {
+                plannerId: taskPlannerMR2.id,
+                employeeId: mr2.id,
+                chemistId: chemist.id,
+                taskDate: taskDate,
+                startTime: new Date(`2024-01-01T15:00:00`),
+                endTime: new Date(`2024-01-01T15:30:00`),
+                taskStatus: faker.helpers.arrayElement(['PENDING', 'COMPLETED']) as any
+            }
+        });
+        chemistTasks.push(chemistTask);
+    }
+
+    console.log(`✅ Created ${chemistTasks.length} chemist tasks`);
+
+    // Step 16: Create Tour Plan Tasks (10 for each MR)
+    console.log('\n🗺️ Creating tour plan tasks...');
+
+    const tourPlanTasks = [];
+
+    // Create 10 tour plan tasks for MR1
+    for (let i = 0; i < 10; i++) {
+        const taskDate = addDays(startDate, i % 7);
+
+        const tourTask = await tenantPrisma.tourPlanTask.create({
+            data: {
+                plannerId: taskPlannerMR1.id,
+                employeeId: mr1.id,
+                tourPlanId: tourPlanMumbai.id,
+                location: `Mumbai Location ${i + 1}`,
+                taskDate: taskDate,
+                startTime: new Date(`2024-01-01T09:00:00`),
+                endTime: new Date(`2024-01-01T18:00:00`),
+                taskStatus: faker.helpers.arrayElement(['PENDING', 'COMPLETED']) as any
+            }
+        });
+        tourPlanTasks.push(tourTask);
+    }
+
+    // Create 10 tour plan tasks for MR2
+    for (let i = 0; i < 10; i++) {
+        const taskDate = addDays(startDate, i % 7);
+
+        const tourTask = await tenantPrisma.tourPlanTask.create({
+            data: {
+                plannerId: taskPlannerMR2.id,
+                employeeId: mr2.id,
+                tourPlanId: tourPlanPune.id,
+                location: `Pune Location ${i + 1}`,
+                taskDate: taskDate,
+                startTime: new Date(`2024-01-01T09:00:00`),
+                endTime: new Date(`2024-01-01T18:00:00`),
+                taskStatus: faker.helpers.arrayElement(['PENDING', 'COMPLETED']) as any
+            }
+        });
+        tourPlanTasks.push(tourTask);
+    }
+
+    console.log(`✅ Created ${tourPlanTasks.length} tour plan tasks`);
+
+    // Step 17: Create DCR Reports for completed tasks
+    console.log('\n📝 Creating DCR reports...');
+
+    const dcrReports = [];
+
+    // Create DCR for completed doctor tasks
+    const completedDoctorTasks = doctorTasks.filter(task => task.taskStatus === 'COMPLETED');
+    for (const task of completedDoctorTasks.slice(0, 5)) {
+        const dcr = await tenantPrisma.dcrReport.create({
+            data: {
+                organizationId: organizationId,
+                employeeId: task.employeeId,
+                taskId: task.id,
+                taskType: 'DOCTOR_TASK',
+                reportDate: task.taskDate,
+                productsDiscussed: drugs.slice(0, 3).map(d => d.name).join(', '),
+                comments: faker.lorem.paragraph(),
+                isDraft: false
+            }
+        });
+        dcrReports.push(dcr);
+    }
+
+    // Create DCR for completed chemist tasks
+    const completedChemistTasks = chemistTasks.filter(task => task.taskStatus === 'COMPLETED');
+    for (const task of completedChemistTasks.slice(0, 5)) {
+        const dcr = await tenantPrisma.dcrReport.create({
+            data: {
+                organizationId: organizationId,
+                employeeId: task.employeeId,
+                taskId: task.id,
+                taskType: 'CHEMIST_TASK',
+                reportDate: task.taskDate,
+                productsDiscussed: drugs.slice(0, 3).map(d => d.name).join(', '),
+                comments: faker.lorem.paragraph(),
+                isDraft: false
+            }
+        });
+        dcrReports.push(dcr);
+    }
+
+    // Create DCR for completed tour plan tasks
+    const completedTourTasks = tourPlanTasks.filter(task => task.taskStatus === 'COMPLETED');
+    for (const task of completedTourTasks.slice(0, 5)) {
+        const dcr = await tenantPrisma.dcrReport.create({
+            data: {
+                organizationId: organizationId,
+                employeeId: task.employeeId,
+                taskId: task.id,
+                taskType: 'TOUR_PLAN_TASK',
+                reportDate: task.taskDate,
+                productsDiscussed: drugs.slice(0, 3).map(d => d.name).join(', '),
+                comments: faker.lorem.paragraph(),
+                isDraft: false
+            }
+        });
+        dcrReports.push(dcr);
+    }
+
+    console.log(`✅ Created ${dcrReports.length} DCR reports`);
+
+    // Step 18: Create doctor-chemist relations
     console.log('\n🔗 Creating doctor-chemist relations...');
 
     let relationCount = 0;
-    for (const doctor of doctors.slice(0, 10)) {
-        const nearbyChemists = getRandomElements(chemists, 2);
+
+    // Mumbai doctors with Mumbai chemists
+    for (const doctor of mumbaiDoctors) {
+        const nearbyChemists = getRandomElements(mumbaiChemists, 2);
         for (const chemist of nearbyChemists) {
-            await tenantDb.doctorChemistRelation.create({
+            await tenantPrisma.doctorChemistRelation.create({
                 data: {
                     doctorId: doctor.id,
                     chemistId: chemist.id,
-                    createdById: getRandomElement([employees.adminEmployee.id, employees.salesManager.id, employees.mr1.id, employees.mr2.id])
+                    createdById: mr1.id
                 }
             });
             relationCount++;
         }
     }
-    
+
+    // Pune doctors with Pune chemists
+    for (const doctor of puneDoctors) {
+        const nearbyChemists = getRandomElements(puneChemists, 2);
+        for (const chemist of nearbyChemists) {
+            await tenantPrisma.doctorChemistRelation.create({
+                data: {
+                    doctorId: doctor.id,
+                    chemistId: chemist.id,
+                    createdById: mr2.id
+                }
+            });
+            relationCount++;
+        }
+    }
+
     console.log(`✅ Created ${relationCount} doctor-chemist relations`);
-}
 
-async function createDrugs(tenantDb: any, adminEmployee: any) {
-    console.log('\n💊 Creating drugs...');
+    // Step 19: Create interactions
+    console.log('\n🤝 Creating interactions...');
 
-    const drugs = [];
-    const drugNames = [
-        'Paracetamol', 'Amoxicillin', 'Metformin', 'Atorvastatin', 'Omeprazole',
-        'Aspirin', 'Clopidogrel', 'Amlodipine', 'Losartan', 'Simvastatin',
-        'Ciprofloxacin', 'Azithromycin', 'Pantoprazole', 'Ranitidine', 'Diclofenac'
-    ];
-
-    for (let i = 0; i < 15; i++) {
-        const drug = await tenantDb.drug.create({
-            data: {
-                organizationId: ORG_ID,
-                name: truncateText(drugNames[i], 255),
-                composition: truncateText(faker.lorem.words(3), 1000),
-                manufacturer: truncateText(faker.company.name(), 255),
-                indications: truncateText(faker.lorem.sentence(), 1000),
-                sideEffects: truncateText(faker.lorem.sentence(), 1000),
-                safetyAdvice: truncateText(faker.lorem.sentence(), 1000),
-                dosageForms: ['Tablet', 'Capsule', 'Syrup'],
-                price: faker.number.float({ min: 10, max: 500, fractionDigits: 2 }),
-                schedule: truncateText(faker.helpers.arrayElement(['H', 'H1', 'X', 'G']), 10),
-                regulatoryApprovals: truncateText('CDSCO Approved', 1000),
-                category: truncateText(faker.helpers.arrayElement(['Antibiotic', 'Analgesic', 'Antidiabetic', 'Cardiovascular']), 100),
-                isAvailable: true,
-                images: [`https://example.com/drugs/${drugNames[i].toLowerCase()}.jpg`],
-                marketingMaterials: [`https://example.com/marketing/${drugNames[i].toLowerCase()}.pdf`],
-                createdById: adminEmployee.id,
-                isActive: true
-            }
-        });
-        drugs.push(drug);
-    }
-    
-    console.log(`✅ Created ${drugs.length} drugs`);
-    return drugs;
-}
-
-async function createOrders(tenantDb: any, chemists: any, drugs: any, employees: any) {
-    console.log('\n📦 Creating orders...');
-
-    const orders = [];
-    for (let i = 0; i < 15; i++) {
-        const order = await tenantDb.order.create({
-            data: {
-                organizationId: ORG_ID,
-                chemistId: getRandomElement(chemists).id,
-                totalAmount: 0, // Will update after adding items
-                status: faker.helpers.arrayElement(['DRAFT', 'CONFIRMED']) as any,
-                orderDate: faker.date.recent(),
-                deliveryDate: faker.date.future(),
-                specialInstructions: truncateText(faker.lorem.sentence(), 1000),
-                createdById: getRandomElement([employees.mr1.id, employees.mr2.id])
-            }
+    // Doctor interactions
+    for (const task of completedDoctorTasks.slice(0, 5)) {
+        const doctor = doctors.find(d => d.id === task.doctorId);
+        const hospital = await tenantPrisma.doctorHospitalAssociation.findFirst({
+            where: { doctorId: doctor.id },
+            include: { hospital: true }
         });
 
-        // Add order items
-        const selectedDrugs = getRandomElements(drugs, faker.number.int({ min: 2, max: 5 }));
-        let totalAmount = 0;
-
-        for (const drug of selectedDrugs) {
-            const quantity = faker.number.int({ min: 10, max: 100 });
-            const unitPrice = drug.price || faker.number.float({ min: 10, max: 100, fractionDigits: 2 });
-            const subtotal = quantity * Number(unitPrice);
-            totalAmount += subtotal;
-
-            await tenantDb.orderItem.create({
+        if (hospital) {
+            await tenantPrisma.doctorInteraction.create({
                 data: {
-                    orderId: order.id,
-                    drugId: drug.id,
-                    quantity,
-                    unitPrice,
-                    subtotal
-                }
-            });
-        }
-
-        // Update total amount
-        await tenantDb.order.update({
-            where: { id: order.id },
-            data: { totalAmount }
-        });
-
-        orders.push(order);
-    }
-    
-    console.log(`✅ Created ${orders.length} orders with items`);
-}
-
-async function createDcrReports(tenantDb: any, drugs: any, employees: any) {
-    console.log('\n📋 Creating DCR reports...');
-
-    for (let i = 0; i < 15; i++) {
-        await tenantDb.dcrReport.create({
-            data: {
-                organizationId: ORG_ID,
-                employeeId: getRandomElement([employees.mr1.id, employees.mr2.id]),
-                reportDate: faker.date.recent(),
-                productsDiscussed: truncateText(getRandomElements(drugs, 3).map(d => d.name).join(', '), 1000),
-                comments: truncateText(faker.lorem.paragraph(), 1000),
-                isDraft: faker.datatype.boolean()
-            }
-        });
-    }
-    
-    console.log('✅ Created 15 DCR reports');
-}
-
-async function createRcpaReports(tenantDb: any, chemists: any, drugs: any, employees: any) {
-    console.log('\n📊 Creating RCPA reports...');
-
-    for (let i = 0; i < 15; i++) {
-        const rcpaReport = await tenantDb.rcpaReport.create({
-            data: {
-                organizationId: ORG_ID,
-                employeeId: getRandomElement([employees.mr1.id, employees.mr2.id]),
-                chemistId: getRandomElement(chemists).id,
-                reportingPeriod: faker.helpers.arrayElement(['WEEKLY', 'MONTHLY']) as any,
-                startDate: faker.date.past(),
-                endDate: faker.date.recent(),
-                totalPrescription: faker.number.int({ min: 50, max: 500 }),
-                remarks: truncateText(faker.lorem.sentence(), 1000)
-            }
-        });
-
-        // Add RCPA drug data
-        const selectedDrugs = getRandomElements(drugs, faker.number.int({ min: 2, max: 4 }));
-        for (const drug of selectedDrugs) {
-            await tenantDb.rcpaDrugData.create({
-                data: {
-                    rcpaReportId: rcpaReport.id,
-                    drugId: drug.id,
-                    competitorDrugName: truncateText(`Competitor ${drug.name}`, 255),
-                    ownQuantity: faker.number.int({ min: 20, max: 200 }),
-                    competitorQuantity: faker.number.int({ min: 15, max: 150 }),
-                    ownPackSize: truncateText(faker.helpers.arrayElement(['10 tablets', '20 capsules', '100ml syrup']), 255),
-                    competitorPackSize: truncateText(faker.helpers.arrayElement(['10 tablets', '15 capsules', '120ml syrup']), 255)
-                }
-            });
-        }
-    }
-    
-    console.log('✅ Created 15 RCPA reports with drug data');
-}
-
-async function createGiftsAndInventory(tenantDb: any, employees: any, drugs: any) {
-    console.log('\n🎁 Creating gifts and inventory...');
-
-    // Create gifts
-    const gifts = [];
-    const giftNames = ['Pen Set', 'Notebook', 'Calendar', 'Coffee Mug', 'USB Drive'];
-    
-    for (let i = 0; i < giftNames.length; i++) {
-        const gift = await tenantDb.gift.create({
-            data: {
-                name: truncateText(giftNames[i], 200),
-                description: truncateText(faker.lorem.sentence(), 1000),
-                unitCost: faker.number.float({ min: 50, max: 500, fractionDigits: 2 }),
-                specifications: { material: faker.lorem.word(), color: faker.color.human() },
-                giftImages: [`https://example.com/gifts/${giftNames[i].toLowerCase().replace(' ', '-')}.jpg`],
-                createdById: employees.adminEmployee.id,
-                isActive: true
-            }
-        });
-        gifts.push(gift);
-    }
-
-    // Create user drug inventory
-    for (const emp of [employees.mr1, employees.mr2]) {
-        const selectedDrugs = getRandomElements(drugs, 10);
-        for (const drug of selectedDrugs) {
-            await tenantDb.userDrugInventory.create({
-                data: {
-                    employeeId: emp.id,
-                    drugId: drug.id,
-                    quantity: faker.number.int({ min: 10, max: 100 }),
-                    lastRestockedAt: faker.date.recent()
+                    doctorId: doctor.id,
+                    employeeId: task.employeeId,
+                    hospitalId: hospital.hospitalId,
+                    doctorTaskId: task.id,
+                    interactionType: 'MEETING',
+                    startTime: task.taskDate,
+                    endTime: addDays(task.taskDate, 0.02), // 30 minutes later
+                    purpose: 'Product presentation',
+                    outcome: 'Positive response',
+                    rating: faker.number.int({ min: 3, max: 5 })
                 }
             });
         }
     }
 
-    // Create user gift inventory
-    for (const emp of [employees.mr1, employees.mr2]) {
-        for (const gift of gifts) {
-            await tenantDb.userGiftInventory.create({
-                data: {
-                    employeeId: emp.id,
-                    giftId: gift.id,
-                    quantity: faker.number.int({ min: 5, max: 50 }),
-                    lastRestockedAt: faker.date.recent()
-                }
-            });
-        }
-    }
-
-    console.log(`✅ Created ${gifts.length} gifts and inventory for MRs`);
-    return gifts;
-}
-
-async function createExpenseTypes(tenantDb: any) {
-    console.log('\n💰 Creating expense types...');
-
-    const expenseTypes = [];
-    const expenseData = [
-        { name: 'Travel', description: 'Travel expenses', icon: 'car', formFields: { fields: ['distance', 'mode', 'purpose'] } },
-        { name: 'Food', description: 'Food and dining', icon: 'utensils', formFields: { fields: ['amount', 'restaurant', 'guests'] } },
-        { name: 'Fuel', description: 'Fuel expenses', icon: 'gas-pump', formFields: { fields: ['liters', 'rate', 'vehicle'] } },
-        { name: 'Hotel', description: 'Accommodation', icon: 'bed', formFields: { fields: ['nights', 'rate', 'location'] } }
-    ];
-
-    for (const expense of expenseData) {
-        const expenseType = await tenantDb.expenseType.create({
+    // Chemist interactions
+    for (const task of completedChemistTasks.slice(0, 5)) {
+        await tenantPrisma.chemistInteraction.create({
             data: {
-                name: truncateText(expense.name, 50),
-                description: truncateText(expense.description, 1000),
-                icon: expense.icon,
-                formFields: expense.formFields,
-                isActive: true
-            }
-        });
-
-        // Create role configs
-        const roles = ['MEDICAL_REPRESENTATIVE', 'SALES_MANAGER'];
-        for (const role of roles) {
-            await tenantDb.expenseRoleConfig.create({
-                data: {
-                    expenseTypeId: expenseType.id,
-                    role: role as any,
-                    limits: { daily: 1000, monthly: 10000 },
-                    rates: { standard: 50, premium: 100 },
-                    validationRules: { required: ['amount'], max: 5000 },
-                    isActive: true
-                }
-            });
-        }
-
-        expenseTypes.push(expenseType);
-    }
-
-    console.log(`✅ Created ${expenseTypes.length} expense types with role configs`);
-    return expenseTypes;
-}
-
-async function createTourPlansAndTasks(tenantDb: any, doctors: any, chemists: any, employees: any) {
-    console.log('\n🗺️ Creating tour plans and task planners...');
-
-    // Create Tour Plans
-    const tourPlans = [];
-    const tourPlanNames = ['City Coverage', 'Hospital Visit', 'Chemist Meet', 'Product Launch', 'Training Program'];
-
-    for (const name of tourPlanNames) {
-        const tourPlan = await tenantDb.tourPlan.create({
-            data: {
-                name: truncateText(name, 255),
-                description: truncateText(faker.lorem.sentence(), 1000)
-            }
-        });
-        tourPlans.push(tourPlan);
-    }
-
-    // Create Task Planners with tasks
-    for (let i = 0; i < 15; i++) {
-        const employee = getRandomElement([employees.mr1, employees.mr2]);
-        const startDate = faker.date.recent();
-        const endDate = new Date(startDate);
-        endDate.setDate(endDate.getDate() + 7); // 1 week duration
-
-        const taskPlanner = await tenantDb.taskPlanner.create({
-            data: {
-                employeeId: employee.id,
-                startDate,
-                endDate,
-                status: faker.helpers.arrayElement(['DRAFT', 'PENDING_APPROVAL', 'APPROVED']) as any
-            }
-        });
-
-        // Create doctor tasks for first 5 planners
-        if (i < 5) {
-            for (let j = 0; j < 5; j++) {
-                const startHour = faker.number.int({ min: 9, max: 11 });
-                const endHour = faker.number.int({ min: 12, max: 17 });
-                
-                await tenantDb.doctorTask.create({
-                    data: {
-                        plannerId: taskPlanner.id,
-                        employeeId: employee.id,
-                        doctorId: getRandomElement(doctors).id,
-                        taskDate: faker.date.between({ from: startDate, to: endDate }),
-                        startTime: createTimeObject(startHour, 0),
-                        endTime: createTimeObject(endHour, 0),
-                        taskStatus: faker.helpers.arrayElement(['PENDING', 'COMPLETED', 'RESCHEDULED']) as any
-                    }
-                });
-            }
-        }
-
-        // Create chemist tasks for planners 5-9
-        if (i >= 5 && i < 10) {
-            for (let j = 0; j < 5; j++) {
-                const startHour = faker.number.int({ min: 9, max: 11 });
-                const endHour = faker.number.int({ min: 12, max: 17 });
-                
-                await tenantDb.chemistTask.create({
-                    data: {
-                        plannerId: taskPlanner.id,
-                        employeeId: employee.id,
-                        chemistId: getRandomElement(chemists).id,
-                        taskDate: faker.date.between({ from: startDate, to: endDate }),
-                        startTime: createTimeObject(startHour, 0),
-                        endTime: createTimeObject(endHour, 0),
-                        taskStatus: faker.helpers.arrayElement(['PENDING', 'COMPLETED', 'RESCHEDULED']) as any
-                    }
-                });
-            }
-        }
-
-        // Create tour plan tasks for planners 10-14
-        if (i >= 10) {
-            for (let j = 0; j < 5; j++) {
-                const startHour = faker.number.int({ min: 9, max: 11 });
-                const endHour = faker.number.int({ min: 12, max: 17 });
-                
-                await tenantDb.tourPlanTask.create({
-                    data: {
-                        plannerId: taskPlanner.id,
-                        employeeId: employee.id,
-                        tourPlanId: getRandomElement(tourPlans).id,
-                        location: truncateText(getRandomElement(['Mumbai Central', 'Pune City', 'Andheri West', 'Bandra East']), 255),
-                        taskDate: faker.date.between({ from: startDate, to: endDate }),
-                        startTime: createTimeObject(startHour, 0),
-                        endTime: createTimeObject(endHour, 0),
-                        taskStatus: faker.helpers.arrayElement(['PENDING', 'COMPLETED', 'RESCHEDULED']) as any
-                    }
-                });
-            }
-        }
-    }
-    
-    console.log('✅ Created tour plans and 15 task planners with distributed tasks');
-}
-
-async function createCheckIns(tenantDb: any, employees: any) {
-    console.log('\n📍 Creating check-ins...');
-
-    for (let i = 0; i < 30; i++) {
-        const employee = getRandomElement([employees.mr1, employees.mr2]);
-        const checkInTime = faker.date.recent();
-        const checkOutTime = new Date(checkInTime);
-        checkOutTime.setHours(checkOutTime.getHours() + faker.number.int({ min: 6, max: 10 }));
-
-        await tenantDb.checkIn.create({
-            data: {
-                organizationId: ORG_ID,
-                employeeId: employee.id,
-                checkInTime,
-                checkOutTime: faker.datatype.boolean() ? checkOutTime : null,
-                checkInLatitude: faker.location.latitude({ min: 18, max: 20 }),
-                checkInLongitude: faker.location.longitude({ min: 72, max: 74 }),
-                checkOutLatitude: faker.datatype.boolean() ? faker.location.latitude({ min: 18, max: 20 }) : null,
-                checkOutLongitude: faker.datatype.boolean() ? faker.location.longitude({ min: 72, max: 74 }) : null
+                chemistId: task.chemistId,
+                employeeId: task.employeeId,
+                chemistTaskId: task.id,
+                interactionType: 'MEETING',
+                startTime: task.taskDate,
+                endTime: addDays(task.taskDate, 0.02),
+                purpose: 'Order collection',
+                outcome: 'Order placed',
+                rating: faker.number.int({ min: 3, max: 5 })
             }
         });
     }
 
-    console.log('✅ Created 30 check-in records');
+    console.log('✅ Created doctor and chemist interactions');
+
+    console.log('\n✨ Tenant database seeding completed!');
+
+    // Return summary
+    return {
+        employees: {
+            admin: adminEmployee,
+            salesManager,
+            medicalReps: [mr1, mr2]
+        },
+        territories: {
+            region: westRegion,
+            state: maharashtra,
+            cities: [mumbai, pune]
+        },
+        hospitals,
+        doctors: {
+            mumbai: mumbaiDoctors,
+            pune: puneDoctors
+        },
+        chemists: {
+            mumbai: mumbaiChemists,
+            pune: puneChemists
+        },
+        drugs,
+        orders,
+        rcpaReports,
+        taskPlanners: [taskPlannerMR1, taskPlannerMR2],
+        tasks: {
+            doctorTasks,
+            chemistTasks,
+            tourPlanTasks
+        },
+        dcrReports
+    };
 }
 
-async function seedCompleteData() {
+async function main() {
     try {
-        console.log('🚀 Starting complete database seeding...\n');
+        console.log('🚀 Starting database seeding...\n');
 
-        // Initialize schema service
-        const schemaService = SchemaManagementService.getInstance();
-        await schemaService.initializeMigrations();
+        // Step 1: Seed shared database
+        const { organization, hashedPassword } = await seedSharedDatabase();
 
-        // Get tenant client for the specific schema
-        const tenantDb = await schemaService.getTenantClient(SCHEMA_NAME);
-        console.log(`📋 Connected to schema: ${SCHEMA_NAME}`);
+        // Step 2: Seed tenant database (using the pre-created "Forsys" schema)
+        const tenantData = await seedTenantDatabase(organization.id, hashedPassword);
 
-        // Get existing employees (don't recreate them)
-        const adminEmployee = await tenantDb.employee.findFirst({
-            where: { role: 'SYSTEM_ADMINISTRATOR' }
-        });
-
-        const salesManager = await tenantDb.employee.findFirst({
-            where: { role: 'SALES_MANAGER' }
-        });
-
-        const medicalReps = await tenantDb.employee.findMany({
-            where: { role: 'MEDICAL_REPRESENTATIVE' }
-        });
-
-        if (!adminEmployee || !salesManager || medicalReps.length < 2) {
-            throw new Error('Required employees not found. Please ensure admin, sales manager, and at least 2 MRs exist.');
-        }
-
-        const [mr1, mr2] = medicalReps;
-        const employees = { adminEmployee, salesManager, mr1, mr2 };
-
-        console.log('✅ Found existing employees:');
-        console.log(`   - Admin: ${adminEmployee.email}`);
-        console.log(`   - Sales Manager: ${salesManager.email}`);
-        console.log(`   - MR1: ${mr1.email}`);
-        console.log(`   - MR2: ${mr2.email}`);
-
-        // Clean up existing data (except employees)
-        await cleanupAllData(tenantDb);
-
-        // Create all data step by step
-        const territories = await createTerritories(tenantDb);
-        await assignTerritories(tenantDb, territories, employees);
-        
-        const hospitalChains = await createHospitalChains(tenantDb);
-        const hospitals = await createHospitals(tenantDb, hospitalChains, territories);
-        const doctors = await createDoctors(tenantDb, hospitals, adminEmployee);
-        
-        const chemistChains = await createChemistChains(tenantDb);
-        const chemists = await createChemists(tenantDb, chemistChains, territories, adminEmployee);
-        
-        await createDoctorChemistRelations(tenantDb, doctors, chemists, employees);
-        
-        const drugs = await createDrugs(tenantDb, adminEmployee);
-        await createOrders(tenantDb, chemists, drugs, employees);
-        
-        await createDcrReports(tenantDb, drugs, employees);
-        await createRcpaReports(tenantDb, chemists, drugs, employees);
-        
-        const gifts = await createGiftsAndInventory(tenantDb, employees, drugs);
-        const expenseTypes = await createExpenseTypes(tenantDb);
-        
-        await createTourPlansAndTasks(tenantDb, doctors, chemists, employees);
-        await createCheckIns(tenantDb, employees);
-
-        // Summary
-        console.log('\n✨ SEEDING COMPLETED SUCCESSFULLY!');
-        console.log('📊 SUMMARY:');
+        // Print summary
+        console.log('\n📊 SEEDING SUMMARY');
         console.log('==================');
-        console.log('✅ Organization: HealthTech Pharma');
-        console.log('✅ Employees: 4 (existing - not recreated)');
-        console.log('✅ Territories: 4 (1 Region, 1 State, 2 Cities)');
-        console.log(`✅ Hospitals: ${hospitals.length}`);
-        console.log(`✅ Doctors: ${doctors.length} with associations and schedules`);
-        console.log(`✅ Chemists: ${chemists.length}`);
-        console.log('✅ Doctor-Chemist Relations: 20');
-        console.log(`✅ Drugs: ${drugs.length}`);
-        console.log('✅ Orders: 15 with items');
-        console.log('✅ DCR Reports: 15');
-        console.log('✅ RCPA Reports: 15 with drug data');
-        console.log(`✅ Gifts: ${gifts.length} with inventory`);
-        console.log(`✅ Expense Types: ${expenseTypes.length} with role configs`);
-        console.log('✅ Task Planners: 15 with distributed tasks');
-        console.log('   - 5 with Doctor Tasks (5 each)');
-        console.log('   - 5 with Chemist Tasks (5 each)');
-        console.log('   - 5 with Tour Plan Tasks (5 each)');
-        console.log('✅ Check-ins: 30 records');
+        console.log('✅ Shared Database:');
+        console.log('   - 1 Organization (MediCare Pharmaceuticals)');
+        console.log('   - 1 Admin User');
+        console.log('   - Schema: Forsys (pre-created)');
+        console.log('\n✅ Tenant Database:');
+        console.log('   - 4 Employees (1 Admin, 1 Sales Manager, 2 MRs)');
+        console.log('   - 4 Territories (1 Region, 1 State, 2 Cities)');
+        console.log(`   - ${tenantData.hospitals.length} Hospitals`);
+        console.log(`   - ${tenantData.doctors.mumbai.length + tenantData.doctors.pune.length} Doctors (5 Mumbai, 5 Pune)`);
+        console.log(`   - ${tenantData.chemists.mumbai.length + tenantData.chemists.pune.length} Chemists (3 Mumbai, 3 Pune)`);
+        console.log(`   - ${tenantData.drugs.length} Drugs`);
+        console.log(`   - ${tenantData.orders.length} Orders with items`);
+        console.log(`   - ${tenantData.rcpaReports.length} RCPA Reports with drug data`);
+        console.log(`   - 2 Task Planners`);
+        console.log(`   - ${tenantData.tasks.doctorTasks.length} Doctor Tasks`);
+        console.log(`   - ${tenantData.tasks.chemistTasks.length} Chemist Tasks`);
+        console.log(`   - ${tenantData.tasks.tourPlanTasks.length} Tour Plan Tasks`);
+        console.log(`   - ${tenantData.dcrReports.length} DCR Reports`);
+        console.log('   - Doctor-Hospital associations');
+        console.log('   - Doctor-Chemist relations');
+        console.log('   - Doctor and Chemist interactions');
 
-        console.log('\n🔐 EXISTING TEST CREDENTIALS:');
-        console.log('=============================');
-        console.log('Admin: admin@healthtech.net / SecureAdmin123');
-        console.log('Manager: sales.manager@healthtech.net / Manager@123');
-        console.log('MR1: amit.sharma@healthtech.net / MR@123456');
-        console.log('MR2: priya.patel@healthtech.net / MR@123456');
+        console.log('\n🔐 TEST CREDENTIALS');
+        console.log('===================');
+        console.log('Admin User:');
+        console.log(`   Email: ${ADMIN_EMAIL}`);
+        console.log(`   Password: ${ADMIN_PASSWORD}`);
+        console.log('\nSales Manager:');
+        console.log('   Email: sales.manager@medicarepharma.com');
+        console.log('   Password: Manager@123');
+        console.log('\nMedical Representative (Mumbai):');
+        console.log('   Email: amit.patel@medicarepharma.com');
+        console.log('   Password: MR@123456');
+        console.log('   Territory: Mumbai');
+        console.log('\nMedical Representative (Pune):');
+        console.log('   Email: priya.shah@medicarepharma.com');
+        console.log('   Password: MR@123456');
+        console.log('   Territory: Pune');
 
-        // Close connections
-        await schemaService.closeAllConnections();
+        console.log('\n✅ Database seeding completed successfully!');
 
     } catch (error) {
-        console.error('❌ Error during seeding:', error);
+        console.error('❌ Error seeding database:', error);
         throw error;
+    } finally {
+        // Clean up connections
+        await sharedPrisma.$disconnect();
+        await tenantPrisma.$disconnect();
     }
 }
 
 // Run the seeding
-seedCompleteData()
+main()
     .catch((e) => {
-        console.error('❌ Seeding failed:', e);
+        console.error(e);
         process.exit(1);
     });

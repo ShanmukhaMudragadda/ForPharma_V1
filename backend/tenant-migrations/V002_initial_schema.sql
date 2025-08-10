@@ -48,3 +48,30 @@ COMMENT ON COLUMN "rcpa_reports"."reporting_period" IS 'Reporting period type: W
 COMMENT ON COLUMN "rcpa_reports"."total_prescription" IS 'Total number of prescriptions in the reporting period';
 COMMENT ON COLUMN "rcpa_drug_data"."own_pack_size" IS 'Pack size of own company drug';
 COMMENT ON COLUMN "rcpa_drug_data"."competitor_pack_size" IS 'Pack size of competitor drug';
+
+
+-- 8. Drop existing foreign key constraints
+ALTER TABLE "dcr_reports" DROP CONSTRAINT IF EXISTS "dcr_reports_doctor_task_fkey";
+ALTER TABLE "dcr_reports" DROP CONSTRAINT IF EXISTS "dcr_reports_chemist_task_fkey";
+ALTER TABLE "dcr_reports" DROP CONSTRAINT IF EXISTS "dcr_reports_tour_plan_task_fkey";
+ALTER TABLE "dcr_reports" DROP CONSTRAINT IF EXISTS "dcr_reports_task_id_fkey";
+
+-- 9. Create indexes for better query performance on the polymorphic columns
+-- 9. Create indexes for better query performance on the polymorphic columns
+CREATE INDEX "idx_dcr_reports_task_id" ON "dcr_reports"("task_id");
+CREATE INDEX "idx_dcr_reports_task_type" ON "dcr_reports"("task_type");
+CREATE INDEX "idx_dcr_reports_task_polymorphic" ON "dcr_reports"("task_id", "task_type");
+
+-- 10. Add check constraint to ensure task_type is valid when task_id is present
+ALTER TABLE "dcr_reports" DROP CONSTRAINT IF EXISTS "dcr_reports_task_type_check";
+ALTER TABLE "dcr_reports" 
+ADD CONSTRAINT "dcr_reports_task_type_check" 
+CHECK (
+    ("task_id" IS NULL AND "task_type" IS NULL) 
+    OR 
+    ("task_id" IS NOT NULL AND "task_type" IS NOT NULL)
+);
+
+-- 11. Add comments for documentation
+COMMENT ON COLUMN "dcr_reports"."task_id" IS 'Polymorphic reference to task ID (can be doctor_task, chemist_task, or tour_plan_task)';
+COMMENT ON COLUMN "dcr_reports"."task_type" IS 'Type of task being referenced (DOCTOR_TASK, CHEMIST_TASK, or TOUR_PLAN_TASK)';

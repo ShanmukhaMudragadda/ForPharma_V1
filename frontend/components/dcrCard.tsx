@@ -76,13 +76,19 @@ const DCRCard: React.FC<DCRCardProps> = ({
                 marginBottom: 8
             }}>
                 {/* DCR ID */}
-                <StyledText style={{
-                    fontSize: 16,
-                    fontWeight: '600',
-                    color: '#0077B6'
-                }}>
-                    {dcrId}
-                </StyledText>
+                <StyledView style={{ flex: 1, marginRight: 12 }}>
+                    <StyledText
+                        style={{
+                            fontSize: 16,
+                            fontWeight: '600',
+                            color: '#0077B6'
+                        }}
+                        numberOfLines={1}
+                        ellipsizeMode="tail"
+                    >
+                        {dcrId}
+                    </StyledText>
+                </StyledView>
 
                 {/* Status with Border */}
                 {status && (
