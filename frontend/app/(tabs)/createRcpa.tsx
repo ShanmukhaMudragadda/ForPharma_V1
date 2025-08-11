@@ -46,12 +46,98 @@ export default function CreateRCPA() {
     const [isEditMode, setIsEditMode] = useState(false);
     const [editRcpaId, setEditRcpaId] = useState<string | null>(null);
     const [isCustomerListOpen, setIsCustomerListOpen] = useState(false);
+    const [dateRangeWarning, setDateRangeWarning] = useState<string>('');
 
     // Backend data states
     const [customerOptions, setCustomerOptions] = useState<Customer[]>([]);
     const [availableDrugs, setAvailableDrugs] = useState<Drug[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+
+    // Date utility functions
+    const formatDate = (date: Date): string => {
+        const day = date.getDate().toString().padStart(2, '0');
+        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+        const year = date.getFullYear();
+        return `${day}-${month}-${year}`; // No spaces around dashes
+    };
+
+    const parseDate = (dateStr: string): Date | null => {
+        if (!dateStr) return null;
+        const parts = dateStr.split('-');
+        if (parts.length === 3) {
+            const day = parseInt(parts[0], 10);
+            const month = parseInt(parts[1], 10);
+            const year = parseInt(parts[2], 10);
+
+            // Create date (month is 0-based in JavaScript Date)
+            const date = new Date(year, month - 1, day);
+
+            // Validate the date
+            if (date.getFullYear() === year &&
+                date.getMonth() === month - 1 &&
+                date.getDate() === day) {
+                return date;
+            }
+        }
+        return null;
+    };
+
+    const calculateEndDate = (startDateStr: string, period: 'WEEKLY' | 'MONTHLY'): string => {
+        const startDate = parseDate(startDateStr);
+        if (!startDate) return '';
+
+        if (period === 'WEEKLY') {
+            const endDate = new Date(startDate);
+            endDate.setDate(startDate.getDate() + 6); // 7 days total (including start date)
+            return formatDate(endDate);
+        } else {
+            const endDate = new Date(startDate);
+            endDate.setMonth(startDate.getMonth() + 1);
+            endDate.setDate(0); // Last day of the month
+            return formatDate(endDate);
+        }
+    };
+
+    const validateDateRange = (startDateStr: string, endDateStr: string, period: 'WEEKLY' | 'MONTHLY'): string => {
+        if (!startDateStr || !endDateStr || !period) return '';
+
+        const startDate = parseDate(startDateStr);
+        const endDate = parseDate(endDateStr);
+
+        if (!startDate || !endDate) return 'Invalid date format. Please use DD-MM-YYYY format.';
+
+        const today = new Date();
+        today.setHours(23, 59, 59, 999); // Set to end of today for comparison
+
+        // Check if any date is in the future
+        if (startDate > today) {
+            return 'Start date cannot be in the future. RCPA reports are for past periods only.';
+        }
+
+        if (endDate > today) {
+            return 'End date cannot be in the future. RCPA reports are for past periods only.';
+        }
+
+        const diffTime = endDate.getTime() - startDate.getTime();
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1; // +1 to include both start and end dates
+
+        if (diffDays <= 0) {
+            return 'End date must be after start date.';
+        }
+
+        if (period === 'WEEKLY') {
+            if (diffDays > 7) {
+                return `Selected period is ${diffDays} days. For weekly reports, please select a period within 7 days.`;
+            }
+        } else if (period === 'MONTHLY') {
+            if (diffDays > 31) {
+                return `Selected period is ${diffDays} days. For monthly reports, please select a period within 31 days.`;
+            }
+        }
+
+        return '';
+    };
 
     // Load data from backend
     const loadData = async () => {
@@ -90,6 +176,46 @@ export default function CreateRCPA() {
         loadData();
     }, []);
 
+    // Convert YYYY-MM-DD back to DD-MM-YYYY for display
+    const convertDateFromBackend = (dateStr: string): string => {
+        if (!dateStr || typeof dateStr !== 'string') {
+            console.warn('⚠️ Invalid date string for display conversion:', dateStr);
+            return '';
+        }
+
+        const trimmedDate = dateStr.trim();
+        console.log('🔄 Converting date from backend:', trimmedDate);
+
+        // Handle YYYY-MM-DD format (convert to DD-MM-YYYY)
+        if (/^\d{4}-\d{2}-\d{2}$/.test(trimmedDate)) {
+            const parts = trimmedDate.split('-');
+            const convertedDate = `${parts[2]}-${parts[1]}-${parts[0]}`;
+            console.log('✅ Converted YYYY-MM-DD to DD-MM-YYYY:', convertedDate);
+            return convertedDate;
+        }
+
+        // If already in DD-MM-YYYY format, return as is
+        if (/^\d{2}-\d{2}-\d{4}$/.test(trimmedDate)) {
+            console.log('✅ Already in DD-MM-YYYY format:', trimmedDate);
+            return trimmedDate;
+        }
+
+        // Handle other date formats by trying to parse and reformat
+        try {
+            const parsedDate = new Date(trimmedDate);
+            if (!isNaN(parsedDate.getTime())) {
+                const formattedDate = formatDate(parsedDate);
+                console.log('✅ Parsed and formatted date:', formattedDate);
+                return formattedDate;
+            }
+        } catch (error) {
+            console.warn('Could not parse date:', trimmedDate);
+        }
+
+        console.warn('⚠️ Unable to convert date format:', trimmedDate);
+        return trimmedDate; // Return as-is if can't parse
+    };
+
     // Handle edit mode data population (if needed in future)
     useEffect(() => {
         if (params.editData && customerOptions.length > 0 && availableDrugs.length > 0) {
@@ -108,8 +234,18 @@ export default function CreateRCPA() {
 
                 // Set other fields
                 setSelectedPeriod(editData.reportingPeriod);
-                setStartDate(editData.startDate);
-                setEndDate(editData.endDate);
+
+                // Convert dates from backend format (YYYY-MM-DD) to display format (DD-MM-YYYY)
+                if (editData.startDate) {
+                    const displayStartDate = convertDateFromBackend(editData.startDate);
+                    setStartDate(displayStartDate);
+                }
+
+                if (editData.endDate) {
+                    const displayEndDate = convertDateFromBackend(editData.endDate);
+                    setEndDate(displayEndDate);
+                }
+
                 setTotalPrescriptions(editData.totalPrescriptions?.toString() || '');
                 setBriefRemarks(editData.briefRemarks || '');
 
@@ -133,6 +269,16 @@ export default function CreateRCPA() {
         }
     }, [params.editData, customerOptions, availableDrugs]);
 
+    // Validate date range whenever dates or period change
+    useEffect(() => {
+        if (startDate && endDate && selectedPeriod) {
+            const warning = validateDateRange(startDate, endDate, selectedPeriod);
+            setDateRangeWarning(warning);
+        } else {
+            setDateRangeWarning('');
+        }
+    }, [startDate, endDate, selectedPeriod]);
+
     // Validation
     const isViewSummaryEnabled = useMemo(() => {
         const hasCustomer = selectedCustomer !== null;
@@ -140,50 +286,54 @@ export default function CreateRCPA() {
         const hasDates = startDate !== '' && endDate !== '';
         const hasTotalPrescriptions = totalPrescriptions !== '' && parseInt(totalPrescriptions) > 0;
         const hasValidItems = auditItems.length > 0 && auditItems.some(item =>
-            item.companyDrug !== null && 
-            item.companyQuantity > 0 && 
+            item.companyDrug !== null &&
+            item.companyQuantity > 0 &&
             item.companyPackSize.trim() !== '' &&
             item.competitorDrug.trim() !== '' &&
             item.competitorQuantity > 0 &&
             item.competitorPackSize.trim() !== ''
         );
-        return hasCustomer && hasPeriod && hasDates && hasTotalPrescriptions && hasValidItems;
-    }, [selectedCustomer, selectedPeriod, startDate, endDate, totalPrescriptions, auditItems]);
+        const hasValidDateRange = dateRangeWarning === '';
+
+        return hasCustomer && hasPeriod && hasDates && hasTotalPrescriptions && hasValidItems && hasValidDateRange;
+    }, [selectedCustomer, selectedPeriod, startDate, endDate, totalPrescriptions, auditItems, dateRangeWarning]);
 
     const handlePeriodChange = (period: 'WEEKLY' | 'MONTHLY') => {
         setSelectedPeriod(period);
 
-        // Auto-set date ranges based on period
+        // Auto-set date ranges based on period (for PAST periods, ending today)
         const today = new Date();
+        let startDateForPeriod: Date;
+        let endDateForPeriod: Date = new Date(today); // End date is always today
+
         if (period === 'WEEKLY') {
-            const startOfWeek = new Date(today);
-            startOfWeek.setDate(today.getDate() - today.getDay());
-            const endOfWeek = new Date(startOfWeek);
-            endOfWeek.setDate(startOfWeek.getDate() + 6);
-
-            const formatDate = (date: Date) => {
-                const day = date.getDate().toString().padStart(2, '0');
-                const month = (date.getMonth() + 1).toString().padStart(2, '0');
-                const year = date.getFullYear();
-                return `${day}/${month}/${year}`;
-            };
-
-            setStartDate(formatDate(startOfWeek));
-            setEndDate(formatDate(endOfWeek));
+            // Set to previous week ending today
+            startDateForPeriod = new Date(today);
+            startDateForPeriod.setDate(today.getDate() - 6); // 7 days ago (including today)
         } else {
-            const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
-            const endOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
-
-            const formatDate = (date: Date) => {
-                const day = date.getDate().toString().padStart(2, '0');
-                const month = (date.getMonth() + 1).toString().padStart(2, '0');
-                const year = date.getFullYear();
-                return `${day}/${month}/${year}`;
-            };
-
-            setStartDate(formatDate(startOfMonth));
-            setEndDate(formatDate(endOfMonth));
+            // Set to previous month ending today
+            startDateForPeriod = new Date(today);
+            startDateForPeriod.setDate(today.getDate() - 29); // ~30 days ago (including today)
         }
+
+        setStartDate(formatDate(startDateForPeriod));
+        setEndDate(formatDate(endDateForPeriod));
+    };
+
+    const handleStartDateChange = (newStartDate: string) => {
+        setStartDate(newStartDate);
+
+        // Automatically calculate end date if period is selected and start date is valid
+        if (selectedPeriod && newStartDate) {
+            const calculatedEndDate = calculateEndDate(newStartDate, selectedPeriod);
+            if (calculatedEndDate) {
+                setEndDate(calculatedEndDate);
+            }
+        }
+    };
+
+    const handleEndDateChange = (newEndDate: string) => {
+        setEndDate(newEndDate);
     };
 
     const handleTotalPrescriptionsChange = (value: string) => {
@@ -196,14 +346,62 @@ export default function CreateRCPA() {
         setAuditItems(items);
     };
 
-    // Convert DD/MM/YYYY to YYYY-MM-DD for backend
+    // Convert DD-MM-YYYY to YYYY-MM-DD for backend
     const convertDateFormat = (dateStr: string): string => {
-        if (!dateStr) return '';
-        const parts = dateStr.split('/');
-        if (parts.length === 3) {
-            return `${parts[2]}-${parts[1]}-${parts[0]}`;
+        if (!dateStr || typeof dateStr !== 'string') {
+            console.warn('⚠️ Invalid date string for conversion:', dateStr);
+            return '';
         }
-        return dateStr;
+
+        // Remove any extra spaces around dashes and trim
+        let trimmedDate = dateStr.trim();
+        trimmedDate = trimmedDate.replace(/\s*-\s*/g, '-'); // Replace " - " with "-"
+        trimmedDate = trimmedDate.replace(/\s*\/\s*/g, '/'); // Replace " / " with "/"
+
+        console.log('🔄 Converting date format:', dateStr, '→ cleaned:', trimmedDate);
+
+        // Handle DD-MM-YYYY format (including single digits)
+        if (trimmedDate.includes('-')) {
+            const parts = trimmedDate.split('-');
+            if (parts.length === 3) {
+                const day = parts[0].padStart(2, '0');
+                const month = parts[1].padStart(2, '0');
+                const year = parts[2];
+
+                // Check if it's DD-MM-YYYY format (year is 4 digits at the end)
+                if (year.length === 4 && parseInt(year) > 1900) {
+                    const convertedDate = `${year}-${month}-${day}`;
+                    console.log('✅ Converted DD-MM-YYYY to YYYY-MM-DD:', convertedDate);
+                    return convertedDate;
+                }
+
+                // Check if it's already YYYY-MM-DD format (year is 4 digits at start)
+                if (parts[0].length === 4 && parseInt(parts[0]) > 1900) {
+                    const convertedDate = `${parts[0]}-${parts[1].padStart(2, '0')}-${parts[2].padStart(2, '0')}`;
+                    console.log('✅ Already in YYYY-MM-DD format, normalized:', convertedDate);
+                    return convertedDate;
+                }
+            }
+        }
+
+        // Handle DD/MM/YYYY format
+        if (trimmedDate.includes('/')) {
+            const parts = trimmedDate.split('/');
+            if (parts.length === 3) {
+                const day = parts[0].padStart(2, '0');
+                const month = parts[1].padStart(2, '0');
+                const year = parts[2];
+
+                if (year.length === 4 && parseInt(year) > 1900) {
+                    const convertedDate = `${year}-${month}-${day}`;
+                    console.log('✅ Converted DD/MM/YYYY to YYYY-MM-DD:', convertedDate);
+                    return convertedDate;
+                }
+            }
+        }
+
+        console.warn('⚠️ Unable to convert date format:', trimmedDate);
+        return trimmedDate; // Return as-is if can't parse
     };
 
     const handleCancel = () => {
@@ -224,17 +422,39 @@ export default function CreateRCPA() {
     const handleViewSummary = () => {
         if (!isViewSummaryEnabled) return;
 
+        // Validate dates before conversion
+        if (!startDate || !endDate) {
+            Alert.alert('Error', 'Please select both start and end dates.');
+            return;
+        }
+
+        console.log('📊 Preparing summary data:');
+        console.log('  - Start date (input):', startDate);
+        console.log('  - End date (input):', endDate);
+
+        const convertedStartDate = convertDateFormat(startDate);
+        const convertedEndDate = convertDateFormat(endDate);
+
+        console.log('  - Start date (converted):', convertedStartDate);
+        console.log('  - End date (converted):', convertedEndDate);
+
+        // Validate converted dates
+        if (!convertedStartDate || !convertedEndDate) {
+            Alert.alert('Error', 'Invalid date format. Please check your date selections.');
+            return;
+        }
+
         const summaryData = {
             action: isEditMode ? 'edit' : 'create',
             rcpaId: isEditMode ? editRcpaId : undefined,
             customer: selectedCustomer,
             period: selectedPeriod,
-            startDate: convertDateFormat(startDate),
-            endDate: convertDateFormat(endDate),
+            startDate: convertedStartDate,
+            endDate: convertedEndDate,
             totalPrescriptions: parseInt(totalPrescriptions),
             briefRemarks: briefRemarks.trim(),
-            auditItems: auditItems.filter(item => 
-                item.companyDrug !== null && 
+            auditItems: auditItems.filter(item =>
+                item.companyDrug !== null &&
                 item.companyQuantity > 0 &&
                 item.companyPackSize.trim() !== '' &&
                 item.competitorDrug.trim() !== '' &&
@@ -256,6 +476,8 @@ export default function CreateRCPA() {
                 day: 'numeric'
             })
         };
+
+        console.log('📋 Final summary data:', JSON.stringify(summaryData, null, 2));
 
         router.push({
             pathname: '/rcpaSummary',
@@ -427,8 +649,8 @@ export default function CreateRCPA() {
                     <StyledView className="flex-row gap-2">
                         <StyledTouchableOpacity
                             className={`flex-1 py-3 px-4 rounded-lg border ${selectedPeriod === 'WEEKLY'
-                                    ? 'bg-[#0077B6] border-[#0077B6]'
-                                    : 'bg-white border-gray-300'
+                                ? 'bg-[#0077B6] border-[#0077B6]'
+                                : 'bg-white border-gray-300'
                                 }`}
                             onPress={() => handlePeriodChange('WEEKLY')}
                         >
@@ -439,8 +661,8 @@ export default function CreateRCPA() {
                         </StyledTouchableOpacity>
                         <StyledTouchableOpacity
                             className={`flex-1 py-3 px-4 rounded-lg border ${selectedPeriod === 'MONTHLY'
-                                    ? 'bg-[#0077B6] border-[#0077B6]'
-                                    : 'bg-white border-gray-300'
+                                ? 'bg-[#0077B6] border-[#0077B6]'
+                                : 'bg-white border-gray-300'
                                 }`}
                             onPress={() => handlePeriodChange('MONTHLY')}
                         >
@@ -459,38 +681,50 @@ export default function CreateRCPA() {
                             {selectedPeriod === 'WEEKLY' ? 'Select Week Range' : 'Select Month Range'}
                             <StyledText className="text-red-500 ml-1">*</StyledText>
                         </StyledText>
-                        <StyledView className="flex-row gap-3 mb-4">
+                        <StyledView className="flex-row gap-3 mb-2">
                             <StyledView className="flex-1">
                                 <StyledText className="text-xs font-medium text-gray-600 mb-2">From</StyledText>
                                 <Input
                                     value={startDate}
-                                    onChangeText={setStartDate}
-                                    placeholder="dd/mm/yyyy"
+                                    onChangeText={handleStartDateChange}
+                                    placeholder="dd-mm-yyyy"
                                     isDateInput
                                     allowPastDates
                                     onDateChange={(date) => {
-                                        const formatted = `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear()}`;
-                                        setStartDate(formatted);
+                                        const formatted = formatDate(date);
+                                        handleStartDateChange(formatted);
                                     }}
-                                    dateValue={startDate ? new Date(startDate.split('/').reverse().join('-')) : undefined}
+                                    dateValue={startDate ? parseDate(startDate) || undefined : undefined}
                                 />
                             </StyledView>
                             <StyledView className="flex-1">
                                 <StyledText className="text-xs font-medium text-gray-600 mb-2">To</StyledText>
                                 <Input
                                     value={endDate}
-                                    onChangeText={setEndDate}
-                                    placeholder="dd/mm/yyyy"
+                                    onChangeText={handleEndDateChange}
+                                    placeholder="dd-mm-yyyy"
                                     isDateInput
                                     allowPastDates
                                     onDateChange={(date) => {
-                                        const formatted = `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear()}`;
-                                        setEndDate(formatted);
+                                        const formatted = formatDate(date);
+                                        handleEndDateChange(formatted);
                                     }}
-                                    dateValue={endDate ? new Date(endDate.split('/').reverse().join('-')) : undefined}
+                                    dateValue={endDate ? parseDate(endDate) || undefined : undefined}
                                 />
                             </StyledView>
                         </StyledView>
+
+                        {/* Date Range Warning */}
+                        {dateRangeWarning !== '' && (
+                            <StyledView className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+                                <StyledView className="flex-row items-start">
+                                    <Ionicons name="warning-outline" size={18} color="#DC2626" style={{ marginTop: 1 }} />
+                                    <StyledText className="text-red-700 text-sm font-medium ml-2 flex-1 leading-5">
+                                        {dateRangeWarning}
+                                    </StyledText>
+                                </StyledView>
+                            </StyledView>
+                        )}
                     </>
                 )}
 

@@ -48,6 +48,47 @@ export default function RCPASummary() {
     const isEditMode = rcpaData.action === 'edit';
     const rcpaId = rcpaData.rcpaId;
 
+    // Convert YYYY-MM-DD back to DD-MM-YYYY for display and editing
+    const convertDateForDisplay = (dateStr: string): string => {
+        if (!dateStr || typeof dateStr !== 'string') {
+            return '';
+        }
+
+        const trimmedDate = dateStr.trim();
+        console.log('🔄 Converting date for display:', trimmedDate);
+
+        // Handle YYYY-MM-DD format (convert to DD-MM-YYYY)
+        if (/^\d{4}-\d{2}-\d{2}$/.test(trimmedDate)) {
+            const parts = trimmedDate.split('-');
+            const convertedDate = `${parts[2]}-${parts[1]}-${parts[0]}`;
+            console.log('✅ Converted YYYY-MM-DD to DD-MM-YYYY for display:', convertedDate);
+            return convertedDate;
+        }
+
+        // If already in DD-MM-YYYY format, return as is
+        if (/^\d{2}-\d{2}-\d{4}$/.test(trimmedDate)) {
+            console.log('✅ Already in DD-MM-YYYY format:', trimmedDate);
+            return trimmedDate;
+        }
+
+        // Try to parse other formats and convert
+        try {
+            const parsedDate = new Date(trimmedDate);
+            if (!isNaN(parsedDate.getTime())) {
+                const day = parsedDate.getDate().toString().padStart(2, '0');
+                const month = (parsedDate.getMonth() + 1).toString().padStart(2, '0');
+                const year = parsedDate.getFullYear();
+                const formattedDate = `${day}-${month}-${year}`;
+                console.log('✅ Parsed and formatted date for display:', formattedDate);
+                return formattedDate;
+            }
+        } catch (error) {
+            console.warn('Could not parse date for display:', trimmedDate);
+        }
+
+        return trimmedDate;
+    };
+
     // Format period display
     const formatPeriodDisplay = () => {
         if (!rcpaData.period || !rcpaData.startDate || !rcpaData.endDate) {
@@ -55,29 +96,25 @@ export default function RCPASummary() {
         }
 
         const periodType = rcpaData.period.toLowerCase() === 'weekly' ? 'Weekly' : 'Monthly';
-        
-        // Convert YYYY-MM-DD back to DD/MM/YYYY for display
-        const formatDisplayDate = (dateStr: string) => {
-            if (!dateStr) return dateStr;
-            const parts = dateStr.split('-');
-            if (parts.length === 3) {
-                return `${parts[2]}/${parts[1]}/${parts[0]}`;
-            }
-            return dateStr;
-        };
 
-        return `${periodType} (${formatDisplayDate(rcpaData.startDate)} - ${formatDisplayDate(rcpaData.endDate)})`;
+        // Convert dates for display
+        const displayStartDate = convertDateForDisplay(rcpaData.startDate);
+        const displayEndDate = convertDateForDisplay(rcpaData.endDate);
+
+        return `${periodType} (${displayStartDate} - ${displayEndDate})`;
     };
 
     const handleEditRCPA = () => {
         // Prepare the current summary data to pass back to create RCPA page
+        // Convert dates back to DD-MM-YYYY format for editing
         const editData = {
             rcpaId: isEditMode ? rcpaId : undefined,
             chemistName: rcpaData.customer?.label || '',
             chemistId: rcpaData.customer?.id || '',
             reportingPeriod: rcpaData.period,
-            startDate: rcpaData.startDate,
-            endDate: rcpaData.endDate,
+            // Convert dates to DD-MM-YYYY format for the create page
+            startDate: convertDateForDisplay(rcpaData.startDate),
+            endDate: convertDateForDisplay(rcpaData.endDate),
             totalPrescriptions: rcpaData.totalPrescriptions,
             briefRemarks: rcpaData.briefRemarks,
             auditItems: rcpaData.auditItems.map((item: any) => ({
@@ -86,7 +123,7 @@ export default function RCPASummary() {
                     id: item.drugId,
                     name: item.drugName,
                     quantity: item.ownQuantity,
-                    packSize: item.ownPackSize
+                    packSize: item.ownPackSize || ''
                 },
                 competitor: {
                     name: item.competitorDrugName,
@@ -95,6 +132,8 @@ export default function RCPASummary() {
                 }
             }))
         };
+
+        console.log('📝 Sending edit data back to create RCPA:', editData);
 
         // Navigate back to create RCPA with current data
         router.push({
@@ -165,8 +204,8 @@ export default function RCPASummary() {
                                 const rcpaRequest: CreateRcpaRequest = {
                                     chemistId: rcpaData.customer.id,
                                     reportingPeriod: rcpaData.period.toUpperCase(),
-                                    startDate: rcpaData.startDate,
-                                    endDate: rcpaData.endDate,
+                                    startDate: rcpaData.startDate, // Keep in YYYY-MM-DD format for backend
+                                    endDate: rcpaData.endDate,     // Keep in YYYY-MM-DD format for backend
                                     totalPrescriptions: rcpaData.totalPrescriptions,
                                     remarks: rcpaData.briefRemarks || undefined,
                                     drugData: rcpaData.auditItems.map((item: any) => ({
@@ -217,8 +256,8 @@ export default function RCPASummary() {
         <StyledSafeAreaView className='flex-1 bg-gray-50'>
             {/* Header */}
             <StyledView className='bg-white px-5 py-4 flex-row items-center border-b border-gray-200'>
-                <StyledTouchableOpacity 
-                    className='mr-4' 
+                <StyledTouchableOpacity
+                    className='mr-4'
                     onPress={() => router.back()}
                     disabled={loading}
                 >

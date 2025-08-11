@@ -50,6 +50,14 @@ export default function CreateOrder() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
+    // Date utility function - Fixed to not add spaces
+    const formatDate = (date: Date): string => {
+        const day = date.getDate().toString().padStart(2, '0');
+        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+        const year = date.getFullYear();
+        return `${day}-${month}-${year}`; // No spaces around dashes
+    };
+
     // Load data from backend
     const loadData = async () => {
         try {
@@ -113,9 +121,20 @@ export default function CreateOrder() {
                     setSelectedCustomer(customer);
                 }
 
-                // Set delivery date
+                // Set delivery date - normalize format
                 if (editData.deliveryDate) {
-                    setDeliveryDate(editData.deliveryDate);
+                    let normalizedDate = editData.deliveryDate;
+                    // If it's a long format date, try to parse and reformat
+                    try {
+                        const parsedDate = new Date(editData.deliveryDate);
+                        if (!isNaN(parsedDate.getTime())) {
+                            normalizedDate = formatDate(parsedDate);
+                            setDeliveryDateValue(parsedDate);
+                        }
+                    } catch (e) {
+                        console.warn('Could not parse delivery date:', editData.deliveryDate);
+                    }
+                    setDeliveryDate(normalizedDate);
                 }
 
                 // Set special instructions
@@ -160,6 +179,8 @@ export default function CreateOrder() {
 
     const handleDateChange = (date: Date) => {
         setDeliveryDateValue(date);
+        // Update the text field with formatted date
+        setDeliveryDate(formatDate(date));
     };
 
     const handleItemsUpdate = (items: OrderItem[]) => {
@@ -184,15 +205,30 @@ export default function CreateOrder() {
     const handleViewSummary = () => {
         if (!isViewSummaryEnabled) return;
 
+        // Determine the best delivery date to use
+        let finalDeliveryDate = '';
+        if (deliveryDateValue) {
+            // Use the Date object and format it consistently
+            finalDeliveryDate = deliveryDateValue.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+        } else if (deliveryDate.trim()) {
+            // Use the text field value if no Date object is available
+            finalDeliveryDate = deliveryDate.trim();
+        }
+
+        console.log('📊 Preparing order summary data:');
+        console.log('  - Delivery date (text):', deliveryDate);
+        console.log('  - Delivery date (value):', deliveryDateValue);
+        console.log('  - Final delivery date:', finalDeliveryDate);
+
         const summaryData = {
             action: isEditMode ? 'edit' : 'create', // Key addition for Option 4
             orderId: isEditMode ? editOrderId : undefined, // Pass original order ID when editing
             customer: selectedCustomer,
-            deliveryDate: deliveryDate || (deliveryDateValue ? deliveryDateValue.toLocaleDateString('en-US', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-            }) : ''),
+            deliveryDate: finalDeliveryDate,
             specialInstructions: specialInstructions.trim() || '',
             items: orderItems.filter(item => item.drug !== null).map(item => ({
                 id: item.id,
@@ -208,6 +244,8 @@ export default function CreateOrder() {
                 day: 'numeric'
             })
         };
+
+        console.log('📋 Final order summary data:', JSON.stringify(summaryData, null, 2));
 
         router.push({
             pathname: '/(tabs)/orderSummary',
@@ -393,7 +431,7 @@ export default function CreateOrder() {
                 <StyledView style={{ marginBottom: 24 }}>
                     <Input
                         label="Expected Delivery Date"
-                        placeholder="dd - mm - yyyy"
+                        placeholder="dd-mm-yyyy"
                         value={deliveryDate}
                         onChangeText={setDeliveryDate}
                         rightIcon="calendar-outline"

@@ -16,6 +16,73 @@ interface AuthenticatedRequest extends Request {
 class OrderController {
 
     /**
+     * Parse date string (supports multiple formats and handles spaces)
+     */
+    private static parseDate(dateString: string): Date | null {
+        if (!dateString || typeof dateString !== 'string') {
+            console.log('❌ Invalid date string:', dateString);
+            return null;
+        }
+
+        // Remove any extra whitespace and normalize spaces around separators
+        let cleanDateString = dateString.trim();
+        cleanDateString = cleanDateString.replace(/\s*-\s*/g, '-'); // Replace " - " with "-"
+        cleanDateString = cleanDateString.replace(/\s*\/\s*/g, '/'); // Replace " / " with "/"
+
+        console.log('📅 Parsing date string:', dateString, '→ cleaned:', cleanDateString);
+
+        try {
+            // Handle standard date formats
+            const date = new Date(cleanDateString);
+            if (!isNaN(date.getTime())) {
+                console.log('✅ Successfully parsed date:', date);
+                return date;
+            }
+
+            // Handle DD-MM-YYYY format
+            if (/^\d{1,2}-\d{1,2}-\d{4}$/.test(cleanDateString)) {
+                console.log('📅 Detected DD-MM-YYYY format');
+                const parts = cleanDateString.split('-');
+                const day = parseInt(parts[0], 10);
+                const month = parseInt(parts[1], 10);
+                const year = parseInt(parts[2], 10);
+
+                const parsedDate = new Date(year, month - 1, day);
+                if (parsedDate.getFullYear() === year &&
+                    parsedDate.getMonth() === month - 1 &&
+                    parsedDate.getDate() === day) {
+                    console.log('✅ Successfully parsed DD-MM-YYYY:', parsedDate);
+                    return parsedDate;
+                }
+            }
+
+            // Handle DD/MM/YYYY format
+            if (/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(cleanDateString)) {
+                console.log('📅 Detected DD/MM/YYYY format');
+                const parts = cleanDateString.split('/');
+                const day = parseInt(parts[0], 10);
+                const month = parseInt(parts[1], 10);
+                const year = parseInt(parts[2], 10);
+
+                const parsedDate = new Date(year, month - 1, day);
+                if (parsedDate.getFullYear() === year &&
+                    parsedDate.getMonth() === month - 1 &&
+                    parsedDate.getDate() === day) {
+                    console.log('✅ Successfully parsed DD/MM/YYYY:', parsedDate);
+                    return parsedDate;
+                }
+            }
+
+            console.log('❌ No valid date format found for:', cleanDateString);
+            return null;
+
+        } catch (error) {
+            console.error('❌ Error parsing date:', error);
+            return null;
+        }
+    }
+
+    /**
      * GET /api/orders
      * List only orders created by the authenticated employee
      */
@@ -63,7 +130,7 @@ class OrderController {
                     day: 'numeric'
                 }),
                 amount: `₹${order.totalAmount.toLocaleString('en-IN')}`,
-                status: order.status || 'PENDING'
+                status: order.status || 'DRAFT'
             }));
 
             res.status(200).json({
@@ -195,7 +262,7 @@ class OrderController {
                     }) : null,
 
                 // Order status
-                status: order.status || 'PENDING',
+                status: order.status || 'DRAFT',
 
                 // Items and pricing
                 items: transformedItems,
@@ -235,6 +302,7 @@ class OrderController {
         try {
             const orderData = req.body;
             console.log('📝 Creating new order for employee:', req.user?.employeeId);
+            console.log('📝 Received order data:', JSON.stringify(orderData, null, 2));
 
             if (!req.tenantDb) {
                 return res.status(500).json({
@@ -314,18 +382,26 @@ class OrderController {
             const orderNumber = `ORD-${new Date().getFullYear()}-${uuidv4().split('-')[0].toUpperCase()}`;
 
             // Determine order status
-            const status = orderData.action === 'confirm' ? 'CONFIRMED' : 'PENDING';
+            const status = orderData.action === 'confirm' ? 'CONFIRMED' : 'DRAFT';
             const orderDate = status === 'CONFIRMED' ? new Date() : (orderData.orderDate ? new Date(orderData.orderDate) : new Date());
 
-            // Validate and parse delivery date
+            // Enhanced delivery date parsing
             let deliveryDate = null;
             if (orderData.expectedDeliveryDate) {
-                const parsedDeliveryDate = new Date(orderData.expectedDeliveryDate);
-                if (!isNaN(parsedDeliveryDate.getTime())) {
-                    deliveryDate = parsedDeliveryDate;
-                } else {
-                    console.warn('Invalid delivery date provided:', orderData.expectedDeliveryDate);
+                console.log('🗓️ Parsing delivery date:', orderData.expectedDeliveryDate);
+                deliveryDate = OrderController.parseDate(orderData.expectedDeliveryDate);
+
+                if (!deliveryDate) {
+                    return res.status(400).json({
+                        success: false,
+                        message: `Invalid delivery date format: "${orderData.expectedDeliveryDate}". Please use a valid date format.`,
+                        debug: {
+                            received: orderData.expectedDeliveryDate,
+                            type: typeof orderData.expectedDeliveryDate
+                        }
+                    });
                 }
+                console.log('✅ Parsed delivery date:', deliveryDate);
             }
 
             // Create order with transaction
@@ -339,7 +415,7 @@ class OrderController {
                         totalAmount: calculatedTotal,
                         status: status,
                         orderDate: orderDate,
-                        deliveryDate: deliveryDate, // Now properly validated
+                        deliveryDate: deliveryDate,
                         specialInstructions: orderData.specialInstructions || null,
                         createdById: req.user?.employeeId
                     }
@@ -390,6 +466,8 @@ class OrderController {
                 }
             });
 
+            console.log('✅ Order created successfully:', result.id);
+
             res.status(201).json({
                 success: true,
                 message: `Order ${status === 'CONFIRMED' ? 'confirmed' : 'saved as draft'} successfully`,
@@ -403,12 +481,12 @@ class OrderController {
                 }
             });
 
-        } catch (error) {
+        } catch (error: any) {
             console.error('❌ Error creating order:', error);
             res.status(500).json({
                 success: false,
                 message: 'Failed to create order',
-                error: process.env.NODE_ENV === 'development' ? error : undefined
+                error: process.env.NODE_ENV === 'development' ? error.message : undefined
             });
         }
     }
@@ -472,6 +550,7 @@ class OrderController {
             const { orderId } = req.params;
             const orderData = req.body;
             console.log('📝 Updating order:', orderId);
+            console.log('📝 Received update data:', JSON.stringify(orderData, null, 2));
 
             if (!req.tenantDb) {
                 return res.status(500).json({
@@ -495,11 +574,15 @@ class OrderController {
                 });
             }
 
-            // Only allow updating PENDING orders
-            if (existingOrder.status !== 'PENDING') {
+            // Only allow updating DRAFT orders for full updates
+            if (existingOrder.status !== 'DRAFT' && existingOrder.status !== 'PENDING') {
                 return res.status(400).json({
                     success: false,
-                    message: 'Only draft orders can be edited'
+                    message: 'Only draft orders can be edited',
+                    debug: {
+                        currentStatus: existingOrder.status,
+                        allowedStatuses: ['DRAFT', 'PENDING']
+                    }
                 });
             }
 
@@ -567,17 +650,25 @@ class OrderController {
             });
 
             // Determine order status
-            const status = orderData.action === 'confirm' ? 'CONFIRMED' : 'PENDING';
+            const status = orderData.action === 'confirm' ? 'CONFIRMED' : 'DRAFT';
 
-            // Validate and parse delivery date
+            // Enhanced delivery date parsing
             let deliveryDate = null;
             if (orderData.expectedDeliveryDate) {
-                const parsedDeliveryDate = new Date(orderData.expectedDeliveryDate);
-                if (!isNaN(parsedDeliveryDate.getTime())) {
-                    deliveryDate = parsedDeliveryDate;
-                } else {
-                    console.warn('Invalid delivery date provided:', orderData.expectedDeliveryDate);
+                console.log('🗓️ Parsing delivery date for update:', orderData.expectedDeliveryDate);
+                deliveryDate = OrderController.parseDate(orderData.expectedDeliveryDate);
+
+                if (!deliveryDate) {
+                    return res.status(400).json({
+                        success: false,
+                        message: `Invalid delivery date format: "${orderData.expectedDeliveryDate}". Please use a valid date format.`,
+                        debug: {
+                            received: orderData.expectedDeliveryDate,
+                            type: typeof orderData.expectedDeliveryDate
+                        }
+                    });
                 }
+                console.log('✅ Parsed delivery date for update:', deliveryDate);
             }
 
             // Update order with transaction - THIS IS THE KEY PART
@@ -596,11 +687,14 @@ class OrderController {
                 });
 
                 // 2. Delete ALL existing order items
-                await tx.orderItem.deleteMany({
+                console.log('🔥 Deleting existing order items for order:', orderId);
+                const deletedItems = await tx.orderItem.deleteMany({
                     where: { orderId: orderId }
                 });
+                console.log(`✅ Deleted ${deletedItems.count} existing order items`);
 
                 // 3. Create NEW order items
+                console.log(`📦 Creating ${validatedItems.length} new order items`);
                 for (const item of validatedItems) {
                     await tx.orderItem.create({
                         data: {
@@ -645,6 +739,8 @@ class OrderController {
                 }
             });
 
+            console.log('✅ Order updated successfully:', orderId);
+
             res.status(200).json({
                 success: true,
                 message: `Order ${status === 'CONFIRMED' ? 'updated and confirmed' : 'updated as draft'} successfully`,
@@ -658,12 +754,12 @@ class OrderController {
                 }
             });
 
-        } catch (error) {
+        } catch (error: any) {
             console.error('❌ Error updating order:', error);
             res.status(500).json({
                 success: false,
                 message: 'Failed to update order',
-                error: process.env.NODE_ENV === 'development' ? error : undefined
+                error: process.env.NODE_ENV === 'development' ? error.message : undefined
             });
         }
     }
@@ -746,7 +842,7 @@ class OrderController {
                 }
             });
 
-        } catch (error) {
+        } catch (error: any) {
             console.error('❌ Error deleting order:', error);
 
             // Check if it's a foreign key constraint error
