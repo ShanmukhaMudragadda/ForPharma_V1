@@ -9,8 +9,8 @@ import chemistRoutes from './src/routes/chemistRoutes.ts'
 import { cleanupMiddleware } from './src/middlewares/tenantMiddleware.ts';
 import orderRoutes from './src/routes/orderRoutes.ts';
 import drugRoutes from './src/routes/drugRoutes.ts'
-
-
+import rcpaRoutes from './src/routes/rcpaRoutes.ts';
+import dcrRoutes from './src/routes/dcrRoutes.ts'
 
 
 dotenv.config();
@@ -55,6 +55,9 @@ app.use('/api/doctors', doctorRoutes);
 
 //chemist routes
 app.use('/api/chemists', chemistRoutes);
+app.use('/api/orders', orderRoutes);
+app.use('/api/rcpa', rcpaRoutes);
+app.use('/api/dcr', dcrRoutes);
 
 // Order Routes
 app.use('/api/orders', orderRoutes);

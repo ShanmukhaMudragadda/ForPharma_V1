@@ -98,7 +98,11 @@ export default function OrderSummary() {
                         quantity: item.quantity,
                         unitPrice: item.unitPrice
                     })),
+<<<<<<< HEAD
                     action: 'save' // Save as PENDING status
+=======
+                    action: 'save' // Save as DRAFT status
+>>>>>>> origin/rcpa/dcr_frontend
                 };
 
                 const result = await OrderService.updateOrder(orderId, updateRequest);
@@ -129,7 +133,11 @@ export default function OrderSummary() {
                         quantity: item.quantity,
                         unitPrice: item.unitPrice
                     })),
+<<<<<<< HEAD
                     action: 'save' // This will save as PENDING status
+=======
+                    action: 'save' // This will save as DRAFT status
+>>>>>>> origin/rcpa/dcr_frontend
                 };
 
                 const result = await OrderService.createOrder(orderRequest);
@@ -764,4 +772,8 @@ export default function OrderSummary() {
             </StyledView>
         </StyledSafeAreaView>
     );
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> origin/rcpa/dcr_frontend

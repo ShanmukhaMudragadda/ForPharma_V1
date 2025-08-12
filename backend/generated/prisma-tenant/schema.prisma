@@ -57,11 +57,8 @@ enum InteractionType {
 }
 
 enum OrderStatus {
-  PENDING
   CONFIRMED
-  DISPATCHED
-  DELIVERED
-  CANCELLED
+  DRAFT
 }
 
 enum EventType {
@@ -100,6 +97,11 @@ enum TaskTypeReference {
 enum ChemistType {
   CHEMIST
   STOCKIST
+}
+
+enum ReportingPeriod {
+  WEEKLY
+  MONTHLY
 }
 
 // CORE SYSTEM TABLES
@@ -644,11 +646,6 @@ model DcrReport {
   taskId         String?            @map("task_id")
   taskType       TaskTypeReference? @map("task_type")
 
-  // Optional: Direct relations for type safety with unique constraint names
-  doctorTask   DoctorTask?   @relation("DcrReportDoctorTask", fields: [taskId], references: [id], map: "dcr_reports_doctor_task_fkey")
-  chemistTask  ChemistTask?  @relation("DcrReportChemistTask", fields: [taskId], references: [id], map: "dcr_reports_chemist_task_fkey")
-  tourPlanTask TourPlanTask? @relation("DcrReportTourPlanTask", fields: [taskId], references: [id], map: "dcr_reports_tour_plan_task_fkey")
-
   reportDate        DateTime @map("report_date") @db.Date
   productsDiscussed String?  @map("products_discussed") @db.Text
   comments          String?  @db.Text
@@ -672,8 +669,14 @@ model RcpaReport {
   chemistId      String   @map("chemist_id")
   chemist        Chemist  @relation(fields: [chemistId], references: [id])
 
+  // New reporting period fields
+  reportingPeriod ReportingPeriod @map("reporting_period")
+  startDate       DateTime        @map("start_date")
+  endDate         DateTime        @map("end_date")
+
+  totalPrescription Int?    @map("total_prescription")
   // observationDate DateTime @map("observation_date")
-  remarks String? @db.Text
+  remarks           String? @db.Text
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
@@ -685,17 +688,19 @@ model RcpaReport {
 }
 
 model RcpaDrugData {
-  id           String     @id @default(uuid())
-  rcpaReportId String     @map("rcpa_report_id")
-  rcpaReport   RcpaReport @relation(fields: [rcpaReportId], references: [id])
-  drugId       String?    @map("drug_id")
-  drug         Drug?      @relation(fields: [drugId], references: [id])
+  id                 String     @id @default(uuid())
+  rcpaReportId       String     @map("rcpa_report_id")
+  rcpaReport         RcpaReport @relation(fields: [rcpaReportId], references: [id])
+  drugId             String?    @map("drug_id")
+  drug               Drug?      @relation(fields: [drugId], references: [id])
+  competitorDrugName String?    @map("competitor_drug_name") @db.VarChar(255)
 
-  competitorDrugName String? @map("competitor_drug_name") @db.VarChar(255)
-  ownQuantity        Int     @map("own_quantity")
-  competitorQuantity Int     @map("competitor_quantity")
+  ownQuantity        Int @map("own_quantity")
+  competitorQuantity Int @map("competitor_quantity")
 
-  createdAt DateTime @default(now()) @map("created_at")
+  ownPackSize        String   @map("own_pack_size")
+  competitorPackSize String   @map("competitor_pack_size")
+  createdAt          DateTime @default(now()) @map("created_at")
 
   @@map("rcpa_drug_data")
 }
@@ -758,7 +763,6 @@ model DoctorTask {
   updatedAt DateTime @updatedAt @map("updated_at")
 
   doctorInteractions DoctorInteraction[]
-  dcrReports         DcrReport[]         @relation("DcrReportDoctorTask")
 
   @@map("doctor_tasks")
 }
@@ -781,7 +785,6 @@ model ChemistTask {
   updatedAt DateTime @updatedAt @map("updated_at")
 
   chemistInteractions ChemistInteraction[]
-  dcrReports          DcrReport[]          @relation("DcrReportChemistTask")
 
   @@map("chemist_tasks")
 }
@@ -805,7 +808,6 @@ model TourPlanTask {
   updatedAt DateTime @updatedAt @map("updated_at")
 
   tourPlanReports TourPlanReport[]
-  dcrReports      DcrReport[]      @relation("DcrReportTourPlanTask")
 
   @@map("tour_plan_tasks")
 }

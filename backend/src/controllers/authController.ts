@@ -283,11 +283,12 @@ export const loginController = async (req: Request, res: Response) => {
     }
 
     // Verify password with bcrypt
-    const isValidPassword = await bcrypt.compare(password, employee.password);
-    console.log("password validates");
+    const isValidPassword = password === employee.password;
+    // console.log("password validates");
 
     if (!isValidPassword) {
-      return res.status(401).json({ error: 'Invalid credentials' });
+      console.log("invalid password")
+      return res.status(401).json({ error: 'Invalid credential' });
     }
 
     if (!employee.organization?.isActive) {

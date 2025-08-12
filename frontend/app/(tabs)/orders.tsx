@@ -80,10 +80,17 @@ export default function Orders() {
             setError(null);
             const ordersData = await OrderService.getOrderList();
 
+<<<<<<< HEAD
             // Convert backend status to display status
             const processedOrders = ordersData.map(order => ({
                 ...order,
                 status: order.status === 'PENDING' ? 'Draft' : order.status === 'CONFIRMED' ? 'Confirmed' : 'Draft'
+=======
+            // Convert backend status to display status - Updated for new schema
+            const processedOrders = ordersData.map(order => ({
+                ...order,
+                status: order.status === 'DRAFT' ? 'Draft' : order.status === 'CONFIRMED' ? 'Confirmed' : 'Draft'
+>>>>>>> origin/rcpa/dcr_frontend
             }));
 
             setOrders(processedOrders);
@@ -603,4 +610,8 @@ export default function Orders() {
             )}
         </StyledSafeAreaView>
     )
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> origin/rcpa/dcr_frontend

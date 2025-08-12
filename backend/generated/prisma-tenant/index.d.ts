@@ -287,11 +287,8 @@ export type InteractionType = (typeof InteractionType)[keyof typeof InteractionT
 
 
 export const OrderStatus: {
-  PENDING: 'PENDING',
   CONFIRMED: 'CONFIRMED',
-  DISPATCHED: 'DISPATCHED',
-  DELIVERED: 'DELIVERED',
-  CANCELLED: 'CANCELLED'
+  DRAFT: 'DRAFT'
 };
 
 export type OrderStatus = (typeof OrderStatus)[keyof typeof OrderStatus]
@@ -352,6 +349,14 @@ export const ChemistType: {
 
 export type ChemistType = (typeof ChemistType)[keyof typeof ChemistType]
 
+
+export const ReportingPeriod: {
+  WEEKLY: 'WEEKLY',
+  MONTHLY: 'MONTHLY'
+};
+
+export type ReportingPeriod = (typeof ReportingPeriod)[keyof typeof ReportingPeriod]
+
 }
 
 export type EmployeeRole = $Enums.EmployeeRole
@@ -409,6 +414,10 @@ export const TaskTypeReference: typeof $Enums.TaskTypeReference
 export type ChemistType = $Enums.ChemistType
 
 export const ChemistType: typeof $Enums.ChemistType
+
+export type ReportingPeriod = $Enums.ReportingPeriod
+
+export const ReportingPeriod: typeof $Enums.ReportingPeriod
 
 /**
  * ##  Prisma Client ʲˢ
@@ -5423,12 +5432,10 @@ export namespace Prisma {
 
   export type DoctorTaskCountOutputType = {
     doctorInteractions: number
-    dcrReports: number
   }
 
   export type DoctorTaskCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     doctorInteractions?: boolean | DoctorTaskCountOutputTypeCountDoctorInteractionsArgs
-    dcrReports?: boolean | DoctorTaskCountOutputTypeCountDcrReportsArgs
   }
 
   // Custom InputTypes
@@ -5449,13 +5456,6 @@ export namespace Prisma {
     where?: DoctorInteractionWhereInput
   }
 
-  /**
-   * DoctorTaskCountOutputType without action
-   */
-  export type DoctorTaskCountOutputTypeCountDcrReportsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: DcrReportWhereInput
-  }
-
 
   /**
    * Count Type ChemistTaskCountOutputType
@@ -5463,12 +5463,10 @@ export namespace Prisma {
 
   export type ChemistTaskCountOutputType = {
     chemistInteractions: number
-    dcrReports: number
   }
 
   export type ChemistTaskCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     chemistInteractions?: boolean | ChemistTaskCountOutputTypeCountChemistInteractionsArgs
-    dcrReports?: boolean | ChemistTaskCountOutputTypeCountDcrReportsArgs
   }
 
   // Custom InputTypes
@@ -5489,13 +5487,6 @@ export namespace Prisma {
     where?: ChemistInteractionWhereInput
   }
 
-  /**
-   * ChemistTaskCountOutputType without action
-   */
-  export type ChemistTaskCountOutputTypeCountDcrReportsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: DcrReportWhereInput
-  }
-
 
   /**
    * Count Type TourPlanTaskCountOutputType
@@ -5503,12 +5494,10 @@ export namespace Prisma {
 
   export type TourPlanTaskCountOutputType = {
     tourPlanReports: number
-    dcrReports: number
   }
 
   export type TourPlanTaskCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     tourPlanReports?: boolean | TourPlanTaskCountOutputTypeCountTourPlanReportsArgs
-    dcrReports?: boolean | TourPlanTaskCountOutputTypeCountDcrReportsArgs
   }
 
   // Custom InputTypes
@@ -5527,13 +5516,6 @@ export namespace Prisma {
    */
   export type TourPlanTaskCountOutputTypeCountTourPlanReportsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: TourPlanReportWhereInput
-  }
-
-  /**
-   * TourPlanTaskCountOutputType without action
-   */
-  export type TourPlanTaskCountOutputTypeCountDcrReportsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: DcrReportWhereInput
   }
 
 
@@ -30864,9 +30846,6 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     employee?: boolean | EmployeeDefaultArgs<ExtArgs>
-    doctorTask?: boolean | DcrReport$doctorTaskArgs<ExtArgs>
-    chemistTask?: boolean | DcrReport$chemistTaskArgs<ExtArgs>
-    tourPlanTask?: boolean | DcrReport$tourPlanTaskArgs<ExtArgs>
   }, ExtArgs["result"]["dcrReport"]>
 
   export type DcrReportSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -30882,9 +30861,6 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     employee?: boolean | EmployeeDefaultArgs<ExtArgs>
-    doctorTask?: boolean | DcrReport$doctorTaskArgs<ExtArgs>
-    chemistTask?: boolean | DcrReport$chemistTaskArgs<ExtArgs>
-    tourPlanTask?: boolean | DcrReport$tourPlanTaskArgs<ExtArgs>
   }, ExtArgs["result"]["dcrReport"]>
 
   export type DcrReportSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -30900,9 +30876,6 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     employee?: boolean | EmployeeDefaultArgs<ExtArgs>
-    doctorTask?: boolean | DcrReport$doctorTaskArgs<ExtArgs>
-    chemistTask?: boolean | DcrReport$chemistTaskArgs<ExtArgs>
-    tourPlanTask?: boolean | DcrReport$tourPlanTaskArgs<ExtArgs>
   }, ExtArgs["result"]["dcrReport"]>
 
   export type DcrReportSelectScalar = {
@@ -30922,30 +30895,18 @@ export namespace Prisma {
   export type DcrReportOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "organizationId" | "employeeId" | "taskId" | "taskType" | "reportDate" | "productsDiscussed" | "comments" | "isDraft" | "createdAt" | "updatedAt", ExtArgs["result"]["dcrReport"]>
   export type DcrReportInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     employee?: boolean | EmployeeDefaultArgs<ExtArgs>
-    doctorTask?: boolean | DcrReport$doctorTaskArgs<ExtArgs>
-    chemistTask?: boolean | DcrReport$chemistTaskArgs<ExtArgs>
-    tourPlanTask?: boolean | DcrReport$tourPlanTaskArgs<ExtArgs>
   }
   export type DcrReportIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     employee?: boolean | EmployeeDefaultArgs<ExtArgs>
-    doctorTask?: boolean | DcrReport$doctorTaskArgs<ExtArgs>
-    chemistTask?: boolean | DcrReport$chemistTaskArgs<ExtArgs>
-    tourPlanTask?: boolean | DcrReport$tourPlanTaskArgs<ExtArgs>
   }
   export type DcrReportIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     employee?: boolean | EmployeeDefaultArgs<ExtArgs>
-    doctorTask?: boolean | DcrReport$doctorTaskArgs<ExtArgs>
-    chemistTask?: boolean | DcrReport$chemistTaskArgs<ExtArgs>
-    tourPlanTask?: boolean | DcrReport$tourPlanTaskArgs<ExtArgs>
   }
 
   export type $DcrReportPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "DcrReport"
     objects: {
       employee: Prisma.$EmployeePayload<ExtArgs>
-      doctorTask: Prisma.$DoctorTaskPayload<ExtArgs> | null
-      chemistTask: Prisma.$ChemistTaskPayload<ExtArgs> | null
-      tourPlanTask: Prisma.$TourPlanTaskPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -31354,9 +31315,6 @@ export namespace Prisma {
   export interface Prisma__DcrReportClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     employee<T extends EmployeeDefaultArgs<ExtArgs> = {}>(args?: Subset<T, EmployeeDefaultArgs<ExtArgs>>): Prisma__EmployeeClient<$Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    doctorTask<T extends DcrReport$doctorTaskArgs<ExtArgs> = {}>(args?: Subset<T, DcrReport$doctorTaskArgs<ExtArgs>>): Prisma__DoctorTaskClient<$Result.GetResult<Prisma.$DoctorTaskPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    chemistTask<T extends DcrReport$chemistTaskArgs<ExtArgs> = {}>(args?: Subset<T, DcrReport$chemistTaskArgs<ExtArgs>>): Prisma__ChemistTaskClient<$Result.GetResult<Prisma.$ChemistTaskPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    tourPlanTask<T extends DcrReport$tourPlanTaskArgs<ExtArgs> = {}>(args?: Subset<T, DcrReport$tourPlanTaskArgs<ExtArgs>>): Prisma__TourPlanTaskClient<$Result.GetResult<Prisma.$TourPlanTaskPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -31793,63 +31751,6 @@ export namespace Prisma {
   }
 
   /**
-   * DcrReport.doctorTask
-   */
-  export type DcrReport$doctorTaskArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the DoctorTask
-     */
-    select?: DoctorTaskSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the DoctorTask
-     */
-    omit?: DoctorTaskOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: DoctorTaskInclude<ExtArgs> | null
-    where?: DoctorTaskWhereInput
-  }
-
-  /**
-   * DcrReport.chemistTask
-   */
-  export type DcrReport$chemistTaskArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the ChemistTask
-     */
-    select?: ChemistTaskSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the ChemistTask
-     */
-    omit?: ChemistTaskOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ChemistTaskInclude<ExtArgs> | null
-    where?: ChemistTaskWhereInput
-  }
-
-  /**
-   * DcrReport.tourPlanTask
-   */
-  export type DcrReport$tourPlanTaskArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the TourPlanTask
-     */
-    select?: TourPlanTaskSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the TourPlanTask
-     */
-    omit?: TourPlanTaskOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: TourPlanTaskInclude<ExtArgs> | null
-    where?: TourPlanTaskWhereInput
-  }
-
-  /**
    * DcrReport without action
    */
   export type DcrReportDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -31874,8 +31775,18 @@ export namespace Prisma {
 
   export type AggregateRcpaReport = {
     _count: RcpaReportCountAggregateOutputType | null
+    _avg: RcpaReportAvgAggregateOutputType | null
+    _sum: RcpaReportSumAggregateOutputType | null
     _min: RcpaReportMinAggregateOutputType | null
     _max: RcpaReportMaxAggregateOutputType | null
+  }
+
+  export type RcpaReportAvgAggregateOutputType = {
+    totalPrescription: number | null
+  }
+
+  export type RcpaReportSumAggregateOutputType = {
+    totalPrescription: number | null
   }
 
   export type RcpaReportMinAggregateOutputType = {
@@ -31883,6 +31794,10 @@ export namespace Prisma {
     organizationId: string | null
     employeeId: string | null
     chemistId: string | null
+    reportingPeriod: $Enums.ReportingPeriod | null
+    startDate: Date | null
+    endDate: Date | null
+    totalPrescription: number | null
     remarks: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -31893,6 +31808,10 @@ export namespace Prisma {
     organizationId: string | null
     employeeId: string | null
     chemistId: string | null
+    reportingPeriod: $Enums.ReportingPeriod | null
+    startDate: Date | null
+    endDate: Date | null
+    totalPrescription: number | null
     remarks: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -31903,6 +31822,10 @@ export namespace Prisma {
     organizationId: number
     employeeId: number
     chemistId: number
+    reportingPeriod: number
+    startDate: number
+    endDate: number
+    totalPrescription: number
     remarks: number
     createdAt: number
     updatedAt: number
@@ -31910,11 +31833,23 @@ export namespace Prisma {
   }
 
 
+  export type RcpaReportAvgAggregateInputType = {
+    totalPrescription?: true
+  }
+
+  export type RcpaReportSumAggregateInputType = {
+    totalPrescription?: true
+  }
+
   export type RcpaReportMinAggregateInputType = {
     id?: true
     organizationId?: true
     employeeId?: true
     chemistId?: true
+    reportingPeriod?: true
+    startDate?: true
+    endDate?: true
+    totalPrescription?: true
     remarks?: true
     createdAt?: true
     updatedAt?: true
@@ -31925,6 +31860,10 @@ export namespace Prisma {
     organizationId?: true
     employeeId?: true
     chemistId?: true
+    reportingPeriod?: true
+    startDate?: true
+    endDate?: true
+    totalPrescription?: true
     remarks?: true
     createdAt?: true
     updatedAt?: true
@@ -31935,6 +31874,10 @@ export namespace Prisma {
     organizationId?: true
     employeeId?: true
     chemistId?: true
+    reportingPeriod?: true
+    startDate?: true
+    endDate?: true
+    totalPrescription?: true
     remarks?: true
     createdAt?: true
     updatedAt?: true
@@ -31979,6 +31922,18 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
+     * Select which fields to average
+    **/
+    _avg?: RcpaReportAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: RcpaReportSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: RcpaReportMinAggregateInputType
@@ -32009,6 +31964,8 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: RcpaReportCountAggregateInputType | true
+    _avg?: RcpaReportAvgAggregateInputType
+    _sum?: RcpaReportSumAggregateInputType
     _min?: RcpaReportMinAggregateInputType
     _max?: RcpaReportMaxAggregateInputType
   }
@@ -32018,10 +31975,16 @@ export namespace Prisma {
     organizationId: string
     employeeId: string
     chemistId: string
+    reportingPeriod: $Enums.ReportingPeriod
+    startDate: Date
+    endDate: Date
+    totalPrescription: number | null
     remarks: string | null
     createdAt: Date
     updatedAt: Date
     _count: RcpaReportCountAggregateOutputType | null
+    _avg: RcpaReportAvgAggregateOutputType | null
+    _sum: RcpaReportSumAggregateOutputType | null
     _min: RcpaReportMinAggregateOutputType | null
     _max: RcpaReportMaxAggregateOutputType | null
   }
@@ -32045,6 +32008,10 @@ export namespace Prisma {
     organizationId?: boolean
     employeeId?: boolean
     chemistId?: boolean
+    reportingPeriod?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    totalPrescription?: boolean
     remarks?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -32059,6 +32026,10 @@ export namespace Prisma {
     organizationId?: boolean
     employeeId?: boolean
     chemistId?: boolean
+    reportingPeriod?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    totalPrescription?: boolean
     remarks?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -32071,6 +32042,10 @@ export namespace Prisma {
     organizationId?: boolean
     employeeId?: boolean
     chemistId?: boolean
+    reportingPeriod?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    totalPrescription?: boolean
     remarks?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -32083,12 +32058,16 @@ export namespace Prisma {
     organizationId?: boolean
     employeeId?: boolean
     chemistId?: boolean
+    reportingPeriod?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    totalPrescription?: boolean
     remarks?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type RcpaReportOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "organizationId" | "employeeId" | "chemistId" | "remarks" | "createdAt" | "updatedAt", ExtArgs["result"]["rcpaReport"]>
+  export type RcpaReportOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "organizationId" | "employeeId" | "chemistId" | "reportingPeriod" | "startDate" | "endDate" | "totalPrescription" | "remarks" | "createdAt" | "updatedAt", ExtArgs["result"]["rcpaReport"]>
   export type RcpaReportInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     employee?: boolean | EmployeeDefaultArgs<ExtArgs>
     chemist?: boolean | ChemistDefaultArgs<ExtArgs>
@@ -32116,6 +32095,10 @@ export namespace Prisma {
       organizationId: string
       employeeId: string
       chemistId: string
+      reportingPeriod: $Enums.ReportingPeriod
+      startDate: Date
+      endDate: Date
+      totalPrescription: number | null
       remarks: string | null
       createdAt: Date
       updatedAt: Date
@@ -32549,6 +32532,10 @@ export namespace Prisma {
     readonly organizationId: FieldRef<"RcpaReport", 'String'>
     readonly employeeId: FieldRef<"RcpaReport", 'String'>
     readonly chemistId: FieldRef<"RcpaReport", 'String'>
+    readonly reportingPeriod: FieldRef<"RcpaReport", 'ReportingPeriod'>
+    readonly startDate: FieldRef<"RcpaReport", 'DateTime'>
+    readonly endDate: FieldRef<"RcpaReport", 'DateTime'>
+    readonly totalPrescription: FieldRef<"RcpaReport", 'Int'>
     readonly remarks: FieldRef<"RcpaReport", 'String'>
     readonly createdAt: FieldRef<"RcpaReport", 'DateTime'>
     readonly updatedAt: FieldRef<"RcpaReport", 'DateTime'>
@@ -33019,6 +33006,8 @@ export namespace Prisma {
     competitorDrugName: string | null
     ownQuantity: number | null
     competitorQuantity: number | null
+    ownPackSize: string | null
+    competitorPackSize: string | null
     createdAt: Date | null
   }
 
@@ -33029,6 +33018,8 @@ export namespace Prisma {
     competitorDrugName: string | null
     ownQuantity: number | null
     competitorQuantity: number | null
+    ownPackSize: string | null
+    competitorPackSize: string | null
     createdAt: Date | null
   }
 
@@ -33039,6 +33030,8 @@ export namespace Prisma {
     competitorDrugName: number
     ownQuantity: number
     competitorQuantity: number
+    ownPackSize: number
+    competitorPackSize: number
     createdAt: number
     _all: number
   }
@@ -33061,6 +33054,8 @@ export namespace Prisma {
     competitorDrugName?: true
     ownQuantity?: true
     competitorQuantity?: true
+    ownPackSize?: true
+    competitorPackSize?: true
     createdAt?: true
   }
 
@@ -33071,6 +33066,8 @@ export namespace Prisma {
     competitorDrugName?: true
     ownQuantity?: true
     competitorQuantity?: true
+    ownPackSize?: true
+    competitorPackSize?: true
     createdAt?: true
   }
 
@@ -33081,6 +33078,8 @@ export namespace Prisma {
     competitorDrugName?: true
     ownQuantity?: true
     competitorQuantity?: true
+    ownPackSize?: true
+    competitorPackSize?: true
     createdAt?: true
     _all?: true
   }
@@ -33178,6 +33177,8 @@ export namespace Prisma {
     competitorDrugName: string | null
     ownQuantity: number
     competitorQuantity: number
+    ownPackSize: string
+    competitorPackSize: string
     createdAt: Date
     _count: RcpaDrugDataCountAggregateOutputType | null
     _avg: RcpaDrugDataAvgAggregateOutputType | null
@@ -33207,6 +33208,8 @@ export namespace Prisma {
     competitorDrugName?: boolean
     ownQuantity?: boolean
     competitorQuantity?: boolean
+    ownPackSize?: boolean
+    competitorPackSize?: boolean
     createdAt?: boolean
     rcpaReport?: boolean | RcpaReportDefaultArgs<ExtArgs>
     drug?: boolean | RcpaDrugData$drugArgs<ExtArgs>
@@ -33219,6 +33222,8 @@ export namespace Prisma {
     competitorDrugName?: boolean
     ownQuantity?: boolean
     competitorQuantity?: boolean
+    ownPackSize?: boolean
+    competitorPackSize?: boolean
     createdAt?: boolean
     rcpaReport?: boolean | RcpaReportDefaultArgs<ExtArgs>
     drug?: boolean | RcpaDrugData$drugArgs<ExtArgs>
@@ -33231,6 +33236,8 @@ export namespace Prisma {
     competitorDrugName?: boolean
     ownQuantity?: boolean
     competitorQuantity?: boolean
+    ownPackSize?: boolean
+    competitorPackSize?: boolean
     createdAt?: boolean
     rcpaReport?: boolean | RcpaReportDefaultArgs<ExtArgs>
     drug?: boolean | RcpaDrugData$drugArgs<ExtArgs>
@@ -33243,10 +33250,12 @@ export namespace Prisma {
     competitorDrugName?: boolean
     ownQuantity?: boolean
     competitorQuantity?: boolean
+    ownPackSize?: boolean
+    competitorPackSize?: boolean
     createdAt?: boolean
   }
 
-  export type RcpaDrugDataOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "rcpaReportId" | "drugId" | "competitorDrugName" | "ownQuantity" | "competitorQuantity" | "createdAt", ExtArgs["result"]["rcpaDrugData"]>
+  export type RcpaDrugDataOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "rcpaReportId" | "drugId" | "competitorDrugName" | "ownQuantity" | "competitorQuantity" | "ownPackSize" | "competitorPackSize" | "createdAt", ExtArgs["result"]["rcpaDrugData"]>
   export type RcpaDrugDataInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     rcpaReport?: boolean | RcpaReportDefaultArgs<ExtArgs>
     drug?: boolean | RcpaDrugData$drugArgs<ExtArgs>
@@ -33273,6 +33282,8 @@ export namespace Prisma {
       competitorDrugName: string | null
       ownQuantity: number
       competitorQuantity: number
+      ownPackSize: string
+      competitorPackSize: string
       createdAt: Date
     }, ExtArgs["result"]["rcpaDrugData"]>
     composites: {}
@@ -33705,6 +33716,8 @@ export namespace Prisma {
     readonly competitorDrugName: FieldRef<"RcpaDrugData", 'String'>
     readonly ownQuantity: FieldRef<"RcpaDrugData", 'Int'>
     readonly competitorQuantity: FieldRef<"RcpaDrugData", 'Int'>
+    readonly ownPackSize: FieldRef<"RcpaDrugData", 'String'>
+    readonly competitorPackSize: FieldRef<"RcpaDrugData", 'String'>
     readonly createdAt: FieldRef<"RcpaDrugData", 'DateTime'>
   }
     
@@ -36686,7 +36699,6 @@ export namespace Prisma {
     employee?: boolean | EmployeeDefaultArgs<ExtArgs>
     doctor?: boolean | DoctorDefaultArgs<ExtArgs>
     doctorInteractions?: boolean | DoctorTask$doctorInteractionsArgs<ExtArgs>
-    dcrReports?: boolean | DoctorTask$dcrReportsArgs<ExtArgs>
     _count?: boolean | DoctorTaskCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["doctorTask"]>
 
@@ -36741,7 +36753,6 @@ export namespace Prisma {
     employee?: boolean | EmployeeDefaultArgs<ExtArgs>
     doctor?: boolean | DoctorDefaultArgs<ExtArgs>
     doctorInteractions?: boolean | DoctorTask$doctorInteractionsArgs<ExtArgs>
-    dcrReports?: boolean | DoctorTask$dcrReportsArgs<ExtArgs>
     _count?: boolean | DoctorTaskCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type DoctorTaskIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -36762,7 +36773,6 @@ export namespace Prisma {
       employee: Prisma.$EmployeePayload<ExtArgs>
       doctor: Prisma.$DoctorPayload<ExtArgs>
       doctorInteractions: Prisma.$DoctorInteractionPayload<ExtArgs>[]
-      dcrReports: Prisma.$DcrReportPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -37173,7 +37183,6 @@ export namespace Prisma {
     employee<T extends EmployeeDefaultArgs<ExtArgs> = {}>(args?: Subset<T, EmployeeDefaultArgs<ExtArgs>>): Prisma__EmployeeClient<$Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     doctor<T extends DoctorDefaultArgs<ExtArgs> = {}>(args?: Subset<T, DoctorDefaultArgs<ExtArgs>>): Prisma__DoctorClient<$Result.GetResult<Prisma.$DoctorPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     doctorInteractions<T extends DoctorTask$doctorInteractionsArgs<ExtArgs> = {}>(args?: Subset<T, DoctorTask$doctorInteractionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DoctorInteractionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    dcrReports<T extends DoctorTask$dcrReportsArgs<ExtArgs> = {}>(args?: Subset<T, DoctorTask$dcrReportsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DcrReportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -37633,30 +37642,6 @@ export namespace Prisma {
   }
 
   /**
-   * DoctorTask.dcrReports
-   */
-  export type DoctorTask$dcrReportsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the DcrReport
-     */
-    select?: DcrReportSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the DcrReport
-     */
-    omit?: DcrReportOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: DcrReportInclude<ExtArgs> | null
-    where?: DcrReportWhereInput
-    orderBy?: DcrReportOrderByWithRelationInput | DcrReportOrderByWithRelationInput[]
-    cursor?: DcrReportWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: DcrReportScalarFieldEnum | DcrReportScalarFieldEnum[]
-  }
-
-  /**
    * DoctorTask without action
    */
   export type DoctorTaskDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -37883,7 +37868,6 @@ export namespace Prisma {
     employee?: boolean | EmployeeDefaultArgs<ExtArgs>
     chemist?: boolean | ChemistDefaultArgs<ExtArgs>
     chemistInteractions?: boolean | ChemistTask$chemistInteractionsArgs<ExtArgs>
-    dcrReports?: boolean | ChemistTask$dcrReportsArgs<ExtArgs>
     _count?: boolean | ChemistTaskCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["chemistTask"]>
 
@@ -37938,7 +37922,6 @@ export namespace Prisma {
     employee?: boolean | EmployeeDefaultArgs<ExtArgs>
     chemist?: boolean | ChemistDefaultArgs<ExtArgs>
     chemistInteractions?: boolean | ChemistTask$chemistInteractionsArgs<ExtArgs>
-    dcrReports?: boolean | ChemistTask$dcrReportsArgs<ExtArgs>
     _count?: boolean | ChemistTaskCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ChemistTaskIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -37959,7 +37942,6 @@ export namespace Prisma {
       employee: Prisma.$EmployeePayload<ExtArgs>
       chemist: Prisma.$ChemistPayload<ExtArgs>
       chemistInteractions: Prisma.$ChemistInteractionPayload<ExtArgs>[]
-      dcrReports: Prisma.$DcrReportPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -38370,7 +38352,6 @@ export namespace Prisma {
     employee<T extends EmployeeDefaultArgs<ExtArgs> = {}>(args?: Subset<T, EmployeeDefaultArgs<ExtArgs>>): Prisma__EmployeeClient<$Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     chemist<T extends ChemistDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ChemistDefaultArgs<ExtArgs>>): Prisma__ChemistClient<$Result.GetResult<Prisma.$ChemistPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     chemistInteractions<T extends ChemistTask$chemistInteractionsArgs<ExtArgs> = {}>(args?: Subset<T, ChemistTask$chemistInteractionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ChemistInteractionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    dcrReports<T extends ChemistTask$dcrReportsArgs<ExtArgs> = {}>(args?: Subset<T, ChemistTask$dcrReportsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DcrReportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -38830,30 +38811,6 @@ export namespace Prisma {
   }
 
   /**
-   * ChemistTask.dcrReports
-   */
-  export type ChemistTask$dcrReportsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the DcrReport
-     */
-    select?: DcrReportSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the DcrReport
-     */
-    omit?: DcrReportOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: DcrReportInclude<ExtArgs> | null
-    where?: DcrReportWhereInput
-    orderBy?: DcrReportOrderByWithRelationInput | DcrReportOrderByWithRelationInput[]
-    cursor?: DcrReportWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: DcrReportScalarFieldEnum | DcrReportScalarFieldEnum[]
-  }
-
-  /**
    * ChemistTask without action
    */
   export type ChemistTaskDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -39088,7 +39045,6 @@ export namespace Prisma {
     employee?: boolean | EmployeeDefaultArgs<ExtArgs>
     tourPlan?: boolean | TourPlanDefaultArgs<ExtArgs>
     tourPlanReports?: boolean | TourPlanTask$tourPlanReportsArgs<ExtArgs>
-    dcrReports?: boolean | TourPlanTask$dcrReportsArgs<ExtArgs>
     _count?: boolean | TourPlanTaskCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["tourPlanTask"]>
 
@@ -39146,7 +39102,6 @@ export namespace Prisma {
     employee?: boolean | EmployeeDefaultArgs<ExtArgs>
     tourPlan?: boolean | TourPlanDefaultArgs<ExtArgs>
     tourPlanReports?: boolean | TourPlanTask$tourPlanReportsArgs<ExtArgs>
-    dcrReports?: boolean | TourPlanTask$dcrReportsArgs<ExtArgs>
     _count?: boolean | TourPlanTaskCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type TourPlanTaskIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -39167,7 +39122,6 @@ export namespace Prisma {
       employee: Prisma.$EmployeePayload<ExtArgs>
       tourPlan: Prisma.$TourPlanPayload<ExtArgs>
       tourPlanReports: Prisma.$TourPlanReportPayload<ExtArgs>[]
-      dcrReports: Prisma.$DcrReportPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -39579,7 +39533,6 @@ export namespace Prisma {
     employee<T extends EmployeeDefaultArgs<ExtArgs> = {}>(args?: Subset<T, EmployeeDefaultArgs<ExtArgs>>): Prisma__EmployeeClient<$Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     tourPlan<T extends TourPlanDefaultArgs<ExtArgs> = {}>(args?: Subset<T, TourPlanDefaultArgs<ExtArgs>>): Prisma__TourPlanClient<$Result.GetResult<Prisma.$TourPlanPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     tourPlanReports<T extends TourPlanTask$tourPlanReportsArgs<ExtArgs> = {}>(args?: Subset<T, TourPlanTask$tourPlanReportsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TourPlanReportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    dcrReports<T extends TourPlanTask$dcrReportsArgs<ExtArgs> = {}>(args?: Subset<T, TourPlanTask$dcrReportsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DcrReportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -40037,30 +39990,6 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: TourPlanReportScalarFieldEnum | TourPlanReportScalarFieldEnum[]
-  }
-
-  /**
-   * TourPlanTask.dcrReports
-   */
-  export type TourPlanTask$dcrReportsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the DcrReport
-     */
-    select?: DcrReportSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the DcrReport
-     */
-    omit?: DcrReportOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: DcrReportInclude<ExtArgs> | null
-    where?: DcrReportWhereInput
-    orderBy?: DcrReportOrderByWithRelationInput | DcrReportOrderByWithRelationInput[]
-    cursor?: DcrReportWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: DcrReportScalarFieldEnum | DcrReportScalarFieldEnum[]
   }
 
   /**
@@ -54226,6 +54155,10 @@ export namespace Prisma {
     organizationId: 'organizationId',
     employeeId: 'employeeId',
     chemistId: 'chemistId',
+    reportingPeriod: 'reportingPeriod',
+    startDate: 'startDate',
+    endDate: 'endDate',
+    totalPrescription: 'totalPrescription',
     remarks: 'remarks',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
@@ -54241,6 +54174,8 @@ export namespace Prisma {
     competitorDrugName: 'competitorDrugName',
     ownQuantity: 'ownQuantity',
     competitorQuantity: 'competitorQuantity',
+    ownPackSize: 'ownPackSize',
+    competitorPackSize: 'competitorPackSize',
     createdAt: 'createdAt'
   };
 
@@ -54724,6 +54659,20 @@ export namespace Prisma {
    * Reference to a field of type 'TaskTypeReference[]'
    */
   export type ListEnumTaskTypeReferenceFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TaskTypeReference[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'ReportingPeriod'
+   */
+  export type EnumReportingPeriodFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ReportingPeriod'>
+    
+
+
+  /**
+   * Reference to a field of type 'ReportingPeriod[]'
+   */
+  export type ListEnumReportingPeriodFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ReportingPeriod[]'>
     
 
 
@@ -56735,9 +56684,6 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"DcrReport"> | Date | string
     updatedAt?: DateTimeFilter<"DcrReport"> | Date | string
     employee?: XOR<EmployeeScalarRelationFilter, EmployeeWhereInput>
-    doctorTask?: XOR<DoctorTaskNullableScalarRelationFilter, DoctorTaskWhereInput> | null
-    chemistTask?: XOR<ChemistTaskNullableScalarRelationFilter, ChemistTaskWhereInput> | null
-    tourPlanTask?: XOR<TourPlanTaskNullableScalarRelationFilter, TourPlanTaskWhereInput> | null
   }
 
   export type DcrReportOrderByWithRelationInput = {
@@ -56753,9 +56699,6 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     employee?: EmployeeOrderByWithRelationInput
-    doctorTask?: DoctorTaskOrderByWithRelationInput
-    chemistTask?: ChemistTaskOrderByWithRelationInput
-    tourPlanTask?: TourPlanTaskOrderByWithRelationInput
   }
 
   export type DcrReportWhereUniqueInput = Prisma.AtLeast<{
@@ -56774,9 +56717,6 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"DcrReport"> | Date | string
     updatedAt?: DateTimeFilter<"DcrReport"> | Date | string
     employee?: XOR<EmployeeScalarRelationFilter, EmployeeWhereInput>
-    doctorTask?: XOR<DoctorTaskNullableScalarRelationFilter, DoctorTaskWhereInput> | null
-    chemistTask?: XOR<ChemistTaskNullableScalarRelationFilter, ChemistTaskWhereInput> | null
-    tourPlanTask?: XOR<TourPlanTaskNullableScalarRelationFilter, TourPlanTaskWhereInput> | null
   }, "id">
 
   export type DcrReportOrderByWithAggregationInput = {
@@ -56821,6 +56761,10 @@ export namespace Prisma {
     organizationId?: StringFilter<"RcpaReport"> | string
     employeeId?: StringFilter<"RcpaReport"> | string
     chemistId?: StringFilter<"RcpaReport"> | string
+    reportingPeriod?: EnumReportingPeriodFilter<"RcpaReport"> | $Enums.ReportingPeriod
+    startDate?: DateTimeFilter<"RcpaReport"> | Date | string
+    endDate?: DateTimeFilter<"RcpaReport"> | Date | string
+    totalPrescription?: IntNullableFilter<"RcpaReport"> | number | null
     remarks?: StringNullableFilter<"RcpaReport"> | string | null
     createdAt?: DateTimeFilter<"RcpaReport"> | Date | string
     updatedAt?: DateTimeFilter<"RcpaReport"> | Date | string
@@ -56834,6 +56778,10 @@ export namespace Prisma {
     organizationId?: SortOrder
     employeeId?: SortOrder
     chemistId?: SortOrder
+    reportingPeriod?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    totalPrescription?: SortOrderInput | SortOrder
     remarks?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -56850,6 +56798,10 @@ export namespace Prisma {
     organizationId?: StringFilter<"RcpaReport"> | string
     employeeId?: StringFilter<"RcpaReport"> | string
     chemistId?: StringFilter<"RcpaReport"> | string
+    reportingPeriod?: EnumReportingPeriodFilter<"RcpaReport"> | $Enums.ReportingPeriod
+    startDate?: DateTimeFilter<"RcpaReport"> | Date | string
+    endDate?: DateTimeFilter<"RcpaReport"> | Date | string
+    totalPrescription?: IntNullableFilter<"RcpaReport"> | number | null
     remarks?: StringNullableFilter<"RcpaReport"> | string | null
     createdAt?: DateTimeFilter<"RcpaReport"> | Date | string
     updatedAt?: DateTimeFilter<"RcpaReport"> | Date | string
@@ -56863,12 +56815,18 @@ export namespace Prisma {
     organizationId?: SortOrder
     employeeId?: SortOrder
     chemistId?: SortOrder
+    reportingPeriod?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    totalPrescription?: SortOrderInput | SortOrder
     remarks?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: RcpaReportCountOrderByAggregateInput
+    _avg?: RcpaReportAvgOrderByAggregateInput
     _max?: RcpaReportMaxOrderByAggregateInput
     _min?: RcpaReportMinOrderByAggregateInput
+    _sum?: RcpaReportSumOrderByAggregateInput
   }
 
   export type RcpaReportScalarWhereWithAggregatesInput = {
@@ -56879,6 +56837,10 @@ export namespace Prisma {
     organizationId?: StringWithAggregatesFilter<"RcpaReport"> | string
     employeeId?: StringWithAggregatesFilter<"RcpaReport"> | string
     chemistId?: StringWithAggregatesFilter<"RcpaReport"> | string
+    reportingPeriod?: EnumReportingPeriodWithAggregatesFilter<"RcpaReport"> | $Enums.ReportingPeriod
+    startDate?: DateTimeWithAggregatesFilter<"RcpaReport"> | Date | string
+    endDate?: DateTimeWithAggregatesFilter<"RcpaReport"> | Date | string
+    totalPrescription?: IntNullableWithAggregatesFilter<"RcpaReport"> | number | null
     remarks?: StringNullableWithAggregatesFilter<"RcpaReport"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"RcpaReport"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"RcpaReport"> | Date | string
@@ -56894,6 +56856,8 @@ export namespace Prisma {
     competitorDrugName?: StringNullableFilter<"RcpaDrugData"> | string | null
     ownQuantity?: IntFilter<"RcpaDrugData"> | number
     competitorQuantity?: IntFilter<"RcpaDrugData"> | number
+    ownPackSize?: StringFilter<"RcpaDrugData"> | string
+    competitorPackSize?: StringFilter<"RcpaDrugData"> | string
     createdAt?: DateTimeFilter<"RcpaDrugData"> | Date | string
     rcpaReport?: XOR<RcpaReportScalarRelationFilter, RcpaReportWhereInput>
     drug?: XOR<DrugNullableScalarRelationFilter, DrugWhereInput> | null
@@ -56906,6 +56870,8 @@ export namespace Prisma {
     competitorDrugName?: SortOrderInput | SortOrder
     ownQuantity?: SortOrder
     competitorQuantity?: SortOrder
+    ownPackSize?: SortOrder
+    competitorPackSize?: SortOrder
     createdAt?: SortOrder
     rcpaReport?: RcpaReportOrderByWithRelationInput
     drug?: DrugOrderByWithRelationInput
@@ -56921,6 +56887,8 @@ export namespace Prisma {
     competitorDrugName?: StringNullableFilter<"RcpaDrugData"> | string | null
     ownQuantity?: IntFilter<"RcpaDrugData"> | number
     competitorQuantity?: IntFilter<"RcpaDrugData"> | number
+    ownPackSize?: StringFilter<"RcpaDrugData"> | string
+    competitorPackSize?: StringFilter<"RcpaDrugData"> | string
     createdAt?: DateTimeFilter<"RcpaDrugData"> | Date | string
     rcpaReport?: XOR<RcpaReportScalarRelationFilter, RcpaReportWhereInput>
     drug?: XOR<DrugNullableScalarRelationFilter, DrugWhereInput> | null
@@ -56933,6 +56901,8 @@ export namespace Prisma {
     competitorDrugName?: SortOrderInput | SortOrder
     ownQuantity?: SortOrder
     competitorQuantity?: SortOrder
+    ownPackSize?: SortOrder
+    competitorPackSize?: SortOrder
     createdAt?: SortOrder
     _count?: RcpaDrugDataCountOrderByAggregateInput
     _avg?: RcpaDrugDataAvgOrderByAggregateInput
@@ -56951,6 +56921,8 @@ export namespace Prisma {
     competitorDrugName?: StringNullableWithAggregatesFilter<"RcpaDrugData"> | string | null
     ownQuantity?: IntWithAggregatesFilter<"RcpaDrugData"> | number
     competitorQuantity?: IntWithAggregatesFilter<"RcpaDrugData"> | number
+    ownPackSize?: StringWithAggregatesFilter<"RcpaDrugData"> | string
+    competitorPackSize?: StringWithAggregatesFilter<"RcpaDrugData"> | string
     createdAt?: DateTimeWithAggregatesFilter<"RcpaDrugData"> | Date | string
   }
 
@@ -57128,7 +57100,6 @@ export namespace Prisma {
     employee?: XOR<EmployeeScalarRelationFilter, EmployeeWhereInput>
     doctor?: XOR<DoctorScalarRelationFilter, DoctorWhereInput>
     doctorInteractions?: DoctorInteractionListRelationFilter
-    dcrReports?: DcrReportListRelationFilter
   }
 
   export type DoctorTaskOrderByWithRelationInput = {
@@ -57146,7 +57117,6 @@ export namespace Prisma {
     employee?: EmployeeOrderByWithRelationInput
     doctor?: DoctorOrderByWithRelationInput
     doctorInteractions?: DoctorInteractionOrderByRelationAggregateInput
-    dcrReports?: DcrReportOrderByRelationAggregateInput
   }
 
   export type DoctorTaskWhereUniqueInput = Prisma.AtLeast<{
@@ -57167,7 +57137,6 @@ export namespace Prisma {
     employee?: XOR<EmployeeScalarRelationFilter, EmployeeWhereInput>
     doctor?: XOR<DoctorScalarRelationFilter, DoctorWhereInput>
     doctorInteractions?: DoctorInteractionListRelationFilter
-    dcrReports?: DcrReportListRelationFilter
   }, "id">
 
   export type DoctorTaskOrderByWithAggregationInput = {
@@ -57220,7 +57189,6 @@ export namespace Prisma {
     employee?: XOR<EmployeeScalarRelationFilter, EmployeeWhereInput>
     chemist?: XOR<ChemistScalarRelationFilter, ChemistWhereInput>
     chemistInteractions?: ChemistInteractionListRelationFilter
-    dcrReports?: DcrReportListRelationFilter
   }
 
   export type ChemistTaskOrderByWithRelationInput = {
@@ -57238,7 +57206,6 @@ export namespace Prisma {
     employee?: EmployeeOrderByWithRelationInput
     chemist?: ChemistOrderByWithRelationInput
     chemistInteractions?: ChemistInteractionOrderByRelationAggregateInput
-    dcrReports?: DcrReportOrderByRelationAggregateInput
   }
 
   export type ChemistTaskWhereUniqueInput = Prisma.AtLeast<{
@@ -57259,7 +57226,6 @@ export namespace Prisma {
     employee?: XOR<EmployeeScalarRelationFilter, EmployeeWhereInput>
     chemist?: XOR<ChemistScalarRelationFilter, ChemistWhereInput>
     chemistInteractions?: ChemistInteractionListRelationFilter
-    dcrReports?: DcrReportListRelationFilter
   }, "id">
 
   export type ChemistTaskOrderByWithAggregationInput = {
@@ -57313,7 +57279,6 @@ export namespace Prisma {
     employee?: XOR<EmployeeScalarRelationFilter, EmployeeWhereInput>
     tourPlan?: XOR<TourPlanScalarRelationFilter, TourPlanWhereInput>
     tourPlanReports?: TourPlanReportListRelationFilter
-    dcrReports?: DcrReportListRelationFilter
   }
 
   export type TourPlanTaskOrderByWithRelationInput = {
@@ -57332,7 +57297,6 @@ export namespace Prisma {
     employee?: EmployeeOrderByWithRelationInput
     tourPlan?: TourPlanOrderByWithRelationInput
     tourPlanReports?: TourPlanReportOrderByRelationAggregateInput
-    dcrReports?: DcrReportOrderByRelationAggregateInput
   }
 
   export type TourPlanTaskWhereUniqueInput = Prisma.AtLeast<{
@@ -57354,7 +57318,6 @@ export namespace Prisma {
     employee?: XOR<EmployeeScalarRelationFilter, EmployeeWhereInput>
     tourPlan?: XOR<TourPlanScalarRelationFilter, TourPlanWhereInput>
     tourPlanReports?: TourPlanReportListRelationFilter
-    dcrReports?: DcrReportListRelationFilter
   }, "id">
 
   export type TourPlanTaskOrderByWithAggregationInput = {
@@ -60473,6 +60436,7 @@ export namespace Prisma {
   export type DcrReportCreateInput = {
     id?: string
     organizationId: string
+    taskId?: string | null
     taskType?: $Enums.TaskTypeReference | null
     reportDate: Date | string
     productsDiscussed?: string | null
@@ -60481,9 +60445,6 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     employee: EmployeeCreateNestedOneWithoutDcrReportsInput
-    doctorTask?: DoctorTaskCreateNestedOneWithoutDcrReportsInput
-    chemistTask?: ChemistTaskCreateNestedOneWithoutDcrReportsInput
-    tourPlanTask?: TourPlanTaskCreateNestedOneWithoutDcrReportsInput
   }
 
   export type DcrReportUncheckedCreateInput = {
@@ -60503,6 +60464,7 @@ export namespace Prisma {
   export type DcrReportUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     organizationId?: StringFieldUpdateOperationsInput | string
+    taskId?: NullableStringFieldUpdateOperationsInput | string | null
     taskType?: NullableEnumTaskTypeReferenceFieldUpdateOperationsInput | $Enums.TaskTypeReference | null
     reportDate?: DateTimeFieldUpdateOperationsInput | Date | string
     productsDiscussed?: NullableStringFieldUpdateOperationsInput | string | null
@@ -60511,9 +60473,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     employee?: EmployeeUpdateOneRequiredWithoutDcrReportsNestedInput
-    doctorTask?: DoctorTaskUpdateOneWithoutDcrReportsNestedInput
-    chemistTask?: ChemistTaskUpdateOneWithoutDcrReportsNestedInput
-    tourPlanTask?: TourPlanTaskUpdateOneWithoutDcrReportsNestedInput
   }
 
   export type DcrReportUncheckedUpdateInput = {
@@ -60547,6 +60506,7 @@ export namespace Prisma {
   export type DcrReportUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     organizationId?: StringFieldUpdateOperationsInput | string
+    taskId?: NullableStringFieldUpdateOperationsInput | string | null
     taskType?: NullableEnumTaskTypeReferenceFieldUpdateOperationsInput | $Enums.TaskTypeReference | null
     reportDate?: DateTimeFieldUpdateOperationsInput | Date | string
     productsDiscussed?: NullableStringFieldUpdateOperationsInput | string | null
@@ -60573,6 +60533,10 @@ export namespace Prisma {
   export type RcpaReportCreateInput = {
     id?: string
     organizationId: string
+    reportingPeriod: $Enums.ReportingPeriod
+    startDate: Date | string
+    endDate: Date | string
+    totalPrescription?: number | null
     remarks?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -60586,6 +60550,10 @@ export namespace Prisma {
     organizationId: string
     employeeId: string
     chemistId: string
+    reportingPeriod: $Enums.ReportingPeriod
+    startDate: Date | string
+    endDate: Date | string
+    totalPrescription?: number | null
     remarks?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -60595,6 +60563,10 @@ export namespace Prisma {
   export type RcpaReportUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     organizationId?: StringFieldUpdateOperationsInput | string
+    reportingPeriod?: EnumReportingPeriodFieldUpdateOperationsInput | $Enums.ReportingPeriod
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    totalPrescription?: NullableIntFieldUpdateOperationsInput | number | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -60608,6 +60580,10 @@ export namespace Prisma {
     organizationId?: StringFieldUpdateOperationsInput | string
     employeeId?: StringFieldUpdateOperationsInput | string
     chemistId?: StringFieldUpdateOperationsInput | string
+    reportingPeriod?: EnumReportingPeriodFieldUpdateOperationsInput | $Enums.ReportingPeriod
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    totalPrescription?: NullableIntFieldUpdateOperationsInput | number | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -60619,6 +60595,10 @@ export namespace Prisma {
     organizationId: string
     employeeId: string
     chemistId: string
+    reportingPeriod: $Enums.ReportingPeriod
+    startDate: Date | string
+    endDate: Date | string
+    totalPrescription?: number | null
     remarks?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -60627,6 +60607,10 @@ export namespace Prisma {
   export type RcpaReportUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     organizationId?: StringFieldUpdateOperationsInput | string
+    reportingPeriod?: EnumReportingPeriodFieldUpdateOperationsInput | $Enums.ReportingPeriod
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    totalPrescription?: NullableIntFieldUpdateOperationsInput | number | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -60637,6 +60621,10 @@ export namespace Prisma {
     organizationId?: StringFieldUpdateOperationsInput | string
     employeeId?: StringFieldUpdateOperationsInput | string
     chemistId?: StringFieldUpdateOperationsInput | string
+    reportingPeriod?: EnumReportingPeriodFieldUpdateOperationsInput | $Enums.ReportingPeriod
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    totalPrescription?: NullableIntFieldUpdateOperationsInput | number | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -60647,6 +60635,8 @@ export namespace Prisma {
     competitorDrugName?: string | null
     ownQuantity: number
     competitorQuantity: number
+    ownPackSize: string
+    competitorPackSize: string
     createdAt?: Date | string
     rcpaReport: RcpaReportCreateNestedOneWithoutDrugDataInput
     drug?: DrugCreateNestedOneWithoutRcpaDataInput
@@ -60659,6 +60649,8 @@ export namespace Prisma {
     competitorDrugName?: string | null
     ownQuantity: number
     competitorQuantity: number
+    ownPackSize: string
+    competitorPackSize: string
     createdAt?: Date | string
   }
 
@@ -60667,6 +60659,8 @@ export namespace Prisma {
     competitorDrugName?: NullableStringFieldUpdateOperationsInput | string | null
     ownQuantity?: IntFieldUpdateOperationsInput | number
     competitorQuantity?: IntFieldUpdateOperationsInput | number
+    ownPackSize?: StringFieldUpdateOperationsInput | string
+    competitorPackSize?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     rcpaReport?: RcpaReportUpdateOneRequiredWithoutDrugDataNestedInput
     drug?: DrugUpdateOneWithoutRcpaDataNestedInput
@@ -60679,6 +60673,8 @@ export namespace Prisma {
     competitorDrugName?: NullableStringFieldUpdateOperationsInput | string | null
     ownQuantity?: IntFieldUpdateOperationsInput | number
     competitorQuantity?: IntFieldUpdateOperationsInput | number
+    ownPackSize?: StringFieldUpdateOperationsInput | string
+    competitorPackSize?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -60689,6 +60685,8 @@ export namespace Prisma {
     competitorDrugName?: string | null
     ownQuantity: number
     competitorQuantity: number
+    ownPackSize: string
+    competitorPackSize: string
     createdAt?: Date | string
   }
 
@@ -60697,6 +60695,8 @@ export namespace Prisma {
     competitorDrugName?: NullableStringFieldUpdateOperationsInput | string | null
     ownQuantity?: IntFieldUpdateOperationsInput | number
     competitorQuantity?: IntFieldUpdateOperationsInput | number
+    ownPackSize?: StringFieldUpdateOperationsInput | string
+    competitorPackSize?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -60707,6 +60707,8 @@ export namespace Prisma {
     competitorDrugName?: NullableStringFieldUpdateOperationsInput | string | null
     ownQuantity?: IntFieldUpdateOperationsInput | number
     competitorQuantity?: IntFieldUpdateOperationsInput | number
+    ownPackSize?: StringFieldUpdateOperationsInput | string
+    competitorPackSize?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -60893,7 +60895,6 @@ export namespace Prisma {
     employee: EmployeeCreateNestedOneWithoutDoctorTasksInput
     doctor: DoctorCreateNestedOneWithoutDoctorTaskInput
     doctorInteractions?: DoctorInteractionCreateNestedManyWithoutDoctorTaskInput
-    dcrReports?: DcrReportCreateNestedManyWithoutDoctorTaskInput
   }
 
   export type DoctorTaskUncheckedCreateInput = {
@@ -60908,7 +60909,6 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     doctorInteractions?: DoctorInteractionUncheckedCreateNestedManyWithoutDoctorTaskInput
-    dcrReports?: DcrReportUncheckedCreateNestedManyWithoutDoctorTaskInput
   }
 
   export type DoctorTaskUpdateInput = {
@@ -60923,7 +60923,6 @@ export namespace Prisma {
     employee?: EmployeeUpdateOneRequiredWithoutDoctorTasksNestedInput
     doctor?: DoctorUpdateOneRequiredWithoutDoctorTaskNestedInput
     doctorInteractions?: DoctorInteractionUpdateManyWithoutDoctorTaskNestedInput
-    dcrReports?: DcrReportUpdateManyWithoutDoctorTaskNestedInput
   }
 
   export type DoctorTaskUncheckedUpdateInput = {
@@ -60938,7 +60937,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     doctorInteractions?: DoctorInteractionUncheckedUpdateManyWithoutDoctorTaskNestedInput
-    dcrReports?: DcrReportUncheckedUpdateManyWithoutDoctorTaskNestedInput
   }
 
   export type DoctorTaskCreateManyInput = {
@@ -60989,7 +60987,6 @@ export namespace Prisma {
     employee: EmployeeCreateNestedOneWithoutChemistTasksInput
     chemist: ChemistCreateNestedOneWithoutChemistTasksInput
     chemistInteractions?: ChemistInteractionCreateNestedManyWithoutChemistTaskInput
-    dcrReports?: DcrReportCreateNestedManyWithoutChemistTaskInput
   }
 
   export type ChemistTaskUncheckedCreateInput = {
@@ -61004,7 +61001,6 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     chemistInteractions?: ChemistInteractionUncheckedCreateNestedManyWithoutChemistTaskInput
-    dcrReports?: DcrReportUncheckedCreateNestedManyWithoutChemistTaskInput
   }
 
   export type ChemistTaskUpdateInput = {
@@ -61019,7 +61015,6 @@ export namespace Prisma {
     employee?: EmployeeUpdateOneRequiredWithoutChemistTasksNestedInput
     chemist?: ChemistUpdateOneRequiredWithoutChemistTasksNestedInput
     chemistInteractions?: ChemistInteractionUpdateManyWithoutChemistTaskNestedInput
-    dcrReports?: DcrReportUpdateManyWithoutChemistTaskNestedInput
   }
 
   export type ChemistTaskUncheckedUpdateInput = {
@@ -61034,7 +61029,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     chemistInteractions?: ChemistInteractionUncheckedUpdateManyWithoutChemistTaskNestedInput
-    dcrReports?: DcrReportUncheckedUpdateManyWithoutChemistTaskNestedInput
   }
 
   export type ChemistTaskCreateManyInput = {
@@ -61086,7 +61080,6 @@ export namespace Prisma {
     employee: EmployeeCreateNestedOneWithoutTourPlanTasksInput
     tourPlan: TourPlanCreateNestedOneWithoutTourTasksInput
     tourPlanReports?: TourPlanReportCreateNestedManyWithoutTourTaskInput
-    dcrReports?: DcrReportCreateNestedManyWithoutTourPlanTaskInput
   }
 
   export type TourPlanTaskUncheckedCreateInput = {
@@ -61102,7 +61095,6 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     tourPlanReports?: TourPlanReportUncheckedCreateNestedManyWithoutTourTaskInput
-    dcrReports?: DcrReportUncheckedCreateNestedManyWithoutTourPlanTaskInput
   }
 
   export type TourPlanTaskUpdateInput = {
@@ -61118,7 +61110,6 @@ export namespace Prisma {
     employee?: EmployeeUpdateOneRequiredWithoutTourPlanTasksNestedInput
     tourPlan?: TourPlanUpdateOneRequiredWithoutTourTasksNestedInput
     tourPlanReports?: TourPlanReportUpdateManyWithoutTourTaskNestedInput
-    dcrReports?: DcrReportUpdateManyWithoutTourPlanTaskNestedInput
   }
 
   export type TourPlanTaskUncheckedUpdateInput = {
@@ -61134,7 +61125,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tourPlanReports?: TourPlanReportUncheckedUpdateManyWithoutTourTaskNestedInput
-    dcrReports?: DcrReportUncheckedUpdateManyWithoutTourPlanTaskNestedInput
   }
 
   export type TourPlanTaskCreateManyInput = {
@@ -63886,11 +63876,6 @@ export namespace Prisma {
     not?: NestedEnumTaskTypeReferenceNullableFilter<$PrismaModel> | $Enums.TaskTypeReference | null
   }
 
-  export type TourPlanTaskNullableScalarRelationFilter = {
-    is?: TourPlanTaskWhereInput | null
-    isNot?: TourPlanTaskWhereInput | null
-  }
-
   export type DcrReportCountOrderByAggregateInput = {
     id?: SortOrder
     organizationId?: SortOrder
@@ -63943,14 +63928,29 @@ export namespace Prisma {
     _max?: NestedEnumTaskTypeReferenceNullableFilter<$PrismaModel>
   }
 
+  export type EnumReportingPeriodFilter<$PrismaModel = never> = {
+    equals?: $Enums.ReportingPeriod | EnumReportingPeriodFieldRefInput<$PrismaModel>
+    in?: $Enums.ReportingPeriod[] | ListEnumReportingPeriodFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ReportingPeriod[] | ListEnumReportingPeriodFieldRefInput<$PrismaModel>
+    not?: NestedEnumReportingPeriodFilter<$PrismaModel> | $Enums.ReportingPeriod
+  }
+
   export type RcpaReportCountOrderByAggregateInput = {
     id?: SortOrder
     organizationId?: SortOrder
     employeeId?: SortOrder
     chemistId?: SortOrder
+    reportingPeriod?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    totalPrescription?: SortOrder
     remarks?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+  }
+
+  export type RcpaReportAvgOrderByAggregateInput = {
+    totalPrescription?: SortOrder
   }
 
   export type RcpaReportMaxOrderByAggregateInput = {
@@ -63958,6 +63958,10 @@ export namespace Prisma {
     organizationId?: SortOrder
     employeeId?: SortOrder
     chemistId?: SortOrder
+    reportingPeriod?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    totalPrescription?: SortOrder
     remarks?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -63968,9 +63972,27 @@ export namespace Prisma {
     organizationId?: SortOrder
     employeeId?: SortOrder
     chemistId?: SortOrder
+    reportingPeriod?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    totalPrescription?: SortOrder
     remarks?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+  }
+
+  export type RcpaReportSumOrderByAggregateInput = {
+    totalPrescription?: SortOrder
+  }
+
+  export type EnumReportingPeriodWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ReportingPeriod | EnumReportingPeriodFieldRefInput<$PrismaModel>
+    in?: $Enums.ReportingPeriod[] | ListEnumReportingPeriodFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ReportingPeriod[] | ListEnumReportingPeriodFieldRefInput<$PrismaModel>
+    not?: NestedEnumReportingPeriodWithAggregatesFilter<$PrismaModel> | $Enums.ReportingPeriod
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumReportingPeriodFilter<$PrismaModel>
+    _max?: NestedEnumReportingPeriodFilter<$PrismaModel>
   }
 
   export type RcpaReportScalarRelationFilter = {
@@ -63990,6 +64012,8 @@ export namespace Prisma {
     competitorDrugName?: SortOrder
     ownQuantity?: SortOrder
     competitorQuantity?: SortOrder
+    ownPackSize?: SortOrder
+    competitorPackSize?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -64005,6 +64029,8 @@ export namespace Prisma {
     competitorDrugName?: SortOrder
     ownQuantity?: SortOrder
     competitorQuantity?: SortOrder
+    ownPackSize?: SortOrder
+    competitorPackSize?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -64015,6 +64041,8 @@ export namespace Prisma {
     competitorDrugName?: SortOrder
     ownQuantity?: SortOrder
     competitorQuantity?: SortOrder
+    ownPackSize?: SortOrder
+    competitorPackSize?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -67759,24 +67787,6 @@ export namespace Prisma {
     connect?: EmployeeWhereUniqueInput
   }
 
-  export type DoctorTaskCreateNestedOneWithoutDcrReportsInput = {
-    create?: XOR<DoctorTaskCreateWithoutDcrReportsInput, DoctorTaskUncheckedCreateWithoutDcrReportsInput>
-    connectOrCreate?: DoctorTaskCreateOrConnectWithoutDcrReportsInput
-    connect?: DoctorTaskWhereUniqueInput
-  }
-
-  export type ChemistTaskCreateNestedOneWithoutDcrReportsInput = {
-    create?: XOR<ChemistTaskCreateWithoutDcrReportsInput, ChemistTaskUncheckedCreateWithoutDcrReportsInput>
-    connectOrCreate?: ChemistTaskCreateOrConnectWithoutDcrReportsInput
-    connect?: ChemistTaskWhereUniqueInput
-  }
-
-  export type TourPlanTaskCreateNestedOneWithoutDcrReportsInput = {
-    create?: XOR<TourPlanTaskCreateWithoutDcrReportsInput, TourPlanTaskUncheckedCreateWithoutDcrReportsInput>
-    connectOrCreate?: TourPlanTaskCreateOrConnectWithoutDcrReportsInput
-    connect?: TourPlanTaskWhereUniqueInput
-  }
-
   export type NullableEnumTaskTypeReferenceFieldUpdateOperationsInput = {
     set?: $Enums.TaskTypeReference | null
   }
@@ -67787,36 +67797,6 @@ export namespace Prisma {
     upsert?: EmployeeUpsertWithoutDcrReportsInput
     connect?: EmployeeWhereUniqueInput
     update?: XOR<XOR<EmployeeUpdateToOneWithWhereWithoutDcrReportsInput, EmployeeUpdateWithoutDcrReportsInput>, EmployeeUncheckedUpdateWithoutDcrReportsInput>
-  }
-
-  export type DoctorTaskUpdateOneWithoutDcrReportsNestedInput = {
-    create?: XOR<DoctorTaskCreateWithoutDcrReportsInput, DoctorTaskUncheckedCreateWithoutDcrReportsInput>
-    connectOrCreate?: DoctorTaskCreateOrConnectWithoutDcrReportsInput
-    upsert?: DoctorTaskUpsertWithoutDcrReportsInput
-    disconnect?: DoctorTaskWhereInput | boolean
-    delete?: DoctorTaskWhereInput | boolean
-    connect?: DoctorTaskWhereUniqueInput
-    update?: XOR<XOR<DoctorTaskUpdateToOneWithWhereWithoutDcrReportsInput, DoctorTaskUpdateWithoutDcrReportsInput>, DoctorTaskUncheckedUpdateWithoutDcrReportsInput>
-  }
-
-  export type ChemistTaskUpdateOneWithoutDcrReportsNestedInput = {
-    create?: XOR<ChemistTaskCreateWithoutDcrReportsInput, ChemistTaskUncheckedCreateWithoutDcrReportsInput>
-    connectOrCreate?: ChemistTaskCreateOrConnectWithoutDcrReportsInput
-    upsert?: ChemistTaskUpsertWithoutDcrReportsInput
-    disconnect?: ChemistTaskWhereInput | boolean
-    delete?: ChemistTaskWhereInput | boolean
-    connect?: ChemistTaskWhereUniqueInput
-    update?: XOR<XOR<ChemistTaskUpdateToOneWithWhereWithoutDcrReportsInput, ChemistTaskUpdateWithoutDcrReportsInput>, ChemistTaskUncheckedUpdateWithoutDcrReportsInput>
-  }
-
-  export type TourPlanTaskUpdateOneWithoutDcrReportsNestedInput = {
-    create?: XOR<TourPlanTaskCreateWithoutDcrReportsInput, TourPlanTaskUncheckedCreateWithoutDcrReportsInput>
-    connectOrCreate?: TourPlanTaskCreateOrConnectWithoutDcrReportsInput
-    upsert?: TourPlanTaskUpsertWithoutDcrReportsInput
-    disconnect?: TourPlanTaskWhereInput | boolean
-    delete?: TourPlanTaskWhereInput | boolean
-    connect?: TourPlanTaskWhereUniqueInput
-    update?: XOR<XOR<TourPlanTaskUpdateToOneWithWhereWithoutDcrReportsInput, TourPlanTaskUpdateWithoutDcrReportsInput>, TourPlanTaskUncheckedUpdateWithoutDcrReportsInput>
   }
 
   export type EmployeeCreateNestedOneWithoutRcpaReportsInput = {
@@ -67843,6 +67823,10 @@ export namespace Prisma {
     connectOrCreate?: RcpaDrugDataCreateOrConnectWithoutRcpaReportInput | RcpaDrugDataCreateOrConnectWithoutRcpaReportInput[]
     createMany?: RcpaDrugDataCreateManyRcpaReportInputEnvelope
     connect?: RcpaDrugDataWhereUniqueInput | RcpaDrugDataWhereUniqueInput[]
+  }
+
+  export type EnumReportingPeriodFieldUpdateOperationsInput = {
+    set?: $Enums.ReportingPeriod
   }
 
   export type EmployeeUpdateOneRequiredWithoutRcpaReportsNestedInput = {
@@ -68102,25 +68086,11 @@ export namespace Prisma {
     connect?: DoctorInteractionWhereUniqueInput | DoctorInteractionWhereUniqueInput[]
   }
 
-  export type DcrReportCreateNestedManyWithoutDoctorTaskInput = {
-    create?: XOR<DcrReportCreateWithoutDoctorTaskInput, DcrReportUncheckedCreateWithoutDoctorTaskInput> | DcrReportCreateWithoutDoctorTaskInput[] | DcrReportUncheckedCreateWithoutDoctorTaskInput[]
-    connectOrCreate?: DcrReportCreateOrConnectWithoutDoctorTaskInput | DcrReportCreateOrConnectWithoutDoctorTaskInput[]
-    createMany?: DcrReportCreateManyDoctorTaskInputEnvelope
-    connect?: DcrReportWhereUniqueInput | DcrReportWhereUniqueInput[]
-  }
-
   export type DoctorInteractionUncheckedCreateNestedManyWithoutDoctorTaskInput = {
     create?: XOR<DoctorInteractionCreateWithoutDoctorTaskInput, DoctorInteractionUncheckedCreateWithoutDoctorTaskInput> | DoctorInteractionCreateWithoutDoctorTaskInput[] | DoctorInteractionUncheckedCreateWithoutDoctorTaskInput[]
     connectOrCreate?: DoctorInteractionCreateOrConnectWithoutDoctorTaskInput | DoctorInteractionCreateOrConnectWithoutDoctorTaskInput[]
     createMany?: DoctorInteractionCreateManyDoctorTaskInputEnvelope
     connect?: DoctorInteractionWhereUniqueInput | DoctorInteractionWhereUniqueInput[]
-  }
-
-  export type DcrReportUncheckedCreateNestedManyWithoutDoctorTaskInput = {
-    create?: XOR<DcrReportCreateWithoutDoctorTaskInput, DcrReportUncheckedCreateWithoutDoctorTaskInput> | DcrReportCreateWithoutDoctorTaskInput[] | DcrReportUncheckedCreateWithoutDoctorTaskInput[]
-    connectOrCreate?: DcrReportCreateOrConnectWithoutDoctorTaskInput | DcrReportCreateOrConnectWithoutDoctorTaskInput[]
-    createMany?: DcrReportCreateManyDoctorTaskInputEnvelope
-    connect?: DcrReportWhereUniqueInput | DcrReportWhereUniqueInput[]
   }
 
   export type EnumTaskStatusFieldUpdateOperationsInput = {
@@ -68165,20 +68135,6 @@ export namespace Prisma {
     deleteMany?: DoctorInteractionScalarWhereInput | DoctorInteractionScalarWhereInput[]
   }
 
-  export type DcrReportUpdateManyWithoutDoctorTaskNestedInput = {
-    create?: XOR<DcrReportCreateWithoutDoctorTaskInput, DcrReportUncheckedCreateWithoutDoctorTaskInput> | DcrReportCreateWithoutDoctorTaskInput[] | DcrReportUncheckedCreateWithoutDoctorTaskInput[]
-    connectOrCreate?: DcrReportCreateOrConnectWithoutDoctorTaskInput | DcrReportCreateOrConnectWithoutDoctorTaskInput[]
-    upsert?: DcrReportUpsertWithWhereUniqueWithoutDoctorTaskInput | DcrReportUpsertWithWhereUniqueWithoutDoctorTaskInput[]
-    createMany?: DcrReportCreateManyDoctorTaskInputEnvelope
-    set?: DcrReportWhereUniqueInput | DcrReportWhereUniqueInput[]
-    disconnect?: DcrReportWhereUniqueInput | DcrReportWhereUniqueInput[]
-    delete?: DcrReportWhereUniqueInput | DcrReportWhereUniqueInput[]
-    connect?: DcrReportWhereUniqueInput | DcrReportWhereUniqueInput[]
-    update?: DcrReportUpdateWithWhereUniqueWithoutDoctorTaskInput | DcrReportUpdateWithWhereUniqueWithoutDoctorTaskInput[]
-    updateMany?: DcrReportUpdateManyWithWhereWithoutDoctorTaskInput | DcrReportUpdateManyWithWhereWithoutDoctorTaskInput[]
-    deleteMany?: DcrReportScalarWhereInput | DcrReportScalarWhereInput[]
-  }
-
   export type DoctorInteractionUncheckedUpdateManyWithoutDoctorTaskNestedInput = {
     create?: XOR<DoctorInteractionCreateWithoutDoctorTaskInput, DoctorInteractionUncheckedCreateWithoutDoctorTaskInput> | DoctorInteractionCreateWithoutDoctorTaskInput[] | DoctorInteractionUncheckedCreateWithoutDoctorTaskInput[]
     connectOrCreate?: DoctorInteractionCreateOrConnectWithoutDoctorTaskInput | DoctorInteractionCreateOrConnectWithoutDoctorTaskInput[]
@@ -68191,20 +68147,6 @@ export namespace Prisma {
     update?: DoctorInteractionUpdateWithWhereUniqueWithoutDoctorTaskInput | DoctorInteractionUpdateWithWhereUniqueWithoutDoctorTaskInput[]
     updateMany?: DoctorInteractionUpdateManyWithWhereWithoutDoctorTaskInput | DoctorInteractionUpdateManyWithWhereWithoutDoctorTaskInput[]
     deleteMany?: DoctorInteractionScalarWhereInput | DoctorInteractionScalarWhereInput[]
-  }
-
-  export type DcrReportUncheckedUpdateManyWithoutDoctorTaskNestedInput = {
-    create?: XOR<DcrReportCreateWithoutDoctorTaskInput, DcrReportUncheckedCreateWithoutDoctorTaskInput> | DcrReportCreateWithoutDoctorTaskInput[] | DcrReportUncheckedCreateWithoutDoctorTaskInput[]
-    connectOrCreate?: DcrReportCreateOrConnectWithoutDoctorTaskInput | DcrReportCreateOrConnectWithoutDoctorTaskInput[]
-    upsert?: DcrReportUpsertWithWhereUniqueWithoutDoctorTaskInput | DcrReportUpsertWithWhereUniqueWithoutDoctorTaskInput[]
-    createMany?: DcrReportCreateManyDoctorTaskInputEnvelope
-    set?: DcrReportWhereUniqueInput | DcrReportWhereUniqueInput[]
-    disconnect?: DcrReportWhereUniqueInput | DcrReportWhereUniqueInput[]
-    delete?: DcrReportWhereUniqueInput | DcrReportWhereUniqueInput[]
-    connect?: DcrReportWhereUniqueInput | DcrReportWhereUniqueInput[]
-    update?: DcrReportUpdateWithWhereUniqueWithoutDoctorTaskInput | DcrReportUpdateWithWhereUniqueWithoutDoctorTaskInput[]
-    updateMany?: DcrReportUpdateManyWithWhereWithoutDoctorTaskInput | DcrReportUpdateManyWithWhereWithoutDoctorTaskInput[]
-    deleteMany?: DcrReportScalarWhereInput | DcrReportScalarWhereInput[]
   }
 
   export type TaskPlannerCreateNestedOneWithoutChemistTasksInput = {
@@ -68232,25 +68174,11 @@ export namespace Prisma {
     connect?: ChemistInteractionWhereUniqueInput | ChemistInteractionWhereUniqueInput[]
   }
 
-  export type DcrReportCreateNestedManyWithoutChemistTaskInput = {
-    create?: XOR<DcrReportCreateWithoutChemistTaskInput, DcrReportUncheckedCreateWithoutChemistTaskInput> | DcrReportCreateWithoutChemistTaskInput[] | DcrReportUncheckedCreateWithoutChemistTaskInput[]
-    connectOrCreate?: DcrReportCreateOrConnectWithoutChemistTaskInput | DcrReportCreateOrConnectWithoutChemistTaskInput[]
-    createMany?: DcrReportCreateManyChemistTaskInputEnvelope
-    connect?: DcrReportWhereUniqueInput | DcrReportWhereUniqueInput[]
-  }
-
   export type ChemistInteractionUncheckedCreateNestedManyWithoutChemistTaskInput = {
     create?: XOR<ChemistInteractionCreateWithoutChemistTaskInput, ChemistInteractionUncheckedCreateWithoutChemistTaskInput> | ChemistInteractionCreateWithoutChemistTaskInput[] | ChemistInteractionUncheckedCreateWithoutChemistTaskInput[]
     connectOrCreate?: ChemistInteractionCreateOrConnectWithoutChemistTaskInput | ChemistInteractionCreateOrConnectWithoutChemistTaskInput[]
     createMany?: ChemistInteractionCreateManyChemistTaskInputEnvelope
     connect?: ChemistInteractionWhereUniqueInput | ChemistInteractionWhereUniqueInput[]
-  }
-
-  export type DcrReportUncheckedCreateNestedManyWithoutChemistTaskInput = {
-    create?: XOR<DcrReportCreateWithoutChemistTaskInput, DcrReportUncheckedCreateWithoutChemistTaskInput> | DcrReportCreateWithoutChemistTaskInput[] | DcrReportUncheckedCreateWithoutChemistTaskInput[]
-    connectOrCreate?: DcrReportCreateOrConnectWithoutChemistTaskInput | DcrReportCreateOrConnectWithoutChemistTaskInput[]
-    createMany?: DcrReportCreateManyChemistTaskInputEnvelope
-    connect?: DcrReportWhereUniqueInput | DcrReportWhereUniqueInput[]
   }
 
   export type TaskPlannerUpdateOneRequiredWithoutChemistTasksNestedInput = {
@@ -68291,20 +68219,6 @@ export namespace Prisma {
     deleteMany?: ChemistInteractionScalarWhereInput | ChemistInteractionScalarWhereInput[]
   }
 
-  export type DcrReportUpdateManyWithoutChemistTaskNestedInput = {
-    create?: XOR<DcrReportCreateWithoutChemistTaskInput, DcrReportUncheckedCreateWithoutChemistTaskInput> | DcrReportCreateWithoutChemistTaskInput[] | DcrReportUncheckedCreateWithoutChemistTaskInput[]
-    connectOrCreate?: DcrReportCreateOrConnectWithoutChemistTaskInput | DcrReportCreateOrConnectWithoutChemistTaskInput[]
-    upsert?: DcrReportUpsertWithWhereUniqueWithoutChemistTaskInput | DcrReportUpsertWithWhereUniqueWithoutChemistTaskInput[]
-    createMany?: DcrReportCreateManyChemistTaskInputEnvelope
-    set?: DcrReportWhereUniqueInput | DcrReportWhereUniqueInput[]
-    disconnect?: DcrReportWhereUniqueInput | DcrReportWhereUniqueInput[]
-    delete?: DcrReportWhereUniqueInput | DcrReportWhereUniqueInput[]
-    connect?: DcrReportWhereUniqueInput | DcrReportWhereUniqueInput[]
-    update?: DcrReportUpdateWithWhereUniqueWithoutChemistTaskInput | DcrReportUpdateWithWhereUniqueWithoutChemistTaskInput[]
-    updateMany?: DcrReportUpdateManyWithWhereWithoutChemistTaskInput | DcrReportUpdateManyWithWhereWithoutChemistTaskInput[]
-    deleteMany?: DcrReportScalarWhereInput | DcrReportScalarWhereInput[]
-  }
-
   export type ChemistInteractionUncheckedUpdateManyWithoutChemistTaskNestedInput = {
     create?: XOR<ChemistInteractionCreateWithoutChemistTaskInput, ChemistInteractionUncheckedCreateWithoutChemistTaskInput> | ChemistInteractionCreateWithoutChemistTaskInput[] | ChemistInteractionUncheckedCreateWithoutChemistTaskInput[]
     connectOrCreate?: ChemistInteractionCreateOrConnectWithoutChemistTaskInput | ChemistInteractionCreateOrConnectWithoutChemistTaskInput[]
@@ -68317,20 +68231,6 @@ export namespace Prisma {
     update?: ChemistInteractionUpdateWithWhereUniqueWithoutChemistTaskInput | ChemistInteractionUpdateWithWhereUniqueWithoutChemistTaskInput[]
     updateMany?: ChemistInteractionUpdateManyWithWhereWithoutChemistTaskInput | ChemistInteractionUpdateManyWithWhereWithoutChemistTaskInput[]
     deleteMany?: ChemistInteractionScalarWhereInput | ChemistInteractionScalarWhereInput[]
-  }
-
-  export type DcrReportUncheckedUpdateManyWithoutChemistTaskNestedInput = {
-    create?: XOR<DcrReportCreateWithoutChemistTaskInput, DcrReportUncheckedCreateWithoutChemistTaskInput> | DcrReportCreateWithoutChemistTaskInput[] | DcrReportUncheckedCreateWithoutChemistTaskInput[]
-    connectOrCreate?: DcrReportCreateOrConnectWithoutChemistTaskInput | DcrReportCreateOrConnectWithoutChemistTaskInput[]
-    upsert?: DcrReportUpsertWithWhereUniqueWithoutChemistTaskInput | DcrReportUpsertWithWhereUniqueWithoutChemistTaskInput[]
-    createMany?: DcrReportCreateManyChemistTaskInputEnvelope
-    set?: DcrReportWhereUniqueInput | DcrReportWhereUniqueInput[]
-    disconnect?: DcrReportWhereUniqueInput | DcrReportWhereUniqueInput[]
-    delete?: DcrReportWhereUniqueInput | DcrReportWhereUniqueInput[]
-    connect?: DcrReportWhereUniqueInput | DcrReportWhereUniqueInput[]
-    update?: DcrReportUpdateWithWhereUniqueWithoutChemistTaskInput | DcrReportUpdateWithWhereUniqueWithoutChemistTaskInput[]
-    updateMany?: DcrReportUpdateManyWithWhereWithoutChemistTaskInput | DcrReportUpdateManyWithWhereWithoutChemistTaskInput[]
-    deleteMany?: DcrReportScalarWhereInput | DcrReportScalarWhereInput[]
   }
 
   export type TaskPlannerCreateNestedOneWithoutTourPlanTasksInput = {
@@ -68358,25 +68258,11 @@ export namespace Prisma {
     connect?: TourPlanReportWhereUniqueInput | TourPlanReportWhereUniqueInput[]
   }
 
-  export type DcrReportCreateNestedManyWithoutTourPlanTaskInput = {
-    create?: XOR<DcrReportCreateWithoutTourPlanTaskInput, DcrReportUncheckedCreateWithoutTourPlanTaskInput> | DcrReportCreateWithoutTourPlanTaskInput[] | DcrReportUncheckedCreateWithoutTourPlanTaskInput[]
-    connectOrCreate?: DcrReportCreateOrConnectWithoutTourPlanTaskInput | DcrReportCreateOrConnectWithoutTourPlanTaskInput[]
-    createMany?: DcrReportCreateManyTourPlanTaskInputEnvelope
-    connect?: DcrReportWhereUniqueInput | DcrReportWhereUniqueInput[]
-  }
-
   export type TourPlanReportUncheckedCreateNestedManyWithoutTourTaskInput = {
     create?: XOR<TourPlanReportCreateWithoutTourTaskInput, TourPlanReportUncheckedCreateWithoutTourTaskInput> | TourPlanReportCreateWithoutTourTaskInput[] | TourPlanReportUncheckedCreateWithoutTourTaskInput[]
     connectOrCreate?: TourPlanReportCreateOrConnectWithoutTourTaskInput | TourPlanReportCreateOrConnectWithoutTourTaskInput[]
     createMany?: TourPlanReportCreateManyTourTaskInputEnvelope
     connect?: TourPlanReportWhereUniqueInput | TourPlanReportWhereUniqueInput[]
-  }
-
-  export type DcrReportUncheckedCreateNestedManyWithoutTourPlanTaskInput = {
-    create?: XOR<DcrReportCreateWithoutTourPlanTaskInput, DcrReportUncheckedCreateWithoutTourPlanTaskInput> | DcrReportCreateWithoutTourPlanTaskInput[] | DcrReportUncheckedCreateWithoutTourPlanTaskInput[]
-    connectOrCreate?: DcrReportCreateOrConnectWithoutTourPlanTaskInput | DcrReportCreateOrConnectWithoutTourPlanTaskInput[]
-    createMany?: DcrReportCreateManyTourPlanTaskInputEnvelope
-    connect?: DcrReportWhereUniqueInput | DcrReportWhereUniqueInput[]
   }
 
   export type TaskPlannerUpdateOneRequiredWithoutTourPlanTasksNestedInput = {
@@ -68417,20 +68303,6 @@ export namespace Prisma {
     deleteMany?: TourPlanReportScalarWhereInput | TourPlanReportScalarWhereInput[]
   }
 
-  export type DcrReportUpdateManyWithoutTourPlanTaskNestedInput = {
-    create?: XOR<DcrReportCreateWithoutTourPlanTaskInput, DcrReportUncheckedCreateWithoutTourPlanTaskInput> | DcrReportCreateWithoutTourPlanTaskInput[] | DcrReportUncheckedCreateWithoutTourPlanTaskInput[]
-    connectOrCreate?: DcrReportCreateOrConnectWithoutTourPlanTaskInput | DcrReportCreateOrConnectWithoutTourPlanTaskInput[]
-    upsert?: DcrReportUpsertWithWhereUniqueWithoutTourPlanTaskInput | DcrReportUpsertWithWhereUniqueWithoutTourPlanTaskInput[]
-    createMany?: DcrReportCreateManyTourPlanTaskInputEnvelope
-    set?: DcrReportWhereUniqueInput | DcrReportWhereUniqueInput[]
-    disconnect?: DcrReportWhereUniqueInput | DcrReportWhereUniqueInput[]
-    delete?: DcrReportWhereUniqueInput | DcrReportWhereUniqueInput[]
-    connect?: DcrReportWhereUniqueInput | DcrReportWhereUniqueInput[]
-    update?: DcrReportUpdateWithWhereUniqueWithoutTourPlanTaskInput | DcrReportUpdateWithWhereUniqueWithoutTourPlanTaskInput[]
-    updateMany?: DcrReportUpdateManyWithWhereWithoutTourPlanTaskInput | DcrReportUpdateManyWithWhereWithoutTourPlanTaskInput[]
-    deleteMany?: DcrReportScalarWhereInput | DcrReportScalarWhereInput[]
-  }
-
   export type TourPlanReportUncheckedUpdateManyWithoutTourTaskNestedInput = {
     create?: XOR<TourPlanReportCreateWithoutTourTaskInput, TourPlanReportUncheckedCreateWithoutTourTaskInput> | TourPlanReportCreateWithoutTourTaskInput[] | TourPlanReportUncheckedCreateWithoutTourTaskInput[]
     connectOrCreate?: TourPlanReportCreateOrConnectWithoutTourTaskInput | TourPlanReportCreateOrConnectWithoutTourTaskInput[]
@@ -68443,20 +68315,6 @@ export namespace Prisma {
     update?: TourPlanReportUpdateWithWhereUniqueWithoutTourTaskInput | TourPlanReportUpdateWithWhereUniqueWithoutTourTaskInput[]
     updateMany?: TourPlanReportUpdateManyWithWhereWithoutTourTaskInput | TourPlanReportUpdateManyWithWhereWithoutTourTaskInput[]
     deleteMany?: TourPlanReportScalarWhereInput | TourPlanReportScalarWhereInput[]
-  }
-
-  export type DcrReportUncheckedUpdateManyWithoutTourPlanTaskNestedInput = {
-    create?: XOR<DcrReportCreateWithoutTourPlanTaskInput, DcrReportUncheckedCreateWithoutTourPlanTaskInput> | DcrReportCreateWithoutTourPlanTaskInput[] | DcrReportUncheckedCreateWithoutTourPlanTaskInput[]
-    connectOrCreate?: DcrReportCreateOrConnectWithoutTourPlanTaskInput | DcrReportCreateOrConnectWithoutTourPlanTaskInput[]
-    upsert?: DcrReportUpsertWithWhereUniqueWithoutTourPlanTaskInput | DcrReportUpsertWithWhereUniqueWithoutTourPlanTaskInput[]
-    createMany?: DcrReportCreateManyTourPlanTaskInputEnvelope
-    set?: DcrReportWhereUniqueInput | DcrReportWhereUniqueInput[]
-    disconnect?: DcrReportWhereUniqueInput | DcrReportWhereUniqueInput[]
-    delete?: DcrReportWhereUniqueInput | DcrReportWhereUniqueInput[]
-    connect?: DcrReportWhereUniqueInput | DcrReportWhereUniqueInput[]
-    update?: DcrReportUpdateWithWhereUniqueWithoutTourPlanTaskInput | DcrReportUpdateWithWhereUniqueWithoutTourPlanTaskInput[]
-    updateMany?: DcrReportUpdateManyWithWhereWithoutTourPlanTaskInput | DcrReportUpdateManyWithWhereWithoutTourPlanTaskInput[]
-    deleteMany?: DcrReportScalarWhereInput | DcrReportScalarWhereInput[]
   }
 
   export type TourPlanTaskCreateNestedManyWithoutTourPlanInput = {
@@ -69564,6 +69422,23 @@ export namespace Prisma {
     _max?: NestedEnumTaskTypeReferenceNullableFilter<$PrismaModel>
   }
 
+  export type NestedEnumReportingPeriodFilter<$PrismaModel = never> = {
+    equals?: $Enums.ReportingPeriod | EnumReportingPeriodFieldRefInput<$PrismaModel>
+    in?: $Enums.ReportingPeriod[] | ListEnumReportingPeriodFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ReportingPeriod[] | ListEnumReportingPeriodFieldRefInput<$PrismaModel>
+    not?: NestedEnumReportingPeriodFilter<$PrismaModel> | $Enums.ReportingPeriod
+  }
+
+  export type NestedEnumReportingPeriodWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ReportingPeriod | EnumReportingPeriodFieldRefInput<$PrismaModel>
+    in?: $Enums.ReportingPeriod[] | ListEnumReportingPeriodFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ReportingPeriod[] | ListEnumReportingPeriodFieldRefInput<$PrismaModel>
+    not?: NestedEnumReportingPeriodWithAggregatesFilter<$PrismaModel> | $Enums.ReportingPeriod
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumReportingPeriodFilter<$PrismaModel>
+    _max?: NestedEnumReportingPeriodFilter<$PrismaModel>
+  }
+
   export type NestedEnumTaskPlannerStatusFilter<$PrismaModel = never> = {
     equals?: $Enums.TaskPlannerStatus | EnumTaskPlannerStatusFieldRefInput<$PrismaModel>
     in?: $Enums.TaskPlannerStatus[] | ListEnumTaskPlannerStatusFieldRefInput<$PrismaModel>
@@ -70082,6 +69957,7 @@ export namespace Prisma {
   export type DcrReportCreateWithoutEmployeeInput = {
     id?: string
     organizationId: string
+    taskId?: string | null
     taskType?: $Enums.TaskTypeReference | null
     reportDate: Date | string
     productsDiscussed?: string | null
@@ -70089,9 +69965,6 @@ export namespace Prisma {
     isDraft?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
-    doctorTask?: DoctorTaskCreateNestedOneWithoutDcrReportsInput
-    chemistTask?: ChemistTaskCreateNestedOneWithoutDcrReportsInput
-    tourPlanTask?: TourPlanTaskCreateNestedOneWithoutDcrReportsInput
   }
 
   export type DcrReportUncheckedCreateWithoutEmployeeInput = {
@@ -70120,6 +69993,10 @@ export namespace Prisma {
   export type RcpaReportCreateWithoutEmployeeInput = {
     id?: string
     organizationId: string
+    reportingPeriod: $Enums.ReportingPeriod
+    startDate: Date | string
+    endDate: Date | string
+    totalPrescription?: number | null
     remarks?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -70131,6 +70008,10 @@ export namespace Prisma {
     id?: string
     organizationId: string
     chemistId: string
+    reportingPeriod: $Enums.ReportingPeriod
+    startDate: Date | string
+    endDate: Date | string
+    totalPrescription?: number | null
     remarks?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -70720,7 +70601,6 @@ export namespace Prisma {
     planner: TaskPlannerCreateNestedOneWithoutDoctorTasksInput
     doctor: DoctorCreateNestedOneWithoutDoctorTaskInput
     doctorInteractions?: DoctorInteractionCreateNestedManyWithoutDoctorTaskInput
-    dcrReports?: DcrReportCreateNestedManyWithoutDoctorTaskInput
   }
 
   export type DoctorTaskUncheckedCreateWithoutEmployeeInput = {
@@ -70734,7 +70614,6 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     doctorInteractions?: DoctorInteractionUncheckedCreateNestedManyWithoutDoctorTaskInput
-    dcrReports?: DcrReportUncheckedCreateNestedManyWithoutDoctorTaskInput
   }
 
   export type DoctorTaskCreateOrConnectWithoutEmployeeInput = {
@@ -70758,7 +70637,6 @@ export namespace Prisma {
     planner: TaskPlannerCreateNestedOneWithoutChemistTasksInput
     chemist: ChemistCreateNestedOneWithoutChemistTasksInput
     chemistInteractions?: ChemistInteractionCreateNestedManyWithoutChemistTaskInput
-    dcrReports?: DcrReportCreateNestedManyWithoutChemistTaskInput
   }
 
   export type ChemistTaskUncheckedCreateWithoutEmployeeInput = {
@@ -70772,7 +70650,6 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     chemistInteractions?: ChemistInteractionUncheckedCreateNestedManyWithoutChemistTaskInput
-    dcrReports?: DcrReportUncheckedCreateNestedManyWithoutChemistTaskInput
   }
 
   export type ChemistTaskCreateOrConnectWithoutEmployeeInput = {
@@ -70797,7 +70674,6 @@ export namespace Prisma {
     planner: TaskPlannerCreateNestedOneWithoutTourPlanTasksInput
     tourPlan: TourPlanCreateNestedOneWithoutTourTasksInput
     tourPlanReports?: TourPlanReportCreateNestedManyWithoutTourTaskInput
-    dcrReports?: DcrReportCreateNestedManyWithoutTourPlanTaskInput
   }
 
   export type TourPlanTaskUncheckedCreateWithoutEmployeeInput = {
@@ -70812,7 +70688,6 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     tourPlanReports?: TourPlanReportUncheckedCreateNestedManyWithoutTourTaskInput
-    dcrReports?: DcrReportUncheckedCreateNestedManyWithoutTourPlanTaskInput
   }
 
   export type TourPlanTaskCreateOrConnectWithoutEmployeeInput = {
@@ -71272,6 +71147,10 @@ export namespace Prisma {
     organizationId?: StringFilter<"RcpaReport"> | string
     employeeId?: StringFilter<"RcpaReport"> | string
     chemistId?: StringFilter<"RcpaReport"> | string
+    reportingPeriod?: EnumReportingPeriodFilter<"RcpaReport"> | $Enums.ReportingPeriod
+    startDate?: DateTimeFilter<"RcpaReport"> | Date | string
+    endDate?: DateTimeFilter<"RcpaReport"> | Date | string
+    totalPrescription?: IntNullableFilter<"RcpaReport"> | number | null
     remarks?: StringNullableFilter<"RcpaReport"> | string | null
     createdAt?: DateTimeFilter<"RcpaReport"> | Date | string
     updatedAt?: DateTimeFilter<"RcpaReport"> | Date | string
@@ -73784,7 +73663,6 @@ export namespace Prisma {
     planner: TaskPlannerCreateNestedOneWithoutDoctorTasksInput
     employee: EmployeeCreateNestedOneWithoutDoctorTasksInput
     doctorInteractions?: DoctorInteractionCreateNestedManyWithoutDoctorTaskInput
-    dcrReports?: DcrReportCreateNestedManyWithoutDoctorTaskInput
   }
 
   export type DoctorTaskUncheckedCreateWithoutDoctorInput = {
@@ -73798,7 +73676,6 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     doctorInteractions?: DoctorInteractionUncheckedCreateNestedManyWithoutDoctorTaskInput
-    dcrReports?: DcrReportUncheckedCreateNestedManyWithoutDoctorTaskInput
   }
 
   export type DoctorTaskCreateOrConnectWithoutDoctorInput = {
@@ -75024,7 +74901,6 @@ export namespace Prisma {
     planner: TaskPlannerCreateNestedOneWithoutDoctorTasksInput
     employee: EmployeeCreateNestedOneWithoutDoctorTasksInput
     doctor: DoctorCreateNestedOneWithoutDoctorTaskInput
-    dcrReports?: DcrReportCreateNestedManyWithoutDoctorTaskInput
   }
 
   export type DoctorTaskUncheckedCreateWithoutDoctorInteractionsInput = {
@@ -75038,7 +74914,6 @@ export namespace Prisma {
     taskStatus?: $Enums.TaskStatus
     createdAt?: Date | string
     updatedAt?: Date | string
-    dcrReports?: DcrReportUncheckedCreateNestedManyWithoutDoctorTaskInput
   }
 
   export type DoctorTaskCreateOrConnectWithoutDoctorInteractionsInput = {
@@ -75309,7 +75184,6 @@ export namespace Prisma {
     planner?: TaskPlannerUpdateOneRequiredWithoutDoctorTasksNestedInput
     employee?: EmployeeUpdateOneRequiredWithoutDoctorTasksNestedInput
     doctor?: DoctorUpdateOneRequiredWithoutDoctorTaskNestedInput
-    dcrReports?: DcrReportUpdateManyWithoutDoctorTaskNestedInput
   }
 
   export type DoctorTaskUncheckedUpdateWithoutDoctorInteractionsInput = {
@@ -75323,7 +75197,6 @@ export namespace Prisma {
     taskStatus?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    dcrReports?: DcrReportUncheckedUpdateManyWithoutDoctorTaskNestedInput
   }
 
   export type EmployeeCreateWithoutDrugsCreatedInput = {
@@ -75460,6 +75333,8 @@ export namespace Prisma {
     competitorDrugName?: string | null
     ownQuantity: number
     competitorQuantity: number
+    ownPackSize: string
+    competitorPackSize: string
     createdAt?: Date | string
     rcpaReport: RcpaReportCreateNestedOneWithoutDrugDataInput
   }
@@ -75470,6 +75345,8 @@ export namespace Prisma {
     competitorDrugName?: string | null
     ownQuantity: number
     competitorQuantity: number
+    ownPackSize: string
+    competitorPackSize: string
     createdAt?: Date | string
   }
 
@@ -75708,6 +75585,8 @@ export namespace Prisma {
     competitorDrugName?: StringNullableFilter<"RcpaDrugData"> | string | null
     ownQuantity?: IntFilter<"RcpaDrugData"> | number
     competitorQuantity?: IntFilter<"RcpaDrugData"> | number
+    ownPackSize?: StringFilter<"RcpaDrugData"> | string
+    competitorPackSize?: StringFilter<"RcpaDrugData"> | string
     createdAt?: DateTimeFilter<"RcpaDrugData"> | Date | string
   }
 
@@ -76052,6 +75931,10 @@ export namespace Prisma {
   export type RcpaReportCreateWithoutChemistInput = {
     id?: string
     organizationId: string
+    reportingPeriod: $Enums.ReportingPeriod
+    startDate: Date | string
+    endDate: Date | string
+    totalPrescription?: number | null
     remarks?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -76063,6 +75946,10 @@ export namespace Prisma {
     id?: string
     organizationId: string
     employeeId: string
+    reportingPeriod: $Enums.ReportingPeriod
+    startDate: Date | string
+    endDate: Date | string
+    totalPrescription?: number | null
     remarks?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -76090,7 +75977,6 @@ export namespace Prisma {
     planner: TaskPlannerCreateNestedOneWithoutChemistTasksInput
     employee: EmployeeCreateNestedOneWithoutChemistTasksInput
     chemistInteractions?: ChemistInteractionCreateNestedManyWithoutChemistTaskInput
-    dcrReports?: DcrReportCreateNestedManyWithoutChemistTaskInput
   }
 
   export type ChemistTaskUncheckedCreateWithoutChemistInput = {
@@ -76104,7 +75990,6 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     chemistInteractions?: ChemistInteractionUncheckedCreateNestedManyWithoutChemistTaskInput
-    dcrReports?: DcrReportUncheckedCreateNestedManyWithoutChemistTaskInput
   }
 
   export type ChemistTaskCreateOrConnectWithoutChemistInput = {
@@ -76917,7 +76802,6 @@ export namespace Prisma {
     planner: TaskPlannerCreateNestedOneWithoutChemistTasksInput
     employee: EmployeeCreateNestedOneWithoutChemistTasksInput
     chemist: ChemistCreateNestedOneWithoutChemistTasksInput
-    dcrReports?: DcrReportCreateNestedManyWithoutChemistTaskInput
   }
 
   export type ChemistTaskUncheckedCreateWithoutChemistInteractionsInput = {
@@ -76931,7 +76815,6 @@ export namespace Prisma {
     taskStatus?: $Enums.TaskStatus
     createdAt?: Date | string
     updatedAt?: Date | string
-    dcrReports?: DcrReportUncheckedCreateNestedManyWithoutChemistTaskInput
   }
 
   export type ChemistTaskCreateOrConnectWithoutChemistInteractionsInput = {
@@ -77139,7 +77022,6 @@ export namespace Prisma {
     planner?: TaskPlannerUpdateOneRequiredWithoutChemistTasksNestedInput
     employee?: EmployeeUpdateOneRequiredWithoutChemistTasksNestedInput
     chemist?: ChemistUpdateOneRequiredWithoutChemistTasksNestedInput
-    dcrReports?: DcrReportUpdateManyWithoutChemistTaskNestedInput
   }
 
   export type ChemistTaskUncheckedUpdateWithoutChemistInteractionsInput = {
@@ -77153,7 +77035,6 @@ export namespace Prisma {
     taskStatus?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    dcrReports?: DcrReportUncheckedUpdateManyWithoutChemistTaskNestedInput
   }
 
   export type DoctorCreateWithoutChemistRelationsInput = {
@@ -78289,107 +78170,6 @@ export namespace Prisma {
     create: XOR<EmployeeCreateWithoutDcrReportsInput, EmployeeUncheckedCreateWithoutDcrReportsInput>
   }
 
-  export type DoctorTaskCreateWithoutDcrReportsInput = {
-    id?: string
-    taskDate: Date | string
-    startTime: Date | string
-    endTime: Date | string
-    taskStatus?: $Enums.TaskStatus
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    planner: TaskPlannerCreateNestedOneWithoutDoctorTasksInput
-    employee: EmployeeCreateNestedOneWithoutDoctorTasksInput
-    doctor: DoctorCreateNestedOneWithoutDoctorTaskInput
-    doctorInteractions?: DoctorInteractionCreateNestedManyWithoutDoctorTaskInput
-  }
-
-  export type DoctorTaskUncheckedCreateWithoutDcrReportsInput = {
-    id?: string
-    plannerId: string
-    employeeId: string
-    doctorId: string
-    taskDate: Date | string
-    startTime: Date | string
-    endTime: Date | string
-    taskStatus?: $Enums.TaskStatus
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    doctorInteractions?: DoctorInteractionUncheckedCreateNestedManyWithoutDoctorTaskInput
-  }
-
-  export type DoctorTaskCreateOrConnectWithoutDcrReportsInput = {
-    where: DoctorTaskWhereUniqueInput
-    create: XOR<DoctorTaskCreateWithoutDcrReportsInput, DoctorTaskUncheckedCreateWithoutDcrReportsInput>
-  }
-
-  export type ChemistTaskCreateWithoutDcrReportsInput = {
-    id?: string
-    taskDate: Date | string
-    startTime: Date | string
-    endTime: Date | string
-    taskStatus?: $Enums.TaskStatus
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    planner: TaskPlannerCreateNestedOneWithoutChemistTasksInput
-    employee: EmployeeCreateNestedOneWithoutChemistTasksInput
-    chemist: ChemistCreateNestedOneWithoutChemistTasksInput
-    chemistInteractions?: ChemistInteractionCreateNestedManyWithoutChemistTaskInput
-  }
-
-  export type ChemistTaskUncheckedCreateWithoutDcrReportsInput = {
-    id?: string
-    plannerId: string
-    employeeId: string
-    chemistId: string
-    taskDate: Date | string
-    startTime: Date | string
-    endTime: Date | string
-    taskStatus?: $Enums.TaskStatus
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    chemistInteractions?: ChemistInteractionUncheckedCreateNestedManyWithoutChemistTaskInput
-  }
-
-  export type ChemistTaskCreateOrConnectWithoutDcrReportsInput = {
-    where: ChemistTaskWhereUniqueInput
-    create: XOR<ChemistTaskCreateWithoutDcrReportsInput, ChemistTaskUncheckedCreateWithoutDcrReportsInput>
-  }
-
-  export type TourPlanTaskCreateWithoutDcrReportsInput = {
-    id?: string
-    location: string
-    taskDate: Date | string
-    startTime: Date | string
-    endTime: Date | string
-    taskStatus?: $Enums.TaskStatus
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    planner: TaskPlannerCreateNestedOneWithoutTourPlanTasksInput
-    employee: EmployeeCreateNestedOneWithoutTourPlanTasksInput
-    tourPlan: TourPlanCreateNestedOneWithoutTourTasksInput
-    tourPlanReports?: TourPlanReportCreateNestedManyWithoutTourTaskInput
-  }
-
-  export type TourPlanTaskUncheckedCreateWithoutDcrReportsInput = {
-    id?: string
-    plannerId: string
-    employeeId: string
-    tourPlanId: string
-    location: string
-    taskDate: Date | string
-    startTime: Date | string
-    endTime: Date | string
-    taskStatus?: $Enums.TaskStatus
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    tourPlanReports?: TourPlanReportUncheckedCreateNestedManyWithoutTourTaskInput
-  }
-
-  export type TourPlanTaskCreateOrConnectWithoutDcrReportsInput = {
-    where: TourPlanTaskWhereUniqueInput
-    create: XOR<TourPlanTaskCreateWithoutDcrReportsInput, TourPlanTaskUncheckedCreateWithoutDcrReportsInput>
-  }
-
   export type EmployeeUpsertWithoutDcrReportsInput = {
     update: XOR<EmployeeUpdateWithoutDcrReportsInput, EmployeeUncheckedUpdateWithoutDcrReportsInput>
     create: XOR<EmployeeCreateWithoutDcrReportsInput, EmployeeUncheckedCreateWithoutDcrReportsInput>
@@ -78497,125 +78277,6 @@ export namespace Prisma {
     doctorTasks?: DoctorTaskUncheckedUpdateManyWithoutEmployeeNestedInput
     chemistTasks?: ChemistTaskUncheckedUpdateManyWithoutEmployeeNestedInput
     tourPlanTasks?: TourPlanTaskUncheckedUpdateManyWithoutEmployeeNestedInput
-  }
-
-  export type DoctorTaskUpsertWithoutDcrReportsInput = {
-    update: XOR<DoctorTaskUpdateWithoutDcrReportsInput, DoctorTaskUncheckedUpdateWithoutDcrReportsInput>
-    create: XOR<DoctorTaskCreateWithoutDcrReportsInput, DoctorTaskUncheckedCreateWithoutDcrReportsInput>
-    where?: DoctorTaskWhereInput
-  }
-
-  export type DoctorTaskUpdateToOneWithWhereWithoutDcrReportsInput = {
-    where?: DoctorTaskWhereInput
-    data: XOR<DoctorTaskUpdateWithoutDcrReportsInput, DoctorTaskUncheckedUpdateWithoutDcrReportsInput>
-  }
-
-  export type DoctorTaskUpdateWithoutDcrReportsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    taskDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    startTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    endTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    taskStatus?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    planner?: TaskPlannerUpdateOneRequiredWithoutDoctorTasksNestedInput
-    employee?: EmployeeUpdateOneRequiredWithoutDoctorTasksNestedInput
-    doctor?: DoctorUpdateOneRequiredWithoutDoctorTaskNestedInput
-    doctorInteractions?: DoctorInteractionUpdateManyWithoutDoctorTaskNestedInput
-  }
-
-  export type DoctorTaskUncheckedUpdateWithoutDcrReportsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    plannerId?: StringFieldUpdateOperationsInput | string
-    employeeId?: StringFieldUpdateOperationsInput | string
-    doctorId?: StringFieldUpdateOperationsInput | string
-    taskDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    startTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    endTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    taskStatus?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    doctorInteractions?: DoctorInteractionUncheckedUpdateManyWithoutDoctorTaskNestedInput
-  }
-
-  export type ChemistTaskUpsertWithoutDcrReportsInput = {
-    update: XOR<ChemistTaskUpdateWithoutDcrReportsInput, ChemistTaskUncheckedUpdateWithoutDcrReportsInput>
-    create: XOR<ChemistTaskCreateWithoutDcrReportsInput, ChemistTaskUncheckedCreateWithoutDcrReportsInput>
-    where?: ChemistTaskWhereInput
-  }
-
-  export type ChemistTaskUpdateToOneWithWhereWithoutDcrReportsInput = {
-    where?: ChemistTaskWhereInput
-    data: XOR<ChemistTaskUpdateWithoutDcrReportsInput, ChemistTaskUncheckedUpdateWithoutDcrReportsInput>
-  }
-
-  export type ChemistTaskUpdateWithoutDcrReportsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    taskDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    startTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    endTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    taskStatus?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    planner?: TaskPlannerUpdateOneRequiredWithoutChemistTasksNestedInput
-    employee?: EmployeeUpdateOneRequiredWithoutChemistTasksNestedInput
-    chemist?: ChemistUpdateOneRequiredWithoutChemistTasksNestedInput
-    chemistInteractions?: ChemistInteractionUpdateManyWithoutChemistTaskNestedInput
-  }
-
-  export type ChemistTaskUncheckedUpdateWithoutDcrReportsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    plannerId?: StringFieldUpdateOperationsInput | string
-    employeeId?: StringFieldUpdateOperationsInput | string
-    chemistId?: StringFieldUpdateOperationsInput | string
-    taskDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    startTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    endTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    taskStatus?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    chemistInteractions?: ChemistInteractionUncheckedUpdateManyWithoutChemistTaskNestedInput
-  }
-
-  export type TourPlanTaskUpsertWithoutDcrReportsInput = {
-    update: XOR<TourPlanTaskUpdateWithoutDcrReportsInput, TourPlanTaskUncheckedUpdateWithoutDcrReportsInput>
-    create: XOR<TourPlanTaskCreateWithoutDcrReportsInput, TourPlanTaskUncheckedCreateWithoutDcrReportsInput>
-    where?: TourPlanTaskWhereInput
-  }
-
-  export type TourPlanTaskUpdateToOneWithWhereWithoutDcrReportsInput = {
-    where?: TourPlanTaskWhereInput
-    data: XOR<TourPlanTaskUpdateWithoutDcrReportsInput, TourPlanTaskUncheckedUpdateWithoutDcrReportsInput>
-  }
-
-  export type TourPlanTaskUpdateWithoutDcrReportsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    location?: StringFieldUpdateOperationsInput | string
-    taskDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    startTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    endTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    taskStatus?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    planner?: TaskPlannerUpdateOneRequiredWithoutTourPlanTasksNestedInput
-    employee?: EmployeeUpdateOneRequiredWithoutTourPlanTasksNestedInput
-    tourPlan?: TourPlanUpdateOneRequiredWithoutTourTasksNestedInput
-    tourPlanReports?: TourPlanReportUpdateManyWithoutTourTaskNestedInput
-  }
-
-  export type TourPlanTaskUncheckedUpdateWithoutDcrReportsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    plannerId?: StringFieldUpdateOperationsInput | string
-    employeeId?: StringFieldUpdateOperationsInput | string
-    tourPlanId?: StringFieldUpdateOperationsInput | string
-    location?: StringFieldUpdateOperationsInput | string
-    taskDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    startTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    endTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    taskStatus?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    tourPlanReports?: TourPlanReportUncheckedUpdateManyWithoutTourTaskNestedInput
   }
 
   export type EmployeeCreateWithoutRcpaReportsInput = {
@@ -78789,6 +78450,8 @@ export namespace Prisma {
     competitorDrugName?: string | null
     ownQuantity: number
     competitorQuantity: number
+    ownPackSize: string
+    competitorPackSize: string
     createdAt?: Date | string
     drug?: DrugCreateNestedOneWithoutRcpaDataInput
   }
@@ -78799,6 +78462,8 @@ export namespace Prisma {
     competitorDrugName?: string | null
     ownQuantity: number
     competitorQuantity: number
+    ownPackSize: string
+    competitorPackSize: string
     createdAt?: Date | string
   }
 
@@ -79009,6 +78674,10 @@ export namespace Prisma {
   export type RcpaReportCreateWithoutDrugDataInput = {
     id?: string
     organizationId: string
+    reportingPeriod: $Enums.ReportingPeriod
+    startDate: Date | string
+    endDate: Date | string
+    totalPrescription?: number | null
     remarks?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -79021,6 +78690,10 @@ export namespace Prisma {
     organizationId: string
     employeeId: string
     chemistId: string
+    reportingPeriod: $Enums.ReportingPeriod
+    startDate: Date | string
+    endDate: Date | string
+    totalPrescription?: number | null
     remarks?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -79102,6 +78775,10 @@ export namespace Prisma {
   export type RcpaReportUpdateWithoutDrugDataInput = {
     id?: StringFieldUpdateOperationsInput | string
     organizationId?: StringFieldUpdateOperationsInput | string
+    reportingPeriod?: EnumReportingPeriodFieldUpdateOperationsInput | $Enums.ReportingPeriod
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    totalPrescription?: NullableIntFieldUpdateOperationsInput | number | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -79114,6 +78791,10 @@ export namespace Prisma {
     organizationId?: StringFieldUpdateOperationsInput | string
     employeeId?: StringFieldUpdateOperationsInput | string
     chemistId?: StringFieldUpdateOperationsInput | string
+    reportingPeriod?: EnumReportingPeriodFieldUpdateOperationsInput | $Enums.ReportingPeriod
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    totalPrescription?: NullableIntFieldUpdateOperationsInput | number | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -79508,7 +79189,6 @@ export namespace Prisma {
     employee: EmployeeCreateNestedOneWithoutDoctorTasksInput
     doctor: DoctorCreateNestedOneWithoutDoctorTaskInput
     doctorInteractions?: DoctorInteractionCreateNestedManyWithoutDoctorTaskInput
-    dcrReports?: DcrReportCreateNestedManyWithoutDoctorTaskInput
   }
 
   export type DoctorTaskUncheckedCreateWithoutPlannerInput = {
@@ -79522,7 +79202,6 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     doctorInteractions?: DoctorInteractionUncheckedCreateNestedManyWithoutDoctorTaskInput
-    dcrReports?: DcrReportUncheckedCreateNestedManyWithoutDoctorTaskInput
   }
 
   export type DoctorTaskCreateOrConnectWithoutPlannerInput = {
@@ -79546,7 +79225,6 @@ export namespace Prisma {
     employee: EmployeeCreateNestedOneWithoutChemistTasksInput
     chemist: ChemistCreateNestedOneWithoutChemistTasksInput
     chemistInteractions?: ChemistInteractionCreateNestedManyWithoutChemistTaskInput
-    dcrReports?: DcrReportCreateNestedManyWithoutChemistTaskInput
   }
 
   export type ChemistTaskUncheckedCreateWithoutPlannerInput = {
@@ -79560,7 +79238,6 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     chemistInteractions?: ChemistInteractionUncheckedCreateNestedManyWithoutChemistTaskInput
-    dcrReports?: DcrReportUncheckedCreateNestedManyWithoutChemistTaskInput
   }
 
   export type ChemistTaskCreateOrConnectWithoutPlannerInput = {
@@ -79585,7 +79262,6 @@ export namespace Prisma {
     employee: EmployeeCreateNestedOneWithoutTourPlanTasksInput
     tourPlan: TourPlanCreateNestedOneWithoutTourTasksInput
     tourPlanReports?: TourPlanReportCreateNestedManyWithoutTourTaskInput
-    dcrReports?: DcrReportCreateNestedManyWithoutTourPlanTaskInput
   }
 
   export type TourPlanTaskUncheckedCreateWithoutPlannerInput = {
@@ -79600,7 +79276,6 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     tourPlanReports?: TourPlanReportUncheckedCreateNestedManyWithoutTourTaskInput
-    dcrReports?: DcrReportUncheckedCreateNestedManyWithoutTourPlanTaskInput
   }
 
   export type TourPlanTaskCreateOrConnectWithoutPlannerInput = {
@@ -79995,44 +79670,6 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type DcrReportCreateWithoutDoctorTaskInput = {
-    id?: string
-    organizationId: string
-    taskType?: $Enums.TaskTypeReference | null
-    reportDate: Date | string
-    productsDiscussed?: string | null
-    comments?: string | null
-    isDraft?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    employee: EmployeeCreateNestedOneWithoutDcrReportsInput
-    chemistTask?: ChemistTaskCreateNestedOneWithoutDcrReportsInput
-    tourPlanTask?: TourPlanTaskCreateNestedOneWithoutDcrReportsInput
-  }
-
-  export type DcrReportUncheckedCreateWithoutDoctorTaskInput = {
-    id?: string
-    organizationId: string
-    employeeId: string
-    taskType?: $Enums.TaskTypeReference | null
-    reportDate: Date | string
-    productsDiscussed?: string | null
-    comments?: string | null
-    isDraft?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type DcrReportCreateOrConnectWithoutDoctorTaskInput = {
-    where: DcrReportWhereUniqueInput
-    create: XOR<DcrReportCreateWithoutDoctorTaskInput, DcrReportUncheckedCreateWithoutDoctorTaskInput>
-  }
-
-  export type DcrReportCreateManyDoctorTaskInputEnvelope = {
-    data: DcrReportCreateManyDoctorTaskInput | DcrReportCreateManyDoctorTaskInput[]
-    skipDuplicates?: boolean
-  }
-
   export type TaskPlannerUpsertWithoutDoctorTasksInput = {
     update: XOR<TaskPlannerUpdateWithoutDoctorTasksInput, TaskPlannerUncheckedUpdateWithoutDoctorTasksInput>
     create: XOR<TaskPlannerCreateWithoutDoctorTasksInput, TaskPlannerUncheckedCreateWithoutDoctorTasksInput>
@@ -80248,22 +79885,6 @@ export namespace Prisma {
   export type DoctorInteractionUpdateManyWithWhereWithoutDoctorTaskInput = {
     where: DoctorInteractionScalarWhereInput
     data: XOR<DoctorInteractionUpdateManyMutationInput, DoctorInteractionUncheckedUpdateManyWithoutDoctorTaskInput>
-  }
-
-  export type DcrReportUpsertWithWhereUniqueWithoutDoctorTaskInput = {
-    where: DcrReportWhereUniqueInput
-    update: XOR<DcrReportUpdateWithoutDoctorTaskInput, DcrReportUncheckedUpdateWithoutDoctorTaskInput>
-    create: XOR<DcrReportCreateWithoutDoctorTaskInput, DcrReportUncheckedCreateWithoutDoctorTaskInput>
-  }
-
-  export type DcrReportUpdateWithWhereUniqueWithoutDoctorTaskInput = {
-    where: DcrReportWhereUniqueInput
-    data: XOR<DcrReportUpdateWithoutDoctorTaskInput, DcrReportUncheckedUpdateWithoutDoctorTaskInput>
-  }
-
-  export type DcrReportUpdateManyWithWhereWithoutDoctorTaskInput = {
-    where: DcrReportScalarWhereInput
-    data: XOR<DcrReportUpdateManyMutationInput, DcrReportUncheckedUpdateManyWithoutDoctorTaskInput>
   }
 
   export type TaskPlannerCreateWithoutChemistTasksInput = {
@@ -80499,44 +80120,6 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type DcrReportCreateWithoutChemistTaskInput = {
-    id?: string
-    organizationId: string
-    taskType?: $Enums.TaskTypeReference | null
-    reportDate: Date | string
-    productsDiscussed?: string | null
-    comments?: string | null
-    isDraft?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    employee: EmployeeCreateNestedOneWithoutDcrReportsInput
-    doctorTask?: DoctorTaskCreateNestedOneWithoutDcrReportsInput
-    tourPlanTask?: TourPlanTaskCreateNestedOneWithoutDcrReportsInput
-  }
-
-  export type DcrReportUncheckedCreateWithoutChemistTaskInput = {
-    id?: string
-    organizationId: string
-    employeeId: string
-    taskType?: $Enums.TaskTypeReference | null
-    reportDate: Date | string
-    productsDiscussed?: string | null
-    comments?: string | null
-    isDraft?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type DcrReportCreateOrConnectWithoutChemistTaskInput = {
-    where: DcrReportWhereUniqueInput
-    create: XOR<DcrReportCreateWithoutChemistTaskInput, DcrReportUncheckedCreateWithoutChemistTaskInput>
-  }
-
-  export type DcrReportCreateManyChemistTaskInputEnvelope = {
-    data: DcrReportCreateManyChemistTaskInput | DcrReportCreateManyChemistTaskInput[]
-    skipDuplicates?: boolean
-  }
-
   export type TaskPlannerUpsertWithoutChemistTasksInput = {
     update: XOR<TaskPlannerUpdateWithoutChemistTasksInput, TaskPlannerUncheckedUpdateWithoutChemistTasksInput>
     create: XOR<TaskPlannerCreateWithoutChemistTasksInput, TaskPlannerUncheckedCreateWithoutChemistTasksInput>
@@ -80766,22 +80349,6 @@ export namespace Prisma {
     data: XOR<ChemistInteractionUpdateManyMutationInput, ChemistInteractionUncheckedUpdateManyWithoutChemistTaskInput>
   }
 
-  export type DcrReportUpsertWithWhereUniqueWithoutChemistTaskInput = {
-    where: DcrReportWhereUniqueInput
-    update: XOR<DcrReportUpdateWithoutChemistTaskInput, DcrReportUncheckedUpdateWithoutChemistTaskInput>
-    create: XOR<DcrReportCreateWithoutChemistTaskInput, DcrReportUncheckedCreateWithoutChemistTaskInput>
-  }
-
-  export type DcrReportUpdateWithWhereUniqueWithoutChemistTaskInput = {
-    where: DcrReportWhereUniqueInput
-    data: XOR<DcrReportUpdateWithoutChemistTaskInput, DcrReportUncheckedUpdateWithoutChemistTaskInput>
-  }
-
-  export type DcrReportUpdateManyWithWhereWithoutChemistTaskInput = {
-    where: DcrReportScalarWhereInput
-    data: XOR<DcrReportUpdateManyMutationInput, DcrReportUncheckedUpdateManyWithoutChemistTaskInput>
-  }
-
   export type TaskPlannerCreateWithoutTourPlanTasksInput = {
     id?: string
     startDate: Date | string
@@ -80962,44 +80529,6 @@ export namespace Prisma {
 
   export type TourPlanReportCreateManyTourTaskInputEnvelope = {
     data: TourPlanReportCreateManyTourTaskInput | TourPlanReportCreateManyTourTaskInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type DcrReportCreateWithoutTourPlanTaskInput = {
-    id?: string
-    organizationId: string
-    taskType?: $Enums.TaskTypeReference | null
-    reportDate: Date | string
-    productsDiscussed?: string | null
-    comments?: string | null
-    isDraft?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    employee: EmployeeCreateNestedOneWithoutDcrReportsInput
-    doctorTask?: DoctorTaskCreateNestedOneWithoutDcrReportsInput
-    chemistTask?: ChemistTaskCreateNestedOneWithoutDcrReportsInput
-  }
-
-  export type DcrReportUncheckedCreateWithoutTourPlanTaskInput = {
-    id?: string
-    organizationId: string
-    employeeId: string
-    taskType?: $Enums.TaskTypeReference | null
-    reportDate: Date | string
-    productsDiscussed?: string | null
-    comments?: string | null
-    isDraft?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type DcrReportCreateOrConnectWithoutTourPlanTaskInput = {
-    where: DcrReportWhereUniqueInput
-    create: XOR<DcrReportCreateWithoutTourPlanTaskInput, DcrReportUncheckedCreateWithoutTourPlanTaskInput>
-  }
-
-  export type DcrReportCreateManyTourPlanTaskInputEnvelope = {
-    data: DcrReportCreateManyTourPlanTaskInput | DcrReportCreateManyTourPlanTaskInput[]
     skipDuplicates?: boolean
   }
 
@@ -81204,22 +80733,6 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"TourPlanReport"> | Date | string
   }
 
-  export type DcrReportUpsertWithWhereUniqueWithoutTourPlanTaskInput = {
-    where: DcrReportWhereUniqueInput
-    update: XOR<DcrReportUpdateWithoutTourPlanTaskInput, DcrReportUncheckedUpdateWithoutTourPlanTaskInput>
-    create: XOR<DcrReportCreateWithoutTourPlanTaskInput, DcrReportUncheckedCreateWithoutTourPlanTaskInput>
-  }
-
-  export type DcrReportUpdateWithWhereUniqueWithoutTourPlanTaskInput = {
-    where: DcrReportWhereUniqueInput
-    data: XOR<DcrReportUpdateWithoutTourPlanTaskInput, DcrReportUncheckedUpdateWithoutTourPlanTaskInput>
-  }
-
-  export type DcrReportUpdateManyWithWhereWithoutTourPlanTaskInput = {
-    where: DcrReportScalarWhereInput
-    data: XOR<DcrReportUpdateManyMutationInput, DcrReportUncheckedUpdateManyWithoutTourPlanTaskInput>
-  }
-
   export type TourPlanTaskCreateWithoutTourPlanInput = {
     id?: string
     location: string
@@ -81232,7 +80745,6 @@ export namespace Prisma {
     planner: TaskPlannerCreateNestedOneWithoutTourPlanTasksInput
     employee: EmployeeCreateNestedOneWithoutTourPlanTasksInput
     tourPlanReports?: TourPlanReportCreateNestedManyWithoutTourTaskInput
-    dcrReports?: DcrReportCreateNestedManyWithoutTourPlanTaskInput
   }
 
   export type TourPlanTaskUncheckedCreateWithoutTourPlanInput = {
@@ -81247,7 +80759,6 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     tourPlanReports?: TourPlanReportUncheckedCreateNestedManyWithoutTourTaskInput
-    dcrReports?: DcrReportUncheckedCreateNestedManyWithoutTourPlanTaskInput
   }
 
   export type TourPlanTaskCreateOrConnectWithoutTourPlanInput = {
@@ -81288,7 +80799,6 @@ export namespace Prisma {
     planner: TaskPlannerCreateNestedOneWithoutTourPlanTasksInput
     employee: EmployeeCreateNestedOneWithoutTourPlanTasksInput
     tourPlan: TourPlanCreateNestedOneWithoutTourTasksInput
-    dcrReports?: DcrReportCreateNestedManyWithoutTourPlanTaskInput
   }
 
   export type TourPlanTaskUncheckedCreateWithoutTourPlanReportsInput = {
@@ -81303,7 +80813,6 @@ export namespace Prisma {
     taskStatus?: $Enums.TaskStatus
     createdAt?: Date | string
     updatedAt?: Date | string
-    dcrReports?: DcrReportUncheckedCreateNestedManyWithoutTourPlanTaskInput
   }
 
   export type TourPlanTaskCreateOrConnectWithoutTourPlanReportsInput = {
@@ -81334,7 +80843,6 @@ export namespace Prisma {
     planner?: TaskPlannerUpdateOneRequiredWithoutTourPlanTasksNestedInput
     employee?: EmployeeUpdateOneRequiredWithoutTourPlanTasksNestedInput
     tourPlan?: TourPlanUpdateOneRequiredWithoutTourTasksNestedInput
-    dcrReports?: DcrReportUpdateManyWithoutTourPlanTaskNestedInput
   }
 
   export type TourPlanTaskUncheckedUpdateWithoutTourPlanReportsInput = {
@@ -81349,7 +80857,6 @@ export namespace Prisma {
     taskStatus?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    dcrReports?: DcrReportUncheckedUpdateManyWithoutTourPlanTaskNestedInput
   }
 
   export type ExpenseRoleConfigCreateWithoutExpenseTypeInput = {
@@ -84298,6 +83805,10 @@ export namespace Prisma {
     id?: string
     organizationId: string
     chemistId: string
+    reportingPeriod: $Enums.ReportingPeriod
+    startDate: Date | string
+    endDate: Date | string
+    totalPrescription?: number | null
     remarks?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -84833,6 +84344,7 @@ export namespace Prisma {
   export type DcrReportUpdateWithoutEmployeeInput = {
     id?: StringFieldUpdateOperationsInput | string
     organizationId?: StringFieldUpdateOperationsInput | string
+    taskId?: NullableStringFieldUpdateOperationsInput | string | null
     taskType?: NullableEnumTaskTypeReferenceFieldUpdateOperationsInput | $Enums.TaskTypeReference | null
     reportDate?: DateTimeFieldUpdateOperationsInput | Date | string
     productsDiscussed?: NullableStringFieldUpdateOperationsInput | string | null
@@ -84840,9 +84352,6 @@ export namespace Prisma {
     isDraft?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    doctorTask?: DoctorTaskUpdateOneWithoutDcrReportsNestedInput
-    chemistTask?: ChemistTaskUpdateOneWithoutDcrReportsNestedInput
-    tourPlanTask?: TourPlanTaskUpdateOneWithoutDcrReportsNestedInput
   }
 
   export type DcrReportUncheckedUpdateWithoutEmployeeInput = {
@@ -84874,6 +84383,10 @@ export namespace Prisma {
   export type RcpaReportUpdateWithoutEmployeeInput = {
     id?: StringFieldUpdateOperationsInput | string
     organizationId?: StringFieldUpdateOperationsInput | string
+    reportingPeriod?: EnumReportingPeriodFieldUpdateOperationsInput | $Enums.ReportingPeriod
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    totalPrescription?: NullableIntFieldUpdateOperationsInput | number | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -84885,6 +84398,10 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     organizationId?: StringFieldUpdateOperationsInput | string
     chemistId?: StringFieldUpdateOperationsInput | string
+    reportingPeriod?: EnumReportingPeriodFieldUpdateOperationsInput | $Enums.ReportingPeriod
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    totalPrescription?: NullableIntFieldUpdateOperationsInput | number | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -84895,6 +84412,10 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     organizationId?: StringFieldUpdateOperationsInput | string
     chemistId?: StringFieldUpdateOperationsInput | string
+    reportingPeriod?: EnumReportingPeriodFieldUpdateOperationsInput | $Enums.ReportingPeriod
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    totalPrescription?: NullableIntFieldUpdateOperationsInput | number | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -85518,7 +85039,6 @@ export namespace Prisma {
     planner?: TaskPlannerUpdateOneRequiredWithoutDoctorTasksNestedInput
     doctor?: DoctorUpdateOneRequiredWithoutDoctorTaskNestedInput
     doctorInteractions?: DoctorInteractionUpdateManyWithoutDoctorTaskNestedInput
-    dcrReports?: DcrReportUpdateManyWithoutDoctorTaskNestedInput
   }
 
   export type DoctorTaskUncheckedUpdateWithoutEmployeeInput = {
@@ -85532,7 +85052,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     doctorInteractions?: DoctorInteractionUncheckedUpdateManyWithoutDoctorTaskNestedInput
-    dcrReports?: DcrReportUncheckedUpdateManyWithoutDoctorTaskNestedInput
   }
 
   export type DoctorTaskUncheckedUpdateManyWithoutEmployeeInput = {
@@ -85558,7 +85077,6 @@ export namespace Prisma {
     planner?: TaskPlannerUpdateOneRequiredWithoutChemistTasksNestedInput
     chemist?: ChemistUpdateOneRequiredWithoutChemistTasksNestedInput
     chemistInteractions?: ChemistInteractionUpdateManyWithoutChemistTaskNestedInput
-    dcrReports?: DcrReportUpdateManyWithoutChemistTaskNestedInput
   }
 
   export type ChemistTaskUncheckedUpdateWithoutEmployeeInput = {
@@ -85572,7 +85090,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     chemistInteractions?: ChemistInteractionUncheckedUpdateManyWithoutChemistTaskNestedInput
-    dcrReports?: DcrReportUncheckedUpdateManyWithoutChemistTaskNestedInput
   }
 
   export type ChemistTaskUncheckedUpdateManyWithoutEmployeeInput = {
@@ -85599,7 +85116,6 @@ export namespace Prisma {
     planner?: TaskPlannerUpdateOneRequiredWithoutTourPlanTasksNestedInput
     tourPlan?: TourPlanUpdateOneRequiredWithoutTourTasksNestedInput
     tourPlanReports?: TourPlanReportUpdateManyWithoutTourTaskNestedInput
-    dcrReports?: DcrReportUpdateManyWithoutTourPlanTaskNestedInput
   }
 
   export type TourPlanTaskUncheckedUpdateWithoutEmployeeInput = {
@@ -85614,7 +85130,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tourPlanReports?: TourPlanReportUncheckedUpdateManyWithoutTourTaskNestedInput
-    dcrReports?: DcrReportUncheckedUpdateManyWithoutTourPlanTaskNestedInput
   }
 
   export type TourPlanTaskUncheckedUpdateManyWithoutEmployeeInput = {
@@ -86655,7 +86170,6 @@ export namespace Prisma {
     planner?: TaskPlannerUpdateOneRequiredWithoutDoctorTasksNestedInput
     employee?: EmployeeUpdateOneRequiredWithoutDoctorTasksNestedInput
     doctorInteractions?: DoctorInteractionUpdateManyWithoutDoctorTaskNestedInput
-    dcrReports?: DcrReportUpdateManyWithoutDoctorTaskNestedInput
   }
 
   export type DoctorTaskUncheckedUpdateWithoutDoctorInput = {
@@ -86669,7 +86183,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     doctorInteractions?: DoctorInteractionUncheckedUpdateManyWithoutDoctorTaskNestedInput
-    dcrReports?: DcrReportUncheckedUpdateManyWithoutDoctorTaskNestedInput
   }
 
   export type DoctorTaskUncheckedUpdateManyWithoutDoctorInput = {
@@ -86734,6 +86247,8 @@ export namespace Prisma {
     competitorDrugName?: string | null
     ownQuantity: number
     competitorQuantity: number
+    ownPackSize: string
+    competitorPackSize: string
     createdAt?: Date | string
   }
 
@@ -86786,6 +86301,8 @@ export namespace Prisma {
     competitorDrugName?: NullableStringFieldUpdateOperationsInput | string | null
     ownQuantity?: IntFieldUpdateOperationsInput | number
     competitorQuantity?: IntFieldUpdateOperationsInput | number
+    ownPackSize?: StringFieldUpdateOperationsInput | string
+    competitorPackSize?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     rcpaReport?: RcpaReportUpdateOneRequiredWithoutDrugDataNestedInput
   }
@@ -86796,6 +86313,8 @@ export namespace Prisma {
     competitorDrugName?: NullableStringFieldUpdateOperationsInput | string | null
     ownQuantity?: IntFieldUpdateOperationsInput | number
     competitorQuantity?: IntFieldUpdateOperationsInput | number
+    ownPackSize?: StringFieldUpdateOperationsInput | string
+    competitorPackSize?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -86805,6 +86324,8 @@ export namespace Prisma {
     competitorDrugName?: NullableStringFieldUpdateOperationsInput | string | null
     ownQuantity?: IntFieldUpdateOperationsInput | number
     competitorQuantity?: IntFieldUpdateOperationsInput | number
+    ownPackSize?: StringFieldUpdateOperationsInput | string
+    competitorPackSize?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -86916,6 +86437,10 @@ export namespace Prisma {
     id?: string
     organizationId: string
     employeeId: string
+    reportingPeriod: $Enums.ReportingPeriod
+    startDate: Date | string
+    endDate: Date | string
+    totalPrescription?: number | null
     remarks?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -87064,6 +86589,10 @@ export namespace Prisma {
   export type RcpaReportUpdateWithoutChemistInput = {
     id?: StringFieldUpdateOperationsInput | string
     organizationId?: StringFieldUpdateOperationsInput | string
+    reportingPeriod?: EnumReportingPeriodFieldUpdateOperationsInput | $Enums.ReportingPeriod
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    totalPrescription?: NullableIntFieldUpdateOperationsInput | number | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -87075,6 +86604,10 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     organizationId?: StringFieldUpdateOperationsInput | string
     employeeId?: StringFieldUpdateOperationsInput | string
+    reportingPeriod?: EnumReportingPeriodFieldUpdateOperationsInput | $Enums.ReportingPeriod
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    totalPrescription?: NullableIntFieldUpdateOperationsInput | number | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -87085,6 +86618,10 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     organizationId?: StringFieldUpdateOperationsInput | string
     employeeId?: StringFieldUpdateOperationsInput | string
+    reportingPeriod?: EnumReportingPeriodFieldUpdateOperationsInput | $Enums.ReportingPeriod
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    totalPrescription?: NullableIntFieldUpdateOperationsInput | number | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -87101,7 +86638,6 @@ export namespace Prisma {
     planner?: TaskPlannerUpdateOneRequiredWithoutChemistTasksNestedInput
     employee?: EmployeeUpdateOneRequiredWithoutChemistTasksNestedInput
     chemistInteractions?: ChemistInteractionUpdateManyWithoutChemistTaskNestedInput
-    dcrReports?: DcrReportUpdateManyWithoutChemistTaskNestedInput
   }
 
   export type ChemistTaskUncheckedUpdateWithoutChemistInput = {
@@ -87115,7 +86651,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     chemistInteractions?: ChemistInteractionUncheckedUpdateManyWithoutChemistTaskNestedInput
-    dcrReports?: DcrReportUncheckedUpdateManyWithoutChemistTaskNestedInput
   }
 
   export type ChemistTaskUncheckedUpdateManyWithoutChemistInput = {
@@ -87168,6 +86703,8 @@ export namespace Prisma {
     competitorDrugName?: string | null
     ownQuantity: number
     competitorQuantity: number
+    ownPackSize: string
+    competitorPackSize: string
     createdAt?: Date | string
   }
 
@@ -87176,6 +86713,8 @@ export namespace Prisma {
     competitorDrugName?: NullableStringFieldUpdateOperationsInput | string | null
     ownQuantity?: IntFieldUpdateOperationsInput | number
     competitorQuantity?: IntFieldUpdateOperationsInput | number
+    ownPackSize?: StringFieldUpdateOperationsInput | string
+    competitorPackSize?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     drug?: DrugUpdateOneWithoutRcpaDataNestedInput
   }
@@ -87186,6 +86725,8 @@ export namespace Prisma {
     competitorDrugName?: NullableStringFieldUpdateOperationsInput | string | null
     ownQuantity?: IntFieldUpdateOperationsInput | number
     competitorQuantity?: IntFieldUpdateOperationsInput | number
+    ownPackSize?: StringFieldUpdateOperationsInput | string
+    competitorPackSize?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -87195,6 +86736,8 @@ export namespace Prisma {
     competitorDrugName?: NullableStringFieldUpdateOperationsInput | string | null
     ownQuantity?: IntFieldUpdateOperationsInput | number
     competitorQuantity?: IntFieldUpdateOperationsInput | number
+    ownPackSize?: StringFieldUpdateOperationsInput | string
+    competitorPackSize?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -87246,7 +86789,6 @@ export namespace Prisma {
     employee?: EmployeeUpdateOneRequiredWithoutDoctorTasksNestedInput
     doctor?: DoctorUpdateOneRequiredWithoutDoctorTaskNestedInput
     doctorInteractions?: DoctorInteractionUpdateManyWithoutDoctorTaskNestedInput
-    dcrReports?: DcrReportUpdateManyWithoutDoctorTaskNestedInput
   }
 
   export type DoctorTaskUncheckedUpdateWithoutPlannerInput = {
@@ -87260,7 +86802,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     doctorInteractions?: DoctorInteractionUncheckedUpdateManyWithoutDoctorTaskNestedInput
-    dcrReports?: DcrReportUncheckedUpdateManyWithoutDoctorTaskNestedInput
   }
 
   export type DoctorTaskUncheckedUpdateManyWithoutPlannerInput = {
@@ -87286,7 +86827,6 @@ export namespace Prisma {
     employee?: EmployeeUpdateOneRequiredWithoutChemistTasksNestedInput
     chemist?: ChemistUpdateOneRequiredWithoutChemistTasksNestedInput
     chemistInteractions?: ChemistInteractionUpdateManyWithoutChemistTaskNestedInput
-    dcrReports?: DcrReportUpdateManyWithoutChemistTaskNestedInput
   }
 
   export type ChemistTaskUncheckedUpdateWithoutPlannerInput = {
@@ -87300,7 +86840,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     chemistInteractions?: ChemistInteractionUncheckedUpdateManyWithoutChemistTaskNestedInput
-    dcrReports?: DcrReportUncheckedUpdateManyWithoutChemistTaskNestedInput
   }
 
   export type ChemistTaskUncheckedUpdateManyWithoutPlannerInput = {
@@ -87327,7 +86866,6 @@ export namespace Prisma {
     employee?: EmployeeUpdateOneRequiredWithoutTourPlanTasksNestedInput
     tourPlan?: TourPlanUpdateOneRequiredWithoutTourTasksNestedInput
     tourPlanReports?: TourPlanReportUpdateManyWithoutTourTaskNestedInput
-    dcrReports?: DcrReportUpdateManyWithoutTourPlanTaskNestedInput
   }
 
   export type TourPlanTaskUncheckedUpdateWithoutPlannerInput = {
@@ -87342,7 +86880,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tourPlanReports?: TourPlanReportUncheckedUpdateManyWithoutTourTaskNestedInput
-    dcrReports?: DcrReportUncheckedUpdateManyWithoutTourPlanTaskNestedInput
   }
 
   export type TourPlanTaskUncheckedUpdateManyWithoutPlannerInput = {
@@ -87371,19 +86908,6 @@ export namespace Prisma {
     comments?: string | null
     rating?: number | null
     createdAt?: Date | string
-  }
-
-  export type DcrReportCreateManyDoctorTaskInput = {
-    id?: string
-    organizationId: string
-    employeeId: string
-    taskType?: $Enums.TaskTypeReference | null
-    reportDate: Date | string
-    productsDiscussed?: string | null
-    comments?: string | null
-    isDraft?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
   }
 
   export type DoctorInteractionUpdateWithoutDoctorTaskInput = {
@@ -87433,47 +86957,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type DcrReportUpdateWithoutDoctorTaskInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    organizationId?: StringFieldUpdateOperationsInput | string
-    taskType?: NullableEnumTaskTypeReferenceFieldUpdateOperationsInput | $Enums.TaskTypeReference | null
-    reportDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    productsDiscussed?: NullableStringFieldUpdateOperationsInput | string | null
-    comments?: NullableStringFieldUpdateOperationsInput | string | null
-    isDraft?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    employee?: EmployeeUpdateOneRequiredWithoutDcrReportsNestedInput
-    chemistTask?: ChemistTaskUpdateOneWithoutDcrReportsNestedInput
-    tourPlanTask?: TourPlanTaskUpdateOneWithoutDcrReportsNestedInput
-  }
-
-  export type DcrReportUncheckedUpdateWithoutDoctorTaskInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    organizationId?: StringFieldUpdateOperationsInput | string
-    employeeId?: StringFieldUpdateOperationsInput | string
-    taskType?: NullableEnumTaskTypeReferenceFieldUpdateOperationsInput | $Enums.TaskTypeReference | null
-    reportDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    productsDiscussed?: NullableStringFieldUpdateOperationsInput | string | null
-    comments?: NullableStringFieldUpdateOperationsInput | string | null
-    isDraft?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type DcrReportUncheckedUpdateManyWithoutDoctorTaskInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    organizationId?: StringFieldUpdateOperationsInput | string
-    employeeId?: StringFieldUpdateOperationsInput | string
-    taskType?: NullableEnumTaskTypeReferenceFieldUpdateOperationsInput | $Enums.TaskTypeReference | null
-    reportDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    productsDiscussed?: NullableStringFieldUpdateOperationsInput | string | null
-    comments?: NullableStringFieldUpdateOperationsInput | string | null
-    isDraft?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
   export type ChemistInteractionCreateManyChemistTaskInput = {
     id?: string
     chemistId: string
@@ -87486,19 +86969,6 @@ export namespace Prisma {
     comments?: string | null
     rating?: number | null
     createdAt?: Date | string
-  }
-
-  export type DcrReportCreateManyChemistTaskInput = {
-    id?: string
-    organizationId: string
-    employeeId: string
-    taskType?: $Enums.TaskTypeReference | null
-    reportDate: Date | string
-    productsDiscussed?: string | null
-    comments?: string | null
-    isDraft?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
   }
 
   export type ChemistInteractionUpdateWithoutChemistTaskInput = {
@@ -87543,66 +87013,12 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type DcrReportUpdateWithoutChemistTaskInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    organizationId?: StringFieldUpdateOperationsInput | string
-    taskType?: NullableEnumTaskTypeReferenceFieldUpdateOperationsInput | $Enums.TaskTypeReference | null
-    reportDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    productsDiscussed?: NullableStringFieldUpdateOperationsInput | string | null
-    comments?: NullableStringFieldUpdateOperationsInput | string | null
-    isDraft?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    employee?: EmployeeUpdateOneRequiredWithoutDcrReportsNestedInput
-    doctorTask?: DoctorTaskUpdateOneWithoutDcrReportsNestedInput
-    tourPlanTask?: TourPlanTaskUpdateOneWithoutDcrReportsNestedInput
-  }
-
-  export type DcrReportUncheckedUpdateWithoutChemistTaskInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    organizationId?: StringFieldUpdateOperationsInput | string
-    employeeId?: StringFieldUpdateOperationsInput | string
-    taskType?: NullableEnumTaskTypeReferenceFieldUpdateOperationsInput | $Enums.TaskTypeReference | null
-    reportDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    productsDiscussed?: NullableStringFieldUpdateOperationsInput | string | null
-    comments?: NullableStringFieldUpdateOperationsInput | string | null
-    isDraft?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type DcrReportUncheckedUpdateManyWithoutChemistTaskInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    organizationId?: StringFieldUpdateOperationsInput | string
-    employeeId?: StringFieldUpdateOperationsInput | string
-    taskType?: NullableEnumTaskTypeReferenceFieldUpdateOperationsInput | $Enums.TaskTypeReference | null
-    reportDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    productsDiscussed?: NullableStringFieldUpdateOperationsInput | string | null
-    comments?: NullableStringFieldUpdateOperationsInput | string | null
-    isDraft?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
   export type TourPlanReportCreateManyTourTaskInput = {
     id?: string
     interactionTime?: Date | string
     purpose?: string | null
     outcome?: string | null
     comments?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type DcrReportCreateManyTourPlanTaskInput = {
-    id?: string
-    organizationId: string
-    employeeId: string
-    taskType?: $Enums.TaskTypeReference | null
-    reportDate: Date | string
-    productsDiscussed?: string | null
-    comments?: string | null
-    isDraft?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -87637,47 +87053,6 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type DcrReportUpdateWithoutTourPlanTaskInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    organizationId?: StringFieldUpdateOperationsInput | string
-    taskType?: NullableEnumTaskTypeReferenceFieldUpdateOperationsInput | $Enums.TaskTypeReference | null
-    reportDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    productsDiscussed?: NullableStringFieldUpdateOperationsInput | string | null
-    comments?: NullableStringFieldUpdateOperationsInput | string | null
-    isDraft?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    employee?: EmployeeUpdateOneRequiredWithoutDcrReportsNestedInput
-    doctorTask?: DoctorTaskUpdateOneWithoutDcrReportsNestedInput
-    chemistTask?: ChemistTaskUpdateOneWithoutDcrReportsNestedInput
-  }
-
-  export type DcrReportUncheckedUpdateWithoutTourPlanTaskInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    organizationId?: StringFieldUpdateOperationsInput | string
-    employeeId?: StringFieldUpdateOperationsInput | string
-    taskType?: NullableEnumTaskTypeReferenceFieldUpdateOperationsInput | $Enums.TaskTypeReference | null
-    reportDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    productsDiscussed?: NullableStringFieldUpdateOperationsInput | string | null
-    comments?: NullableStringFieldUpdateOperationsInput | string | null
-    isDraft?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type DcrReportUncheckedUpdateManyWithoutTourPlanTaskInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    organizationId?: StringFieldUpdateOperationsInput | string
-    employeeId?: StringFieldUpdateOperationsInput | string
-    taskType?: NullableEnumTaskTypeReferenceFieldUpdateOperationsInput | $Enums.TaskTypeReference | null
-    reportDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    productsDiscussed?: NullableStringFieldUpdateOperationsInput | string | null
-    comments?: NullableStringFieldUpdateOperationsInput | string | null
-    isDraft?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
   export type TourPlanTaskCreateManyTourPlanInput = {
     id?: string
     plannerId: string
@@ -87703,7 +87078,6 @@ export namespace Prisma {
     planner?: TaskPlannerUpdateOneRequiredWithoutTourPlanTasksNestedInput
     employee?: EmployeeUpdateOneRequiredWithoutTourPlanTasksNestedInput
     tourPlanReports?: TourPlanReportUpdateManyWithoutTourTaskNestedInput
-    dcrReports?: DcrReportUpdateManyWithoutTourPlanTaskNestedInput
   }
 
   export type TourPlanTaskUncheckedUpdateWithoutTourPlanInput = {
@@ -87718,7 +87092,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tourPlanReports?: TourPlanReportUncheckedUpdateManyWithoutTourTaskNestedInput
-    dcrReports?: DcrReportUncheckedUpdateManyWithoutTourPlanTaskNestedInput
   }
 
   export type TourPlanTaskUncheckedUpdateManyWithoutTourPlanInput = {

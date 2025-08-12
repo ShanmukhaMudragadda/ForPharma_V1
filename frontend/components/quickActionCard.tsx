@@ -29,9 +29,7 @@ export default function QuickActionCard({ icon, label, color, iconColor, onPress
         elevation: 3,
       }}
       onPress={onPress}
-      activeOpacity={0.7}
-
-    >
+      activeOpacity={0.7} >
       <StyledView
         className="w-10 h-12 rounded-xl items-center justify-center mb-3"
         style={{ backgroundColor: color }}
