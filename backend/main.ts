@@ -8,6 +8,7 @@ import doctorRoutes from './src/routes/doctorRoutes.ts'
 import chemistRoutes from './src/routes/chemistRoutes.ts'
 import { cleanupMiddleware } from './src/middlewares/tenantMiddleware.ts';
 import orderRoutes from './src/routes/orderRoutes.ts';
+import drugRoutes from './src/routes/drugRoutes.ts'
 
 
 
@@ -57,6 +58,9 @@ app.use('/api/chemists', chemistRoutes);
 
 // Order Routes
 app.use('/api/orders', orderRoutes);
+
+// Drug Routes
+app.use('/api/drugs', drugRoutes);
 
 
 
