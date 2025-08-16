@@ -75,3 +75,113 @@ CHECK (
 -- 11. Add comments for documentation
 COMMENT ON COLUMN "dcr_reports"."task_id" IS 'Polymorphic reference to task ID (can be doctor_task, chemist_task, or tour_plan_task)';
 COMMENT ON COLUMN "dcr_reports"."task_type" IS 'Type of task being referenced (DOCTOR_TASK, CHEMIST_TASK, or TOUR_PLAN_TASK)';
+
+
+-- Migration: V003_rename_doctor_distribution_to_sample_distribution
+-- Description: Rename DoctorDistribution tables to SampleDistribution and update foreign key relationships
+-- Date: 2025-01-16
+
+-- Migration: V003_rename_doctor_distribution_to_sample_distribution
+-- Description: Rename DoctorDistribution tables to SampleDistribution, update foreign key relationships, and remove redundant drug_id/gift_id columns
+-- Date: 2025-01-16
+
+-- 1. Drop existing foreign key constraints from doctor_distributions table
+ALTER TABLE "doctor_distributions" DROP CONSTRAINT "doctor_distributions_doctor_interaction_id_fkey";
+ALTER TABLE "doctor_distributions" DROP CONSTRAINT "doctor_distributions_employee_id_fkey";
+
+-- 2. Drop existing foreign key constraints from doctor_distribution_drug_items table
+ALTER TABLE "doctor_distribution_drug_items" DROP CONSTRAINT "doctor_distribution_drug_items_doctor_distribution_id_fkey";
+ALTER TABLE "doctor_distribution_drug_items" DROP CONSTRAINT "doctor_distribution_drug_items_drug_id_fkey";
+ALTER TABLE "doctor_distribution_drug_items" DROP CONSTRAINT "doctor_distribution_drug_items_from_inventory_id_fkey";
+
+-- 3. Drop existing foreign key constraints from doctor_distribution_gift_items table
+ALTER TABLE "doctor_distribution_gift_items" DROP CONSTRAINT "doctor_distribution_gift_items_doctor_distribution_id_fkey";
+ALTER TABLE "doctor_distribution_gift_items" DROP CONSTRAINT "doctor_distribution_gift_items_gift_id_fkey";
+ALTER TABLE "doctor_distribution_gift_items" DROP CONSTRAINT "doctor_distribution_gift_items_from_inventory_id_fkey";
+
+-- 4. Rename tables
+ALTER TABLE "doctor_distributions" RENAME TO "sample_distributions";
+ALTER TABLE "doctor_distribution_drug_items" RENAME TO "sample_distribution_drug_items";
+ALTER TABLE "doctor_distribution_gift_items" RENAME TO "sample_distribution_gift_items";
+
+-- 5. Rename columns in sample_distributions table and add new column
+ALTER TABLE "sample_distributions" RENAME COLUMN "doctor_interaction_id" TO "doctor_id";
+ALTER TABLE "sample_distributions" ADD COLUMN "chemist_id" TEXT;
+
+-- 6. Update the doctor_id column to be nullable
+ALTER TABLE "sample_distributions" ALTER COLUMN "doctor_id" DROP NOT NULL;
+
+-- 7. Rename foreign key columns in child tables
+ALTER TABLE "sample_distribution_drug_items" RENAME COLUMN "doctor_distribution_id" TO "sample_distribution_id";
+ALTER TABLE "sample_distribution_gift_items" RENAME COLUMN "doctor_distribution_id" TO "sample_distribution_id";
+
+-- 8. Remove redundant drug_id column from sample_distribution_drug_items
+ALTER TABLE "sample_distribution_drug_items" DROP COLUMN "drug_id";
+
+-- 9. Remove redundant gift_id column from sample_distribution_gift_items
+ALTER TABLE "sample_distribution_gift_items" DROP COLUMN "gift_id";
+
+-- 10. Create new foreign key constraints for sample_distributions table
+ALTER TABLE "sample_distributions" 
+ADD CONSTRAINT "sample_distributions_doctor_id_fkey" 
+FOREIGN KEY ("doctor_id") REFERENCES "doctors"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+ALTER TABLE "sample_distributions" 
+ADD CONSTRAINT "sample_distributions_chemist_id_fkey" 
+FOREIGN KEY ("chemist_id") REFERENCES "chemists"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+ALTER TABLE "sample_distributions" 
+ADD CONSTRAINT "sample_distributions_employee_id_fkey" 
+FOREIGN KEY ("employee_id") REFERENCES "employees"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- 11. Create new foreign key constraints for sample_distribution_drug_items table
+ALTER TABLE "sample_distribution_drug_items" 
+ADD CONSTRAINT "sample_distribution_drug_items_sample_distribution_id_fkey" 
+FOREIGN KEY ("sample_distribution_id") REFERENCES "sample_distributions"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE "sample_distribution_drug_items" 
+ADD CONSTRAINT "sample_distribution_drug_items_from_inventory_id_fkey" 
+FOREIGN KEY ("from_inventory_id") REFERENCES "user_drug_inventory"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- 12. Create new foreign key constraints for sample_distribution_gift_items table
+ALTER TABLE "sample_distribution_gift_items" 
+ADD CONSTRAINT "sample_distribution_gift_items_sample_distribution_id_fkey" 
+FOREIGN KEY ("sample_distribution_id") REFERENCES "sample_distributions"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE "sample_distribution_gift_items" 
+ADD CONSTRAINT "sample_distribution_gift_items_from_inventory_id_fkey" 
+FOREIGN KEY ("from_inventory_id") REFERENCES "user_gift_inventory"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- 13. Add check constraint to ensure either doctor_id or chemist_id is provided (but not both)
+ALTER TABLE "sample_distributions" 
+ADD CONSTRAINT "sample_distributions_recipient_check" 
+CHECK (
+    ("doctor_id" IS NOT NULL AND "chemist_id" IS NULL) 
+    OR 
+    ("doctor_id" IS NULL AND "chemist_id" IS NOT NULL)
+);
+
+-- 14. Create indexes for better query performance
+CREATE INDEX "sample_distributions_doctor_id_idx" ON "sample_distributions"("doctor_id");
+CREATE INDEX "sample_distributions_chemist_id_idx" ON "sample_distributions"("chemist_id");
+CREATE INDEX "sample_distributions_employee_id_idx" ON "sample_distributions"("employee_id");
+CREATE INDEX "sample_distributions_distributed_at_idx" ON "sample_distributions"("distributed_at");
+
+CREATE INDEX "sample_distribution_drug_items_sample_distribution_id_idx" ON "sample_distribution_drug_items"("sample_distribution_id");
+CREATE INDEX "sample_distribution_drug_items_from_inventory_id_idx" ON "sample_distribution_drug_items"("from_inventory_id");
+
+CREATE INDEX "sample_distribution_gift_items_sample_distribution_id_idx" ON "sample_distribution_gift_items"("sample_distribution_id");
+CREATE INDEX "sample_distribution_gift_items_from_inventory_id_idx" ON "sample_distribution_gift_items"("from_inventory_id");
+
+-- 15. Update any existing data to populate doctor_id from doctor_interactions
+-- This assumes you want to get the doctor_id from the doctor_interaction that was previously referenced
+UPDATE "sample_distributions" 
+SET "doctor_id" = (
+    SELECT "doctor_id" 
+    FROM "doctor_interactions" 
+    WHERE "doctor_interactions"."id" = "sample_distributions"."doctor_id"
+);
+
+-- 16. Drop old indexes that are no longer needed (related to removed drug_id and gift_id columns)
+DROP INDEX IF EXISTS "doctor_distribution_drug_items_drug_id_idx";
+DROP INDEX IF EXISTS "doctor_distribution_gift_items_gift_id_idx";

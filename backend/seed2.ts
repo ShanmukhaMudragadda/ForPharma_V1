@@ -12,6 +12,51 @@ async function clearAllData() {
         // Clear tenant database tables in correct order to avoid foreign key constraints
         console.log('Clearing tenant database...');
 
+        // Clear sample distribution related tables (NEW - in correct order)
+        try {
+            await tenantPrisma.sampleDistributionGiftItem.deleteMany();
+            console.log('  ✓ Cleared sample distribution gift items');
+        } catch (error) {
+            console.log('  ⚠ Sample distribution gift items table not found or already empty');
+        }
+
+        try {
+            await tenantPrisma.sampleDistributionDrugItem.deleteMany();
+            console.log('  ✓ Cleared sample distribution drug items');
+        } catch (error) {
+            console.log('  ⚠ Sample distribution drug items table not found or already empty');
+        }
+
+        try {
+            await tenantPrisma.sampleDistribution.deleteMany();
+            console.log('  ✓ Cleared sample distributions');
+        } catch (error) {
+            console.log('  ⚠ Sample distributions table not found or already empty');
+        }
+
+        // Clear inventory tables (NEW)
+        try {
+            await tenantPrisma.userGiftInventory.deleteMany();
+            console.log('  ✓ Cleared user gift inventory');
+        } catch (error) {
+            console.log('  ⚠ User gift inventory table not found or already empty');
+        }
+
+        try {
+            await tenantPrisma.userDrugInventory.deleteMany();
+            console.log('  ✓ Cleared user drug inventory');
+        } catch (error) {
+            console.log('  ⚠ User drug inventory table not found or already empty');
+        }
+
+        // Clear gifts table (NEW)
+        try {
+            await tenantPrisma.gift.deleteMany();
+            console.log('  ✓ Cleared gifts');
+        } catch (error) {
+            console.log('  ⚠ Gifts table not found or already empty');
+        }
+
         // Clear DCR related tables
         try {
             await tenantPrisma.dcrReport.deleteMany();
@@ -241,9 +286,80 @@ async function clearAllData() {
     }
 }
 
-// Run the clearing
-clearAllData()
-    .catch((e) => {
-        console.error(e);
-        process.exit(1);
-    });
+async function clearOnlySampleDistributionData() {
+    try {
+        console.log('🧹 Clearing only sample distribution related data...\n');
+
+        // Clear sample distribution related tables only
+        console.log('Clearing sample distribution data...');
+
+        try {
+            await tenantPrisma.sampleDistributionGiftItem.deleteMany();
+            console.log('  ✓ Cleared sample distribution gift items');
+        } catch (error) {
+            console.log('  ⚠ Sample distribution gift items table not found or already empty');
+        }
+
+        try {
+            await tenantPrisma.sampleDistributionDrugItem.deleteMany();
+            console.log('  ✓ Cleared sample distribution drug items');
+        } catch (error) {
+            console.log('  ⚠ Sample distribution drug items table not found or already empty');
+        }
+
+        try {
+            await tenantPrisma.sampleDistribution.deleteMany();
+            console.log('  ✓ Cleared sample distributions');
+        } catch (error) {
+            console.log('  ⚠ Sample distributions table not found or already empty');
+        }
+
+        try {
+            await tenantPrisma.userGiftInventory.deleteMany();
+            console.log('  ✓ Cleared user gift inventory');
+        } catch (error) {
+            console.log('  ⚠ User gift inventory table not found or already empty');
+        }
+
+        try {
+            await tenantPrisma.userDrugInventory.deleteMany();
+            console.log('  ✓ Cleared user drug inventory');
+        } catch (error) {
+            console.log('  ⚠ User drug inventory table not found or already empty');
+        }
+
+        try {
+            await tenantPrisma.gift.deleteMany();
+            console.log('  ✓ Cleared gifts');
+        } catch (error) {
+            console.log('  ⚠ Gifts table not found or already empty');
+        }
+
+        console.log('\n✅ Sample distribution data cleared successfully!');
+
+    } catch (error) {
+        console.error('❌ Error clearing sample distribution data:', error);
+        throw error;
+    } finally {
+        await tenantPrisma.$disconnect();
+    }
+}
+
+// Check command line arguments
+const args = process.argv.slice(2);
+const onlySampleDistribution = args.includes('--sample-only');
+
+// Run the appropriate clearing function
+if (onlySampleDistribution) {
+    clearOnlySampleDistributionData()
+        .catch((e) => {
+            console.error(e);
+            process.exit(1);
+        });
+} else {
+    clearAllData()
+        .catch((e) => {
+            console.error(e);
+            process.exit(1);
+        });
+}

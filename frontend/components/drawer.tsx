@@ -28,7 +28,7 @@ export default function Drawer({ isOpen, onClose }: DrawerProps) {
     { icon: 'clipboard-outline', label: 'Orders', route: '/(tabs)/orders', color: '#FFA000' },
     { icon: 'analytics-outline', label: 'RCPA', route: '/(tabs)/rcpa', color: '#8E44AD' },
     { icon: 'document-text-outline', label: 'DCR', route: '/(tabs)/createDcr', color: '#FF6B35' },
-    { icon: 'stats-chart-outline', label: 'Reports', route: '/(tabs)/reports', color: '#DC3545' },
+    { icon: 'cube-outline', label: 'My Inventory', route: '/(tabs)/inventory', color: '#DC3545' },
     { icon: 'calendar-outline', label: 'Tour Plan', route: '/(tabs)/tour-plan', color: '#6F42C1' },
     { icon: 'wallet-outline', label: 'Expenses', route: '/(tabs)/expenses', color: '#17A2B8' },
   ];

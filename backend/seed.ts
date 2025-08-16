@@ -60,6 +60,130 @@ const drugData = [
     { name: 'B-Complex Forte', composition: 'Vitamin B Complex', category: 'Vitamin', manufacturer: 'MediCare Pharma' }
 ];
 
+// Gift data with images (Created by Admin)
+const giftData = [
+    {
+        name: 'Medical Stethoscope',
+        description: 'High-quality dual-head stethoscope for medical professionals',
+        unitCost: 2500.00,
+        specifications: {
+            material: 'Stainless Steel',
+            weight: '150g',
+            tubeLength: '56cm',
+            warranty: '2 years'
+        },
+        images: [
+            'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=400',
+            'https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?w=400'
+        ]
+    },
+    {
+        name: 'Digital Blood Pressure Monitor',
+        description: 'Automatic digital BP monitor with large LCD display',
+        unitCost: 3500.00,
+        specifications: {
+            type: 'Digital Automatic',
+            cuffSize: 'Standard Adult',
+            memory: '90 readings',
+            powerSource: 'AC Adapter/Batteries'
+        },
+        images: [
+            'https://images.unsplash.com/photo-1584362917165-526a968579e8?w=400',
+            'https://images.unsplash.com/photo-1559757175-0eb30cd8c063?w=400'
+        ]
+    },
+    {
+        name: 'Medical Reference Book Set',
+        description: 'Complete set of medical reference books for practitioners',
+        unitCost: 1500.00,
+        specifications: {
+            volumes: '3 Books',
+            pages: '2500+ pages total',
+            binding: 'Hardcover',
+            language: 'English'
+        },
+        images: [
+            'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=400',
+            'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400'
+        ]
+    },
+    {
+        name: 'Premium Pen Set',
+        description: 'Elegant metal pen set with company branding',
+        unitCost: 800.00,
+        specifications: {
+            material: 'Stainless Steel',
+            inkType: 'Blue/Black',
+            packaging: 'Gift Box',
+            engraving: 'Company Logo'
+        },
+        images: [
+            'https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?w=400',
+            'https://images.unsplash.com/photo-1586953135024-ca0b06b7ad43?w=400'
+        ]
+    },
+    {
+        name: 'Medical Calculator',
+        description: 'Scientific calculator with medical functions',
+        unitCost: 1200.00,
+        specifications: {
+            functions: '350+ functions',
+            display: 'LCD with backlight',
+            battery: 'Solar + Battery',
+            memory: '9 variables'
+        },
+        images: [
+            'https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=400',
+            'https://images.unsplash.com/photo-1587145820266-a5951ee6f620?w=400'
+        ]
+    },
+    {
+        name: 'Desktop Calendar',
+        description: 'Professional desk calendar with medical facts',
+        unitCost: 600.00,
+        specifications: {
+            size: '8x6 inches',
+            pages: '365 pages',
+            binding: 'Spiral bound',
+            content: 'Medical tips daily'
+        },
+        images: [
+            'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400',
+            'https://images.unsplash.com/photo-1541963463532-d68292c34d19?w=400'
+        ]
+    },
+    {
+        name: 'Coffee Mug Set',
+        description: 'Set of 2 ceramic mugs with medical themes',
+        unitCost: 500.00,
+        specifications: {
+            material: 'Ceramic',
+            capacity: '350ml each',
+            design: 'Medical themed',
+            dishwasherSafe: true
+        },
+        images: [
+            'https://images.unsplash.com/photo-1514228742587-6b1558fcf93a?w=400',
+            'https://images.unsplash.com/photo-1497636577773-f1231844b336?w=400'
+        ]
+    },
+    {
+        name: 'Medical Keychain',
+        description: 'Metal keychain with medical symbol',
+        unitCost: 300.00,
+        specifications: {
+            material: 'Zinc Alloy',
+            design: 'Caduceus Symbol',
+            finish: 'Antique Silver',
+            packaging: 'Velvet pouch'
+        },
+        images: [
+            'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400',
+            'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=400'
+        ]
+    }
+];
+
 async function seedSharedDatabase() {
     console.log('🌱 Seeding shared database...');
 
@@ -67,7 +191,7 @@ async function seedSharedDatabase() {
     const org = await sharedPrisma.organization.create({
         data: {
             name: 'MediCare Pharmaceuticals',
-            schemaName: 'Forsys', // Pre-created schema name
+            schemaName: 'Forsys1', // Updated to use Forsys1 schema
             address: '123, Pharma Park, Mumbai, Maharashtra 400001',
             contactEmail: 'info@medicarepharma.com',
             contactPhone: '+91-22-12345678',
@@ -122,7 +246,7 @@ async function seedTenantDatabase(organizationId: string, hashedPassword: string
     console.log('✅ Admin employee created in tenant database');
 
     // Step 2: Create territories (hierarchical structure)
-    console.log('\n📍 Creating territories...');
+    console.log('\n🗺️ Creating territories...');
 
     // Create region
     const westRegion = await tenantPrisma.territory.create({
@@ -471,7 +595,197 @@ async function seedTenantDatabase(organizationId: string, hashedPassword: string
     }
     console.log(`✅ Created ${drugs.length} drugs`);
 
-    // Step 10: Create orders - 5 for each MR with their territory chemists
+    // Step 10: Create gifts (by Admin only)
+    console.log('\n🎁 Creating gifts (by Admin)...');
+    const gifts = [];
+
+    for (const giftInfo of giftData) {
+        const gift = await tenantPrisma.gift.create({
+            data: {
+                name: giftInfo.name,
+                description: giftInfo.description,
+                unitCost: giftInfo.unitCost,
+                specifications: giftInfo.specifications,
+                giftImages: giftInfo.images,
+                createdById: adminEmployee.id, // Created by Admin
+                isActive: true
+            }
+        });
+        gifts.push(gift);
+    }
+    console.log(`✅ Created ${gifts.length} gifts`);
+
+    // Step 11: Create User Inventories for MR Amit only
+    console.log('\n📦 Creating inventories for MR Amit...');
+
+    // Create Drug Inventory for Amit
+    const drugInventories = [];
+    for (const drug of drugs) {
+        const inventory = await tenantPrisma.userDrugInventory.create({
+            data: {
+                employeeId: mr1.id, // Amit
+                drugId: drug.id,
+                quantity: faker.number.int({ min: 50, max: 200 }),
+                lastRestockedAt: faker.date.recent({ days: 30 })
+            }
+        });
+        drugInventories.push(inventory);
+    }
+
+    // Create Gift Inventory for Amit
+    const giftInventories = [];
+    for (const gift of gifts) {
+        const inventory = await tenantPrisma.userGiftInventory.create({
+            data: {
+                employeeId: mr1.id, // Amit
+                giftId: gift.id,
+                quantity: faker.number.int({ min: 10, max: 50 }),
+                lastRestockedAt: faker.date.recent({ days: 30 })
+            }
+        });
+        giftInventories.push(inventory);
+    }
+
+    console.log(`✅ Created inventories for Amit: ${drugInventories.length} drugs, ${giftInventories.length} gifts`);
+
+    // Step 12: Create Sample Distributions for Amit (Mumbai territory only)
+    console.log('\n🎯 Creating sample distributions for Amit...');
+
+    const sampleDistributions = [];
+
+    // Create 5 distributions to Mumbai doctors
+    for (let i = 0; i < 5; i++) {
+        const selectedDoctor = getRandomElement(mumbaiDoctors);
+
+        const distribution = await tenantPrisma.sampleDistribution.create({
+            data: {
+                doctorId: selectedDoctor.id,
+                chemistId: null,
+                employeeId: mr1.id, // Amit
+                distributedAt: faker.date.recent({ days: 30 })
+            }
+        });
+
+        // Add 2-3 drug items per distribution
+        const drugItemCount = faker.number.int({ min: 2, max: 3 });
+        const selectedDrugInventories = getRandomElements(drugInventories, drugItemCount);
+
+        for (const drugInventory of selectedDrugInventories) {
+            const quantity = faker.number.int({ min: 5, max: 20 });
+            const unitCost = Number(drugInventory.drug?.price || 100);
+
+            await tenantPrisma.sampleDistributionDrugItem.create({
+                data: {
+                    sampleDistributionId: distribution.id,
+                    fromInventoryId: drugInventory.id,
+                    quantity: quantity,
+                    unitCost: unitCost,
+                    totalCost: quantity * unitCost
+                }
+            });
+
+            // Update inventory (reduce quantity)
+            await tenantPrisma.userDrugInventory.update({
+                where: { id: drugInventory.id },
+                data: { quantity: { decrement: quantity } }
+            });
+        }
+
+        // Add 1-2 gift items per distribution
+        const giftItemCount = faker.number.int({ min: 1, max: 2 });
+        const selectedGiftInventories = getRandomElements(giftInventories, giftItemCount);
+
+        for (const giftInventory of selectedGiftInventories) {
+            const quantity = faker.number.int({ min: 1, max: 3 });
+            const unitCost = Number(giftInventory.gift?.unitCost || 500);
+
+            await tenantPrisma.sampleDistributionGiftItem.create({
+                data: {
+                    sampleDistributionId: distribution.id,
+                    fromInventoryId: giftInventory.id,
+                    quantity: quantity,
+                    unitCost: unitCost,
+                    totalCost: quantity * unitCost
+                }
+            });
+
+            // Update inventory (reduce quantity)
+            await tenantPrisma.userGiftInventory.update({
+                where: { id: giftInventory.id },
+                data: { quantity: { decrement: quantity } }
+            });
+        }
+
+        sampleDistributions.push(distribution);
+    }
+
+    // Create 3 distributions to Mumbai chemists
+    for (let i = 0; i < 3; i++) {
+        const selectedChemist = getRandomElement(mumbaiChemists);
+
+        const distribution = await tenantPrisma.sampleDistribution.create({
+            data: {
+                doctorId: null,
+                chemistId: selectedChemist.id,
+                employeeId: mr1.id, // Amit
+                distributedAt: faker.date.recent({ days: 30 })
+            }
+        });
+
+        // Add 1-2 drug items per distribution
+        const drugItemCount = faker.number.int({ min: 1, max: 2 });
+        const selectedDrugInventories = getRandomElements(drugInventories, drugItemCount);
+
+        for (const drugInventory of selectedDrugInventories) {
+            const quantity = faker.number.int({ min: 3, max: 10 });
+            const unitCost = Number(drugInventory.drug?.price || 100);
+
+            await tenantPrisma.sampleDistributionDrugItem.create({
+                data: {
+                    sampleDistributionId: distribution.id,
+                    fromInventoryId: drugInventory.id,
+                    quantity: quantity,
+                    unitCost: unitCost,
+                    totalCost: quantity * unitCost
+                }
+            });
+
+            // Update inventory (reduce quantity)
+            await tenantPrisma.userDrugInventory.update({
+                where: { id: drugInventory.id },
+                data: { quantity: { decrement: quantity } }
+            });
+        }
+
+        // Add 1 gift item per distribution
+        const selectedGiftInventory = getRandomElement(giftInventories);
+        const quantity = 1;
+        const unitCost = Number(selectedGiftInventory.gift?.unitCost || 500);
+
+        await tenantPrisma.sampleDistributionGiftItem.create({
+            data: {
+                sampleDistributionId: distribution.id,
+                fromInventoryId: selectedGiftInventory.id,
+                quantity: quantity,
+                unitCost: unitCost,
+                totalCost: quantity * unitCost
+            }
+        });
+
+        // Update inventory (reduce quantity)
+        await tenantPrisma.userGiftInventory.update({
+            where: { id: selectedGiftInventory.id },
+            data: { quantity: { decrement: quantity } }
+        });
+
+        sampleDistributions.push(distribution);
+    }
+
+    console.log(`✅ Created ${sampleDistributions.length} sample distributions (5 doctors, 3 chemists)`);
+
+    // Continue with rest of the existing seed logic...
+
+    // Step 13: Create orders - 5 for each MR with their territory chemists
     console.log('\n📦 Creating orders...');
 
     const orders = [];
@@ -572,7 +886,7 @@ async function seedTenantDatabase(organizationId: string, hashedPassword: string
 
     console.log(`✅ Created ${orders.length} orders with items`);
 
-    // Step 11: Create RCPA Reports
+    // Step 14: Create RCPA Reports
     console.log('\n📊 Creating RCPA reports...');
 
     const rcpaReports = [];
@@ -653,7 +967,7 @@ async function seedTenantDatabase(organizationId: string, hashedPassword: string
 
     console.log(`✅ Created ${rcpaReports.length} RCPA reports with drug data`);
 
-    // Step 12: Create Task Planners
+    // Step 15: Create Task Planners
     console.log('\n📅 Creating task planners...');
 
     const startDate = new Date();
@@ -683,7 +997,7 @@ async function seedTenantDatabase(organizationId: string, hashedPassword: string
 
     console.log('✅ Created task planners for both MRs');
 
-    // Step 13: Create Tour Plans
+    // Step 16: Create Tour Plans
     console.log('\n🗺️ Creating tour plans...');
 
     const tourPlanMumbai = await tenantPrisma.tourPlan.create({
@@ -700,7 +1014,7 @@ async function seedTenantDatabase(organizationId: string, hashedPassword: string
         }
     });
 
-    // Step 14: Create Doctor Tasks (10 for each MR with their territory doctors)
+    // Step 17: Create Doctor Tasks (10 for each MR with their territory doctors)
     console.log('\n👨‍⚕️ Creating doctor tasks...');
 
     const doctorTasks = [];
@@ -745,7 +1059,7 @@ async function seedTenantDatabase(organizationId: string, hashedPassword: string
 
     console.log(`✅ Created ${doctorTasks.length} doctor tasks`);
 
-    // Step 15: Create Chemist Tasks (10 for each MR with their territory chemists)
+    // Step 18: Create Chemist Tasks (10 for each MR with their territory chemists)
     console.log('\n💊 Creating chemist tasks...');
 
     const chemistTasks = [];
@@ -790,7 +1104,7 @@ async function seedTenantDatabase(organizationId: string, hashedPassword: string
 
     console.log(`✅ Created ${chemistTasks.length} chemist tasks`);
 
-    // Step 16: Create Tour Plan Tasks (10 for each MR)
+    // Step 19: Create Tour Plan Tasks (10 for each MR)
     console.log('\n🗺️ Creating tour plan tasks...');
 
     const tourPlanTasks = [];
@@ -835,7 +1149,7 @@ async function seedTenantDatabase(organizationId: string, hashedPassword: string
 
     console.log(`✅ Created ${tourPlanTasks.length} tour plan tasks`);
 
-    // Step 17: Create DCR Reports for completed tasks
+    // Step 20: Create DCR Reports for completed tasks
     console.log('\n📝 Creating DCR reports...');
 
     const dcrReports = [];
@@ -896,7 +1210,7 @@ async function seedTenantDatabase(organizationId: string, hashedPassword: string
 
     console.log(`✅ Created ${dcrReports.length} DCR reports`);
 
-    // Step 18: Create doctor-chemist relations
+    // Step 21: Create doctor-chemist relations
     console.log('\n🔗 Creating doctor-chemist relations...');
 
     let relationCount = 0;
@@ -933,7 +1247,7 @@ async function seedTenantDatabase(organizationId: string, hashedPassword: string
 
     console.log(`✅ Created ${relationCount} doctor-chemist relations`);
 
-    // Step 19: Create interactions
+    // Step 22: Create interactions
     console.log('\n🤝 Creating interactions...');
 
     // Doctor interactions
@@ -1005,6 +1319,12 @@ async function seedTenantDatabase(organizationId: string, hashedPassword: string
             pune: puneChemists
         },
         drugs,
+        gifts,
+        inventories: {
+            drugInventories,
+            giftInventories
+        },
+        sampleDistributions,
         orders,
         rcpaReports,
         taskPlanners: [taskPlannerMR1, taskPlannerMR2],
@@ -1024,7 +1344,7 @@ async function main() {
         // Step 1: Seed shared database
         const { organization, hashedPassword } = await seedSharedDatabase();
 
-        // Step 2: Seed tenant database (using the pre-created "Forsys" schema)
+        // Step 2: Seed tenant database (using the "Forsys1" schema)
         const tenantData = await seedTenantDatabase(organization.id, hashedPassword);
 
         // Print summary
@@ -1033,7 +1353,7 @@ async function main() {
         console.log('✅ Shared Database:');
         console.log('   - 1 Organization (MediCare Pharmaceuticals)');
         console.log('   - 1 Admin User');
-        console.log('   - Schema: Forsys (pre-created)');
+        console.log('   - Schema: Forsys1');
         console.log('\n✅ Tenant Database:');
         console.log('   - 4 Employees (1 Admin, 1 Sales Manager, 2 MRs)');
         console.log('   - 4 Territories (1 Region, 1 State, 2 Cities)');
@@ -1041,6 +1361,10 @@ async function main() {
         console.log(`   - ${tenantData.doctors.mumbai.length + tenantData.doctors.pune.length} Doctors (5 Mumbai, 5 Pune)`);
         console.log(`   - ${tenantData.chemists.mumbai.length + tenantData.chemists.pune.length} Chemists (3 Mumbai, 3 Pune)`);
         console.log(`   - ${tenantData.drugs.length} Drugs`);
+        console.log(`   - ${tenantData.gifts.length} Gifts (Created by Admin)`);
+        console.log(`   - Drug Inventory: ${tenantData.inventories.drugInventories.length} items (Amit only)`);
+        console.log(`   - Gift Inventory: ${tenantData.inventories.giftInventories.length} items (Amit only)`);
+        console.log(`   - ${tenantData.sampleDistributions.length} Sample Distributions (Amit to Mumbai entities only)`);
         console.log(`   - ${tenantData.orders.length} Orders with items`);
         console.log(`   - ${tenantData.rcpaReports.length} RCPA Reports with drug data`);
         console.log(`   - 2 Task Planners`);
@@ -1052,7 +1376,16 @@ async function main() {
         console.log('   - Doctor-Chemist relations');
         console.log('   - Doctor and Chemist interactions');
 
-        console.log('\n🔐 TEST CREDENTIALS');
+        console.log('\n🔍 SAMPLE DISTRIBUTION DETAILS');
+        console.log('===============================');
+        console.log('✅ 8 Sample Distributions for MR Amit (Mumbai territory only):');
+        console.log('   - 5 distributions to Mumbai doctors');
+        console.log('   - 3 distributions to Mumbai chemists');
+        console.log('   - Drug items: 2-3 per doctor, 1-2 per chemist');
+        console.log('   - Gift items: 1-2 per doctor, 1 per chemist');
+        console.log('   - Inventory automatically updated after distributions');
+
+        console.log('\n🔑 TEST CREDENTIALS');
         console.log('===================');
         console.log('Admin User:');
         console.log(`   Email: ${ADMIN_EMAIL}`);
@@ -1060,10 +1393,11 @@ async function main() {
         console.log('\nSales Manager:');
         console.log('   Email: sales.manager@medicarepharma.com');
         console.log('   Password: Manager@123');
-        console.log('\nMedical Representative (Mumbai):');
+        console.log('\nMedical Representative (Mumbai - has sample distributions):');
         console.log('   Email: amit.patel@medicarepharma.com');
         console.log('   Password: MR@123456');
         console.log('   Territory: Mumbai');
+        console.log('   Has: Drug & Gift inventory, Sample distributions');
         console.log('\nMedical Representative (Pune):');
         console.log('   Email: priya.shah@medicarepharma.com');
         console.log('   Password: MR@123456');

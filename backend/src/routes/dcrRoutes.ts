@@ -1,6 +1,10 @@
 import express from 'express';
 import tenantMiddleware from '../middlewares/tenantMiddleware';
-import dcrController from '../controllers/dcrController';
+import { createDcr, getTasksForDcr } from '../controllers/dcr/createDcrController';
+import { getDcrList } from '../controllers/dcr/getDcrListController';
+import { getDcrDetails } from '../controllers/dcr/getDcrDetailsController';
+import { updateDcr } from '../controllers/dcr/updateDcrController';
+import { deleteDcr } from '../controllers/dcr/deleteDcrController';
 
 const router = express.Router();
 
@@ -9,11 +13,11 @@ const router = express.Router();
 router.use(tenantMiddleware);
 
 // DCR Routes
-router.get('/', dcrController.getDCRReports);                    // GET /api/dcr - List all DCR reports
-router.get('/tasks/available', dcrController.getTasksForDCR);    // GET /api/dcr/tasks/available - Get tasks for DCR creation
-router.get('/:dcrId', dcrController.getDCRById);                 // GET /api/dcr/:dcrId - Get single DCR details
-router.post('/', dcrController.createDCR);                       // POST /api/dcr - Create new DCR report
-router.put('/:dcrId', dcrController.updateDCR);                  // PUT /api/dcr/:dcrId - Update existing DCR report
-router.delete('/:dcrId', dcrController.deleteDCR);               // DELETE /api/dcr/:dcrId - Delete DCR report
+router.get('/', getDcrList);                       // GET /api/dcr - List all DCR reports
+router.get('/tasks/available', getTasksForDcr);    // GET /api/dcr/tasks/available - Get tasks for DCR creation
+router.get('/:dcrId', getDcrDetails);              // GET /api/dcr/:dcrId - Get single DCR details
+router.post('/', createDcr);                       // POST /api/dcr - Create new DCR report
+router.put('/:dcrId', updateDcr);                  // PUT /api/dcr/:dcrId - Update existing DCR report
+router.delete('/:dcrId', deleteDcr);               // DELETE /api/dcr/:dcrId - Delete DCR report
 
 export default router;

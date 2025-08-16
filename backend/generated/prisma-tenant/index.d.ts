@@ -194,20 +194,20 @@ export type UserDrugInventory = $Result.DefaultSelection<Prisma.$UserDrugInvento
  */
 export type UserGiftInventory = $Result.DefaultSelection<Prisma.$UserGiftInventoryPayload>
 /**
- * Model DoctorDistribution
+ * Model SampleDistribution
  * 
  */
-export type DoctorDistribution = $Result.DefaultSelection<Prisma.$DoctorDistributionPayload>
+export type SampleDistribution = $Result.DefaultSelection<Prisma.$SampleDistributionPayload>
 /**
- * Model DoctorDistributionDrugItem
+ * Model SampleDistributionDrugItem
  * 
  */
-export type DoctorDistributionDrugItem = $Result.DefaultSelection<Prisma.$DoctorDistributionDrugItemPayload>
+export type SampleDistributionDrugItem = $Result.DefaultSelection<Prisma.$SampleDistributionDrugItemPayload>
 /**
- * Model DoctorDistributionGiftItem
+ * Model SampleDistributionGiftItem
  * 
  */
-export type DoctorDistributionGiftItem = $Result.DefaultSelection<Prisma.$DoctorDistributionGiftItemPayload>
+export type SampleDistributionGiftItem = $Result.DefaultSelection<Prisma.$SampleDistributionGiftItemPayload>
 /**
  * Model AuditLog
  * 
@@ -905,34 +905,34 @@ export class PrismaClient<
   get userGiftInventory(): Prisma.UserGiftInventoryDelegate<ExtArgs, ClientOptions>;
 
   /**
-   * `prisma.doctorDistribution`: Exposes CRUD operations for the **DoctorDistribution** model.
+   * `prisma.sampleDistribution`: Exposes CRUD operations for the **SampleDistribution** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more DoctorDistributions
-    * const doctorDistributions = await prisma.doctorDistribution.findMany()
+    * // Fetch zero or more SampleDistributions
+    * const sampleDistributions = await prisma.sampleDistribution.findMany()
     * ```
     */
-  get doctorDistribution(): Prisma.DoctorDistributionDelegate<ExtArgs, ClientOptions>;
+  get sampleDistribution(): Prisma.SampleDistributionDelegate<ExtArgs, ClientOptions>;
 
   /**
-   * `prisma.doctorDistributionDrugItem`: Exposes CRUD operations for the **DoctorDistributionDrugItem** model.
+   * `prisma.sampleDistributionDrugItem`: Exposes CRUD operations for the **SampleDistributionDrugItem** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more DoctorDistributionDrugItems
-    * const doctorDistributionDrugItems = await prisma.doctorDistributionDrugItem.findMany()
+    * // Fetch zero or more SampleDistributionDrugItems
+    * const sampleDistributionDrugItems = await prisma.sampleDistributionDrugItem.findMany()
     * ```
     */
-  get doctorDistributionDrugItem(): Prisma.DoctorDistributionDrugItemDelegate<ExtArgs, ClientOptions>;
+  get sampleDistributionDrugItem(): Prisma.SampleDistributionDrugItemDelegate<ExtArgs, ClientOptions>;
 
   /**
-   * `prisma.doctorDistributionGiftItem`: Exposes CRUD operations for the **DoctorDistributionGiftItem** model.
+   * `prisma.sampleDistributionGiftItem`: Exposes CRUD operations for the **SampleDistributionGiftItem** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more DoctorDistributionGiftItems
-    * const doctorDistributionGiftItems = await prisma.doctorDistributionGiftItem.findMany()
+    * // Fetch zero or more SampleDistributionGiftItems
+    * const sampleDistributionGiftItems = await prisma.sampleDistributionGiftItem.findMany()
     * ```
     */
-  get doctorDistributionGiftItem(): Prisma.DoctorDistributionGiftItemDelegate<ExtArgs, ClientOptions>;
+  get sampleDistributionGiftItem(): Prisma.SampleDistributionGiftItemDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.auditLog`: Exposes CRUD operations for the **AuditLog** model.
@@ -1419,9 +1419,9 @@ export namespace Prisma {
     Gift: 'Gift',
     UserDrugInventory: 'UserDrugInventory',
     UserGiftInventory: 'UserGiftInventory',
-    DoctorDistribution: 'DoctorDistribution',
-    DoctorDistributionDrugItem: 'DoctorDistributionDrugItem',
-    DoctorDistributionGiftItem: 'DoctorDistributionGiftItem',
+    SampleDistribution: 'SampleDistribution',
+    SampleDistributionDrugItem: 'SampleDistributionDrugItem',
+    SampleDistributionGiftItem: 'SampleDistributionGiftItem',
     AuditLog: 'AuditLog'
   };
 
@@ -1441,7 +1441,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "employee" | "team" | "territory" | "employeeTerritory" | "employeeTrainingRecord" | "hospitalChain" | "chemistChain" | "hospital" | "doctor" | "doctorHospitalAssociation" | "doctorConsultationSchedule" | "doctorNote" | "doctorInteraction" | "drug" | "chemist" | "chemistNote" | "chemistInteraction" | "doctorChemistRelation" | "order" | "orderItem" | "dcrReport" | "rcpaReport" | "rcpaDrugData" | "checkIn" | "taskPlanner" | "doctorTask" | "chemistTask" | "tourPlanTask" | "tourPlan" | "tourPlanReport" | "expenseType" | "expenseRoleConfig" | "expenseClaim" | "gift" | "userDrugInventory" | "userGiftInventory" | "doctorDistribution" | "doctorDistributionDrugItem" | "doctorDistributionGiftItem" | "auditLog"
+      modelProps: "employee" | "team" | "territory" | "employeeTerritory" | "employeeTrainingRecord" | "hospitalChain" | "chemistChain" | "hospital" | "doctor" | "doctorHospitalAssociation" | "doctorConsultationSchedule" | "doctorNote" | "doctorInteraction" | "drug" | "chemist" | "chemistNote" | "chemistInteraction" | "doctorChemistRelation" | "order" | "orderItem" | "dcrReport" | "rcpaReport" | "rcpaDrugData" | "checkIn" | "taskPlanner" | "doctorTask" | "chemistTask" | "tourPlanTask" | "tourPlan" | "tourPlanReport" | "expenseType" | "expenseRoleConfig" | "expenseClaim" | "gift" | "userDrugInventory" | "userGiftInventory" | "sampleDistribution" | "sampleDistributionDrugItem" | "sampleDistributionGiftItem" | "auditLog"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -4109,225 +4109,225 @@ export namespace Prisma {
           }
         }
       }
-      DoctorDistribution: {
-        payload: Prisma.$DoctorDistributionPayload<ExtArgs>
-        fields: Prisma.DoctorDistributionFieldRefs
+      SampleDistribution: {
+        payload: Prisma.$SampleDistributionPayload<ExtArgs>
+        fields: Prisma.SampleDistributionFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.DoctorDistributionFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$DoctorDistributionPayload> | null
+            args: Prisma.SampleDistributionFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SampleDistributionPayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.DoctorDistributionFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$DoctorDistributionPayload>
+            args: Prisma.SampleDistributionFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SampleDistributionPayload>
           }
           findFirst: {
-            args: Prisma.DoctorDistributionFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$DoctorDistributionPayload> | null
+            args: Prisma.SampleDistributionFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SampleDistributionPayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.DoctorDistributionFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$DoctorDistributionPayload>
+            args: Prisma.SampleDistributionFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SampleDistributionPayload>
           }
           findMany: {
-            args: Prisma.DoctorDistributionFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$DoctorDistributionPayload>[]
+            args: Prisma.SampleDistributionFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SampleDistributionPayload>[]
           }
           create: {
-            args: Prisma.DoctorDistributionCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$DoctorDistributionPayload>
+            args: Prisma.SampleDistributionCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SampleDistributionPayload>
           }
           createMany: {
-            args: Prisma.DoctorDistributionCreateManyArgs<ExtArgs>
+            args: Prisma.SampleDistributionCreateManyArgs<ExtArgs>
             result: BatchPayload
           }
           createManyAndReturn: {
-            args: Prisma.DoctorDistributionCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$DoctorDistributionPayload>[]
+            args: Prisma.SampleDistributionCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SampleDistributionPayload>[]
           }
           delete: {
-            args: Prisma.DoctorDistributionDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$DoctorDistributionPayload>
+            args: Prisma.SampleDistributionDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SampleDistributionPayload>
           }
           update: {
-            args: Prisma.DoctorDistributionUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$DoctorDistributionPayload>
+            args: Prisma.SampleDistributionUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SampleDistributionPayload>
           }
           deleteMany: {
-            args: Prisma.DoctorDistributionDeleteManyArgs<ExtArgs>
+            args: Prisma.SampleDistributionDeleteManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateMany: {
-            args: Prisma.DoctorDistributionUpdateManyArgs<ExtArgs>
+            args: Prisma.SampleDistributionUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateManyAndReturn: {
-            args: Prisma.DoctorDistributionUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$DoctorDistributionPayload>[]
+            args: Prisma.SampleDistributionUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SampleDistributionPayload>[]
           }
           upsert: {
-            args: Prisma.DoctorDistributionUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$DoctorDistributionPayload>
+            args: Prisma.SampleDistributionUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SampleDistributionPayload>
           }
           aggregate: {
-            args: Prisma.DoctorDistributionAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateDoctorDistribution>
+            args: Prisma.SampleDistributionAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSampleDistribution>
           }
           groupBy: {
-            args: Prisma.DoctorDistributionGroupByArgs<ExtArgs>
-            result: $Utils.Optional<DoctorDistributionGroupByOutputType>[]
+            args: Prisma.SampleDistributionGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SampleDistributionGroupByOutputType>[]
           }
           count: {
-            args: Prisma.DoctorDistributionCountArgs<ExtArgs>
-            result: $Utils.Optional<DoctorDistributionCountAggregateOutputType> | number
+            args: Prisma.SampleDistributionCountArgs<ExtArgs>
+            result: $Utils.Optional<SampleDistributionCountAggregateOutputType> | number
           }
         }
       }
-      DoctorDistributionDrugItem: {
-        payload: Prisma.$DoctorDistributionDrugItemPayload<ExtArgs>
-        fields: Prisma.DoctorDistributionDrugItemFieldRefs
+      SampleDistributionDrugItem: {
+        payload: Prisma.$SampleDistributionDrugItemPayload<ExtArgs>
+        fields: Prisma.SampleDistributionDrugItemFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.DoctorDistributionDrugItemFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$DoctorDistributionDrugItemPayload> | null
+            args: Prisma.SampleDistributionDrugItemFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SampleDistributionDrugItemPayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.DoctorDistributionDrugItemFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$DoctorDistributionDrugItemPayload>
+            args: Prisma.SampleDistributionDrugItemFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SampleDistributionDrugItemPayload>
           }
           findFirst: {
-            args: Prisma.DoctorDistributionDrugItemFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$DoctorDistributionDrugItemPayload> | null
+            args: Prisma.SampleDistributionDrugItemFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SampleDistributionDrugItemPayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.DoctorDistributionDrugItemFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$DoctorDistributionDrugItemPayload>
+            args: Prisma.SampleDistributionDrugItemFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SampleDistributionDrugItemPayload>
           }
           findMany: {
-            args: Prisma.DoctorDistributionDrugItemFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$DoctorDistributionDrugItemPayload>[]
+            args: Prisma.SampleDistributionDrugItemFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SampleDistributionDrugItemPayload>[]
           }
           create: {
-            args: Prisma.DoctorDistributionDrugItemCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$DoctorDistributionDrugItemPayload>
+            args: Prisma.SampleDistributionDrugItemCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SampleDistributionDrugItemPayload>
           }
           createMany: {
-            args: Prisma.DoctorDistributionDrugItemCreateManyArgs<ExtArgs>
+            args: Prisma.SampleDistributionDrugItemCreateManyArgs<ExtArgs>
             result: BatchPayload
           }
           createManyAndReturn: {
-            args: Prisma.DoctorDistributionDrugItemCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$DoctorDistributionDrugItemPayload>[]
+            args: Prisma.SampleDistributionDrugItemCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SampleDistributionDrugItemPayload>[]
           }
           delete: {
-            args: Prisma.DoctorDistributionDrugItemDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$DoctorDistributionDrugItemPayload>
+            args: Prisma.SampleDistributionDrugItemDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SampleDistributionDrugItemPayload>
           }
           update: {
-            args: Prisma.DoctorDistributionDrugItemUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$DoctorDistributionDrugItemPayload>
+            args: Prisma.SampleDistributionDrugItemUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SampleDistributionDrugItemPayload>
           }
           deleteMany: {
-            args: Prisma.DoctorDistributionDrugItemDeleteManyArgs<ExtArgs>
+            args: Prisma.SampleDistributionDrugItemDeleteManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateMany: {
-            args: Prisma.DoctorDistributionDrugItemUpdateManyArgs<ExtArgs>
+            args: Prisma.SampleDistributionDrugItemUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateManyAndReturn: {
-            args: Prisma.DoctorDistributionDrugItemUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$DoctorDistributionDrugItemPayload>[]
+            args: Prisma.SampleDistributionDrugItemUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SampleDistributionDrugItemPayload>[]
           }
           upsert: {
-            args: Prisma.DoctorDistributionDrugItemUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$DoctorDistributionDrugItemPayload>
+            args: Prisma.SampleDistributionDrugItemUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SampleDistributionDrugItemPayload>
           }
           aggregate: {
-            args: Prisma.DoctorDistributionDrugItemAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateDoctorDistributionDrugItem>
+            args: Prisma.SampleDistributionDrugItemAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSampleDistributionDrugItem>
           }
           groupBy: {
-            args: Prisma.DoctorDistributionDrugItemGroupByArgs<ExtArgs>
-            result: $Utils.Optional<DoctorDistributionDrugItemGroupByOutputType>[]
+            args: Prisma.SampleDistributionDrugItemGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SampleDistributionDrugItemGroupByOutputType>[]
           }
           count: {
-            args: Prisma.DoctorDistributionDrugItemCountArgs<ExtArgs>
-            result: $Utils.Optional<DoctorDistributionDrugItemCountAggregateOutputType> | number
+            args: Prisma.SampleDistributionDrugItemCountArgs<ExtArgs>
+            result: $Utils.Optional<SampleDistributionDrugItemCountAggregateOutputType> | number
           }
         }
       }
-      DoctorDistributionGiftItem: {
-        payload: Prisma.$DoctorDistributionGiftItemPayload<ExtArgs>
-        fields: Prisma.DoctorDistributionGiftItemFieldRefs
+      SampleDistributionGiftItem: {
+        payload: Prisma.$SampleDistributionGiftItemPayload<ExtArgs>
+        fields: Prisma.SampleDistributionGiftItemFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.DoctorDistributionGiftItemFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$DoctorDistributionGiftItemPayload> | null
+            args: Prisma.SampleDistributionGiftItemFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SampleDistributionGiftItemPayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.DoctorDistributionGiftItemFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$DoctorDistributionGiftItemPayload>
+            args: Prisma.SampleDistributionGiftItemFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SampleDistributionGiftItemPayload>
           }
           findFirst: {
-            args: Prisma.DoctorDistributionGiftItemFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$DoctorDistributionGiftItemPayload> | null
+            args: Prisma.SampleDistributionGiftItemFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SampleDistributionGiftItemPayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.DoctorDistributionGiftItemFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$DoctorDistributionGiftItemPayload>
+            args: Prisma.SampleDistributionGiftItemFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SampleDistributionGiftItemPayload>
           }
           findMany: {
-            args: Prisma.DoctorDistributionGiftItemFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$DoctorDistributionGiftItemPayload>[]
+            args: Prisma.SampleDistributionGiftItemFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SampleDistributionGiftItemPayload>[]
           }
           create: {
-            args: Prisma.DoctorDistributionGiftItemCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$DoctorDistributionGiftItemPayload>
+            args: Prisma.SampleDistributionGiftItemCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SampleDistributionGiftItemPayload>
           }
           createMany: {
-            args: Prisma.DoctorDistributionGiftItemCreateManyArgs<ExtArgs>
+            args: Prisma.SampleDistributionGiftItemCreateManyArgs<ExtArgs>
             result: BatchPayload
           }
           createManyAndReturn: {
-            args: Prisma.DoctorDistributionGiftItemCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$DoctorDistributionGiftItemPayload>[]
+            args: Prisma.SampleDistributionGiftItemCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SampleDistributionGiftItemPayload>[]
           }
           delete: {
-            args: Prisma.DoctorDistributionGiftItemDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$DoctorDistributionGiftItemPayload>
+            args: Prisma.SampleDistributionGiftItemDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SampleDistributionGiftItemPayload>
           }
           update: {
-            args: Prisma.DoctorDistributionGiftItemUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$DoctorDistributionGiftItemPayload>
+            args: Prisma.SampleDistributionGiftItemUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SampleDistributionGiftItemPayload>
           }
           deleteMany: {
-            args: Prisma.DoctorDistributionGiftItemDeleteManyArgs<ExtArgs>
+            args: Prisma.SampleDistributionGiftItemDeleteManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateMany: {
-            args: Prisma.DoctorDistributionGiftItemUpdateManyArgs<ExtArgs>
+            args: Prisma.SampleDistributionGiftItemUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateManyAndReturn: {
-            args: Prisma.DoctorDistributionGiftItemUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$DoctorDistributionGiftItemPayload>[]
+            args: Prisma.SampleDistributionGiftItemUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SampleDistributionGiftItemPayload>[]
           }
           upsert: {
-            args: Prisma.DoctorDistributionGiftItemUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$DoctorDistributionGiftItemPayload>
+            args: Prisma.SampleDistributionGiftItemUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SampleDistributionGiftItemPayload>
           }
           aggregate: {
-            args: Prisma.DoctorDistributionGiftItemAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateDoctorDistributionGiftItem>
+            args: Prisma.SampleDistributionGiftItemAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSampleDistributionGiftItem>
           }
           groupBy: {
-            args: Prisma.DoctorDistributionGiftItemGroupByArgs<ExtArgs>
-            result: $Utils.Optional<DoctorDistributionGiftItemGroupByOutputType>[]
+            args: Prisma.SampleDistributionGiftItemGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SampleDistributionGiftItemGroupByOutputType>[]
           }
           count: {
-            args: Prisma.DoctorDistributionGiftItemCountArgs<ExtArgs>
-            result: $Utils.Optional<DoctorDistributionGiftItemCountAggregateOutputType> | number
+            args: Prisma.SampleDistributionGiftItemCountArgs<ExtArgs>
+            result: $Utils.Optional<SampleDistributionGiftItemCountAggregateOutputType> | number
           }
         }
       }
@@ -4525,9 +4525,9 @@ export namespace Prisma {
     gift?: GiftOmit
     userDrugInventory?: UserDrugInventoryOmit
     userGiftInventory?: UserGiftInventoryOmit
-    doctorDistribution?: DoctorDistributionOmit
-    doctorDistributionDrugItem?: DoctorDistributionDrugItemOmit
-    doctorDistributionGiftItem?: DoctorDistributionGiftItemOmit
+    sampleDistribution?: SampleDistributionOmit
+    sampleDistributionDrugItem?: SampleDistributionDrugItemOmit
+    sampleDistributionGiftItem?: SampleDistributionGiftItemOmit
     auditLog?: AuditLogOmit
   }
 
@@ -4644,7 +4644,7 @@ export namespace Prisma {
     drugInventories: number
     giftInventories: number
     giftsCreated: number
-    doctorDistributions: number
+    sampleDistributions: number
     taskPlans: number
     doctorTasks: number
     chemistTasks: number
@@ -4673,7 +4673,7 @@ export namespace Prisma {
     drugInventories?: boolean | EmployeeCountOutputTypeCountDrugInventoriesArgs
     giftInventories?: boolean | EmployeeCountOutputTypeCountGiftInventoriesArgs
     giftsCreated?: boolean | EmployeeCountOutputTypeCountGiftsCreatedArgs
-    doctorDistributions?: boolean | EmployeeCountOutputTypeCountDoctorDistributionsArgs
+    sampleDistributions?: boolean | EmployeeCountOutputTypeCountSampleDistributionsArgs
     taskPlans?: boolean | EmployeeCountOutputTypeCountTaskPlansArgs
     doctorTasks?: boolean | EmployeeCountOutputTypeCountDoctorTasksArgs
     chemistTasks?: boolean | EmployeeCountOutputTypeCountChemistTasksArgs
@@ -4841,8 +4841,8 @@ export namespace Prisma {
   /**
    * EmployeeCountOutputType without action
    */
-  export type EmployeeCountOutputTypeCountDoctorDistributionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: DoctorDistributionWhereInput
+  export type EmployeeCountOutputTypeCountSampleDistributionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SampleDistributionWhereInput
   }
 
   /**
@@ -5085,6 +5085,7 @@ export namespace Prisma {
     notes: number
     chemistRelations: number
     DoctorTask: number
+    sampleDistributions: number
   }
 
   export type DoctorCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -5094,6 +5095,7 @@ export namespace Prisma {
     notes?: boolean | DoctorCountOutputTypeCountNotesArgs
     chemistRelations?: boolean | DoctorCountOutputTypeCountChemistRelationsArgs
     DoctorTask?: boolean | DoctorCountOutputTypeCountDoctorTaskArgs
+    sampleDistributions?: boolean | DoctorCountOutputTypeCountSampleDistributionsArgs
   }
 
   // Custom InputTypes
@@ -5149,35 +5151,11 @@ export namespace Prisma {
     where?: DoctorTaskWhereInput
   }
 
-
   /**
-   * Count Type DoctorInteractionCountOutputType
+   * DoctorCountOutputType without action
    */
-
-  export type DoctorInteractionCountOutputType = {
-    DoctorDistribution: number
-  }
-
-  export type DoctorInteractionCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    DoctorDistribution?: boolean | DoctorInteractionCountOutputTypeCountDoctorDistributionArgs
-  }
-
-  // Custom InputTypes
-  /**
-   * DoctorInteractionCountOutputType without action
-   */
-  export type DoctorInteractionCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the DoctorInteractionCountOutputType
-     */
-    select?: DoctorInteractionCountOutputTypeSelect<ExtArgs> | null
-  }
-
-  /**
-   * DoctorInteractionCountOutputType without action
-   */
-  export type DoctorInteractionCountOutputTypeCountDoctorDistributionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: DoctorDistributionWhereInput
+  export type DoctorCountOutputTypeCountSampleDistributionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SampleDistributionWhereInput
   }
 
 
@@ -5189,14 +5167,12 @@ export namespace Prisma {
     orderItems: number
     rcpaData: number
     UserDrugInventory: number
-    DoctorDistributionDrugItem: number
   }
 
   export type DrugCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     orderItems?: boolean | DrugCountOutputTypeCountOrderItemsArgs
     rcpaData?: boolean | DrugCountOutputTypeCountRcpaDataArgs
     UserDrugInventory?: boolean | DrugCountOutputTypeCountUserDrugInventoryArgs
-    DoctorDistributionDrugItem?: boolean | DrugCountOutputTypeCountDoctorDistributionDrugItemArgs
   }
 
   // Custom InputTypes
@@ -5231,13 +5207,6 @@ export namespace Prisma {
     where?: UserDrugInventoryWhereInput
   }
 
-  /**
-   * DrugCountOutputType without action
-   */
-  export type DrugCountOutputTypeCountDoctorDistributionDrugItemArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: DoctorDistributionDrugItemWhereInput
-  }
-
 
   /**
    * Count Type ChemistCountOutputType
@@ -5250,6 +5219,7 @@ export namespace Prisma {
     orders: number
     rcpaReports: number
     chemistTasks: number
+    sampleDistributions: number
   }
 
   export type ChemistCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -5259,6 +5229,7 @@ export namespace Prisma {
     orders?: boolean | ChemistCountOutputTypeCountOrdersArgs
     rcpaReports?: boolean | ChemistCountOutputTypeCountRcpaReportsArgs
     chemistTasks?: boolean | ChemistCountOutputTypeCountChemistTasksArgs
+    sampleDistributions?: boolean | ChemistCountOutputTypeCountSampleDistributionsArgs
   }
 
   // Custom InputTypes
@@ -5312,6 +5283,13 @@ export namespace Prisma {
    */
   export type ChemistCountOutputTypeCountChemistTasksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ChemistTaskWhereInput
+  }
+
+  /**
+   * ChemistCountOutputType without action
+   */
+  export type ChemistCountOutputTypeCountSampleDistributionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SampleDistributionWhereInput
   }
 
 
@@ -5627,12 +5605,10 @@ export namespace Prisma {
 
   export type GiftCountOutputType = {
     userGiftInventories: number
-    doctorDistributionGiftItems: number
   }
 
   export type GiftCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     userGiftInventories?: boolean | GiftCountOutputTypeCountUserGiftInventoriesArgs
-    doctorDistributionGiftItems?: boolean | GiftCountOutputTypeCountDoctorDistributionGiftItemsArgs
   }
 
   // Custom InputTypes
@@ -5653,24 +5629,17 @@ export namespace Prisma {
     where?: UserGiftInventoryWhereInput
   }
 
-  /**
-   * GiftCountOutputType without action
-   */
-  export type GiftCountOutputTypeCountDoctorDistributionGiftItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: DoctorDistributionGiftItemWhereInput
-  }
-
 
   /**
    * Count Type UserDrugInventoryCountOutputType
    */
 
   export type UserDrugInventoryCountOutputType = {
-    doctorDistributionDrugItems: number
+    sampleDistributionDrugItems: number
   }
 
   export type UserDrugInventoryCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    doctorDistributionDrugItems?: boolean | UserDrugInventoryCountOutputTypeCountDoctorDistributionDrugItemsArgs
+    sampleDistributionDrugItems?: boolean | UserDrugInventoryCountOutputTypeCountSampleDistributionDrugItemsArgs
   }
 
   // Custom InputTypes
@@ -5687,8 +5656,8 @@ export namespace Prisma {
   /**
    * UserDrugInventoryCountOutputType without action
    */
-  export type UserDrugInventoryCountOutputTypeCountDoctorDistributionDrugItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: DoctorDistributionDrugItemWhereInput
+  export type UserDrugInventoryCountOutputTypeCountSampleDistributionDrugItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SampleDistributionDrugItemWhereInput
   }
 
 
@@ -5697,11 +5666,11 @@ export namespace Prisma {
    */
 
   export type UserGiftInventoryCountOutputType = {
-    doctorDistributionGiftItems: number
+    sampleDistributionGiftItems: number
   }
 
   export type UserGiftInventoryCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    doctorDistributionGiftItems?: boolean | UserGiftInventoryCountOutputTypeCountDoctorDistributionGiftItemsArgs
+    sampleDistributionGiftItems?: boolean | UserGiftInventoryCountOutputTypeCountSampleDistributionGiftItemsArgs
   }
 
   // Custom InputTypes
@@ -5718,48 +5687,48 @@ export namespace Prisma {
   /**
    * UserGiftInventoryCountOutputType without action
    */
-  export type UserGiftInventoryCountOutputTypeCountDoctorDistributionGiftItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: DoctorDistributionGiftItemWhereInput
+  export type UserGiftInventoryCountOutputTypeCountSampleDistributionGiftItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SampleDistributionGiftItemWhereInput
   }
 
 
   /**
-   * Count Type DoctorDistributionCountOutputType
+   * Count Type SampleDistributionCountOutputType
    */
 
-  export type DoctorDistributionCountOutputType = {
+  export type SampleDistributionCountOutputType = {
     drugItems: number
     giftItems: number
   }
 
-  export type DoctorDistributionCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    drugItems?: boolean | DoctorDistributionCountOutputTypeCountDrugItemsArgs
-    giftItems?: boolean | DoctorDistributionCountOutputTypeCountGiftItemsArgs
+  export type SampleDistributionCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    drugItems?: boolean | SampleDistributionCountOutputTypeCountDrugItemsArgs
+    giftItems?: boolean | SampleDistributionCountOutputTypeCountGiftItemsArgs
   }
 
   // Custom InputTypes
   /**
-   * DoctorDistributionCountOutputType without action
+   * SampleDistributionCountOutputType without action
    */
-  export type DoctorDistributionCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SampleDistributionCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the DoctorDistributionCountOutputType
+     * Select specific fields to fetch from the SampleDistributionCountOutputType
      */
-    select?: DoctorDistributionCountOutputTypeSelect<ExtArgs> | null
+    select?: SampleDistributionCountOutputTypeSelect<ExtArgs> | null
   }
 
   /**
-   * DoctorDistributionCountOutputType without action
+   * SampleDistributionCountOutputType without action
    */
-  export type DoctorDistributionCountOutputTypeCountDrugItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: DoctorDistributionDrugItemWhereInput
+  export type SampleDistributionCountOutputTypeCountDrugItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SampleDistributionDrugItemWhereInput
   }
 
   /**
-   * DoctorDistributionCountOutputType without action
+   * SampleDistributionCountOutputType without action
    */
-  export type DoctorDistributionCountOutputTypeCountGiftItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: DoctorDistributionGiftItemWhereInput
+  export type SampleDistributionCountOutputTypeCountGiftItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SampleDistributionGiftItemWhereInput
   }
 
 
@@ -6113,7 +6082,7 @@ export namespace Prisma {
     drugInventories?: boolean | Employee$drugInventoriesArgs<ExtArgs>
     giftInventories?: boolean | Employee$giftInventoriesArgs<ExtArgs>
     giftsCreated?: boolean | Employee$giftsCreatedArgs<ExtArgs>
-    doctorDistributions?: boolean | Employee$doctorDistributionsArgs<ExtArgs>
+    sampleDistributions?: boolean | Employee$sampleDistributionsArgs<ExtArgs>
     taskPlans?: boolean | Employee$taskPlansArgs<ExtArgs>
     doctorTasks?: boolean | Employee$doctorTasksArgs<ExtArgs>
     chemistTasks?: boolean | Employee$chemistTasksArgs<ExtArgs>
@@ -6220,7 +6189,7 @@ export namespace Prisma {
     drugInventories?: boolean | Employee$drugInventoriesArgs<ExtArgs>
     giftInventories?: boolean | Employee$giftInventoriesArgs<ExtArgs>
     giftsCreated?: boolean | Employee$giftsCreatedArgs<ExtArgs>
-    doctorDistributions?: boolean | Employee$doctorDistributionsArgs<ExtArgs>
+    sampleDistributions?: boolean | Employee$sampleDistributionsArgs<ExtArgs>
     taskPlans?: boolean | Employee$taskPlansArgs<ExtArgs>
     doctorTasks?: boolean | Employee$doctorTasksArgs<ExtArgs>
     chemistTasks?: boolean | Employee$chemistTasksArgs<ExtArgs>
@@ -6263,7 +6232,7 @@ export namespace Prisma {
       drugInventories: Prisma.$UserDrugInventoryPayload<ExtArgs>[]
       giftInventories: Prisma.$UserGiftInventoryPayload<ExtArgs>[]
       giftsCreated: Prisma.$GiftPayload<ExtArgs>[]
-      doctorDistributions: Prisma.$DoctorDistributionPayload<ExtArgs>[]
+      sampleDistributions: Prisma.$SampleDistributionPayload<ExtArgs>[]
       taskPlans: Prisma.$TaskPlannerPayload<ExtArgs>[]
       doctorTasks: Prisma.$DoctorTaskPayload<ExtArgs>[]
       chemistTasks: Prisma.$ChemistTaskPayload<ExtArgs>[]
@@ -6708,7 +6677,7 @@ export namespace Prisma {
     drugInventories<T extends Employee$drugInventoriesArgs<ExtArgs> = {}>(args?: Subset<T, Employee$drugInventoriesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserDrugInventoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     giftInventories<T extends Employee$giftInventoriesArgs<ExtArgs> = {}>(args?: Subset<T, Employee$giftInventoriesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserGiftInventoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     giftsCreated<T extends Employee$giftsCreatedArgs<ExtArgs> = {}>(args?: Subset<T, Employee$giftsCreatedArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GiftPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    doctorDistributions<T extends Employee$doctorDistributionsArgs<ExtArgs> = {}>(args?: Subset<T, Employee$doctorDistributionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DoctorDistributionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    sampleDistributions<T extends Employee$sampleDistributionsArgs<ExtArgs> = {}>(args?: Subset<T, Employee$sampleDistributionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SampleDistributionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     taskPlans<T extends Employee$taskPlansArgs<ExtArgs> = {}>(args?: Subset<T, Employee$taskPlansArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TaskPlannerPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     doctorTasks<T extends Employee$doctorTasksArgs<ExtArgs> = {}>(args?: Subset<T, Employee$doctorTasksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DoctorTaskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     chemistTasks<T extends Employee$chemistTasksArgs<ExtArgs> = {}>(args?: Subset<T, Employee$chemistTasksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ChemistTaskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -7719,27 +7688,27 @@ export namespace Prisma {
   }
 
   /**
-   * Employee.doctorDistributions
+   * Employee.sampleDistributions
    */
-  export type Employee$doctorDistributionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Employee$sampleDistributionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the DoctorDistribution
+     * Select specific fields to fetch from the SampleDistribution
      */
-    select?: DoctorDistributionSelect<ExtArgs> | null
+    select?: SampleDistributionSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the DoctorDistribution
+     * Omit specific fields from the SampleDistribution
      */
-    omit?: DoctorDistributionOmit<ExtArgs> | null
+    omit?: SampleDistributionOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: DoctorDistributionInclude<ExtArgs> | null
-    where?: DoctorDistributionWhereInput
-    orderBy?: DoctorDistributionOrderByWithRelationInput | DoctorDistributionOrderByWithRelationInput[]
-    cursor?: DoctorDistributionWhereUniqueInput
+    include?: SampleDistributionInclude<ExtArgs> | null
+    where?: SampleDistributionWhereInput
+    orderBy?: SampleDistributionOrderByWithRelationInput | SampleDistributionOrderByWithRelationInput[]
+    cursor?: SampleDistributionWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: DoctorDistributionScalarFieldEnum | DoctorDistributionScalarFieldEnum[]
+    distinct?: SampleDistributionScalarFieldEnum | SampleDistributionScalarFieldEnum[]
   }
 
   /**
@@ -16254,6 +16223,7 @@ export namespace Prisma {
     notes?: boolean | Doctor$notesArgs<ExtArgs>
     chemistRelations?: boolean | Doctor$chemistRelationsArgs<ExtArgs>
     DoctorTask?: boolean | Doctor$DoctorTaskArgs<ExtArgs>
+    sampleDistributions?: boolean | Doctor$sampleDistributionsArgs<ExtArgs>
     _count?: boolean | DoctorCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["doctor"]>
 
@@ -16322,6 +16292,7 @@ export namespace Prisma {
     notes?: boolean | Doctor$notesArgs<ExtArgs>
     chemistRelations?: boolean | Doctor$chemistRelationsArgs<ExtArgs>
     DoctorTask?: boolean | Doctor$DoctorTaskArgs<ExtArgs>
+    sampleDistributions?: boolean | Doctor$sampleDistributionsArgs<ExtArgs>
     _count?: boolean | DoctorCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type DoctorIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -16341,6 +16312,7 @@ export namespace Prisma {
       notes: Prisma.$DoctorNotePayload<ExtArgs>[]
       chemistRelations: Prisma.$DoctorChemistRelationPayload<ExtArgs>[]
       DoctorTask: Prisma.$DoctorTaskPayload<ExtArgs>[]
+      sampleDistributions: Prisma.$SampleDistributionPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -16759,6 +16731,7 @@ export namespace Prisma {
     notes<T extends Doctor$notesArgs<ExtArgs> = {}>(args?: Subset<T, Doctor$notesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DoctorNotePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     chemistRelations<T extends Doctor$chemistRelationsArgs<ExtArgs> = {}>(args?: Subset<T, Doctor$chemistRelationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DoctorChemistRelationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     DoctorTask<T extends Doctor$DoctorTaskArgs<ExtArgs> = {}>(args?: Subset<T, Doctor$DoctorTaskArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DoctorTaskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    sampleDistributions<T extends Doctor$sampleDistributionsArgs<ExtArgs> = {}>(args?: Subset<T, Doctor$sampleDistributionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SampleDistributionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -17340,6 +17313,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: DoctorTaskScalarFieldEnum | DoctorTaskScalarFieldEnum[]
+  }
+
+  /**
+   * Doctor.sampleDistributions
+   */
+  export type Doctor$sampleDistributionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SampleDistribution
+     */
+    select?: SampleDistributionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SampleDistribution
+     */
+    omit?: SampleDistributionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SampleDistributionInclude<ExtArgs> | null
+    where?: SampleDistributionWhereInput
+    orderBy?: SampleDistributionOrderByWithRelationInput | SampleDistributionOrderByWithRelationInput[]
+    cursor?: SampleDistributionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SampleDistributionScalarFieldEnum | SampleDistributionScalarFieldEnum[]
   }
 
   /**
@@ -20993,9 +20990,7 @@ export namespace Prisma {
     doctor?: boolean | DoctorDefaultArgs<ExtArgs>
     employee?: boolean | EmployeeDefaultArgs<ExtArgs>
     hospital?: boolean | DoctorInteraction$hospitalArgs<ExtArgs>
-    DoctorDistribution?: boolean | DoctorInteraction$DoctorDistributionArgs<ExtArgs>
     DoctorTask?: boolean | DoctorInteraction$DoctorTaskArgs<ExtArgs>
-    _count?: boolean | DoctorInteractionCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["doctorInteraction"]>
 
   export type DoctorInteractionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -21059,9 +21054,7 @@ export namespace Prisma {
     doctor?: boolean | DoctorDefaultArgs<ExtArgs>
     employee?: boolean | EmployeeDefaultArgs<ExtArgs>
     hospital?: boolean | DoctorInteraction$hospitalArgs<ExtArgs>
-    DoctorDistribution?: boolean | DoctorInteraction$DoctorDistributionArgs<ExtArgs>
     DoctorTask?: boolean | DoctorInteraction$DoctorTaskArgs<ExtArgs>
-    _count?: boolean | DoctorInteractionCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type DoctorInteractionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     doctor?: boolean | DoctorDefaultArgs<ExtArgs>
@@ -21082,7 +21075,6 @@ export namespace Prisma {
       doctor: Prisma.$DoctorPayload<ExtArgs>
       employee: Prisma.$EmployeePayload<ExtArgs>
       hospital: Prisma.$HospitalPayload<ExtArgs> | null
-      DoctorDistribution: Prisma.$DoctorDistributionPayload<ExtArgs>[]
       DoctorTask: Prisma.$DoctorTaskPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -21496,7 +21488,6 @@ export namespace Prisma {
     doctor<T extends DoctorDefaultArgs<ExtArgs> = {}>(args?: Subset<T, DoctorDefaultArgs<ExtArgs>>): Prisma__DoctorClient<$Result.GetResult<Prisma.$DoctorPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     employee<T extends EmployeeDefaultArgs<ExtArgs> = {}>(args?: Subset<T, EmployeeDefaultArgs<ExtArgs>>): Prisma__EmployeeClient<$Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     hospital<T extends DoctorInteraction$hospitalArgs<ExtArgs> = {}>(args?: Subset<T, DoctorInteraction$hospitalArgs<ExtArgs>>): Prisma__HospitalClient<$Result.GetResult<Prisma.$HospitalPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    DoctorDistribution<T extends DoctorInteraction$DoctorDistributionArgs<ExtArgs> = {}>(args?: Subset<T, DoctorInteraction$DoctorDistributionArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DoctorDistributionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     DoctorTask<T extends DoctorInteraction$DoctorTaskArgs<ExtArgs> = {}>(args?: Subset<T, DoctorInteraction$DoctorTaskArgs<ExtArgs>>): Prisma__DoctorTaskClient<$Result.GetResult<Prisma.$DoctorTaskPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -21955,30 +21946,6 @@ export namespace Prisma {
   }
 
   /**
-   * DoctorInteraction.DoctorDistribution
-   */
-  export type DoctorInteraction$DoctorDistributionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the DoctorDistribution
-     */
-    select?: DoctorDistributionSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the DoctorDistribution
-     */
-    omit?: DoctorDistributionOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: DoctorDistributionInclude<ExtArgs> | null
-    where?: DoctorDistributionWhereInput
-    orderBy?: DoctorDistributionOrderByWithRelationInput | DoctorDistributionOrderByWithRelationInput[]
-    cursor?: DoctorDistributionWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: DoctorDistributionScalarFieldEnum | DoctorDistributionScalarFieldEnum[]
-  }
-
-  /**
    * DoctorInteraction.DoctorTask
    */
   export type DoctorInteraction$DoctorTaskArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -22326,7 +22293,6 @@ export namespace Prisma {
     orderItems?: boolean | Drug$orderItemsArgs<ExtArgs>
     rcpaData?: boolean | Drug$rcpaDataArgs<ExtArgs>
     UserDrugInventory?: boolean | Drug$UserDrugInventoryArgs<ExtArgs>
-    DoctorDistributionDrugItem?: boolean | Drug$DoctorDistributionDrugItemArgs<ExtArgs>
     _count?: boolean | DrugCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["drug"]>
 
@@ -22407,7 +22373,6 @@ export namespace Prisma {
     orderItems?: boolean | Drug$orderItemsArgs<ExtArgs>
     rcpaData?: boolean | Drug$rcpaDataArgs<ExtArgs>
     UserDrugInventory?: boolean | Drug$UserDrugInventoryArgs<ExtArgs>
-    DoctorDistributionDrugItem?: boolean | Drug$DoctorDistributionDrugItemArgs<ExtArgs>
     _count?: boolean | DrugCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type DrugIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -22424,7 +22389,6 @@ export namespace Prisma {
       orderItems: Prisma.$OrderItemPayload<ExtArgs>[]
       rcpaData: Prisma.$RcpaDrugDataPayload<ExtArgs>[]
       UserDrugInventory: Prisma.$UserDrugInventoryPayload<ExtArgs>[]
-      DoctorDistributionDrugItem: Prisma.$DoctorDistributionDrugItemPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -22845,7 +22809,6 @@ export namespace Prisma {
     orderItems<T extends Drug$orderItemsArgs<ExtArgs> = {}>(args?: Subset<T, Drug$orderItemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrderItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     rcpaData<T extends Drug$rcpaDataArgs<ExtArgs> = {}>(args?: Subset<T, Drug$rcpaDataArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RcpaDrugDataPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     UserDrugInventory<T extends Drug$UserDrugInventoryArgs<ExtArgs> = {}>(args?: Subset<T, Drug$UserDrugInventoryArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserDrugInventoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    DoctorDistributionDrugItem<T extends Drug$DoctorDistributionDrugItemArgs<ExtArgs> = {}>(args?: Subset<T, Drug$DoctorDistributionDrugItemArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DoctorDistributionDrugItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -23363,30 +23326,6 @@ export namespace Prisma {
   }
 
   /**
-   * Drug.DoctorDistributionDrugItem
-   */
-  export type Drug$DoctorDistributionDrugItemArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the DoctorDistributionDrugItem
-     */
-    select?: DoctorDistributionDrugItemSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the DoctorDistributionDrugItem
-     */
-    omit?: DoctorDistributionDrugItemOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: DoctorDistributionDrugItemInclude<ExtArgs> | null
-    where?: DoctorDistributionDrugItemWhereInput
-    orderBy?: DoctorDistributionDrugItemOrderByWithRelationInput | DoctorDistributionDrugItemOrderByWithRelationInput[]
-    cursor?: DoctorDistributionDrugItemWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: DoctorDistributionDrugItemScalarFieldEnum | DoctorDistributionDrugItemScalarFieldEnum[]
-  }
-
-  /**
    * Drug without action
    */
   export type DrugDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -23744,6 +23683,7 @@ export namespace Prisma {
     orders?: boolean | Chemist$ordersArgs<ExtArgs>
     rcpaReports?: boolean | Chemist$rcpaReportsArgs<ExtArgs>
     chemistTasks?: boolean | Chemist$chemistTasksArgs<ExtArgs>
+    sampleDistributions?: boolean | Chemist$sampleDistributionsArgs<ExtArgs>
     _count?: boolean | ChemistCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["chemist"]>
 
@@ -23836,6 +23776,7 @@ export namespace Prisma {
     orders?: boolean | Chemist$ordersArgs<ExtArgs>
     rcpaReports?: boolean | Chemist$rcpaReportsArgs<ExtArgs>
     chemistTasks?: boolean | Chemist$chemistTasksArgs<ExtArgs>
+    sampleDistributions?: boolean | Chemist$sampleDistributionsArgs<ExtArgs>
     _count?: boolean | ChemistCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ChemistIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -23861,6 +23802,7 @@ export namespace Prisma {
       orders: Prisma.$OrderPayload<ExtArgs>[]
       rcpaReports: Prisma.$RcpaReportPayload<ExtArgs>[]
       chemistTasks: Prisma.$ChemistTaskPayload<ExtArgs>[]
+      sampleDistributions: Prisma.$SampleDistributionPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -24287,6 +24229,7 @@ export namespace Prisma {
     orders<T extends Chemist$ordersArgs<ExtArgs> = {}>(args?: Subset<T, Chemist$ordersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     rcpaReports<T extends Chemist$rcpaReportsArgs<ExtArgs> = {}>(args?: Subset<T, Chemist$rcpaReportsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RcpaReportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     chemistTasks<T extends Chemist$chemistTasksArgs<ExtArgs> = {}>(args?: Subset<T, Chemist$chemistTasksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ChemistTaskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    sampleDistributions<T extends Chemist$sampleDistributionsArgs<ExtArgs> = {}>(args?: Subset<T, Chemist$sampleDistributionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SampleDistributionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -24893,6 +24836,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: ChemistTaskScalarFieldEnum | ChemistTaskScalarFieldEnum[]
+  }
+
+  /**
+   * Chemist.sampleDistributions
+   */
+  export type Chemist$sampleDistributionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SampleDistribution
+     */
+    select?: SampleDistributionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SampleDistribution
+     */
+    omit?: SampleDistributionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SampleDistributionInclude<ExtArgs> | null
+    where?: SampleDistributionWhereInput
+    orderBy?: SampleDistributionOrderByWithRelationInput | SampleDistributionOrderByWithRelationInput[]
+    cursor?: SampleDistributionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SampleDistributionScalarFieldEnum | SampleDistributionScalarFieldEnum[]
   }
 
   /**
@@ -45885,7 +45852,6 @@ export namespace Prisma {
     isActive?: boolean
     createdBy?: boolean | EmployeeDefaultArgs<ExtArgs>
     userGiftInventories?: boolean | Gift$userGiftInventoriesArgs<ExtArgs>
-    doctorDistributionGiftItems?: boolean | Gift$doctorDistributionGiftItemsArgs<ExtArgs>
     _count?: boolean | GiftCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["gift"]>
 
@@ -45934,7 +45900,6 @@ export namespace Prisma {
   export type GiftInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     createdBy?: boolean | EmployeeDefaultArgs<ExtArgs>
     userGiftInventories?: boolean | Gift$userGiftInventoriesArgs<ExtArgs>
-    doctorDistributionGiftItems?: boolean | Gift$doctorDistributionGiftItemsArgs<ExtArgs>
     _count?: boolean | GiftCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type GiftIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -45949,7 +45914,6 @@ export namespace Prisma {
     objects: {
       createdBy: Prisma.$EmployeePayload<ExtArgs>
       userGiftInventories: Prisma.$UserGiftInventoryPayload<ExtArgs>[]
-      doctorDistributionGiftItems: Prisma.$DoctorDistributionGiftItemPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -46358,7 +46322,6 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     createdBy<T extends EmployeeDefaultArgs<ExtArgs> = {}>(args?: Subset<T, EmployeeDefaultArgs<ExtArgs>>): Prisma__EmployeeClient<$Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     userGiftInventories<T extends Gift$userGiftInventoriesArgs<ExtArgs> = {}>(args?: Subset<T, Gift$userGiftInventoriesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserGiftInventoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    doctorDistributionGiftItems<T extends Gift$doctorDistributionGiftItemsArgs<ExtArgs> = {}>(args?: Subset<T, Gift$doctorDistributionGiftItemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DoctorDistributionGiftItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -46818,30 +46781,6 @@ export namespace Prisma {
   }
 
   /**
-   * Gift.doctorDistributionGiftItems
-   */
-  export type Gift$doctorDistributionGiftItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the DoctorDistributionGiftItem
-     */
-    select?: DoctorDistributionGiftItemSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the DoctorDistributionGiftItem
-     */
-    omit?: DoctorDistributionGiftItemOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: DoctorDistributionGiftItemInclude<ExtArgs> | null
-    where?: DoctorDistributionGiftItemWhereInput
-    orderBy?: DoctorDistributionGiftItemOrderByWithRelationInput | DoctorDistributionGiftItemOrderByWithRelationInput[]
-    cursor?: DoctorDistributionGiftItemWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: DoctorDistributionGiftItemScalarFieldEnum | DoctorDistributionGiftItemScalarFieldEnum[]
-  }
-
-  /**
    * Gift without action
    */
   export type GiftDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -47076,7 +47015,7 @@ export namespace Prisma {
     updatedAt?: boolean
     employee?: boolean | EmployeeDefaultArgs<ExtArgs>
     drug?: boolean | DrugDefaultArgs<ExtArgs>
-    doctorDistributionDrugItems?: boolean | UserDrugInventory$doctorDistributionDrugItemsArgs<ExtArgs>
+    sampleDistributionDrugItems?: boolean | UserDrugInventory$sampleDistributionDrugItemsArgs<ExtArgs>
     _count?: boolean | UserDrugInventoryCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["userDrugInventory"]>
 
@@ -47118,7 +47057,7 @@ export namespace Prisma {
   export type UserDrugInventoryInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     employee?: boolean | EmployeeDefaultArgs<ExtArgs>
     drug?: boolean | DrugDefaultArgs<ExtArgs>
-    doctorDistributionDrugItems?: boolean | UserDrugInventory$doctorDistributionDrugItemsArgs<ExtArgs>
+    sampleDistributionDrugItems?: boolean | UserDrugInventory$sampleDistributionDrugItemsArgs<ExtArgs>
     _count?: boolean | UserDrugInventoryCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserDrugInventoryIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -47135,7 +47074,7 @@ export namespace Prisma {
     objects: {
       employee: Prisma.$EmployeePayload<ExtArgs>
       drug: Prisma.$DrugPayload<ExtArgs>
-      doctorDistributionDrugItems: Prisma.$DoctorDistributionDrugItemPayload<ExtArgs>[]
+      sampleDistributionDrugItems: Prisma.$SampleDistributionDrugItemPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -47541,7 +47480,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     employee<T extends EmployeeDefaultArgs<ExtArgs> = {}>(args?: Subset<T, EmployeeDefaultArgs<ExtArgs>>): Prisma__EmployeeClient<$Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     drug<T extends DrugDefaultArgs<ExtArgs> = {}>(args?: Subset<T, DrugDefaultArgs<ExtArgs>>): Prisma__DrugClient<$Result.GetResult<Prisma.$DrugPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    doctorDistributionDrugItems<T extends UserDrugInventory$doctorDistributionDrugItemsArgs<ExtArgs> = {}>(args?: Subset<T, UserDrugInventory$doctorDistributionDrugItemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DoctorDistributionDrugItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    sampleDistributionDrugItems<T extends UserDrugInventory$sampleDistributionDrugItemsArgs<ExtArgs> = {}>(args?: Subset<T, UserDrugInventory$sampleDistributionDrugItemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SampleDistributionDrugItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -47974,27 +47913,27 @@ export namespace Prisma {
   }
 
   /**
-   * UserDrugInventory.doctorDistributionDrugItems
+   * UserDrugInventory.sampleDistributionDrugItems
    */
-  export type UserDrugInventory$doctorDistributionDrugItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserDrugInventory$sampleDistributionDrugItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the DoctorDistributionDrugItem
+     * Select specific fields to fetch from the SampleDistributionDrugItem
      */
-    select?: DoctorDistributionDrugItemSelect<ExtArgs> | null
+    select?: SampleDistributionDrugItemSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the DoctorDistributionDrugItem
+     * Omit specific fields from the SampleDistributionDrugItem
      */
-    omit?: DoctorDistributionDrugItemOmit<ExtArgs> | null
+    omit?: SampleDistributionDrugItemOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: DoctorDistributionDrugItemInclude<ExtArgs> | null
-    where?: DoctorDistributionDrugItemWhereInput
-    orderBy?: DoctorDistributionDrugItemOrderByWithRelationInput | DoctorDistributionDrugItemOrderByWithRelationInput[]
-    cursor?: DoctorDistributionDrugItemWhereUniqueInput
+    include?: SampleDistributionDrugItemInclude<ExtArgs> | null
+    where?: SampleDistributionDrugItemWhereInput
+    orderBy?: SampleDistributionDrugItemOrderByWithRelationInput | SampleDistributionDrugItemOrderByWithRelationInput[]
+    cursor?: SampleDistributionDrugItemWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: DoctorDistributionDrugItemScalarFieldEnum | DoctorDistributionDrugItemScalarFieldEnum[]
+    distinct?: SampleDistributionDrugItemScalarFieldEnum | SampleDistributionDrugItemScalarFieldEnum[]
   }
 
   /**
@@ -48232,7 +48171,7 @@ export namespace Prisma {
     updatedAt?: boolean
     employee?: boolean | EmployeeDefaultArgs<ExtArgs>
     gift?: boolean | GiftDefaultArgs<ExtArgs>
-    doctorDistributionGiftItems?: boolean | UserGiftInventory$doctorDistributionGiftItemsArgs<ExtArgs>
+    sampleDistributionGiftItems?: boolean | UserGiftInventory$sampleDistributionGiftItemsArgs<ExtArgs>
     _count?: boolean | UserGiftInventoryCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["userGiftInventory"]>
 
@@ -48274,7 +48213,7 @@ export namespace Prisma {
   export type UserGiftInventoryInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     employee?: boolean | EmployeeDefaultArgs<ExtArgs>
     gift?: boolean | GiftDefaultArgs<ExtArgs>
-    doctorDistributionGiftItems?: boolean | UserGiftInventory$doctorDistributionGiftItemsArgs<ExtArgs>
+    sampleDistributionGiftItems?: boolean | UserGiftInventory$sampleDistributionGiftItemsArgs<ExtArgs>
     _count?: boolean | UserGiftInventoryCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserGiftInventoryIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -48291,7 +48230,7 @@ export namespace Prisma {
     objects: {
       employee: Prisma.$EmployeePayload<ExtArgs>
       gift: Prisma.$GiftPayload<ExtArgs>
-      doctorDistributionGiftItems: Prisma.$DoctorDistributionGiftItemPayload<ExtArgs>[]
+      sampleDistributionGiftItems: Prisma.$SampleDistributionGiftItemPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -48697,7 +48636,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     employee<T extends EmployeeDefaultArgs<ExtArgs> = {}>(args?: Subset<T, EmployeeDefaultArgs<ExtArgs>>): Prisma__EmployeeClient<$Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     gift<T extends GiftDefaultArgs<ExtArgs> = {}>(args?: Subset<T, GiftDefaultArgs<ExtArgs>>): Prisma__GiftClient<$Result.GetResult<Prisma.$GiftPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    doctorDistributionGiftItems<T extends UserGiftInventory$doctorDistributionGiftItemsArgs<ExtArgs> = {}>(args?: Subset<T, UserGiftInventory$doctorDistributionGiftItemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DoctorDistributionGiftItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    sampleDistributionGiftItems<T extends UserGiftInventory$sampleDistributionGiftItemsArgs<ExtArgs> = {}>(args?: Subset<T, UserGiftInventory$sampleDistributionGiftItemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SampleDistributionGiftItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -49130,27 +49069,27 @@ export namespace Prisma {
   }
 
   /**
-   * UserGiftInventory.doctorDistributionGiftItems
+   * UserGiftInventory.sampleDistributionGiftItems
    */
-  export type UserGiftInventory$doctorDistributionGiftItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserGiftInventory$sampleDistributionGiftItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the DoctorDistributionGiftItem
+     * Select specific fields to fetch from the SampleDistributionGiftItem
      */
-    select?: DoctorDistributionGiftItemSelect<ExtArgs> | null
+    select?: SampleDistributionGiftItemSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the DoctorDistributionGiftItem
+     * Omit specific fields from the SampleDistributionGiftItem
      */
-    omit?: DoctorDistributionGiftItemOmit<ExtArgs> | null
+    omit?: SampleDistributionGiftItemOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: DoctorDistributionGiftItemInclude<ExtArgs> | null
-    where?: DoctorDistributionGiftItemWhereInput
-    orderBy?: DoctorDistributionGiftItemOrderByWithRelationInput | DoctorDistributionGiftItemOrderByWithRelationInput[]
-    cursor?: DoctorDistributionGiftItemWhereUniqueInput
+    include?: SampleDistributionGiftItemInclude<ExtArgs> | null
+    where?: SampleDistributionGiftItemWhereInput
+    orderBy?: SampleDistributionGiftItemOrderByWithRelationInput | SampleDistributionGiftItemOrderByWithRelationInput[]
+    cursor?: SampleDistributionGiftItemWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: DoctorDistributionGiftItemScalarFieldEnum | DoctorDistributionGiftItemScalarFieldEnum[]
+    distinct?: SampleDistributionGiftItemScalarFieldEnum | SampleDistributionGiftItemScalarFieldEnum[]
   }
 
   /**
@@ -49173,36 +49112,39 @@ export namespace Prisma {
 
 
   /**
-   * Model DoctorDistribution
+   * Model SampleDistribution
    */
 
-  export type AggregateDoctorDistribution = {
-    _count: DoctorDistributionCountAggregateOutputType | null
-    _min: DoctorDistributionMinAggregateOutputType | null
-    _max: DoctorDistributionMaxAggregateOutputType | null
+  export type AggregateSampleDistribution = {
+    _count: SampleDistributionCountAggregateOutputType | null
+    _min: SampleDistributionMinAggregateOutputType | null
+    _max: SampleDistributionMaxAggregateOutputType | null
   }
 
-  export type DoctorDistributionMinAggregateOutputType = {
+  export type SampleDistributionMinAggregateOutputType = {
     id: string | null
-    doctorInteractionId: string | null
+    doctorId: string | null
+    chemistId: string | null
     employeeId: string | null
     distributedAt: Date | null
     createdAt: Date | null
     updatedAt: Date | null
   }
 
-  export type DoctorDistributionMaxAggregateOutputType = {
+  export type SampleDistributionMaxAggregateOutputType = {
     id: string | null
-    doctorInteractionId: string | null
+    doctorId: string | null
+    chemistId: string | null
     employeeId: string | null
     distributedAt: Date | null
     createdAt: Date | null
     updatedAt: Date | null
   }
 
-  export type DoctorDistributionCountAggregateOutputType = {
+  export type SampleDistributionCountAggregateOutputType = {
     id: number
-    doctorInteractionId: number
+    doctorId: number
+    chemistId: number
     employeeId: number
     distributedAt: number
     createdAt: number
@@ -49211,27 +49153,30 @@ export namespace Prisma {
   }
 
 
-  export type DoctorDistributionMinAggregateInputType = {
+  export type SampleDistributionMinAggregateInputType = {
     id?: true
-    doctorInteractionId?: true
+    doctorId?: true
+    chemistId?: true
     employeeId?: true
     distributedAt?: true
     createdAt?: true
     updatedAt?: true
   }
 
-  export type DoctorDistributionMaxAggregateInputType = {
+  export type SampleDistributionMaxAggregateInputType = {
     id?: true
-    doctorInteractionId?: true
+    doctorId?: true
+    chemistId?: true
     employeeId?: true
     distributedAt?: true
     createdAt?: true
     updatedAt?: true
   }
 
-  export type DoctorDistributionCountAggregateInputType = {
+  export type SampleDistributionCountAggregateInputType = {
     id?: true
-    doctorInteractionId?: true
+    doctorId?: true
+    chemistId?: true
     employeeId?: true
     distributedAt?: true
     createdAt?: true
@@ -49239,311 +49184,324 @@ export namespace Prisma {
     _all?: true
   }
 
-  export type DoctorDistributionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SampleDistributionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which DoctorDistribution to aggregate.
+     * Filter which SampleDistribution to aggregate.
      */
-    where?: DoctorDistributionWhereInput
+    where?: SampleDistributionWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of DoctorDistributions to fetch.
+     * Determine the order of SampleDistributions to fetch.
      */
-    orderBy?: DoctorDistributionOrderByWithRelationInput | DoctorDistributionOrderByWithRelationInput[]
+    orderBy?: SampleDistributionOrderByWithRelationInput | SampleDistributionOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: DoctorDistributionWhereUniqueInput
+    cursor?: SampleDistributionWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` DoctorDistributions from the position of the cursor.
+     * Take `±n` SampleDistributions from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` DoctorDistributions.
+     * Skip the first `n` SampleDistributions.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned DoctorDistributions
+     * Count returned SampleDistributions
     **/
-    _count?: true | DoctorDistributionCountAggregateInputType
+    _count?: true | SampleDistributionCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: DoctorDistributionMinAggregateInputType
+    _min?: SampleDistributionMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: DoctorDistributionMaxAggregateInputType
+    _max?: SampleDistributionMaxAggregateInputType
   }
 
-  export type GetDoctorDistributionAggregateType<T extends DoctorDistributionAggregateArgs> = {
-        [P in keyof T & keyof AggregateDoctorDistribution]: P extends '_count' | 'count'
+  export type GetSampleDistributionAggregateType<T extends SampleDistributionAggregateArgs> = {
+        [P in keyof T & keyof AggregateSampleDistribution]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateDoctorDistribution[P]>
-      : GetScalarType<T[P], AggregateDoctorDistribution[P]>
+        : GetScalarType<T[P], AggregateSampleDistribution[P]>
+      : GetScalarType<T[P], AggregateSampleDistribution[P]>
   }
 
 
 
 
-  export type DoctorDistributionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: DoctorDistributionWhereInput
-    orderBy?: DoctorDistributionOrderByWithAggregationInput | DoctorDistributionOrderByWithAggregationInput[]
-    by: DoctorDistributionScalarFieldEnum[] | DoctorDistributionScalarFieldEnum
-    having?: DoctorDistributionScalarWhereWithAggregatesInput
+  export type SampleDistributionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SampleDistributionWhereInput
+    orderBy?: SampleDistributionOrderByWithAggregationInput | SampleDistributionOrderByWithAggregationInput[]
+    by: SampleDistributionScalarFieldEnum[] | SampleDistributionScalarFieldEnum
+    having?: SampleDistributionScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: DoctorDistributionCountAggregateInputType | true
-    _min?: DoctorDistributionMinAggregateInputType
-    _max?: DoctorDistributionMaxAggregateInputType
+    _count?: SampleDistributionCountAggregateInputType | true
+    _min?: SampleDistributionMinAggregateInputType
+    _max?: SampleDistributionMaxAggregateInputType
   }
 
-  export type DoctorDistributionGroupByOutputType = {
+  export type SampleDistributionGroupByOutputType = {
     id: string
-    doctorInteractionId: string
+    doctorId: string | null
+    chemistId: string | null
     employeeId: string
     distributedAt: Date
     createdAt: Date
     updatedAt: Date
-    _count: DoctorDistributionCountAggregateOutputType | null
-    _min: DoctorDistributionMinAggregateOutputType | null
-    _max: DoctorDistributionMaxAggregateOutputType | null
+    _count: SampleDistributionCountAggregateOutputType | null
+    _min: SampleDistributionMinAggregateOutputType | null
+    _max: SampleDistributionMaxAggregateOutputType | null
   }
 
-  type GetDoctorDistributionGroupByPayload<T extends DoctorDistributionGroupByArgs> = Prisma.PrismaPromise<
+  type GetSampleDistributionGroupByPayload<T extends SampleDistributionGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<DoctorDistributionGroupByOutputType, T['by']> &
+      PickEnumerable<SampleDistributionGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof DoctorDistributionGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof SampleDistributionGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], DoctorDistributionGroupByOutputType[P]>
-            : GetScalarType<T[P], DoctorDistributionGroupByOutputType[P]>
+              : GetScalarType<T[P], SampleDistributionGroupByOutputType[P]>
+            : GetScalarType<T[P], SampleDistributionGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type DoctorDistributionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type SampleDistributionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    doctorInteractionId?: boolean
+    doctorId?: boolean
+    chemistId?: boolean
     employeeId?: boolean
     distributedAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    doctorInteraction?: boolean | DoctorInteractionDefaultArgs<ExtArgs>
+    doctor?: boolean | SampleDistribution$doctorArgs<ExtArgs>
+    chemist?: boolean | SampleDistribution$chemistArgs<ExtArgs>
     employee?: boolean | EmployeeDefaultArgs<ExtArgs>
-    drugItems?: boolean | DoctorDistribution$drugItemsArgs<ExtArgs>
-    giftItems?: boolean | DoctorDistribution$giftItemsArgs<ExtArgs>
-    _count?: boolean | DoctorDistributionCountOutputTypeDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["doctorDistribution"]>
+    drugItems?: boolean | SampleDistribution$drugItemsArgs<ExtArgs>
+    giftItems?: boolean | SampleDistribution$giftItemsArgs<ExtArgs>
+    _count?: boolean | SampleDistributionCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["sampleDistribution"]>
 
-  export type DoctorDistributionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type SampleDistributionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    doctorInteractionId?: boolean
+    doctorId?: boolean
+    chemistId?: boolean
     employeeId?: boolean
     distributedAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    doctorInteraction?: boolean | DoctorInteractionDefaultArgs<ExtArgs>
+    doctor?: boolean | SampleDistribution$doctorArgs<ExtArgs>
+    chemist?: boolean | SampleDistribution$chemistArgs<ExtArgs>
     employee?: boolean | EmployeeDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["doctorDistribution"]>
+  }, ExtArgs["result"]["sampleDistribution"]>
 
-  export type DoctorDistributionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type SampleDistributionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    doctorInteractionId?: boolean
+    doctorId?: boolean
+    chemistId?: boolean
     employeeId?: boolean
     distributedAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    doctorInteraction?: boolean | DoctorInteractionDefaultArgs<ExtArgs>
+    doctor?: boolean | SampleDistribution$doctorArgs<ExtArgs>
+    chemist?: boolean | SampleDistribution$chemistArgs<ExtArgs>
     employee?: boolean | EmployeeDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["doctorDistribution"]>
+  }, ExtArgs["result"]["sampleDistribution"]>
 
-  export type DoctorDistributionSelectScalar = {
+  export type SampleDistributionSelectScalar = {
     id?: boolean
-    doctorInteractionId?: boolean
+    doctorId?: boolean
+    chemistId?: boolean
     employeeId?: boolean
     distributedAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type DoctorDistributionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "doctorInteractionId" | "employeeId" | "distributedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["doctorDistribution"]>
-  export type DoctorDistributionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    doctorInteraction?: boolean | DoctorInteractionDefaultArgs<ExtArgs>
+  export type SampleDistributionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "doctorId" | "chemistId" | "employeeId" | "distributedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["sampleDistribution"]>
+  export type SampleDistributionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    doctor?: boolean | SampleDistribution$doctorArgs<ExtArgs>
+    chemist?: boolean | SampleDistribution$chemistArgs<ExtArgs>
     employee?: boolean | EmployeeDefaultArgs<ExtArgs>
-    drugItems?: boolean | DoctorDistribution$drugItemsArgs<ExtArgs>
-    giftItems?: boolean | DoctorDistribution$giftItemsArgs<ExtArgs>
-    _count?: boolean | DoctorDistributionCountOutputTypeDefaultArgs<ExtArgs>
+    drugItems?: boolean | SampleDistribution$drugItemsArgs<ExtArgs>
+    giftItems?: boolean | SampleDistribution$giftItemsArgs<ExtArgs>
+    _count?: boolean | SampleDistributionCountOutputTypeDefaultArgs<ExtArgs>
   }
-  export type DoctorDistributionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    doctorInteraction?: boolean | DoctorInteractionDefaultArgs<ExtArgs>
+  export type SampleDistributionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    doctor?: boolean | SampleDistribution$doctorArgs<ExtArgs>
+    chemist?: boolean | SampleDistribution$chemistArgs<ExtArgs>
     employee?: boolean | EmployeeDefaultArgs<ExtArgs>
   }
-  export type DoctorDistributionIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    doctorInteraction?: boolean | DoctorInteractionDefaultArgs<ExtArgs>
+  export type SampleDistributionIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    doctor?: boolean | SampleDistribution$doctorArgs<ExtArgs>
+    chemist?: boolean | SampleDistribution$chemistArgs<ExtArgs>
     employee?: boolean | EmployeeDefaultArgs<ExtArgs>
   }
 
-  export type $DoctorDistributionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "DoctorDistribution"
+  export type $SampleDistributionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "SampleDistribution"
     objects: {
-      doctorInteraction: Prisma.$DoctorInteractionPayload<ExtArgs>
+      doctor: Prisma.$DoctorPayload<ExtArgs> | null
+      chemist: Prisma.$ChemistPayload<ExtArgs> | null
       employee: Prisma.$EmployeePayload<ExtArgs>
-      drugItems: Prisma.$DoctorDistributionDrugItemPayload<ExtArgs>[]
-      giftItems: Prisma.$DoctorDistributionGiftItemPayload<ExtArgs>[]
+      drugItems: Prisma.$SampleDistributionDrugItemPayload<ExtArgs>[]
+      giftItems: Prisma.$SampleDistributionGiftItemPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      doctorInteractionId: string
+      doctorId: string | null
+      chemistId: string | null
       employeeId: string
       distributedAt: Date
       createdAt: Date
       updatedAt: Date
-    }, ExtArgs["result"]["doctorDistribution"]>
+    }, ExtArgs["result"]["sampleDistribution"]>
     composites: {}
   }
 
-  type DoctorDistributionGetPayload<S extends boolean | null | undefined | DoctorDistributionDefaultArgs> = $Result.GetResult<Prisma.$DoctorDistributionPayload, S>
+  type SampleDistributionGetPayload<S extends boolean | null | undefined | SampleDistributionDefaultArgs> = $Result.GetResult<Prisma.$SampleDistributionPayload, S>
 
-  type DoctorDistributionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<DoctorDistributionFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: DoctorDistributionCountAggregateInputType | true
+  type SampleDistributionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<SampleDistributionFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: SampleDistributionCountAggregateInputType | true
     }
 
-  export interface DoctorDistributionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['DoctorDistribution'], meta: { name: 'DoctorDistribution' } }
+  export interface SampleDistributionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['SampleDistribution'], meta: { name: 'SampleDistribution' } }
     /**
-     * Find zero or one DoctorDistribution that matches the filter.
-     * @param {DoctorDistributionFindUniqueArgs} args - Arguments to find a DoctorDistribution
+     * Find zero or one SampleDistribution that matches the filter.
+     * @param {SampleDistributionFindUniqueArgs} args - Arguments to find a SampleDistribution
      * @example
-     * // Get one DoctorDistribution
-     * const doctorDistribution = await prisma.doctorDistribution.findUnique({
+     * // Get one SampleDistribution
+     * const sampleDistribution = await prisma.sampleDistribution.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUnique<T extends DoctorDistributionFindUniqueArgs>(args: SelectSubset<T, DoctorDistributionFindUniqueArgs<ExtArgs>>): Prisma__DoctorDistributionClient<$Result.GetResult<Prisma.$DoctorDistributionPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findUnique<T extends SampleDistributionFindUniqueArgs>(args: SelectSubset<T, SampleDistributionFindUniqueArgs<ExtArgs>>): Prisma__SampleDistributionClient<$Result.GetResult<Prisma.$SampleDistributionPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one DoctorDistribution that matches the filter or throw an error with `error.code='P2025'`
+     * Find one SampleDistribution that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
-     * @param {DoctorDistributionFindUniqueOrThrowArgs} args - Arguments to find a DoctorDistribution
+     * @param {SampleDistributionFindUniqueOrThrowArgs} args - Arguments to find a SampleDistribution
      * @example
-     * // Get one DoctorDistribution
-     * const doctorDistribution = await prisma.doctorDistribution.findUniqueOrThrow({
+     * // Get one SampleDistribution
+     * const sampleDistribution = await prisma.sampleDistribution.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUniqueOrThrow<T extends DoctorDistributionFindUniqueOrThrowArgs>(args: SelectSubset<T, DoctorDistributionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__DoctorDistributionClient<$Result.GetResult<Prisma.$DoctorDistributionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findUniqueOrThrow<T extends SampleDistributionFindUniqueOrThrowArgs>(args: SelectSubset<T, SampleDistributionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SampleDistributionClient<$Result.GetResult<Prisma.$SampleDistributionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first DoctorDistribution that matches the filter.
+     * Find the first SampleDistribution that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {DoctorDistributionFindFirstArgs} args - Arguments to find a DoctorDistribution
+     * @param {SampleDistributionFindFirstArgs} args - Arguments to find a SampleDistribution
      * @example
-     * // Get one DoctorDistribution
-     * const doctorDistribution = await prisma.doctorDistribution.findFirst({
+     * // Get one SampleDistribution
+     * const sampleDistribution = await prisma.sampleDistribution.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirst<T extends DoctorDistributionFindFirstArgs>(args?: SelectSubset<T, DoctorDistributionFindFirstArgs<ExtArgs>>): Prisma__DoctorDistributionClient<$Result.GetResult<Prisma.$DoctorDistributionPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findFirst<T extends SampleDistributionFindFirstArgs>(args?: SelectSubset<T, SampleDistributionFindFirstArgs<ExtArgs>>): Prisma__SampleDistributionClient<$Result.GetResult<Prisma.$SampleDistributionPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first DoctorDistribution that matches the filter or
+     * Find the first SampleDistribution that matches the filter or
      * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {DoctorDistributionFindFirstOrThrowArgs} args - Arguments to find a DoctorDistribution
+     * @param {SampleDistributionFindFirstOrThrowArgs} args - Arguments to find a SampleDistribution
      * @example
-     * // Get one DoctorDistribution
-     * const doctorDistribution = await prisma.doctorDistribution.findFirstOrThrow({
+     * // Get one SampleDistribution
+     * const sampleDistribution = await prisma.sampleDistribution.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirstOrThrow<T extends DoctorDistributionFindFirstOrThrowArgs>(args?: SelectSubset<T, DoctorDistributionFindFirstOrThrowArgs<ExtArgs>>): Prisma__DoctorDistributionClient<$Result.GetResult<Prisma.$DoctorDistributionPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findFirstOrThrow<T extends SampleDistributionFindFirstOrThrowArgs>(args?: SelectSubset<T, SampleDistributionFindFirstOrThrowArgs<ExtArgs>>): Prisma__SampleDistributionClient<$Result.GetResult<Prisma.$SampleDistributionPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find zero or more DoctorDistributions that matches the filter.
+     * Find zero or more SampleDistributions that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {DoctorDistributionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @param {SampleDistributionFindManyArgs} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all DoctorDistributions
-     * const doctorDistributions = await prisma.doctorDistribution.findMany()
+     * // Get all SampleDistributions
+     * const sampleDistributions = await prisma.sampleDistribution.findMany()
      * 
-     * // Get first 10 DoctorDistributions
-     * const doctorDistributions = await prisma.doctorDistribution.findMany({ take: 10 })
+     * // Get first 10 SampleDistributions
+     * const sampleDistributions = await prisma.sampleDistribution.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const doctorDistributionWithIdOnly = await prisma.doctorDistribution.findMany({ select: { id: true } })
+     * const sampleDistributionWithIdOnly = await prisma.sampleDistribution.findMany({ select: { id: true } })
      * 
      */
-    findMany<T extends DoctorDistributionFindManyArgs>(args?: SelectSubset<T, DoctorDistributionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DoctorDistributionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+    findMany<T extends SampleDistributionFindManyArgs>(args?: SelectSubset<T, SampleDistributionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SampleDistributionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
     /**
-     * Create a DoctorDistribution.
-     * @param {DoctorDistributionCreateArgs} args - Arguments to create a DoctorDistribution.
+     * Create a SampleDistribution.
+     * @param {SampleDistributionCreateArgs} args - Arguments to create a SampleDistribution.
      * @example
-     * // Create one DoctorDistribution
-     * const DoctorDistribution = await prisma.doctorDistribution.create({
+     * // Create one SampleDistribution
+     * const SampleDistribution = await prisma.sampleDistribution.create({
      *   data: {
-     *     // ... data to create a DoctorDistribution
+     *     // ... data to create a SampleDistribution
      *   }
      * })
      * 
      */
-    create<T extends DoctorDistributionCreateArgs>(args: SelectSubset<T, DoctorDistributionCreateArgs<ExtArgs>>): Prisma__DoctorDistributionClient<$Result.GetResult<Prisma.$DoctorDistributionPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    create<T extends SampleDistributionCreateArgs>(args: SelectSubset<T, SampleDistributionCreateArgs<ExtArgs>>): Prisma__SampleDistributionClient<$Result.GetResult<Prisma.$SampleDistributionPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Create many DoctorDistributions.
-     * @param {DoctorDistributionCreateManyArgs} args - Arguments to create many DoctorDistributions.
+     * Create many SampleDistributions.
+     * @param {SampleDistributionCreateManyArgs} args - Arguments to create many SampleDistributions.
      * @example
-     * // Create many DoctorDistributions
-     * const doctorDistribution = await prisma.doctorDistribution.createMany({
+     * // Create many SampleDistributions
+     * const sampleDistribution = await prisma.sampleDistribution.createMany({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      *     
      */
-    createMany<T extends DoctorDistributionCreateManyArgs>(args?: SelectSubset<T, DoctorDistributionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    createMany<T extends SampleDistributionCreateManyArgs>(args?: SelectSubset<T, SampleDistributionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create many DoctorDistributions and returns the data saved in the database.
-     * @param {DoctorDistributionCreateManyAndReturnArgs} args - Arguments to create many DoctorDistributions.
+     * Create many SampleDistributions and returns the data saved in the database.
+     * @param {SampleDistributionCreateManyAndReturnArgs} args - Arguments to create many SampleDistributions.
      * @example
-     * // Create many DoctorDistributions
-     * const doctorDistribution = await prisma.doctorDistribution.createManyAndReturn({
+     * // Create many SampleDistributions
+     * const sampleDistribution = await prisma.sampleDistribution.createManyAndReturn({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      * 
-     * // Create many DoctorDistributions and only return the `id`
-     * const doctorDistributionWithIdOnly = await prisma.doctorDistribution.createManyAndReturn({
+     * // Create many SampleDistributions and only return the `id`
+     * const sampleDistributionWithIdOnly = await prisma.sampleDistribution.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -49553,28 +49511,28 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    createManyAndReturn<T extends DoctorDistributionCreateManyAndReturnArgs>(args?: SelectSubset<T, DoctorDistributionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DoctorDistributionPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+    createManyAndReturn<T extends SampleDistributionCreateManyAndReturnArgs>(args?: SelectSubset<T, SampleDistributionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SampleDistributionPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Delete a DoctorDistribution.
-     * @param {DoctorDistributionDeleteArgs} args - Arguments to delete one DoctorDistribution.
+     * Delete a SampleDistribution.
+     * @param {SampleDistributionDeleteArgs} args - Arguments to delete one SampleDistribution.
      * @example
-     * // Delete one DoctorDistribution
-     * const DoctorDistribution = await prisma.doctorDistribution.delete({
+     * // Delete one SampleDistribution
+     * const SampleDistribution = await prisma.sampleDistribution.delete({
      *   where: {
-     *     // ... filter to delete one DoctorDistribution
+     *     // ... filter to delete one SampleDistribution
      *   }
      * })
      * 
      */
-    delete<T extends DoctorDistributionDeleteArgs>(args: SelectSubset<T, DoctorDistributionDeleteArgs<ExtArgs>>): Prisma__DoctorDistributionClient<$Result.GetResult<Prisma.$DoctorDistributionPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    delete<T extends SampleDistributionDeleteArgs>(args: SelectSubset<T, SampleDistributionDeleteArgs<ExtArgs>>): Prisma__SampleDistributionClient<$Result.GetResult<Prisma.$SampleDistributionPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Update one DoctorDistribution.
-     * @param {DoctorDistributionUpdateArgs} args - Arguments to update one DoctorDistribution.
+     * Update one SampleDistribution.
+     * @param {SampleDistributionUpdateArgs} args - Arguments to update one SampleDistribution.
      * @example
-     * // Update one DoctorDistribution
-     * const doctorDistribution = await prisma.doctorDistribution.update({
+     * // Update one SampleDistribution
+     * const sampleDistribution = await prisma.sampleDistribution.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -49584,30 +49542,30 @@ export namespace Prisma {
      * })
      * 
      */
-    update<T extends DoctorDistributionUpdateArgs>(args: SelectSubset<T, DoctorDistributionUpdateArgs<ExtArgs>>): Prisma__DoctorDistributionClient<$Result.GetResult<Prisma.$DoctorDistributionPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    update<T extends SampleDistributionUpdateArgs>(args: SelectSubset<T, SampleDistributionUpdateArgs<ExtArgs>>): Prisma__SampleDistributionClient<$Result.GetResult<Prisma.$SampleDistributionPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Delete zero or more DoctorDistributions.
-     * @param {DoctorDistributionDeleteManyArgs} args - Arguments to filter DoctorDistributions to delete.
+     * Delete zero or more SampleDistributions.
+     * @param {SampleDistributionDeleteManyArgs} args - Arguments to filter SampleDistributions to delete.
      * @example
-     * // Delete a few DoctorDistributions
-     * const { count } = await prisma.doctorDistribution.deleteMany({
+     * // Delete a few SampleDistributions
+     * const { count } = await prisma.sampleDistribution.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
      */
-    deleteMany<T extends DoctorDistributionDeleteManyArgs>(args?: SelectSubset<T, DoctorDistributionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    deleteMany<T extends SampleDistributionDeleteManyArgs>(args?: SelectSubset<T, SampleDistributionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more DoctorDistributions.
+     * Update zero or more SampleDistributions.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {DoctorDistributionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {SampleDistributionUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many DoctorDistributions
-     * const doctorDistribution = await prisma.doctorDistribution.updateMany({
+     * // Update many SampleDistributions
+     * const sampleDistribution = await prisma.sampleDistribution.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -49617,14 +49575,14 @@ export namespace Prisma {
      * })
      * 
      */
-    updateMany<T extends DoctorDistributionUpdateManyArgs>(args: SelectSubset<T, DoctorDistributionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    updateMany<T extends SampleDistributionUpdateManyArgs>(args: SelectSubset<T, SampleDistributionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more DoctorDistributions and returns the data updated in the database.
-     * @param {DoctorDistributionUpdateManyAndReturnArgs} args - Arguments to update many DoctorDistributions.
+     * Update zero or more SampleDistributions and returns the data updated in the database.
+     * @param {SampleDistributionUpdateManyAndReturnArgs} args - Arguments to update many SampleDistributions.
      * @example
-     * // Update many DoctorDistributions
-     * const doctorDistribution = await prisma.doctorDistribution.updateManyAndReturn({
+     * // Update many SampleDistributions
+     * const sampleDistribution = await prisma.sampleDistribution.updateManyAndReturn({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -49633,8 +49591,8 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more DoctorDistributions and only return the `id`
-     * const doctorDistributionWithIdOnly = await prisma.doctorDistribution.updateManyAndReturn({
+     * // Update zero or more SampleDistributions and only return the `id`
+     * const sampleDistributionWithIdOnly = await prisma.sampleDistribution.updateManyAndReturn({
      *   select: { id: true },
      *   where: {
      *     // ... provide filter here
@@ -49647,56 +49605,56 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    updateManyAndReturn<T extends DoctorDistributionUpdateManyAndReturnArgs>(args: SelectSubset<T, DoctorDistributionUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DoctorDistributionPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+    updateManyAndReturn<T extends SampleDistributionUpdateManyAndReturnArgs>(args: SelectSubset<T, SampleDistributionUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SampleDistributionPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Create or update one DoctorDistribution.
-     * @param {DoctorDistributionUpsertArgs} args - Arguments to update or create a DoctorDistribution.
+     * Create or update one SampleDistribution.
+     * @param {SampleDistributionUpsertArgs} args - Arguments to update or create a SampleDistribution.
      * @example
-     * // Update or create a DoctorDistribution
-     * const doctorDistribution = await prisma.doctorDistribution.upsert({
+     * // Update or create a SampleDistribution
+     * const sampleDistribution = await prisma.sampleDistribution.upsert({
      *   create: {
-     *     // ... data to create a DoctorDistribution
+     *     // ... data to create a SampleDistribution
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the DoctorDistribution we want to update
+     *     // ... the filter for the SampleDistribution we want to update
      *   }
      * })
      */
-    upsert<T extends DoctorDistributionUpsertArgs>(args: SelectSubset<T, DoctorDistributionUpsertArgs<ExtArgs>>): Prisma__DoctorDistributionClient<$Result.GetResult<Prisma.$DoctorDistributionPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    upsert<T extends SampleDistributionUpsertArgs>(args: SelectSubset<T, SampleDistributionUpsertArgs<ExtArgs>>): Prisma__SampleDistributionClient<$Result.GetResult<Prisma.$SampleDistributionPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
 
     /**
-     * Count the number of DoctorDistributions.
+     * Count the number of SampleDistributions.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {DoctorDistributionCountArgs} args - Arguments to filter DoctorDistributions to count.
+     * @param {SampleDistributionCountArgs} args - Arguments to filter SampleDistributions to count.
      * @example
-     * // Count the number of DoctorDistributions
-     * const count = await prisma.doctorDistribution.count({
+     * // Count the number of SampleDistributions
+     * const count = await prisma.sampleDistribution.count({
      *   where: {
-     *     // ... the filter for the DoctorDistributions we want to count
+     *     // ... the filter for the SampleDistributions we want to count
      *   }
      * })
     **/
-    count<T extends DoctorDistributionCountArgs>(
-      args?: Subset<T, DoctorDistributionCountArgs>,
+    count<T extends SampleDistributionCountArgs>(
+      args?: Subset<T, SampleDistributionCountArgs>,
     ): Prisma.PrismaPromise<
       T extends $Utils.Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], DoctorDistributionCountAggregateOutputType>
+          : GetScalarType<T['select'], SampleDistributionCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a DoctorDistribution.
+     * Allows you to perform aggregations operations on a SampleDistribution.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {DoctorDistributionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {SampleDistributionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -49716,13 +49674,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends DoctorDistributionAggregateArgs>(args: Subset<T, DoctorDistributionAggregateArgs>): Prisma.PrismaPromise<GetDoctorDistributionAggregateType<T>>
+    aggregate<T extends SampleDistributionAggregateArgs>(args: Subset<T, SampleDistributionAggregateArgs>): Prisma.PrismaPromise<GetSampleDistributionAggregateType<T>>
 
     /**
-     * Group by DoctorDistribution.
+     * Group by SampleDistribution.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {DoctorDistributionGroupByArgs} args - Group by arguments.
+     * @param {SampleDistributionGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -49737,14 +49695,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends DoctorDistributionGroupByArgs,
+      T extends SampleDistributionGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: DoctorDistributionGroupByArgs['orderBy'] }
-        : { orderBy?: DoctorDistributionGroupByArgs['orderBy'] },
+        ? { orderBy: SampleDistributionGroupByArgs['orderBy'] }
+        : { orderBy?: SampleDistributionGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends MaybeTupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -49793,25 +49751,26 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, DoctorDistributionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetDoctorDistributionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, SampleDistributionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSampleDistributionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
   /**
-   * Fields of the DoctorDistribution model
+   * Fields of the SampleDistribution model
    */
-  readonly fields: DoctorDistributionFieldRefs;
+  readonly fields: SampleDistributionFieldRefs;
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for DoctorDistribution.
+   * The delegate class that acts as a "Promise-like" for SampleDistribution.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__DoctorDistributionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+  export interface Prisma__SampleDistributionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    doctorInteraction<T extends DoctorInteractionDefaultArgs<ExtArgs> = {}>(args?: Subset<T, DoctorInteractionDefaultArgs<ExtArgs>>): Prisma__DoctorInteractionClient<$Result.GetResult<Prisma.$DoctorInteractionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    doctor<T extends SampleDistribution$doctorArgs<ExtArgs> = {}>(args?: Subset<T, SampleDistribution$doctorArgs<ExtArgs>>): Prisma__DoctorClient<$Result.GetResult<Prisma.$DoctorPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    chemist<T extends SampleDistribution$chemistArgs<ExtArgs> = {}>(args?: Subset<T, SampleDistribution$chemistArgs<ExtArgs>>): Prisma__ChemistClient<$Result.GetResult<Prisma.$ChemistPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     employee<T extends EmployeeDefaultArgs<ExtArgs> = {}>(args?: Subset<T, EmployeeDefaultArgs<ExtArgs>>): Prisma__EmployeeClient<$Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    drugItems<T extends DoctorDistribution$drugItemsArgs<ExtArgs> = {}>(args?: Subset<T, DoctorDistribution$drugItemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DoctorDistributionDrugItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    giftItems<T extends DoctorDistribution$giftItemsArgs<ExtArgs> = {}>(args?: Subset<T, DoctorDistribution$giftItemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DoctorDistributionGiftItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    drugItems<T extends SampleDistribution$drugItemsArgs<ExtArgs> = {}>(args?: Subset<T, SampleDistribution$drugItemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SampleDistributionDrugItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    giftItems<T extends SampleDistribution$giftItemsArgs<ExtArgs> = {}>(args?: Subset<T, SampleDistribution$giftItemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SampleDistributionGiftItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -49838,505 +49797,543 @@ export namespace Prisma {
 
 
   /**
-   * Fields of the DoctorDistribution model
+   * Fields of the SampleDistribution model
    */
-  interface DoctorDistributionFieldRefs {
-    readonly id: FieldRef<"DoctorDistribution", 'String'>
-    readonly doctorInteractionId: FieldRef<"DoctorDistribution", 'String'>
-    readonly employeeId: FieldRef<"DoctorDistribution", 'String'>
-    readonly distributedAt: FieldRef<"DoctorDistribution", 'DateTime'>
-    readonly createdAt: FieldRef<"DoctorDistribution", 'DateTime'>
-    readonly updatedAt: FieldRef<"DoctorDistribution", 'DateTime'>
+  interface SampleDistributionFieldRefs {
+    readonly id: FieldRef<"SampleDistribution", 'String'>
+    readonly doctorId: FieldRef<"SampleDistribution", 'String'>
+    readonly chemistId: FieldRef<"SampleDistribution", 'String'>
+    readonly employeeId: FieldRef<"SampleDistribution", 'String'>
+    readonly distributedAt: FieldRef<"SampleDistribution", 'DateTime'>
+    readonly createdAt: FieldRef<"SampleDistribution", 'DateTime'>
+    readonly updatedAt: FieldRef<"SampleDistribution", 'DateTime'>
   }
     
 
   // Custom InputTypes
   /**
-   * DoctorDistribution findUnique
+   * SampleDistribution findUnique
    */
-  export type DoctorDistributionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SampleDistributionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the DoctorDistribution
+     * Select specific fields to fetch from the SampleDistribution
      */
-    select?: DoctorDistributionSelect<ExtArgs> | null
+    select?: SampleDistributionSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the DoctorDistribution
+     * Omit specific fields from the SampleDistribution
      */
-    omit?: DoctorDistributionOmit<ExtArgs> | null
+    omit?: SampleDistributionOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: DoctorDistributionInclude<ExtArgs> | null
+    include?: SampleDistributionInclude<ExtArgs> | null
     /**
-     * Filter, which DoctorDistribution to fetch.
+     * Filter, which SampleDistribution to fetch.
      */
-    where: DoctorDistributionWhereUniqueInput
+    where: SampleDistributionWhereUniqueInput
   }
 
   /**
-   * DoctorDistribution findUniqueOrThrow
+   * SampleDistribution findUniqueOrThrow
    */
-  export type DoctorDistributionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SampleDistributionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the DoctorDistribution
+     * Select specific fields to fetch from the SampleDistribution
      */
-    select?: DoctorDistributionSelect<ExtArgs> | null
+    select?: SampleDistributionSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the DoctorDistribution
+     * Omit specific fields from the SampleDistribution
      */
-    omit?: DoctorDistributionOmit<ExtArgs> | null
+    omit?: SampleDistributionOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: DoctorDistributionInclude<ExtArgs> | null
+    include?: SampleDistributionInclude<ExtArgs> | null
     /**
-     * Filter, which DoctorDistribution to fetch.
+     * Filter, which SampleDistribution to fetch.
      */
-    where: DoctorDistributionWhereUniqueInput
+    where: SampleDistributionWhereUniqueInput
   }
 
   /**
-   * DoctorDistribution findFirst
+   * SampleDistribution findFirst
    */
-  export type DoctorDistributionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SampleDistributionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the DoctorDistribution
+     * Select specific fields to fetch from the SampleDistribution
      */
-    select?: DoctorDistributionSelect<ExtArgs> | null
+    select?: SampleDistributionSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the DoctorDistribution
+     * Omit specific fields from the SampleDistribution
      */
-    omit?: DoctorDistributionOmit<ExtArgs> | null
+    omit?: SampleDistributionOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: DoctorDistributionInclude<ExtArgs> | null
+    include?: SampleDistributionInclude<ExtArgs> | null
     /**
-     * Filter, which DoctorDistribution to fetch.
+     * Filter, which SampleDistribution to fetch.
      */
-    where?: DoctorDistributionWhereInput
+    where?: SampleDistributionWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of DoctorDistributions to fetch.
+     * Determine the order of SampleDistributions to fetch.
      */
-    orderBy?: DoctorDistributionOrderByWithRelationInput | DoctorDistributionOrderByWithRelationInput[]
+    orderBy?: SampleDistributionOrderByWithRelationInput | SampleDistributionOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for DoctorDistributions.
+     * Sets the position for searching for SampleDistributions.
      */
-    cursor?: DoctorDistributionWhereUniqueInput
+    cursor?: SampleDistributionWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` DoctorDistributions from the position of the cursor.
+     * Take `±n` SampleDistributions from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` DoctorDistributions.
+     * Skip the first `n` SampleDistributions.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of DoctorDistributions.
+     * Filter by unique combinations of SampleDistributions.
      */
-    distinct?: DoctorDistributionScalarFieldEnum | DoctorDistributionScalarFieldEnum[]
+    distinct?: SampleDistributionScalarFieldEnum | SampleDistributionScalarFieldEnum[]
   }
 
   /**
-   * DoctorDistribution findFirstOrThrow
+   * SampleDistribution findFirstOrThrow
    */
-  export type DoctorDistributionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SampleDistributionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the DoctorDistribution
+     * Select specific fields to fetch from the SampleDistribution
      */
-    select?: DoctorDistributionSelect<ExtArgs> | null
+    select?: SampleDistributionSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the DoctorDistribution
+     * Omit specific fields from the SampleDistribution
      */
-    omit?: DoctorDistributionOmit<ExtArgs> | null
+    omit?: SampleDistributionOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: DoctorDistributionInclude<ExtArgs> | null
+    include?: SampleDistributionInclude<ExtArgs> | null
     /**
-     * Filter, which DoctorDistribution to fetch.
+     * Filter, which SampleDistribution to fetch.
      */
-    where?: DoctorDistributionWhereInput
+    where?: SampleDistributionWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of DoctorDistributions to fetch.
+     * Determine the order of SampleDistributions to fetch.
      */
-    orderBy?: DoctorDistributionOrderByWithRelationInput | DoctorDistributionOrderByWithRelationInput[]
+    orderBy?: SampleDistributionOrderByWithRelationInput | SampleDistributionOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for DoctorDistributions.
+     * Sets the position for searching for SampleDistributions.
      */
-    cursor?: DoctorDistributionWhereUniqueInput
+    cursor?: SampleDistributionWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` DoctorDistributions from the position of the cursor.
+     * Take `±n` SampleDistributions from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` DoctorDistributions.
+     * Skip the first `n` SampleDistributions.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of DoctorDistributions.
+     * Filter by unique combinations of SampleDistributions.
      */
-    distinct?: DoctorDistributionScalarFieldEnum | DoctorDistributionScalarFieldEnum[]
+    distinct?: SampleDistributionScalarFieldEnum | SampleDistributionScalarFieldEnum[]
   }
 
   /**
-   * DoctorDistribution findMany
+   * SampleDistribution findMany
    */
-  export type DoctorDistributionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SampleDistributionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the DoctorDistribution
+     * Select specific fields to fetch from the SampleDistribution
      */
-    select?: DoctorDistributionSelect<ExtArgs> | null
+    select?: SampleDistributionSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the DoctorDistribution
+     * Omit specific fields from the SampleDistribution
      */
-    omit?: DoctorDistributionOmit<ExtArgs> | null
+    omit?: SampleDistributionOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: DoctorDistributionInclude<ExtArgs> | null
+    include?: SampleDistributionInclude<ExtArgs> | null
     /**
-     * Filter, which DoctorDistributions to fetch.
+     * Filter, which SampleDistributions to fetch.
      */
-    where?: DoctorDistributionWhereInput
+    where?: SampleDistributionWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of DoctorDistributions to fetch.
+     * Determine the order of SampleDistributions to fetch.
      */
-    orderBy?: DoctorDistributionOrderByWithRelationInput | DoctorDistributionOrderByWithRelationInput[]
+    orderBy?: SampleDistributionOrderByWithRelationInput | SampleDistributionOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing DoctorDistributions.
+     * Sets the position for listing SampleDistributions.
      */
-    cursor?: DoctorDistributionWhereUniqueInput
+    cursor?: SampleDistributionWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` DoctorDistributions from the position of the cursor.
+     * Take `±n` SampleDistributions from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` DoctorDistributions.
+     * Skip the first `n` SampleDistributions.
      */
     skip?: number
-    distinct?: DoctorDistributionScalarFieldEnum | DoctorDistributionScalarFieldEnum[]
+    distinct?: SampleDistributionScalarFieldEnum | SampleDistributionScalarFieldEnum[]
   }
 
   /**
-   * DoctorDistribution create
+   * SampleDistribution create
    */
-  export type DoctorDistributionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SampleDistributionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the DoctorDistribution
+     * Select specific fields to fetch from the SampleDistribution
      */
-    select?: DoctorDistributionSelect<ExtArgs> | null
+    select?: SampleDistributionSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the DoctorDistribution
+     * Omit specific fields from the SampleDistribution
      */
-    omit?: DoctorDistributionOmit<ExtArgs> | null
+    omit?: SampleDistributionOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: DoctorDistributionInclude<ExtArgs> | null
+    include?: SampleDistributionInclude<ExtArgs> | null
     /**
-     * The data needed to create a DoctorDistribution.
+     * The data needed to create a SampleDistribution.
      */
-    data: XOR<DoctorDistributionCreateInput, DoctorDistributionUncheckedCreateInput>
+    data: XOR<SampleDistributionCreateInput, SampleDistributionUncheckedCreateInput>
   }
 
   /**
-   * DoctorDistribution createMany
+   * SampleDistribution createMany
    */
-  export type DoctorDistributionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SampleDistributionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to create many DoctorDistributions.
+     * The data used to create many SampleDistributions.
      */
-    data: DoctorDistributionCreateManyInput | DoctorDistributionCreateManyInput[]
+    data: SampleDistributionCreateManyInput | SampleDistributionCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * DoctorDistribution createManyAndReturn
+   * SampleDistribution createManyAndReturn
    */
-  export type DoctorDistributionCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SampleDistributionCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the DoctorDistribution
+     * Select specific fields to fetch from the SampleDistribution
      */
-    select?: DoctorDistributionSelectCreateManyAndReturn<ExtArgs> | null
+    select?: SampleDistributionSelectCreateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the DoctorDistribution
+     * Omit specific fields from the SampleDistribution
      */
-    omit?: DoctorDistributionOmit<ExtArgs> | null
+    omit?: SampleDistributionOmit<ExtArgs> | null
     /**
-     * The data used to create many DoctorDistributions.
+     * The data used to create many SampleDistributions.
      */
-    data: DoctorDistributionCreateManyInput | DoctorDistributionCreateManyInput[]
+    data: SampleDistributionCreateManyInput | SampleDistributionCreateManyInput[]
     skipDuplicates?: boolean
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: DoctorDistributionIncludeCreateManyAndReturn<ExtArgs> | null
+    include?: SampleDistributionIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * DoctorDistribution update
+   * SampleDistribution update
    */
-  export type DoctorDistributionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SampleDistributionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the DoctorDistribution
+     * Select specific fields to fetch from the SampleDistribution
      */
-    select?: DoctorDistributionSelect<ExtArgs> | null
+    select?: SampleDistributionSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the DoctorDistribution
+     * Omit specific fields from the SampleDistribution
      */
-    omit?: DoctorDistributionOmit<ExtArgs> | null
+    omit?: SampleDistributionOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: DoctorDistributionInclude<ExtArgs> | null
+    include?: SampleDistributionInclude<ExtArgs> | null
     /**
-     * The data needed to update a DoctorDistribution.
+     * The data needed to update a SampleDistribution.
      */
-    data: XOR<DoctorDistributionUpdateInput, DoctorDistributionUncheckedUpdateInput>
+    data: XOR<SampleDistributionUpdateInput, SampleDistributionUncheckedUpdateInput>
     /**
-     * Choose, which DoctorDistribution to update.
+     * Choose, which SampleDistribution to update.
      */
-    where: DoctorDistributionWhereUniqueInput
+    where: SampleDistributionWhereUniqueInput
   }
 
   /**
-   * DoctorDistribution updateMany
+   * SampleDistribution updateMany
    */
-  export type DoctorDistributionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SampleDistributionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to update DoctorDistributions.
+     * The data used to update SampleDistributions.
      */
-    data: XOR<DoctorDistributionUpdateManyMutationInput, DoctorDistributionUncheckedUpdateManyInput>
+    data: XOR<SampleDistributionUpdateManyMutationInput, SampleDistributionUncheckedUpdateManyInput>
     /**
-     * Filter which DoctorDistributions to update
+     * Filter which SampleDistributions to update
      */
-    where?: DoctorDistributionWhereInput
+    where?: SampleDistributionWhereInput
     /**
-     * Limit how many DoctorDistributions to update.
+     * Limit how many SampleDistributions to update.
      */
     limit?: number
   }
 
   /**
-   * DoctorDistribution updateManyAndReturn
+   * SampleDistribution updateManyAndReturn
    */
-  export type DoctorDistributionUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SampleDistributionUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the DoctorDistribution
+     * Select specific fields to fetch from the SampleDistribution
      */
-    select?: DoctorDistributionSelectUpdateManyAndReturn<ExtArgs> | null
+    select?: SampleDistributionSelectUpdateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the DoctorDistribution
+     * Omit specific fields from the SampleDistribution
      */
-    omit?: DoctorDistributionOmit<ExtArgs> | null
+    omit?: SampleDistributionOmit<ExtArgs> | null
     /**
-     * The data used to update DoctorDistributions.
+     * The data used to update SampleDistributions.
      */
-    data: XOR<DoctorDistributionUpdateManyMutationInput, DoctorDistributionUncheckedUpdateManyInput>
+    data: XOR<SampleDistributionUpdateManyMutationInput, SampleDistributionUncheckedUpdateManyInput>
     /**
-     * Filter which DoctorDistributions to update
+     * Filter which SampleDistributions to update
      */
-    where?: DoctorDistributionWhereInput
+    where?: SampleDistributionWhereInput
     /**
-     * Limit how many DoctorDistributions to update.
+     * Limit how many SampleDistributions to update.
      */
     limit?: number
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: DoctorDistributionIncludeUpdateManyAndReturn<ExtArgs> | null
+    include?: SampleDistributionIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * DoctorDistribution upsert
+   * SampleDistribution upsert
    */
-  export type DoctorDistributionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SampleDistributionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the DoctorDistribution
+     * Select specific fields to fetch from the SampleDistribution
      */
-    select?: DoctorDistributionSelect<ExtArgs> | null
+    select?: SampleDistributionSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the DoctorDistribution
+     * Omit specific fields from the SampleDistribution
      */
-    omit?: DoctorDistributionOmit<ExtArgs> | null
+    omit?: SampleDistributionOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: DoctorDistributionInclude<ExtArgs> | null
+    include?: SampleDistributionInclude<ExtArgs> | null
     /**
-     * The filter to search for the DoctorDistribution to update in case it exists.
+     * The filter to search for the SampleDistribution to update in case it exists.
      */
-    where: DoctorDistributionWhereUniqueInput
+    where: SampleDistributionWhereUniqueInput
     /**
-     * In case the DoctorDistribution found by the `where` argument doesn't exist, create a new DoctorDistribution with this data.
+     * In case the SampleDistribution found by the `where` argument doesn't exist, create a new SampleDistribution with this data.
      */
-    create: XOR<DoctorDistributionCreateInput, DoctorDistributionUncheckedCreateInput>
+    create: XOR<SampleDistributionCreateInput, SampleDistributionUncheckedCreateInput>
     /**
-     * In case the DoctorDistribution was found with the provided `where` argument, update it with this data.
+     * In case the SampleDistribution was found with the provided `where` argument, update it with this data.
      */
-    update: XOR<DoctorDistributionUpdateInput, DoctorDistributionUncheckedUpdateInput>
+    update: XOR<SampleDistributionUpdateInput, SampleDistributionUncheckedUpdateInput>
   }
 
   /**
-   * DoctorDistribution delete
+   * SampleDistribution delete
    */
-  export type DoctorDistributionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SampleDistributionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the DoctorDistribution
+     * Select specific fields to fetch from the SampleDistribution
      */
-    select?: DoctorDistributionSelect<ExtArgs> | null
+    select?: SampleDistributionSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the DoctorDistribution
+     * Omit specific fields from the SampleDistribution
      */
-    omit?: DoctorDistributionOmit<ExtArgs> | null
+    omit?: SampleDistributionOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: DoctorDistributionInclude<ExtArgs> | null
+    include?: SampleDistributionInclude<ExtArgs> | null
     /**
-     * Filter which DoctorDistribution to delete.
+     * Filter which SampleDistribution to delete.
      */
-    where: DoctorDistributionWhereUniqueInput
+    where: SampleDistributionWhereUniqueInput
   }
 
   /**
-   * DoctorDistribution deleteMany
+   * SampleDistribution deleteMany
    */
-  export type DoctorDistributionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SampleDistributionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which DoctorDistributions to delete
+     * Filter which SampleDistributions to delete
      */
-    where?: DoctorDistributionWhereInput
+    where?: SampleDistributionWhereInput
     /**
-     * Limit how many DoctorDistributions to delete.
+     * Limit how many SampleDistributions to delete.
      */
     limit?: number
   }
 
   /**
-   * DoctorDistribution.drugItems
+   * SampleDistribution.doctor
    */
-  export type DoctorDistribution$drugItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SampleDistribution$doctorArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the DoctorDistributionDrugItem
+     * Select specific fields to fetch from the Doctor
      */
-    select?: DoctorDistributionDrugItemSelect<ExtArgs> | null
+    select?: DoctorSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the DoctorDistributionDrugItem
+     * Omit specific fields from the Doctor
      */
-    omit?: DoctorDistributionDrugItemOmit<ExtArgs> | null
+    omit?: DoctorOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: DoctorDistributionDrugItemInclude<ExtArgs> | null
-    where?: DoctorDistributionDrugItemWhereInput
-    orderBy?: DoctorDistributionDrugItemOrderByWithRelationInput | DoctorDistributionDrugItemOrderByWithRelationInput[]
-    cursor?: DoctorDistributionDrugItemWhereUniqueInput
+    include?: DoctorInclude<ExtArgs> | null
+    where?: DoctorWhereInput
+  }
+
+  /**
+   * SampleDistribution.chemist
+   */
+  export type SampleDistribution$chemistArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Chemist
+     */
+    select?: ChemistSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Chemist
+     */
+    omit?: ChemistOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChemistInclude<ExtArgs> | null
+    where?: ChemistWhereInput
+  }
+
+  /**
+   * SampleDistribution.drugItems
+   */
+  export type SampleDistribution$drugItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SampleDistributionDrugItem
+     */
+    select?: SampleDistributionDrugItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SampleDistributionDrugItem
+     */
+    omit?: SampleDistributionDrugItemOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SampleDistributionDrugItemInclude<ExtArgs> | null
+    where?: SampleDistributionDrugItemWhereInput
+    orderBy?: SampleDistributionDrugItemOrderByWithRelationInput | SampleDistributionDrugItemOrderByWithRelationInput[]
+    cursor?: SampleDistributionDrugItemWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: DoctorDistributionDrugItemScalarFieldEnum | DoctorDistributionDrugItemScalarFieldEnum[]
+    distinct?: SampleDistributionDrugItemScalarFieldEnum | SampleDistributionDrugItemScalarFieldEnum[]
   }
 
   /**
-   * DoctorDistribution.giftItems
+   * SampleDistribution.giftItems
    */
-  export type DoctorDistribution$giftItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SampleDistribution$giftItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the DoctorDistributionGiftItem
+     * Select specific fields to fetch from the SampleDistributionGiftItem
      */
-    select?: DoctorDistributionGiftItemSelect<ExtArgs> | null
+    select?: SampleDistributionGiftItemSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the DoctorDistributionGiftItem
+     * Omit specific fields from the SampleDistributionGiftItem
      */
-    omit?: DoctorDistributionGiftItemOmit<ExtArgs> | null
+    omit?: SampleDistributionGiftItemOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: DoctorDistributionGiftItemInclude<ExtArgs> | null
-    where?: DoctorDistributionGiftItemWhereInput
-    orderBy?: DoctorDistributionGiftItemOrderByWithRelationInput | DoctorDistributionGiftItemOrderByWithRelationInput[]
-    cursor?: DoctorDistributionGiftItemWhereUniqueInput
+    include?: SampleDistributionGiftItemInclude<ExtArgs> | null
+    where?: SampleDistributionGiftItemWhereInput
+    orderBy?: SampleDistributionGiftItemOrderByWithRelationInput | SampleDistributionGiftItemOrderByWithRelationInput[]
+    cursor?: SampleDistributionGiftItemWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: DoctorDistributionGiftItemScalarFieldEnum | DoctorDistributionGiftItemScalarFieldEnum[]
+    distinct?: SampleDistributionGiftItemScalarFieldEnum | SampleDistributionGiftItemScalarFieldEnum[]
   }
 
   /**
-   * DoctorDistribution without action
+   * SampleDistribution without action
    */
-  export type DoctorDistributionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SampleDistributionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the DoctorDistribution
+     * Select specific fields to fetch from the SampleDistribution
      */
-    select?: DoctorDistributionSelect<ExtArgs> | null
+    select?: SampleDistributionSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the DoctorDistribution
+     * Omit specific fields from the SampleDistribution
      */
-    omit?: DoctorDistributionOmit<ExtArgs> | null
+    omit?: SampleDistributionOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: DoctorDistributionInclude<ExtArgs> | null
+    include?: SampleDistributionInclude<ExtArgs> | null
   }
 
 
   /**
-   * Model DoctorDistributionDrugItem
+   * Model SampleDistributionDrugItem
    */
 
-  export type AggregateDoctorDistributionDrugItem = {
-    _count: DoctorDistributionDrugItemCountAggregateOutputType | null
-    _avg: DoctorDistributionDrugItemAvgAggregateOutputType | null
-    _sum: DoctorDistributionDrugItemSumAggregateOutputType | null
-    _min: DoctorDistributionDrugItemMinAggregateOutputType | null
-    _max: DoctorDistributionDrugItemMaxAggregateOutputType | null
+  export type AggregateSampleDistributionDrugItem = {
+    _count: SampleDistributionDrugItemCountAggregateOutputType | null
+    _avg: SampleDistributionDrugItemAvgAggregateOutputType | null
+    _sum: SampleDistributionDrugItemSumAggregateOutputType | null
+    _min: SampleDistributionDrugItemMinAggregateOutputType | null
+    _max: SampleDistributionDrugItemMaxAggregateOutputType | null
   }
 
-  export type DoctorDistributionDrugItemAvgAggregateOutputType = {
+  export type SampleDistributionDrugItemAvgAggregateOutputType = {
     quantity: number | null
     unitCost: Decimal | null
     totalCost: Decimal | null
   }
 
-  export type DoctorDistributionDrugItemSumAggregateOutputType = {
+  export type SampleDistributionDrugItemSumAggregateOutputType = {
     quantity: number | null
     unitCost: Decimal | null
     totalCost: Decimal | null
   }
 
-  export type DoctorDistributionDrugItemMinAggregateOutputType = {
+  export type SampleDistributionDrugItemMinAggregateOutputType = {
     id: string | null
-    doctorDistributionId: string | null
-    drugId: string | null
+    sampleDistributionId: string | null
     fromInventoryId: string | null
     quantity: number | null
     unitCost: Decimal | null
@@ -50345,10 +50342,9 @@ export namespace Prisma {
     updatedAt: Date | null
   }
 
-  export type DoctorDistributionDrugItemMaxAggregateOutputType = {
+  export type SampleDistributionDrugItemMaxAggregateOutputType = {
     id: string | null
-    doctorDistributionId: string | null
-    drugId: string | null
+    sampleDistributionId: string | null
     fromInventoryId: string | null
     quantity: number | null
     unitCost: Decimal | null
@@ -50357,10 +50353,9 @@ export namespace Prisma {
     updatedAt: Date | null
   }
 
-  export type DoctorDistributionDrugItemCountAggregateOutputType = {
+  export type SampleDistributionDrugItemCountAggregateOutputType = {
     id: number
-    doctorDistributionId: number
-    drugId: number
+    sampleDistributionId: number
     fromInventoryId: number
     quantity: number
     unitCost: number
@@ -50371,22 +50366,21 @@ export namespace Prisma {
   }
 
 
-  export type DoctorDistributionDrugItemAvgAggregateInputType = {
+  export type SampleDistributionDrugItemAvgAggregateInputType = {
     quantity?: true
     unitCost?: true
     totalCost?: true
   }
 
-  export type DoctorDistributionDrugItemSumAggregateInputType = {
+  export type SampleDistributionDrugItemSumAggregateInputType = {
     quantity?: true
     unitCost?: true
     totalCost?: true
   }
 
-  export type DoctorDistributionDrugItemMinAggregateInputType = {
+  export type SampleDistributionDrugItemMinAggregateInputType = {
     id?: true
-    doctorDistributionId?: true
-    drugId?: true
+    sampleDistributionId?: true
     fromInventoryId?: true
     quantity?: true
     unitCost?: true
@@ -50395,10 +50389,9 @@ export namespace Prisma {
     updatedAt?: true
   }
 
-  export type DoctorDistributionDrugItemMaxAggregateInputType = {
+  export type SampleDistributionDrugItemMaxAggregateInputType = {
     id?: true
-    doctorDistributionId?: true
-    drugId?: true
+    sampleDistributionId?: true
     fromInventoryId?: true
     quantity?: true
     unitCost?: true
@@ -50407,10 +50400,9 @@ export namespace Prisma {
     updatedAt?: true
   }
 
-  export type DoctorDistributionDrugItemCountAggregateInputType = {
+  export type SampleDistributionDrugItemCountAggregateInputType = {
     id?: true
-    doctorDistributionId?: true
-    drugId?: true
+    sampleDistributionId?: true
     fromInventoryId?: true
     quantity?: true
     unitCost?: true
@@ -50420,172 +50412,164 @@ export namespace Prisma {
     _all?: true
   }
 
-  export type DoctorDistributionDrugItemAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SampleDistributionDrugItemAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which DoctorDistributionDrugItem to aggregate.
+     * Filter which SampleDistributionDrugItem to aggregate.
      */
-    where?: DoctorDistributionDrugItemWhereInput
+    where?: SampleDistributionDrugItemWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of DoctorDistributionDrugItems to fetch.
+     * Determine the order of SampleDistributionDrugItems to fetch.
      */
-    orderBy?: DoctorDistributionDrugItemOrderByWithRelationInput | DoctorDistributionDrugItemOrderByWithRelationInput[]
+    orderBy?: SampleDistributionDrugItemOrderByWithRelationInput | SampleDistributionDrugItemOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: DoctorDistributionDrugItemWhereUniqueInput
+    cursor?: SampleDistributionDrugItemWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` DoctorDistributionDrugItems from the position of the cursor.
+     * Take `±n` SampleDistributionDrugItems from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` DoctorDistributionDrugItems.
+     * Skip the first `n` SampleDistributionDrugItems.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned DoctorDistributionDrugItems
+     * Count returned SampleDistributionDrugItems
     **/
-    _count?: true | DoctorDistributionDrugItemCountAggregateInputType
+    _count?: true | SampleDistributionDrugItemCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to average
     **/
-    _avg?: DoctorDistributionDrugItemAvgAggregateInputType
+    _avg?: SampleDistributionDrugItemAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to sum
     **/
-    _sum?: DoctorDistributionDrugItemSumAggregateInputType
+    _sum?: SampleDistributionDrugItemSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: DoctorDistributionDrugItemMinAggregateInputType
+    _min?: SampleDistributionDrugItemMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: DoctorDistributionDrugItemMaxAggregateInputType
+    _max?: SampleDistributionDrugItemMaxAggregateInputType
   }
 
-  export type GetDoctorDistributionDrugItemAggregateType<T extends DoctorDistributionDrugItemAggregateArgs> = {
-        [P in keyof T & keyof AggregateDoctorDistributionDrugItem]: P extends '_count' | 'count'
+  export type GetSampleDistributionDrugItemAggregateType<T extends SampleDistributionDrugItemAggregateArgs> = {
+        [P in keyof T & keyof AggregateSampleDistributionDrugItem]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateDoctorDistributionDrugItem[P]>
-      : GetScalarType<T[P], AggregateDoctorDistributionDrugItem[P]>
+        : GetScalarType<T[P], AggregateSampleDistributionDrugItem[P]>
+      : GetScalarType<T[P], AggregateSampleDistributionDrugItem[P]>
   }
 
 
 
 
-  export type DoctorDistributionDrugItemGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: DoctorDistributionDrugItemWhereInput
-    orderBy?: DoctorDistributionDrugItemOrderByWithAggregationInput | DoctorDistributionDrugItemOrderByWithAggregationInput[]
-    by: DoctorDistributionDrugItemScalarFieldEnum[] | DoctorDistributionDrugItemScalarFieldEnum
-    having?: DoctorDistributionDrugItemScalarWhereWithAggregatesInput
+  export type SampleDistributionDrugItemGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SampleDistributionDrugItemWhereInput
+    orderBy?: SampleDistributionDrugItemOrderByWithAggregationInput | SampleDistributionDrugItemOrderByWithAggregationInput[]
+    by: SampleDistributionDrugItemScalarFieldEnum[] | SampleDistributionDrugItemScalarFieldEnum
+    having?: SampleDistributionDrugItemScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: DoctorDistributionDrugItemCountAggregateInputType | true
-    _avg?: DoctorDistributionDrugItemAvgAggregateInputType
-    _sum?: DoctorDistributionDrugItemSumAggregateInputType
-    _min?: DoctorDistributionDrugItemMinAggregateInputType
-    _max?: DoctorDistributionDrugItemMaxAggregateInputType
+    _count?: SampleDistributionDrugItemCountAggregateInputType | true
+    _avg?: SampleDistributionDrugItemAvgAggregateInputType
+    _sum?: SampleDistributionDrugItemSumAggregateInputType
+    _min?: SampleDistributionDrugItemMinAggregateInputType
+    _max?: SampleDistributionDrugItemMaxAggregateInputType
   }
 
-  export type DoctorDistributionDrugItemGroupByOutputType = {
+  export type SampleDistributionDrugItemGroupByOutputType = {
     id: string
-    doctorDistributionId: string
-    drugId: string
+    sampleDistributionId: string
     fromInventoryId: string
     quantity: number
     unitCost: Decimal
     totalCost: Decimal
     createdAt: Date
     updatedAt: Date
-    _count: DoctorDistributionDrugItemCountAggregateOutputType | null
-    _avg: DoctorDistributionDrugItemAvgAggregateOutputType | null
-    _sum: DoctorDistributionDrugItemSumAggregateOutputType | null
-    _min: DoctorDistributionDrugItemMinAggregateOutputType | null
-    _max: DoctorDistributionDrugItemMaxAggregateOutputType | null
+    _count: SampleDistributionDrugItemCountAggregateOutputType | null
+    _avg: SampleDistributionDrugItemAvgAggregateOutputType | null
+    _sum: SampleDistributionDrugItemSumAggregateOutputType | null
+    _min: SampleDistributionDrugItemMinAggregateOutputType | null
+    _max: SampleDistributionDrugItemMaxAggregateOutputType | null
   }
 
-  type GetDoctorDistributionDrugItemGroupByPayload<T extends DoctorDistributionDrugItemGroupByArgs> = Prisma.PrismaPromise<
+  type GetSampleDistributionDrugItemGroupByPayload<T extends SampleDistributionDrugItemGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<DoctorDistributionDrugItemGroupByOutputType, T['by']> &
+      PickEnumerable<SampleDistributionDrugItemGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof DoctorDistributionDrugItemGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof SampleDistributionDrugItemGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], DoctorDistributionDrugItemGroupByOutputType[P]>
-            : GetScalarType<T[P], DoctorDistributionDrugItemGroupByOutputType[P]>
+              : GetScalarType<T[P], SampleDistributionDrugItemGroupByOutputType[P]>
+            : GetScalarType<T[P], SampleDistributionDrugItemGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type DoctorDistributionDrugItemSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type SampleDistributionDrugItemSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    doctorDistributionId?: boolean
-    drugId?: boolean
+    sampleDistributionId?: boolean
     fromInventoryId?: boolean
     quantity?: boolean
     unitCost?: boolean
     totalCost?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    doctorDistribution?: boolean | DoctorDistributionDefaultArgs<ExtArgs>
-    drug?: boolean | DrugDefaultArgs<ExtArgs>
+    sampleDistribution?: boolean | SampleDistributionDefaultArgs<ExtArgs>
     fromInventory?: boolean | UserDrugInventoryDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["doctorDistributionDrugItem"]>
+  }, ExtArgs["result"]["sampleDistributionDrugItem"]>
 
-  export type DoctorDistributionDrugItemSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type SampleDistributionDrugItemSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    doctorDistributionId?: boolean
-    drugId?: boolean
+    sampleDistributionId?: boolean
     fromInventoryId?: boolean
     quantity?: boolean
     unitCost?: boolean
     totalCost?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    doctorDistribution?: boolean | DoctorDistributionDefaultArgs<ExtArgs>
-    drug?: boolean | DrugDefaultArgs<ExtArgs>
+    sampleDistribution?: boolean | SampleDistributionDefaultArgs<ExtArgs>
     fromInventory?: boolean | UserDrugInventoryDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["doctorDistributionDrugItem"]>
+  }, ExtArgs["result"]["sampleDistributionDrugItem"]>
 
-  export type DoctorDistributionDrugItemSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type SampleDistributionDrugItemSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    doctorDistributionId?: boolean
-    drugId?: boolean
+    sampleDistributionId?: boolean
     fromInventoryId?: boolean
     quantity?: boolean
     unitCost?: boolean
     totalCost?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    doctorDistribution?: boolean | DoctorDistributionDefaultArgs<ExtArgs>
-    drug?: boolean | DrugDefaultArgs<ExtArgs>
+    sampleDistribution?: boolean | SampleDistributionDefaultArgs<ExtArgs>
     fromInventory?: boolean | UserDrugInventoryDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["doctorDistributionDrugItem"]>
+  }, ExtArgs["result"]["sampleDistributionDrugItem"]>
 
-  export type DoctorDistributionDrugItemSelectScalar = {
+  export type SampleDistributionDrugItemSelectScalar = {
     id?: boolean
-    doctorDistributionId?: boolean
-    drugId?: boolean
+    sampleDistributionId?: boolean
     fromInventoryId?: boolean
     quantity?: boolean
     unitCost?: boolean
@@ -50594,170 +50578,165 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type DoctorDistributionDrugItemOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "doctorDistributionId" | "drugId" | "fromInventoryId" | "quantity" | "unitCost" | "totalCost" | "createdAt" | "updatedAt", ExtArgs["result"]["doctorDistributionDrugItem"]>
-  export type DoctorDistributionDrugItemInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    doctorDistribution?: boolean | DoctorDistributionDefaultArgs<ExtArgs>
-    drug?: boolean | DrugDefaultArgs<ExtArgs>
+  export type SampleDistributionDrugItemOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "sampleDistributionId" | "fromInventoryId" | "quantity" | "unitCost" | "totalCost" | "createdAt" | "updatedAt", ExtArgs["result"]["sampleDistributionDrugItem"]>
+  export type SampleDistributionDrugItemInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    sampleDistribution?: boolean | SampleDistributionDefaultArgs<ExtArgs>
     fromInventory?: boolean | UserDrugInventoryDefaultArgs<ExtArgs>
   }
-  export type DoctorDistributionDrugItemIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    doctorDistribution?: boolean | DoctorDistributionDefaultArgs<ExtArgs>
-    drug?: boolean | DrugDefaultArgs<ExtArgs>
+  export type SampleDistributionDrugItemIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    sampleDistribution?: boolean | SampleDistributionDefaultArgs<ExtArgs>
     fromInventory?: boolean | UserDrugInventoryDefaultArgs<ExtArgs>
   }
-  export type DoctorDistributionDrugItemIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    doctorDistribution?: boolean | DoctorDistributionDefaultArgs<ExtArgs>
-    drug?: boolean | DrugDefaultArgs<ExtArgs>
+  export type SampleDistributionDrugItemIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    sampleDistribution?: boolean | SampleDistributionDefaultArgs<ExtArgs>
     fromInventory?: boolean | UserDrugInventoryDefaultArgs<ExtArgs>
   }
 
-  export type $DoctorDistributionDrugItemPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "DoctorDistributionDrugItem"
+  export type $SampleDistributionDrugItemPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "SampleDistributionDrugItem"
     objects: {
-      doctorDistribution: Prisma.$DoctorDistributionPayload<ExtArgs>
-      drug: Prisma.$DrugPayload<ExtArgs>
+      sampleDistribution: Prisma.$SampleDistributionPayload<ExtArgs>
       fromInventory: Prisma.$UserDrugInventoryPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      doctorDistributionId: string
-      drugId: string
+      sampleDistributionId: string
       fromInventoryId: string
       quantity: number
       unitCost: Prisma.Decimal
       totalCost: Prisma.Decimal
       createdAt: Date
       updatedAt: Date
-    }, ExtArgs["result"]["doctorDistributionDrugItem"]>
+    }, ExtArgs["result"]["sampleDistributionDrugItem"]>
     composites: {}
   }
 
-  type DoctorDistributionDrugItemGetPayload<S extends boolean | null | undefined | DoctorDistributionDrugItemDefaultArgs> = $Result.GetResult<Prisma.$DoctorDistributionDrugItemPayload, S>
+  type SampleDistributionDrugItemGetPayload<S extends boolean | null | undefined | SampleDistributionDrugItemDefaultArgs> = $Result.GetResult<Prisma.$SampleDistributionDrugItemPayload, S>
 
-  type DoctorDistributionDrugItemCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<DoctorDistributionDrugItemFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: DoctorDistributionDrugItemCountAggregateInputType | true
+  type SampleDistributionDrugItemCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<SampleDistributionDrugItemFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: SampleDistributionDrugItemCountAggregateInputType | true
     }
 
-  export interface DoctorDistributionDrugItemDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['DoctorDistributionDrugItem'], meta: { name: 'DoctorDistributionDrugItem' } }
+  export interface SampleDistributionDrugItemDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['SampleDistributionDrugItem'], meta: { name: 'SampleDistributionDrugItem' } }
     /**
-     * Find zero or one DoctorDistributionDrugItem that matches the filter.
-     * @param {DoctorDistributionDrugItemFindUniqueArgs} args - Arguments to find a DoctorDistributionDrugItem
+     * Find zero or one SampleDistributionDrugItem that matches the filter.
+     * @param {SampleDistributionDrugItemFindUniqueArgs} args - Arguments to find a SampleDistributionDrugItem
      * @example
-     * // Get one DoctorDistributionDrugItem
-     * const doctorDistributionDrugItem = await prisma.doctorDistributionDrugItem.findUnique({
+     * // Get one SampleDistributionDrugItem
+     * const sampleDistributionDrugItem = await prisma.sampleDistributionDrugItem.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUnique<T extends DoctorDistributionDrugItemFindUniqueArgs>(args: SelectSubset<T, DoctorDistributionDrugItemFindUniqueArgs<ExtArgs>>): Prisma__DoctorDistributionDrugItemClient<$Result.GetResult<Prisma.$DoctorDistributionDrugItemPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findUnique<T extends SampleDistributionDrugItemFindUniqueArgs>(args: SelectSubset<T, SampleDistributionDrugItemFindUniqueArgs<ExtArgs>>): Prisma__SampleDistributionDrugItemClient<$Result.GetResult<Prisma.$SampleDistributionDrugItemPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one DoctorDistributionDrugItem that matches the filter or throw an error with `error.code='P2025'`
+     * Find one SampleDistributionDrugItem that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
-     * @param {DoctorDistributionDrugItemFindUniqueOrThrowArgs} args - Arguments to find a DoctorDistributionDrugItem
+     * @param {SampleDistributionDrugItemFindUniqueOrThrowArgs} args - Arguments to find a SampleDistributionDrugItem
      * @example
-     * // Get one DoctorDistributionDrugItem
-     * const doctorDistributionDrugItem = await prisma.doctorDistributionDrugItem.findUniqueOrThrow({
+     * // Get one SampleDistributionDrugItem
+     * const sampleDistributionDrugItem = await prisma.sampleDistributionDrugItem.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUniqueOrThrow<T extends DoctorDistributionDrugItemFindUniqueOrThrowArgs>(args: SelectSubset<T, DoctorDistributionDrugItemFindUniqueOrThrowArgs<ExtArgs>>): Prisma__DoctorDistributionDrugItemClient<$Result.GetResult<Prisma.$DoctorDistributionDrugItemPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findUniqueOrThrow<T extends SampleDistributionDrugItemFindUniqueOrThrowArgs>(args: SelectSubset<T, SampleDistributionDrugItemFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SampleDistributionDrugItemClient<$Result.GetResult<Prisma.$SampleDistributionDrugItemPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first DoctorDistributionDrugItem that matches the filter.
+     * Find the first SampleDistributionDrugItem that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {DoctorDistributionDrugItemFindFirstArgs} args - Arguments to find a DoctorDistributionDrugItem
+     * @param {SampleDistributionDrugItemFindFirstArgs} args - Arguments to find a SampleDistributionDrugItem
      * @example
-     * // Get one DoctorDistributionDrugItem
-     * const doctorDistributionDrugItem = await prisma.doctorDistributionDrugItem.findFirst({
+     * // Get one SampleDistributionDrugItem
+     * const sampleDistributionDrugItem = await prisma.sampleDistributionDrugItem.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirst<T extends DoctorDistributionDrugItemFindFirstArgs>(args?: SelectSubset<T, DoctorDistributionDrugItemFindFirstArgs<ExtArgs>>): Prisma__DoctorDistributionDrugItemClient<$Result.GetResult<Prisma.$DoctorDistributionDrugItemPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findFirst<T extends SampleDistributionDrugItemFindFirstArgs>(args?: SelectSubset<T, SampleDistributionDrugItemFindFirstArgs<ExtArgs>>): Prisma__SampleDistributionDrugItemClient<$Result.GetResult<Prisma.$SampleDistributionDrugItemPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first DoctorDistributionDrugItem that matches the filter or
+     * Find the first SampleDistributionDrugItem that matches the filter or
      * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {DoctorDistributionDrugItemFindFirstOrThrowArgs} args - Arguments to find a DoctorDistributionDrugItem
+     * @param {SampleDistributionDrugItemFindFirstOrThrowArgs} args - Arguments to find a SampleDistributionDrugItem
      * @example
-     * // Get one DoctorDistributionDrugItem
-     * const doctorDistributionDrugItem = await prisma.doctorDistributionDrugItem.findFirstOrThrow({
+     * // Get one SampleDistributionDrugItem
+     * const sampleDistributionDrugItem = await prisma.sampleDistributionDrugItem.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirstOrThrow<T extends DoctorDistributionDrugItemFindFirstOrThrowArgs>(args?: SelectSubset<T, DoctorDistributionDrugItemFindFirstOrThrowArgs<ExtArgs>>): Prisma__DoctorDistributionDrugItemClient<$Result.GetResult<Prisma.$DoctorDistributionDrugItemPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findFirstOrThrow<T extends SampleDistributionDrugItemFindFirstOrThrowArgs>(args?: SelectSubset<T, SampleDistributionDrugItemFindFirstOrThrowArgs<ExtArgs>>): Prisma__SampleDistributionDrugItemClient<$Result.GetResult<Prisma.$SampleDistributionDrugItemPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find zero or more DoctorDistributionDrugItems that matches the filter.
+     * Find zero or more SampleDistributionDrugItems that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {DoctorDistributionDrugItemFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @param {SampleDistributionDrugItemFindManyArgs} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all DoctorDistributionDrugItems
-     * const doctorDistributionDrugItems = await prisma.doctorDistributionDrugItem.findMany()
+     * // Get all SampleDistributionDrugItems
+     * const sampleDistributionDrugItems = await prisma.sampleDistributionDrugItem.findMany()
      * 
-     * // Get first 10 DoctorDistributionDrugItems
-     * const doctorDistributionDrugItems = await prisma.doctorDistributionDrugItem.findMany({ take: 10 })
+     * // Get first 10 SampleDistributionDrugItems
+     * const sampleDistributionDrugItems = await prisma.sampleDistributionDrugItem.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const doctorDistributionDrugItemWithIdOnly = await prisma.doctorDistributionDrugItem.findMany({ select: { id: true } })
+     * const sampleDistributionDrugItemWithIdOnly = await prisma.sampleDistributionDrugItem.findMany({ select: { id: true } })
      * 
      */
-    findMany<T extends DoctorDistributionDrugItemFindManyArgs>(args?: SelectSubset<T, DoctorDistributionDrugItemFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DoctorDistributionDrugItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+    findMany<T extends SampleDistributionDrugItemFindManyArgs>(args?: SelectSubset<T, SampleDistributionDrugItemFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SampleDistributionDrugItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
     /**
-     * Create a DoctorDistributionDrugItem.
-     * @param {DoctorDistributionDrugItemCreateArgs} args - Arguments to create a DoctorDistributionDrugItem.
+     * Create a SampleDistributionDrugItem.
+     * @param {SampleDistributionDrugItemCreateArgs} args - Arguments to create a SampleDistributionDrugItem.
      * @example
-     * // Create one DoctorDistributionDrugItem
-     * const DoctorDistributionDrugItem = await prisma.doctorDistributionDrugItem.create({
+     * // Create one SampleDistributionDrugItem
+     * const SampleDistributionDrugItem = await prisma.sampleDistributionDrugItem.create({
      *   data: {
-     *     // ... data to create a DoctorDistributionDrugItem
+     *     // ... data to create a SampleDistributionDrugItem
      *   }
      * })
      * 
      */
-    create<T extends DoctorDistributionDrugItemCreateArgs>(args: SelectSubset<T, DoctorDistributionDrugItemCreateArgs<ExtArgs>>): Prisma__DoctorDistributionDrugItemClient<$Result.GetResult<Prisma.$DoctorDistributionDrugItemPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    create<T extends SampleDistributionDrugItemCreateArgs>(args: SelectSubset<T, SampleDistributionDrugItemCreateArgs<ExtArgs>>): Prisma__SampleDistributionDrugItemClient<$Result.GetResult<Prisma.$SampleDistributionDrugItemPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Create many DoctorDistributionDrugItems.
-     * @param {DoctorDistributionDrugItemCreateManyArgs} args - Arguments to create many DoctorDistributionDrugItems.
+     * Create many SampleDistributionDrugItems.
+     * @param {SampleDistributionDrugItemCreateManyArgs} args - Arguments to create many SampleDistributionDrugItems.
      * @example
-     * // Create many DoctorDistributionDrugItems
-     * const doctorDistributionDrugItem = await prisma.doctorDistributionDrugItem.createMany({
+     * // Create many SampleDistributionDrugItems
+     * const sampleDistributionDrugItem = await prisma.sampleDistributionDrugItem.createMany({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      *     
      */
-    createMany<T extends DoctorDistributionDrugItemCreateManyArgs>(args?: SelectSubset<T, DoctorDistributionDrugItemCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    createMany<T extends SampleDistributionDrugItemCreateManyArgs>(args?: SelectSubset<T, SampleDistributionDrugItemCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create many DoctorDistributionDrugItems and returns the data saved in the database.
-     * @param {DoctorDistributionDrugItemCreateManyAndReturnArgs} args - Arguments to create many DoctorDistributionDrugItems.
+     * Create many SampleDistributionDrugItems and returns the data saved in the database.
+     * @param {SampleDistributionDrugItemCreateManyAndReturnArgs} args - Arguments to create many SampleDistributionDrugItems.
      * @example
-     * // Create many DoctorDistributionDrugItems
-     * const doctorDistributionDrugItem = await prisma.doctorDistributionDrugItem.createManyAndReturn({
+     * // Create many SampleDistributionDrugItems
+     * const sampleDistributionDrugItem = await prisma.sampleDistributionDrugItem.createManyAndReturn({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      * 
-     * // Create many DoctorDistributionDrugItems and only return the `id`
-     * const doctorDistributionDrugItemWithIdOnly = await prisma.doctorDistributionDrugItem.createManyAndReturn({
+     * // Create many SampleDistributionDrugItems and only return the `id`
+     * const sampleDistributionDrugItemWithIdOnly = await prisma.sampleDistributionDrugItem.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -50767,28 +50746,28 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    createManyAndReturn<T extends DoctorDistributionDrugItemCreateManyAndReturnArgs>(args?: SelectSubset<T, DoctorDistributionDrugItemCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DoctorDistributionDrugItemPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+    createManyAndReturn<T extends SampleDistributionDrugItemCreateManyAndReturnArgs>(args?: SelectSubset<T, SampleDistributionDrugItemCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SampleDistributionDrugItemPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Delete a DoctorDistributionDrugItem.
-     * @param {DoctorDistributionDrugItemDeleteArgs} args - Arguments to delete one DoctorDistributionDrugItem.
+     * Delete a SampleDistributionDrugItem.
+     * @param {SampleDistributionDrugItemDeleteArgs} args - Arguments to delete one SampleDistributionDrugItem.
      * @example
-     * // Delete one DoctorDistributionDrugItem
-     * const DoctorDistributionDrugItem = await prisma.doctorDistributionDrugItem.delete({
+     * // Delete one SampleDistributionDrugItem
+     * const SampleDistributionDrugItem = await prisma.sampleDistributionDrugItem.delete({
      *   where: {
-     *     // ... filter to delete one DoctorDistributionDrugItem
+     *     // ... filter to delete one SampleDistributionDrugItem
      *   }
      * })
      * 
      */
-    delete<T extends DoctorDistributionDrugItemDeleteArgs>(args: SelectSubset<T, DoctorDistributionDrugItemDeleteArgs<ExtArgs>>): Prisma__DoctorDistributionDrugItemClient<$Result.GetResult<Prisma.$DoctorDistributionDrugItemPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    delete<T extends SampleDistributionDrugItemDeleteArgs>(args: SelectSubset<T, SampleDistributionDrugItemDeleteArgs<ExtArgs>>): Prisma__SampleDistributionDrugItemClient<$Result.GetResult<Prisma.$SampleDistributionDrugItemPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Update one DoctorDistributionDrugItem.
-     * @param {DoctorDistributionDrugItemUpdateArgs} args - Arguments to update one DoctorDistributionDrugItem.
+     * Update one SampleDistributionDrugItem.
+     * @param {SampleDistributionDrugItemUpdateArgs} args - Arguments to update one SampleDistributionDrugItem.
      * @example
-     * // Update one DoctorDistributionDrugItem
-     * const doctorDistributionDrugItem = await prisma.doctorDistributionDrugItem.update({
+     * // Update one SampleDistributionDrugItem
+     * const sampleDistributionDrugItem = await prisma.sampleDistributionDrugItem.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -50798,30 +50777,30 @@ export namespace Prisma {
      * })
      * 
      */
-    update<T extends DoctorDistributionDrugItemUpdateArgs>(args: SelectSubset<T, DoctorDistributionDrugItemUpdateArgs<ExtArgs>>): Prisma__DoctorDistributionDrugItemClient<$Result.GetResult<Prisma.$DoctorDistributionDrugItemPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    update<T extends SampleDistributionDrugItemUpdateArgs>(args: SelectSubset<T, SampleDistributionDrugItemUpdateArgs<ExtArgs>>): Prisma__SampleDistributionDrugItemClient<$Result.GetResult<Prisma.$SampleDistributionDrugItemPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Delete zero or more DoctorDistributionDrugItems.
-     * @param {DoctorDistributionDrugItemDeleteManyArgs} args - Arguments to filter DoctorDistributionDrugItems to delete.
+     * Delete zero or more SampleDistributionDrugItems.
+     * @param {SampleDistributionDrugItemDeleteManyArgs} args - Arguments to filter SampleDistributionDrugItems to delete.
      * @example
-     * // Delete a few DoctorDistributionDrugItems
-     * const { count } = await prisma.doctorDistributionDrugItem.deleteMany({
+     * // Delete a few SampleDistributionDrugItems
+     * const { count } = await prisma.sampleDistributionDrugItem.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
      */
-    deleteMany<T extends DoctorDistributionDrugItemDeleteManyArgs>(args?: SelectSubset<T, DoctorDistributionDrugItemDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    deleteMany<T extends SampleDistributionDrugItemDeleteManyArgs>(args?: SelectSubset<T, SampleDistributionDrugItemDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more DoctorDistributionDrugItems.
+     * Update zero or more SampleDistributionDrugItems.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {DoctorDistributionDrugItemUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {SampleDistributionDrugItemUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many DoctorDistributionDrugItems
-     * const doctorDistributionDrugItem = await prisma.doctorDistributionDrugItem.updateMany({
+     * // Update many SampleDistributionDrugItems
+     * const sampleDistributionDrugItem = await prisma.sampleDistributionDrugItem.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -50831,14 +50810,14 @@ export namespace Prisma {
      * })
      * 
      */
-    updateMany<T extends DoctorDistributionDrugItemUpdateManyArgs>(args: SelectSubset<T, DoctorDistributionDrugItemUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    updateMany<T extends SampleDistributionDrugItemUpdateManyArgs>(args: SelectSubset<T, SampleDistributionDrugItemUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more DoctorDistributionDrugItems and returns the data updated in the database.
-     * @param {DoctorDistributionDrugItemUpdateManyAndReturnArgs} args - Arguments to update many DoctorDistributionDrugItems.
+     * Update zero or more SampleDistributionDrugItems and returns the data updated in the database.
+     * @param {SampleDistributionDrugItemUpdateManyAndReturnArgs} args - Arguments to update many SampleDistributionDrugItems.
      * @example
-     * // Update many DoctorDistributionDrugItems
-     * const doctorDistributionDrugItem = await prisma.doctorDistributionDrugItem.updateManyAndReturn({
+     * // Update many SampleDistributionDrugItems
+     * const sampleDistributionDrugItem = await prisma.sampleDistributionDrugItem.updateManyAndReturn({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -50847,8 +50826,8 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more DoctorDistributionDrugItems and only return the `id`
-     * const doctorDistributionDrugItemWithIdOnly = await prisma.doctorDistributionDrugItem.updateManyAndReturn({
+     * // Update zero or more SampleDistributionDrugItems and only return the `id`
+     * const sampleDistributionDrugItemWithIdOnly = await prisma.sampleDistributionDrugItem.updateManyAndReturn({
      *   select: { id: true },
      *   where: {
      *     // ... provide filter here
@@ -50861,56 +50840,56 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    updateManyAndReturn<T extends DoctorDistributionDrugItemUpdateManyAndReturnArgs>(args: SelectSubset<T, DoctorDistributionDrugItemUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DoctorDistributionDrugItemPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+    updateManyAndReturn<T extends SampleDistributionDrugItemUpdateManyAndReturnArgs>(args: SelectSubset<T, SampleDistributionDrugItemUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SampleDistributionDrugItemPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Create or update one DoctorDistributionDrugItem.
-     * @param {DoctorDistributionDrugItemUpsertArgs} args - Arguments to update or create a DoctorDistributionDrugItem.
+     * Create or update one SampleDistributionDrugItem.
+     * @param {SampleDistributionDrugItemUpsertArgs} args - Arguments to update or create a SampleDistributionDrugItem.
      * @example
-     * // Update or create a DoctorDistributionDrugItem
-     * const doctorDistributionDrugItem = await prisma.doctorDistributionDrugItem.upsert({
+     * // Update or create a SampleDistributionDrugItem
+     * const sampleDistributionDrugItem = await prisma.sampleDistributionDrugItem.upsert({
      *   create: {
-     *     // ... data to create a DoctorDistributionDrugItem
+     *     // ... data to create a SampleDistributionDrugItem
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the DoctorDistributionDrugItem we want to update
+     *     // ... the filter for the SampleDistributionDrugItem we want to update
      *   }
      * })
      */
-    upsert<T extends DoctorDistributionDrugItemUpsertArgs>(args: SelectSubset<T, DoctorDistributionDrugItemUpsertArgs<ExtArgs>>): Prisma__DoctorDistributionDrugItemClient<$Result.GetResult<Prisma.$DoctorDistributionDrugItemPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    upsert<T extends SampleDistributionDrugItemUpsertArgs>(args: SelectSubset<T, SampleDistributionDrugItemUpsertArgs<ExtArgs>>): Prisma__SampleDistributionDrugItemClient<$Result.GetResult<Prisma.$SampleDistributionDrugItemPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
 
     /**
-     * Count the number of DoctorDistributionDrugItems.
+     * Count the number of SampleDistributionDrugItems.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {DoctorDistributionDrugItemCountArgs} args - Arguments to filter DoctorDistributionDrugItems to count.
+     * @param {SampleDistributionDrugItemCountArgs} args - Arguments to filter SampleDistributionDrugItems to count.
      * @example
-     * // Count the number of DoctorDistributionDrugItems
-     * const count = await prisma.doctorDistributionDrugItem.count({
+     * // Count the number of SampleDistributionDrugItems
+     * const count = await prisma.sampleDistributionDrugItem.count({
      *   where: {
-     *     // ... the filter for the DoctorDistributionDrugItems we want to count
+     *     // ... the filter for the SampleDistributionDrugItems we want to count
      *   }
      * })
     **/
-    count<T extends DoctorDistributionDrugItemCountArgs>(
-      args?: Subset<T, DoctorDistributionDrugItemCountArgs>,
+    count<T extends SampleDistributionDrugItemCountArgs>(
+      args?: Subset<T, SampleDistributionDrugItemCountArgs>,
     ): Prisma.PrismaPromise<
       T extends $Utils.Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], DoctorDistributionDrugItemCountAggregateOutputType>
+          : GetScalarType<T['select'], SampleDistributionDrugItemCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a DoctorDistributionDrugItem.
+     * Allows you to perform aggregations operations on a SampleDistributionDrugItem.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {DoctorDistributionDrugItemAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {SampleDistributionDrugItemAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -50930,13 +50909,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends DoctorDistributionDrugItemAggregateArgs>(args: Subset<T, DoctorDistributionDrugItemAggregateArgs>): Prisma.PrismaPromise<GetDoctorDistributionDrugItemAggregateType<T>>
+    aggregate<T extends SampleDistributionDrugItemAggregateArgs>(args: Subset<T, SampleDistributionDrugItemAggregateArgs>): Prisma.PrismaPromise<GetSampleDistributionDrugItemAggregateType<T>>
 
     /**
-     * Group by DoctorDistributionDrugItem.
+     * Group by SampleDistributionDrugItem.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {DoctorDistributionDrugItemGroupByArgs} args - Group by arguments.
+     * @param {SampleDistributionDrugItemGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -50951,14 +50930,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends DoctorDistributionDrugItemGroupByArgs,
+      T extends SampleDistributionDrugItemGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: DoctorDistributionDrugItemGroupByArgs['orderBy'] }
-        : { orderBy?: DoctorDistributionDrugItemGroupByArgs['orderBy'] },
+        ? { orderBy: SampleDistributionDrugItemGroupByArgs['orderBy'] }
+        : { orderBy?: SampleDistributionDrugItemGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends MaybeTupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -51007,23 +50986,22 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, DoctorDistributionDrugItemGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetDoctorDistributionDrugItemGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, SampleDistributionDrugItemGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSampleDistributionDrugItemGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
   /**
-   * Fields of the DoctorDistributionDrugItem model
+   * Fields of the SampleDistributionDrugItem model
    */
-  readonly fields: DoctorDistributionDrugItemFieldRefs;
+  readonly fields: SampleDistributionDrugItemFieldRefs;
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for DoctorDistributionDrugItem.
+   * The delegate class that acts as a "Promise-like" for SampleDistributionDrugItem.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__DoctorDistributionDrugItemClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+  export interface Prisma__SampleDistributionDrugItemClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    doctorDistribution<T extends DoctorDistributionDefaultArgs<ExtArgs> = {}>(args?: Subset<T, DoctorDistributionDefaultArgs<ExtArgs>>): Prisma__DoctorDistributionClient<$Result.GetResult<Prisma.$DoctorDistributionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    drug<T extends DrugDefaultArgs<ExtArgs> = {}>(args?: Subset<T, DrugDefaultArgs<ExtArgs>>): Prisma__DrugClient<$Result.GetResult<Prisma.$DrugPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    sampleDistribution<T extends SampleDistributionDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SampleDistributionDefaultArgs<ExtArgs>>): Prisma__SampleDistributionClient<$Result.GetResult<Prisma.$SampleDistributionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     fromInventory<T extends UserDrugInventoryDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDrugInventoryDefaultArgs<ExtArgs>>): Prisma__UserDrugInventoryClient<$Result.GetResult<Prisma.$UserDrugInventoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -51051,460 +51029,458 @@ export namespace Prisma {
 
 
   /**
-   * Fields of the DoctorDistributionDrugItem model
+   * Fields of the SampleDistributionDrugItem model
    */
-  interface DoctorDistributionDrugItemFieldRefs {
-    readonly id: FieldRef<"DoctorDistributionDrugItem", 'String'>
-    readonly doctorDistributionId: FieldRef<"DoctorDistributionDrugItem", 'String'>
-    readonly drugId: FieldRef<"DoctorDistributionDrugItem", 'String'>
-    readonly fromInventoryId: FieldRef<"DoctorDistributionDrugItem", 'String'>
-    readonly quantity: FieldRef<"DoctorDistributionDrugItem", 'Int'>
-    readonly unitCost: FieldRef<"DoctorDistributionDrugItem", 'Decimal'>
-    readonly totalCost: FieldRef<"DoctorDistributionDrugItem", 'Decimal'>
-    readonly createdAt: FieldRef<"DoctorDistributionDrugItem", 'DateTime'>
-    readonly updatedAt: FieldRef<"DoctorDistributionDrugItem", 'DateTime'>
+  interface SampleDistributionDrugItemFieldRefs {
+    readonly id: FieldRef<"SampleDistributionDrugItem", 'String'>
+    readonly sampleDistributionId: FieldRef<"SampleDistributionDrugItem", 'String'>
+    readonly fromInventoryId: FieldRef<"SampleDistributionDrugItem", 'String'>
+    readonly quantity: FieldRef<"SampleDistributionDrugItem", 'Int'>
+    readonly unitCost: FieldRef<"SampleDistributionDrugItem", 'Decimal'>
+    readonly totalCost: FieldRef<"SampleDistributionDrugItem", 'Decimal'>
+    readonly createdAt: FieldRef<"SampleDistributionDrugItem", 'DateTime'>
+    readonly updatedAt: FieldRef<"SampleDistributionDrugItem", 'DateTime'>
   }
     
 
   // Custom InputTypes
   /**
-   * DoctorDistributionDrugItem findUnique
+   * SampleDistributionDrugItem findUnique
    */
-  export type DoctorDistributionDrugItemFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SampleDistributionDrugItemFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the DoctorDistributionDrugItem
+     * Select specific fields to fetch from the SampleDistributionDrugItem
      */
-    select?: DoctorDistributionDrugItemSelect<ExtArgs> | null
+    select?: SampleDistributionDrugItemSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the DoctorDistributionDrugItem
+     * Omit specific fields from the SampleDistributionDrugItem
      */
-    omit?: DoctorDistributionDrugItemOmit<ExtArgs> | null
+    omit?: SampleDistributionDrugItemOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: DoctorDistributionDrugItemInclude<ExtArgs> | null
+    include?: SampleDistributionDrugItemInclude<ExtArgs> | null
     /**
-     * Filter, which DoctorDistributionDrugItem to fetch.
+     * Filter, which SampleDistributionDrugItem to fetch.
      */
-    where: DoctorDistributionDrugItemWhereUniqueInput
+    where: SampleDistributionDrugItemWhereUniqueInput
   }
 
   /**
-   * DoctorDistributionDrugItem findUniqueOrThrow
+   * SampleDistributionDrugItem findUniqueOrThrow
    */
-  export type DoctorDistributionDrugItemFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SampleDistributionDrugItemFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the DoctorDistributionDrugItem
+     * Select specific fields to fetch from the SampleDistributionDrugItem
      */
-    select?: DoctorDistributionDrugItemSelect<ExtArgs> | null
+    select?: SampleDistributionDrugItemSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the DoctorDistributionDrugItem
+     * Omit specific fields from the SampleDistributionDrugItem
      */
-    omit?: DoctorDistributionDrugItemOmit<ExtArgs> | null
+    omit?: SampleDistributionDrugItemOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: DoctorDistributionDrugItemInclude<ExtArgs> | null
+    include?: SampleDistributionDrugItemInclude<ExtArgs> | null
     /**
-     * Filter, which DoctorDistributionDrugItem to fetch.
+     * Filter, which SampleDistributionDrugItem to fetch.
      */
-    where: DoctorDistributionDrugItemWhereUniqueInput
+    where: SampleDistributionDrugItemWhereUniqueInput
   }
 
   /**
-   * DoctorDistributionDrugItem findFirst
+   * SampleDistributionDrugItem findFirst
    */
-  export type DoctorDistributionDrugItemFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SampleDistributionDrugItemFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the DoctorDistributionDrugItem
+     * Select specific fields to fetch from the SampleDistributionDrugItem
      */
-    select?: DoctorDistributionDrugItemSelect<ExtArgs> | null
+    select?: SampleDistributionDrugItemSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the DoctorDistributionDrugItem
+     * Omit specific fields from the SampleDistributionDrugItem
      */
-    omit?: DoctorDistributionDrugItemOmit<ExtArgs> | null
+    omit?: SampleDistributionDrugItemOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: DoctorDistributionDrugItemInclude<ExtArgs> | null
+    include?: SampleDistributionDrugItemInclude<ExtArgs> | null
     /**
-     * Filter, which DoctorDistributionDrugItem to fetch.
+     * Filter, which SampleDistributionDrugItem to fetch.
      */
-    where?: DoctorDistributionDrugItemWhereInput
+    where?: SampleDistributionDrugItemWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of DoctorDistributionDrugItems to fetch.
+     * Determine the order of SampleDistributionDrugItems to fetch.
      */
-    orderBy?: DoctorDistributionDrugItemOrderByWithRelationInput | DoctorDistributionDrugItemOrderByWithRelationInput[]
+    orderBy?: SampleDistributionDrugItemOrderByWithRelationInput | SampleDistributionDrugItemOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for DoctorDistributionDrugItems.
+     * Sets the position for searching for SampleDistributionDrugItems.
      */
-    cursor?: DoctorDistributionDrugItemWhereUniqueInput
+    cursor?: SampleDistributionDrugItemWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` DoctorDistributionDrugItems from the position of the cursor.
+     * Take `±n` SampleDistributionDrugItems from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` DoctorDistributionDrugItems.
+     * Skip the first `n` SampleDistributionDrugItems.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of DoctorDistributionDrugItems.
+     * Filter by unique combinations of SampleDistributionDrugItems.
      */
-    distinct?: DoctorDistributionDrugItemScalarFieldEnum | DoctorDistributionDrugItemScalarFieldEnum[]
+    distinct?: SampleDistributionDrugItemScalarFieldEnum | SampleDistributionDrugItemScalarFieldEnum[]
   }
 
   /**
-   * DoctorDistributionDrugItem findFirstOrThrow
+   * SampleDistributionDrugItem findFirstOrThrow
    */
-  export type DoctorDistributionDrugItemFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SampleDistributionDrugItemFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the DoctorDistributionDrugItem
+     * Select specific fields to fetch from the SampleDistributionDrugItem
      */
-    select?: DoctorDistributionDrugItemSelect<ExtArgs> | null
+    select?: SampleDistributionDrugItemSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the DoctorDistributionDrugItem
+     * Omit specific fields from the SampleDistributionDrugItem
      */
-    omit?: DoctorDistributionDrugItemOmit<ExtArgs> | null
+    omit?: SampleDistributionDrugItemOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: DoctorDistributionDrugItemInclude<ExtArgs> | null
+    include?: SampleDistributionDrugItemInclude<ExtArgs> | null
     /**
-     * Filter, which DoctorDistributionDrugItem to fetch.
+     * Filter, which SampleDistributionDrugItem to fetch.
      */
-    where?: DoctorDistributionDrugItemWhereInput
+    where?: SampleDistributionDrugItemWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of DoctorDistributionDrugItems to fetch.
+     * Determine the order of SampleDistributionDrugItems to fetch.
      */
-    orderBy?: DoctorDistributionDrugItemOrderByWithRelationInput | DoctorDistributionDrugItemOrderByWithRelationInput[]
+    orderBy?: SampleDistributionDrugItemOrderByWithRelationInput | SampleDistributionDrugItemOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for DoctorDistributionDrugItems.
+     * Sets the position for searching for SampleDistributionDrugItems.
      */
-    cursor?: DoctorDistributionDrugItemWhereUniqueInput
+    cursor?: SampleDistributionDrugItemWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` DoctorDistributionDrugItems from the position of the cursor.
+     * Take `±n` SampleDistributionDrugItems from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` DoctorDistributionDrugItems.
+     * Skip the first `n` SampleDistributionDrugItems.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of DoctorDistributionDrugItems.
+     * Filter by unique combinations of SampleDistributionDrugItems.
      */
-    distinct?: DoctorDistributionDrugItemScalarFieldEnum | DoctorDistributionDrugItemScalarFieldEnum[]
+    distinct?: SampleDistributionDrugItemScalarFieldEnum | SampleDistributionDrugItemScalarFieldEnum[]
   }
 
   /**
-   * DoctorDistributionDrugItem findMany
+   * SampleDistributionDrugItem findMany
    */
-  export type DoctorDistributionDrugItemFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SampleDistributionDrugItemFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the DoctorDistributionDrugItem
+     * Select specific fields to fetch from the SampleDistributionDrugItem
      */
-    select?: DoctorDistributionDrugItemSelect<ExtArgs> | null
+    select?: SampleDistributionDrugItemSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the DoctorDistributionDrugItem
+     * Omit specific fields from the SampleDistributionDrugItem
      */
-    omit?: DoctorDistributionDrugItemOmit<ExtArgs> | null
+    omit?: SampleDistributionDrugItemOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: DoctorDistributionDrugItemInclude<ExtArgs> | null
+    include?: SampleDistributionDrugItemInclude<ExtArgs> | null
     /**
-     * Filter, which DoctorDistributionDrugItems to fetch.
+     * Filter, which SampleDistributionDrugItems to fetch.
      */
-    where?: DoctorDistributionDrugItemWhereInput
+    where?: SampleDistributionDrugItemWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of DoctorDistributionDrugItems to fetch.
+     * Determine the order of SampleDistributionDrugItems to fetch.
      */
-    orderBy?: DoctorDistributionDrugItemOrderByWithRelationInput | DoctorDistributionDrugItemOrderByWithRelationInput[]
+    orderBy?: SampleDistributionDrugItemOrderByWithRelationInput | SampleDistributionDrugItemOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing DoctorDistributionDrugItems.
+     * Sets the position for listing SampleDistributionDrugItems.
      */
-    cursor?: DoctorDistributionDrugItemWhereUniqueInput
+    cursor?: SampleDistributionDrugItemWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` DoctorDistributionDrugItems from the position of the cursor.
+     * Take `±n` SampleDistributionDrugItems from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` DoctorDistributionDrugItems.
+     * Skip the first `n` SampleDistributionDrugItems.
      */
     skip?: number
-    distinct?: DoctorDistributionDrugItemScalarFieldEnum | DoctorDistributionDrugItemScalarFieldEnum[]
+    distinct?: SampleDistributionDrugItemScalarFieldEnum | SampleDistributionDrugItemScalarFieldEnum[]
   }
 
   /**
-   * DoctorDistributionDrugItem create
+   * SampleDistributionDrugItem create
    */
-  export type DoctorDistributionDrugItemCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SampleDistributionDrugItemCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the DoctorDistributionDrugItem
+     * Select specific fields to fetch from the SampleDistributionDrugItem
      */
-    select?: DoctorDistributionDrugItemSelect<ExtArgs> | null
+    select?: SampleDistributionDrugItemSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the DoctorDistributionDrugItem
+     * Omit specific fields from the SampleDistributionDrugItem
      */
-    omit?: DoctorDistributionDrugItemOmit<ExtArgs> | null
+    omit?: SampleDistributionDrugItemOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: DoctorDistributionDrugItemInclude<ExtArgs> | null
+    include?: SampleDistributionDrugItemInclude<ExtArgs> | null
     /**
-     * The data needed to create a DoctorDistributionDrugItem.
+     * The data needed to create a SampleDistributionDrugItem.
      */
-    data: XOR<DoctorDistributionDrugItemCreateInput, DoctorDistributionDrugItemUncheckedCreateInput>
+    data: XOR<SampleDistributionDrugItemCreateInput, SampleDistributionDrugItemUncheckedCreateInput>
   }
 
   /**
-   * DoctorDistributionDrugItem createMany
+   * SampleDistributionDrugItem createMany
    */
-  export type DoctorDistributionDrugItemCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SampleDistributionDrugItemCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to create many DoctorDistributionDrugItems.
+     * The data used to create many SampleDistributionDrugItems.
      */
-    data: DoctorDistributionDrugItemCreateManyInput | DoctorDistributionDrugItemCreateManyInput[]
+    data: SampleDistributionDrugItemCreateManyInput | SampleDistributionDrugItemCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * DoctorDistributionDrugItem createManyAndReturn
+   * SampleDistributionDrugItem createManyAndReturn
    */
-  export type DoctorDistributionDrugItemCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SampleDistributionDrugItemCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the DoctorDistributionDrugItem
+     * Select specific fields to fetch from the SampleDistributionDrugItem
      */
-    select?: DoctorDistributionDrugItemSelectCreateManyAndReturn<ExtArgs> | null
+    select?: SampleDistributionDrugItemSelectCreateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the DoctorDistributionDrugItem
+     * Omit specific fields from the SampleDistributionDrugItem
      */
-    omit?: DoctorDistributionDrugItemOmit<ExtArgs> | null
+    omit?: SampleDistributionDrugItemOmit<ExtArgs> | null
     /**
-     * The data used to create many DoctorDistributionDrugItems.
+     * The data used to create many SampleDistributionDrugItems.
      */
-    data: DoctorDistributionDrugItemCreateManyInput | DoctorDistributionDrugItemCreateManyInput[]
+    data: SampleDistributionDrugItemCreateManyInput | SampleDistributionDrugItemCreateManyInput[]
     skipDuplicates?: boolean
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: DoctorDistributionDrugItemIncludeCreateManyAndReturn<ExtArgs> | null
+    include?: SampleDistributionDrugItemIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * DoctorDistributionDrugItem update
+   * SampleDistributionDrugItem update
    */
-  export type DoctorDistributionDrugItemUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SampleDistributionDrugItemUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the DoctorDistributionDrugItem
+     * Select specific fields to fetch from the SampleDistributionDrugItem
      */
-    select?: DoctorDistributionDrugItemSelect<ExtArgs> | null
+    select?: SampleDistributionDrugItemSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the DoctorDistributionDrugItem
+     * Omit specific fields from the SampleDistributionDrugItem
      */
-    omit?: DoctorDistributionDrugItemOmit<ExtArgs> | null
+    omit?: SampleDistributionDrugItemOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: DoctorDistributionDrugItemInclude<ExtArgs> | null
+    include?: SampleDistributionDrugItemInclude<ExtArgs> | null
     /**
-     * The data needed to update a DoctorDistributionDrugItem.
+     * The data needed to update a SampleDistributionDrugItem.
      */
-    data: XOR<DoctorDistributionDrugItemUpdateInput, DoctorDistributionDrugItemUncheckedUpdateInput>
+    data: XOR<SampleDistributionDrugItemUpdateInput, SampleDistributionDrugItemUncheckedUpdateInput>
     /**
-     * Choose, which DoctorDistributionDrugItem to update.
+     * Choose, which SampleDistributionDrugItem to update.
      */
-    where: DoctorDistributionDrugItemWhereUniqueInput
+    where: SampleDistributionDrugItemWhereUniqueInput
   }
 
   /**
-   * DoctorDistributionDrugItem updateMany
+   * SampleDistributionDrugItem updateMany
    */
-  export type DoctorDistributionDrugItemUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SampleDistributionDrugItemUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to update DoctorDistributionDrugItems.
+     * The data used to update SampleDistributionDrugItems.
      */
-    data: XOR<DoctorDistributionDrugItemUpdateManyMutationInput, DoctorDistributionDrugItemUncheckedUpdateManyInput>
+    data: XOR<SampleDistributionDrugItemUpdateManyMutationInput, SampleDistributionDrugItemUncheckedUpdateManyInput>
     /**
-     * Filter which DoctorDistributionDrugItems to update
+     * Filter which SampleDistributionDrugItems to update
      */
-    where?: DoctorDistributionDrugItemWhereInput
+    where?: SampleDistributionDrugItemWhereInput
     /**
-     * Limit how many DoctorDistributionDrugItems to update.
+     * Limit how many SampleDistributionDrugItems to update.
      */
     limit?: number
   }
 
   /**
-   * DoctorDistributionDrugItem updateManyAndReturn
+   * SampleDistributionDrugItem updateManyAndReturn
    */
-  export type DoctorDistributionDrugItemUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SampleDistributionDrugItemUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the DoctorDistributionDrugItem
+     * Select specific fields to fetch from the SampleDistributionDrugItem
      */
-    select?: DoctorDistributionDrugItemSelectUpdateManyAndReturn<ExtArgs> | null
+    select?: SampleDistributionDrugItemSelectUpdateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the DoctorDistributionDrugItem
+     * Omit specific fields from the SampleDistributionDrugItem
      */
-    omit?: DoctorDistributionDrugItemOmit<ExtArgs> | null
+    omit?: SampleDistributionDrugItemOmit<ExtArgs> | null
     /**
-     * The data used to update DoctorDistributionDrugItems.
+     * The data used to update SampleDistributionDrugItems.
      */
-    data: XOR<DoctorDistributionDrugItemUpdateManyMutationInput, DoctorDistributionDrugItemUncheckedUpdateManyInput>
+    data: XOR<SampleDistributionDrugItemUpdateManyMutationInput, SampleDistributionDrugItemUncheckedUpdateManyInput>
     /**
-     * Filter which DoctorDistributionDrugItems to update
+     * Filter which SampleDistributionDrugItems to update
      */
-    where?: DoctorDistributionDrugItemWhereInput
+    where?: SampleDistributionDrugItemWhereInput
     /**
-     * Limit how many DoctorDistributionDrugItems to update.
+     * Limit how many SampleDistributionDrugItems to update.
      */
     limit?: number
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: DoctorDistributionDrugItemIncludeUpdateManyAndReturn<ExtArgs> | null
+    include?: SampleDistributionDrugItemIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * DoctorDistributionDrugItem upsert
+   * SampleDistributionDrugItem upsert
    */
-  export type DoctorDistributionDrugItemUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SampleDistributionDrugItemUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the DoctorDistributionDrugItem
+     * Select specific fields to fetch from the SampleDistributionDrugItem
      */
-    select?: DoctorDistributionDrugItemSelect<ExtArgs> | null
+    select?: SampleDistributionDrugItemSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the DoctorDistributionDrugItem
+     * Omit specific fields from the SampleDistributionDrugItem
      */
-    omit?: DoctorDistributionDrugItemOmit<ExtArgs> | null
+    omit?: SampleDistributionDrugItemOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: DoctorDistributionDrugItemInclude<ExtArgs> | null
+    include?: SampleDistributionDrugItemInclude<ExtArgs> | null
     /**
-     * The filter to search for the DoctorDistributionDrugItem to update in case it exists.
+     * The filter to search for the SampleDistributionDrugItem to update in case it exists.
      */
-    where: DoctorDistributionDrugItemWhereUniqueInput
+    where: SampleDistributionDrugItemWhereUniqueInput
     /**
-     * In case the DoctorDistributionDrugItem found by the `where` argument doesn't exist, create a new DoctorDistributionDrugItem with this data.
+     * In case the SampleDistributionDrugItem found by the `where` argument doesn't exist, create a new SampleDistributionDrugItem with this data.
      */
-    create: XOR<DoctorDistributionDrugItemCreateInput, DoctorDistributionDrugItemUncheckedCreateInput>
+    create: XOR<SampleDistributionDrugItemCreateInput, SampleDistributionDrugItemUncheckedCreateInput>
     /**
-     * In case the DoctorDistributionDrugItem was found with the provided `where` argument, update it with this data.
+     * In case the SampleDistributionDrugItem was found with the provided `where` argument, update it with this data.
      */
-    update: XOR<DoctorDistributionDrugItemUpdateInput, DoctorDistributionDrugItemUncheckedUpdateInput>
+    update: XOR<SampleDistributionDrugItemUpdateInput, SampleDistributionDrugItemUncheckedUpdateInput>
   }
 
   /**
-   * DoctorDistributionDrugItem delete
+   * SampleDistributionDrugItem delete
    */
-  export type DoctorDistributionDrugItemDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SampleDistributionDrugItemDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the DoctorDistributionDrugItem
+     * Select specific fields to fetch from the SampleDistributionDrugItem
      */
-    select?: DoctorDistributionDrugItemSelect<ExtArgs> | null
+    select?: SampleDistributionDrugItemSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the DoctorDistributionDrugItem
+     * Omit specific fields from the SampleDistributionDrugItem
      */
-    omit?: DoctorDistributionDrugItemOmit<ExtArgs> | null
+    omit?: SampleDistributionDrugItemOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: DoctorDistributionDrugItemInclude<ExtArgs> | null
+    include?: SampleDistributionDrugItemInclude<ExtArgs> | null
     /**
-     * Filter which DoctorDistributionDrugItem to delete.
+     * Filter which SampleDistributionDrugItem to delete.
      */
-    where: DoctorDistributionDrugItemWhereUniqueInput
+    where: SampleDistributionDrugItemWhereUniqueInput
   }
 
   /**
-   * DoctorDistributionDrugItem deleteMany
+   * SampleDistributionDrugItem deleteMany
    */
-  export type DoctorDistributionDrugItemDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SampleDistributionDrugItemDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which DoctorDistributionDrugItems to delete
+     * Filter which SampleDistributionDrugItems to delete
      */
-    where?: DoctorDistributionDrugItemWhereInput
+    where?: SampleDistributionDrugItemWhereInput
     /**
-     * Limit how many DoctorDistributionDrugItems to delete.
+     * Limit how many SampleDistributionDrugItems to delete.
      */
     limit?: number
   }
 
   /**
-   * DoctorDistributionDrugItem without action
+   * SampleDistributionDrugItem without action
    */
-  export type DoctorDistributionDrugItemDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SampleDistributionDrugItemDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the DoctorDistributionDrugItem
+     * Select specific fields to fetch from the SampleDistributionDrugItem
      */
-    select?: DoctorDistributionDrugItemSelect<ExtArgs> | null
+    select?: SampleDistributionDrugItemSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the DoctorDistributionDrugItem
+     * Omit specific fields from the SampleDistributionDrugItem
      */
-    omit?: DoctorDistributionDrugItemOmit<ExtArgs> | null
+    omit?: SampleDistributionDrugItemOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: DoctorDistributionDrugItemInclude<ExtArgs> | null
+    include?: SampleDistributionDrugItemInclude<ExtArgs> | null
   }
 
 
   /**
-   * Model DoctorDistributionGiftItem
+   * Model SampleDistributionGiftItem
    */
 
-  export type AggregateDoctorDistributionGiftItem = {
-    _count: DoctorDistributionGiftItemCountAggregateOutputType | null
-    _avg: DoctorDistributionGiftItemAvgAggregateOutputType | null
-    _sum: DoctorDistributionGiftItemSumAggregateOutputType | null
-    _min: DoctorDistributionGiftItemMinAggregateOutputType | null
-    _max: DoctorDistributionGiftItemMaxAggregateOutputType | null
+  export type AggregateSampleDistributionGiftItem = {
+    _count: SampleDistributionGiftItemCountAggregateOutputType | null
+    _avg: SampleDistributionGiftItemAvgAggregateOutputType | null
+    _sum: SampleDistributionGiftItemSumAggregateOutputType | null
+    _min: SampleDistributionGiftItemMinAggregateOutputType | null
+    _max: SampleDistributionGiftItemMaxAggregateOutputType | null
   }
 
-  export type DoctorDistributionGiftItemAvgAggregateOutputType = {
+  export type SampleDistributionGiftItemAvgAggregateOutputType = {
     quantity: number | null
     unitCost: Decimal | null
     totalCost: Decimal | null
   }
 
-  export type DoctorDistributionGiftItemSumAggregateOutputType = {
+  export type SampleDistributionGiftItemSumAggregateOutputType = {
     quantity: number | null
     unitCost: Decimal | null
     totalCost: Decimal | null
   }
 
-  export type DoctorDistributionGiftItemMinAggregateOutputType = {
+  export type SampleDistributionGiftItemMinAggregateOutputType = {
     id: string | null
-    doctorDistributionId: string | null
-    giftId: string | null
+    sampleDistributionId: string | null
     fromInventoryId: string | null
     quantity: number | null
     unitCost: Decimal | null
@@ -51513,10 +51489,9 @@ export namespace Prisma {
     updatedAt: Date | null
   }
 
-  export type DoctorDistributionGiftItemMaxAggregateOutputType = {
+  export type SampleDistributionGiftItemMaxAggregateOutputType = {
     id: string | null
-    doctorDistributionId: string | null
-    giftId: string | null
+    sampleDistributionId: string | null
     fromInventoryId: string | null
     quantity: number | null
     unitCost: Decimal | null
@@ -51525,10 +51500,9 @@ export namespace Prisma {
     updatedAt: Date | null
   }
 
-  export type DoctorDistributionGiftItemCountAggregateOutputType = {
+  export type SampleDistributionGiftItemCountAggregateOutputType = {
     id: number
-    doctorDistributionId: number
-    giftId: number
+    sampleDistributionId: number
     fromInventoryId: number
     quantity: number
     unitCost: number
@@ -51539,22 +51513,21 @@ export namespace Prisma {
   }
 
 
-  export type DoctorDistributionGiftItemAvgAggregateInputType = {
+  export type SampleDistributionGiftItemAvgAggregateInputType = {
     quantity?: true
     unitCost?: true
     totalCost?: true
   }
 
-  export type DoctorDistributionGiftItemSumAggregateInputType = {
+  export type SampleDistributionGiftItemSumAggregateInputType = {
     quantity?: true
     unitCost?: true
     totalCost?: true
   }
 
-  export type DoctorDistributionGiftItemMinAggregateInputType = {
+  export type SampleDistributionGiftItemMinAggregateInputType = {
     id?: true
-    doctorDistributionId?: true
-    giftId?: true
+    sampleDistributionId?: true
     fromInventoryId?: true
     quantity?: true
     unitCost?: true
@@ -51563,10 +51536,9 @@ export namespace Prisma {
     updatedAt?: true
   }
 
-  export type DoctorDistributionGiftItemMaxAggregateInputType = {
+  export type SampleDistributionGiftItemMaxAggregateInputType = {
     id?: true
-    doctorDistributionId?: true
-    giftId?: true
+    sampleDistributionId?: true
     fromInventoryId?: true
     quantity?: true
     unitCost?: true
@@ -51575,10 +51547,9 @@ export namespace Prisma {
     updatedAt?: true
   }
 
-  export type DoctorDistributionGiftItemCountAggregateInputType = {
+  export type SampleDistributionGiftItemCountAggregateInputType = {
     id?: true
-    doctorDistributionId?: true
-    giftId?: true
+    sampleDistributionId?: true
     fromInventoryId?: true
     quantity?: true
     unitCost?: true
@@ -51588,172 +51559,164 @@ export namespace Prisma {
     _all?: true
   }
 
-  export type DoctorDistributionGiftItemAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SampleDistributionGiftItemAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which DoctorDistributionGiftItem to aggregate.
+     * Filter which SampleDistributionGiftItem to aggregate.
      */
-    where?: DoctorDistributionGiftItemWhereInput
+    where?: SampleDistributionGiftItemWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of DoctorDistributionGiftItems to fetch.
+     * Determine the order of SampleDistributionGiftItems to fetch.
      */
-    orderBy?: DoctorDistributionGiftItemOrderByWithRelationInput | DoctorDistributionGiftItemOrderByWithRelationInput[]
+    orderBy?: SampleDistributionGiftItemOrderByWithRelationInput | SampleDistributionGiftItemOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: DoctorDistributionGiftItemWhereUniqueInput
+    cursor?: SampleDistributionGiftItemWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` DoctorDistributionGiftItems from the position of the cursor.
+     * Take `±n` SampleDistributionGiftItems from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` DoctorDistributionGiftItems.
+     * Skip the first `n` SampleDistributionGiftItems.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned DoctorDistributionGiftItems
+     * Count returned SampleDistributionGiftItems
     **/
-    _count?: true | DoctorDistributionGiftItemCountAggregateInputType
+    _count?: true | SampleDistributionGiftItemCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to average
     **/
-    _avg?: DoctorDistributionGiftItemAvgAggregateInputType
+    _avg?: SampleDistributionGiftItemAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to sum
     **/
-    _sum?: DoctorDistributionGiftItemSumAggregateInputType
+    _sum?: SampleDistributionGiftItemSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: DoctorDistributionGiftItemMinAggregateInputType
+    _min?: SampleDistributionGiftItemMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: DoctorDistributionGiftItemMaxAggregateInputType
+    _max?: SampleDistributionGiftItemMaxAggregateInputType
   }
 
-  export type GetDoctorDistributionGiftItemAggregateType<T extends DoctorDistributionGiftItemAggregateArgs> = {
-        [P in keyof T & keyof AggregateDoctorDistributionGiftItem]: P extends '_count' | 'count'
+  export type GetSampleDistributionGiftItemAggregateType<T extends SampleDistributionGiftItemAggregateArgs> = {
+        [P in keyof T & keyof AggregateSampleDistributionGiftItem]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateDoctorDistributionGiftItem[P]>
-      : GetScalarType<T[P], AggregateDoctorDistributionGiftItem[P]>
+        : GetScalarType<T[P], AggregateSampleDistributionGiftItem[P]>
+      : GetScalarType<T[P], AggregateSampleDistributionGiftItem[P]>
   }
 
 
 
 
-  export type DoctorDistributionGiftItemGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: DoctorDistributionGiftItemWhereInput
-    orderBy?: DoctorDistributionGiftItemOrderByWithAggregationInput | DoctorDistributionGiftItemOrderByWithAggregationInput[]
-    by: DoctorDistributionGiftItemScalarFieldEnum[] | DoctorDistributionGiftItemScalarFieldEnum
-    having?: DoctorDistributionGiftItemScalarWhereWithAggregatesInput
+  export type SampleDistributionGiftItemGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SampleDistributionGiftItemWhereInput
+    orderBy?: SampleDistributionGiftItemOrderByWithAggregationInput | SampleDistributionGiftItemOrderByWithAggregationInput[]
+    by: SampleDistributionGiftItemScalarFieldEnum[] | SampleDistributionGiftItemScalarFieldEnum
+    having?: SampleDistributionGiftItemScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: DoctorDistributionGiftItemCountAggregateInputType | true
-    _avg?: DoctorDistributionGiftItemAvgAggregateInputType
-    _sum?: DoctorDistributionGiftItemSumAggregateInputType
-    _min?: DoctorDistributionGiftItemMinAggregateInputType
-    _max?: DoctorDistributionGiftItemMaxAggregateInputType
+    _count?: SampleDistributionGiftItemCountAggregateInputType | true
+    _avg?: SampleDistributionGiftItemAvgAggregateInputType
+    _sum?: SampleDistributionGiftItemSumAggregateInputType
+    _min?: SampleDistributionGiftItemMinAggregateInputType
+    _max?: SampleDistributionGiftItemMaxAggregateInputType
   }
 
-  export type DoctorDistributionGiftItemGroupByOutputType = {
+  export type SampleDistributionGiftItemGroupByOutputType = {
     id: string
-    doctorDistributionId: string
-    giftId: string
+    sampleDistributionId: string
     fromInventoryId: string
     quantity: number
     unitCost: Decimal
     totalCost: Decimal
     createdAt: Date
     updatedAt: Date
-    _count: DoctorDistributionGiftItemCountAggregateOutputType | null
-    _avg: DoctorDistributionGiftItemAvgAggregateOutputType | null
-    _sum: DoctorDistributionGiftItemSumAggregateOutputType | null
-    _min: DoctorDistributionGiftItemMinAggregateOutputType | null
-    _max: DoctorDistributionGiftItemMaxAggregateOutputType | null
+    _count: SampleDistributionGiftItemCountAggregateOutputType | null
+    _avg: SampleDistributionGiftItemAvgAggregateOutputType | null
+    _sum: SampleDistributionGiftItemSumAggregateOutputType | null
+    _min: SampleDistributionGiftItemMinAggregateOutputType | null
+    _max: SampleDistributionGiftItemMaxAggregateOutputType | null
   }
 
-  type GetDoctorDistributionGiftItemGroupByPayload<T extends DoctorDistributionGiftItemGroupByArgs> = Prisma.PrismaPromise<
+  type GetSampleDistributionGiftItemGroupByPayload<T extends SampleDistributionGiftItemGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<DoctorDistributionGiftItemGroupByOutputType, T['by']> &
+      PickEnumerable<SampleDistributionGiftItemGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof DoctorDistributionGiftItemGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof SampleDistributionGiftItemGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], DoctorDistributionGiftItemGroupByOutputType[P]>
-            : GetScalarType<T[P], DoctorDistributionGiftItemGroupByOutputType[P]>
+              : GetScalarType<T[P], SampleDistributionGiftItemGroupByOutputType[P]>
+            : GetScalarType<T[P], SampleDistributionGiftItemGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type DoctorDistributionGiftItemSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type SampleDistributionGiftItemSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    doctorDistributionId?: boolean
-    giftId?: boolean
+    sampleDistributionId?: boolean
     fromInventoryId?: boolean
     quantity?: boolean
     unitCost?: boolean
     totalCost?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    doctorDistribution?: boolean | DoctorDistributionDefaultArgs<ExtArgs>
-    gift?: boolean | GiftDefaultArgs<ExtArgs>
+    sampleDistribution?: boolean | SampleDistributionDefaultArgs<ExtArgs>
     fromInventory?: boolean | UserGiftInventoryDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["doctorDistributionGiftItem"]>
+  }, ExtArgs["result"]["sampleDistributionGiftItem"]>
 
-  export type DoctorDistributionGiftItemSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type SampleDistributionGiftItemSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    doctorDistributionId?: boolean
-    giftId?: boolean
+    sampleDistributionId?: boolean
     fromInventoryId?: boolean
     quantity?: boolean
     unitCost?: boolean
     totalCost?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    doctorDistribution?: boolean | DoctorDistributionDefaultArgs<ExtArgs>
-    gift?: boolean | GiftDefaultArgs<ExtArgs>
+    sampleDistribution?: boolean | SampleDistributionDefaultArgs<ExtArgs>
     fromInventory?: boolean | UserGiftInventoryDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["doctorDistributionGiftItem"]>
+  }, ExtArgs["result"]["sampleDistributionGiftItem"]>
 
-  export type DoctorDistributionGiftItemSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type SampleDistributionGiftItemSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    doctorDistributionId?: boolean
-    giftId?: boolean
+    sampleDistributionId?: boolean
     fromInventoryId?: boolean
     quantity?: boolean
     unitCost?: boolean
     totalCost?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    doctorDistribution?: boolean | DoctorDistributionDefaultArgs<ExtArgs>
-    gift?: boolean | GiftDefaultArgs<ExtArgs>
+    sampleDistribution?: boolean | SampleDistributionDefaultArgs<ExtArgs>
     fromInventory?: boolean | UserGiftInventoryDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["doctorDistributionGiftItem"]>
+  }, ExtArgs["result"]["sampleDistributionGiftItem"]>
 
-  export type DoctorDistributionGiftItemSelectScalar = {
+  export type SampleDistributionGiftItemSelectScalar = {
     id?: boolean
-    doctorDistributionId?: boolean
-    giftId?: boolean
+    sampleDistributionId?: boolean
     fromInventoryId?: boolean
     quantity?: boolean
     unitCost?: boolean
@@ -51762,170 +51725,165 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type DoctorDistributionGiftItemOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "doctorDistributionId" | "giftId" | "fromInventoryId" | "quantity" | "unitCost" | "totalCost" | "createdAt" | "updatedAt", ExtArgs["result"]["doctorDistributionGiftItem"]>
-  export type DoctorDistributionGiftItemInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    doctorDistribution?: boolean | DoctorDistributionDefaultArgs<ExtArgs>
-    gift?: boolean | GiftDefaultArgs<ExtArgs>
+  export type SampleDistributionGiftItemOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "sampleDistributionId" | "fromInventoryId" | "quantity" | "unitCost" | "totalCost" | "createdAt" | "updatedAt", ExtArgs["result"]["sampleDistributionGiftItem"]>
+  export type SampleDistributionGiftItemInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    sampleDistribution?: boolean | SampleDistributionDefaultArgs<ExtArgs>
     fromInventory?: boolean | UserGiftInventoryDefaultArgs<ExtArgs>
   }
-  export type DoctorDistributionGiftItemIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    doctorDistribution?: boolean | DoctorDistributionDefaultArgs<ExtArgs>
-    gift?: boolean | GiftDefaultArgs<ExtArgs>
+  export type SampleDistributionGiftItemIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    sampleDistribution?: boolean | SampleDistributionDefaultArgs<ExtArgs>
     fromInventory?: boolean | UserGiftInventoryDefaultArgs<ExtArgs>
   }
-  export type DoctorDistributionGiftItemIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    doctorDistribution?: boolean | DoctorDistributionDefaultArgs<ExtArgs>
-    gift?: boolean | GiftDefaultArgs<ExtArgs>
+  export type SampleDistributionGiftItemIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    sampleDistribution?: boolean | SampleDistributionDefaultArgs<ExtArgs>
     fromInventory?: boolean | UserGiftInventoryDefaultArgs<ExtArgs>
   }
 
-  export type $DoctorDistributionGiftItemPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "DoctorDistributionGiftItem"
+  export type $SampleDistributionGiftItemPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "SampleDistributionGiftItem"
     objects: {
-      doctorDistribution: Prisma.$DoctorDistributionPayload<ExtArgs>
-      gift: Prisma.$GiftPayload<ExtArgs>
+      sampleDistribution: Prisma.$SampleDistributionPayload<ExtArgs>
       fromInventory: Prisma.$UserGiftInventoryPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      doctorDistributionId: string
-      giftId: string
+      sampleDistributionId: string
       fromInventoryId: string
       quantity: number
       unitCost: Prisma.Decimal
       totalCost: Prisma.Decimal
       createdAt: Date
       updatedAt: Date
-    }, ExtArgs["result"]["doctorDistributionGiftItem"]>
+    }, ExtArgs["result"]["sampleDistributionGiftItem"]>
     composites: {}
   }
 
-  type DoctorDistributionGiftItemGetPayload<S extends boolean | null | undefined | DoctorDistributionGiftItemDefaultArgs> = $Result.GetResult<Prisma.$DoctorDistributionGiftItemPayload, S>
+  type SampleDistributionGiftItemGetPayload<S extends boolean | null | undefined | SampleDistributionGiftItemDefaultArgs> = $Result.GetResult<Prisma.$SampleDistributionGiftItemPayload, S>
 
-  type DoctorDistributionGiftItemCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<DoctorDistributionGiftItemFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: DoctorDistributionGiftItemCountAggregateInputType | true
+  type SampleDistributionGiftItemCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<SampleDistributionGiftItemFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: SampleDistributionGiftItemCountAggregateInputType | true
     }
 
-  export interface DoctorDistributionGiftItemDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['DoctorDistributionGiftItem'], meta: { name: 'DoctorDistributionGiftItem' } }
+  export interface SampleDistributionGiftItemDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['SampleDistributionGiftItem'], meta: { name: 'SampleDistributionGiftItem' } }
     /**
-     * Find zero or one DoctorDistributionGiftItem that matches the filter.
-     * @param {DoctorDistributionGiftItemFindUniqueArgs} args - Arguments to find a DoctorDistributionGiftItem
+     * Find zero or one SampleDistributionGiftItem that matches the filter.
+     * @param {SampleDistributionGiftItemFindUniqueArgs} args - Arguments to find a SampleDistributionGiftItem
      * @example
-     * // Get one DoctorDistributionGiftItem
-     * const doctorDistributionGiftItem = await prisma.doctorDistributionGiftItem.findUnique({
+     * // Get one SampleDistributionGiftItem
+     * const sampleDistributionGiftItem = await prisma.sampleDistributionGiftItem.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUnique<T extends DoctorDistributionGiftItemFindUniqueArgs>(args: SelectSubset<T, DoctorDistributionGiftItemFindUniqueArgs<ExtArgs>>): Prisma__DoctorDistributionGiftItemClient<$Result.GetResult<Prisma.$DoctorDistributionGiftItemPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findUnique<T extends SampleDistributionGiftItemFindUniqueArgs>(args: SelectSubset<T, SampleDistributionGiftItemFindUniqueArgs<ExtArgs>>): Prisma__SampleDistributionGiftItemClient<$Result.GetResult<Prisma.$SampleDistributionGiftItemPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one DoctorDistributionGiftItem that matches the filter or throw an error with `error.code='P2025'`
+     * Find one SampleDistributionGiftItem that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
-     * @param {DoctorDistributionGiftItemFindUniqueOrThrowArgs} args - Arguments to find a DoctorDistributionGiftItem
+     * @param {SampleDistributionGiftItemFindUniqueOrThrowArgs} args - Arguments to find a SampleDistributionGiftItem
      * @example
-     * // Get one DoctorDistributionGiftItem
-     * const doctorDistributionGiftItem = await prisma.doctorDistributionGiftItem.findUniqueOrThrow({
+     * // Get one SampleDistributionGiftItem
+     * const sampleDistributionGiftItem = await prisma.sampleDistributionGiftItem.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUniqueOrThrow<T extends DoctorDistributionGiftItemFindUniqueOrThrowArgs>(args: SelectSubset<T, DoctorDistributionGiftItemFindUniqueOrThrowArgs<ExtArgs>>): Prisma__DoctorDistributionGiftItemClient<$Result.GetResult<Prisma.$DoctorDistributionGiftItemPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findUniqueOrThrow<T extends SampleDistributionGiftItemFindUniqueOrThrowArgs>(args: SelectSubset<T, SampleDistributionGiftItemFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SampleDistributionGiftItemClient<$Result.GetResult<Prisma.$SampleDistributionGiftItemPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first DoctorDistributionGiftItem that matches the filter.
+     * Find the first SampleDistributionGiftItem that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {DoctorDistributionGiftItemFindFirstArgs} args - Arguments to find a DoctorDistributionGiftItem
+     * @param {SampleDistributionGiftItemFindFirstArgs} args - Arguments to find a SampleDistributionGiftItem
      * @example
-     * // Get one DoctorDistributionGiftItem
-     * const doctorDistributionGiftItem = await prisma.doctorDistributionGiftItem.findFirst({
+     * // Get one SampleDistributionGiftItem
+     * const sampleDistributionGiftItem = await prisma.sampleDistributionGiftItem.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirst<T extends DoctorDistributionGiftItemFindFirstArgs>(args?: SelectSubset<T, DoctorDistributionGiftItemFindFirstArgs<ExtArgs>>): Prisma__DoctorDistributionGiftItemClient<$Result.GetResult<Prisma.$DoctorDistributionGiftItemPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findFirst<T extends SampleDistributionGiftItemFindFirstArgs>(args?: SelectSubset<T, SampleDistributionGiftItemFindFirstArgs<ExtArgs>>): Prisma__SampleDistributionGiftItemClient<$Result.GetResult<Prisma.$SampleDistributionGiftItemPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first DoctorDistributionGiftItem that matches the filter or
+     * Find the first SampleDistributionGiftItem that matches the filter or
      * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {DoctorDistributionGiftItemFindFirstOrThrowArgs} args - Arguments to find a DoctorDistributionGiftItem
+     * @param {SampleDistributionGiftItemFindFirstOrThrowArgs} args - Arguments to find a SampleDistributionGiftItem
      * @example
-     * // Get one DoctorDistributionGiftItem
-     * const doctorDistributionGiftItem = await prisma.doctorDistributionGiftItem.findFirstOrThrow({
+     * // Get one SampleDistributionGiftItem
+     * const sampleDistributionGiftItem = await prisma.sampleDistributionGiftItem.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirstOrThrow<T extends DoctorDistributionGiftItemFindFirstOrThrowArgs>(args?: SelectSubset<T, DoctorDistributionGiftItemFindFirstOrThrowArgs<ExtArgs>>): Prisma__DoctorDistributionGiftItemClient<$Result.GetResult<Prisma.$DoctorDistributionGiftItemPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findFirstOrThrow<T extends SampleDistributionGiftItemFindFirstOrThrowArgs>(args?: SelectSubset<T, SampleDistributionGiftItemFindFirstOrThrowArgs<ExtArgs>>): Prisma__SampleDistributionGiftItemClient<$Result.GetResult<Prisma.$SampleDistributionGiftItemPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find zero or more DoctorDistributionGiftItems that matches the filter.
+     * Find zero or more SampleDistributionGiftItems that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {DoctorDistributionGiftItemFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @param {SampleDistributionGiftItemFindManyArgs} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all DoctorDistributionGiftItems
-     * const doctorDistributionGiftItems = await prisma.doctorDistributionGiftItem.findMany()
+     * // Get all SampleDistributionGiftItems
+     * const sampleDistributionGiftItems = await prisma.sampleDistributionGiftItem.findMany()
      * 
-     * // Get first 10 DoctorDistributionGiftItems
-     * const doctorDistributionGiftItems = await prisma.doctorDistributionGiftItem.findMany({ take: 10 })
+     * // Get first 10 SampleDistributionGiftItems
+     * const sampleDistributionGiftItems = await prisma.sampleDistributionGiftItem.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const doctorDistributionGiftItemWithIdOnly = await prisma.doctorDistributionGiftItem.findMany({ select: { id: true } })
+     * const sampleDistributionGiftItemWithIdOnly = await prisma.sampleDistributionGiftItem.findMany({ select: { id: true } })
      * 
      */
-    findMany<T extends DoctorDistributionGiftItemFindManyArgs>(args?: SelectSubset<T, DoctorDistributionGiftItemFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DoctorDistributionGiftItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+    findMany<T extends SampleDistributionGiftItemFindManyArgs>(args?: SelectSubset<T, SampleDistributionGiftItemFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SampleDistributionGiftItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
     /**
-     * Create a DoctorDistributionGiftItem.
-     * @param {DoctorDistributionGiftItemCreateArgs} args - Arguments to create a DoctorDistributionGiftItem.
+     * Create a SampleDistributionGiftItem.
+     * @param {SampleDistributionGiftItemCreateArgs} args - Arguments to create a SampleDistributionGiftItem.
      * @example
-     * // Create one DoctorDistributionGiftItem
-     * const DoctorDistributionGiftItem = await prisma.doctorDistributionGiftItem.create({
+     * // Create one SampleDistributionGiftItem
+     * const SampleDistributionGiftItem = await prisma.sampleDistributionGiftItem.create({
      *   data: {
-     *     // ... data to create a DoctorDistributionGiftItem
+     *     // ... data to create a SampleDistributionGiftItem
      *   }
      * })
      * 
      */
-    create<T extends DoctorDistributionGiftItemCreateArgs>(args: SelectSubset<T, DoctorDistributionGiftItemCreateArgs<ExtArgs>>): Prisma__DoctorDistributionGiftItemClient<$Result.GetResult<Prisma.$DoctorDistributionGiftItemPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    create<T extends SampleDistributionGiftItemCreateArgs>(args: SelectSubset<T, SampleDistributionGiftItemCreateArgs<ExtArgs>>): Prisma__SampleDistributionGiftItemClient<$Result.GetResult<Prisma.$SampleDistributionGiftItemPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Create many DoctorDistributionGiftItems.
-     * @param {DoctorDistributionGiftItemCreateManyArgs} args - Arguments to create many DoctorDistributionGiftItems.
+     * Create many SampleDistributionGiftItems.
+     * @param {SampleDistributionGiftItemCreateManyArgs} args - Arguments to create many SampleDistributionGiftItems.
      * @example
-     * // Create many DoctorDistributionGiftItems
-     * const doctorDistributionGiftItem = await prisma.doctorDistributionGiftItem.createMany({
+     * // Create many SampleDistributionGiftItems
+     * const sampleDistributionGiftItem = await prisma.sampleDistributionGiftItem.createMany({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      *     
      */
-    createMany<T extends DoctorDistributionGiftItemCreateManyArgs>(args?: SelectSubset<T, DoctorDistributionGiftItemCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    createMany<T extends SampleDistributionGiftItemCreateManyArgs>(args?: SelectSubset<T, SampleDistributionGiftItemCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create many DoctorDistributionGiftItems and returns the data saved in the database.
-     * @param {DoctorDistributionGiftItemCreateManyAndReturnArgs} args - Arguments to create many DoctorDistributionGiftItems.
+     * Create many SampleDistributionGiftItems and returns the data saved in the database.
+     * @param {SampleDistributionGiftItemCreateManyAndReturnArgs} args - Arguments to create many SampleDistributionGiftItems.
      * @example
-     * // Create many DoctorDistributionGiftItems
-     * const doctorDistributionGiftItem = await prisma.doctorDistributionGiftItem.createManyAndReturn({
+     * // Create many SampleDistributionGiftItems
+     * const sampleDistributionGiftItem = await prisma.sampleDistributionGiftItem.createManyAndReturn({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      * 
-     * // Create many DoctorDistributionGiftItems and only return the `id`
-     * const doctorDistributionGiftItemWithIdOnly = await prisma.doctorDistributionGiftItem.createManyAndReturn({
+     * // Create many SampleDistributionGiftItems and only return the `id`
+     * const sampleDistributionGiftItemWithIdOnly = await prisma.sampleDistributionGiftItem.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -51935,28 +51893,28 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    createManyAndReturn<T extends DoctorDistributionGiftItemCreateManyAndReturnArgs>(args?: SelectSubset<T, DoctorDistributionGiftItemCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DoctorDistributionGiftItemPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+    createManyAndReturn<T extends SampleDistributionGiftItemCreateManyAndReturnArgs>(args?: SelectSubset<T, SampleDistributionGiftItemCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SampleDistributionGiftItemPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Delete a DoctorDistributionGiftItem.
-     * @param {DoctorDistributionGiftItemDeleteArgs} args - Arguments to delete one DoctorDistributionGiftItem.
+     * Delete a SampleDistributionGiftItem.
+     * @param {SampleDistributionGiftItemDeleteArgs} args - Arguments to delete one SampleDistributionGiftItem.
      * @example
-     * // Delete one DoctorDistributionGiftItem
-     * const DoctorDistributionGiftItem = await prisma.doctorDistributionGiftItem.delete({
+     * // Delete one SampleDistributionGiftItem
+     * const SampleDistributionGiftItem = await prisma.sampleDistributionGiftItem.delete({
      *   where: {
-     *     // ... filter to delete one DoctorDistributionGiftItem
+     *     // ... filter to delete one SampleDistributionGiftItem
      *   }
      * })
      * 
      */
-    delete<T extends DoctorDistributionGiftItemDeleteArgs>(args: SelectSubset<T, DoctorDistributionGiftItemDeleteArgs<ExtArgs>>): Prisma__DoctorDistributionGiftItemClient<$Result.GetResult<Prisma.$DoctorDistributionGiftItemPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    delete<T extends SampleDistributionGiftItemDeleteArgs>(args: SelectSubset<T, SampleDistributionGiftItemDeleteArgs<ExtArgs>>): Prisma__SampleDistributionGiftItemClient<$Result.GetResult<Prisma.$SampleDistributionGiftItemPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Update one DoctorDistributionGiftItem.
-     * @param {DoctorDistributionGiftItemUpdateArgs} args - Arguments to update one DoctorDistributionGiftItem.
+     * Update one SampleDistributionGiftItem.
+     * @param {SampleDistributionGiftItemUpdateArgs} args - Arguments to update one SampleDistributionGiftItem.
      * @example
-     * // Update one DoctorDistributionGiftItem
-     * const doctorDistributionGiftItem = await prisma.doctorDistributionGiftItem.update({
+     * // Update one SampleDistributionGiftItem
+     * const sampleDistributionGiftItem = await prisma.sampleDistributionGiftItem.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -51966,30 +51924,30 @@ export namespace Prisma {
      * })
      * 
      */
-    update<T extends DoctorDistributionGiftItemUpdateArgs>(args: SelectSubset<T, DoctorDistributionGiftItemUpdateArgs<ExtArgs>>): Prisma__DoctorDistributionGiftItemClient<$Result.GetResult<Prisma.$DoctorDistributionGiftItemPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    update<T extends SampleDistributionGiftItemUpdateArgs>(args: SelectSubset<T, SampleDistributionGiftItemUpdateArgs<ExtArgs>>): Prisma__SampleDistributionGiftItemClient<$Result.GetResult<Prisma.$SampleDistributionGiftItemPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Delete zero or more DoctorDistributionGiftItems.
-     * @param {DoctorDistributionGiftItemDeleteManyArgs} args - Arguments to filter DoctorDistributionGiftItems to delete.
+     * Delete zero or more SampleDistributionGiftItems.
+     * @param {SampleDistributionGiftItemDeleteManyArgs} args - Arguments to filter SampleDistributionGiftItems to delete.
      * @example
-     * // Delete a few DoctorDistributionGiftItems
-     * const { count } = await prisma.doctorDistributionGiftItem.deleteMany({
+     * // Delete a few SampleDistributionGiftItems
+     * const { count } = await prisma.sampleDistributionGiftItem.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
      */
-    deleteMany<T extends DoctorDistributionGiftItemDeleteManyArgs>(args?: SelectSubset<T, DoctorDistributionGiftItemDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    deleteMany<T extends SampleDistributionGiftItemDeleteManyArgs>(args?: SelectSubset<T, SampleDistributionGiftItemDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more DoctorDistributionGiftItems.
+     * Update zero or more SampleDistributionGiftItems.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {DoctorDistributionGiftItemUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {SampleDistributionGiftItemUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many DoctorDistributionGiftItems
-     * const doctorDistributionGiftItem = await prisma.doctorDistributionGiftItem.updateMany({
+     * // Update many SampleDistributionGiftItems
+     * const sampleDistributionGiftItem = await prisma.sampleDistributionGiftItem.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -51999,14 +51957,14 @@ export namespace Prisma {
      * })
      * 
      */
-    updateMany<T extends DoctorDistributionGiftItemUpdateManyArgs>(args: SelectSubset<T, DoctorDistributionGiftItemUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    updateMany<T extends SampleDistributionGiftItemUpdateManyArgs>(args: SelectSubset<T, SampleDistributionGiftItemUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more DoctorDistributionGiftItems and returns the data updated in the database.
-     * @param {DoctorDistributionGiftItemUpdateManyAndReturnArgs} args - Arguments to update many DoctorDistributionGiftItems.
+     * Update zero or more SampleDistributionGiftItems and returns the data updated in the database.
+     * @param {SampleDistributionGiftItemUpdateManyAndReturnArgs} args - Arguments to update many SampleDistributionGiftItems.
      * @example
-     * // Update many DoctorDistributionGiftItems
-     * const doctorDistributionGiftItem = await prisma.doctorDistributionGiftItem.updateManyAndReturn({
+     * // Update many SampleDistributionGiftItems
+     * const sampleDistributionGiftItem = await prisma.sampleDistributionGiftItem.updateManyAndReturn({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -52015,8 +51973,8 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more DoctorDistributionGiftItems and only return the `id`
-     * const doctorDistributionGiftItemWithIdOnly = await prisma.doctorDistributionGiftItem.updateManyAndReturn({
+     * // Update zero or more SampleDistributionGiftItems and only return the `id`
+     * const sampleDistributionGiftItemWithIdOnly = await prisma.sampleDistributionGiftItem.updateManyAndReturn({
      *   select: { id: true },
      *   where: {
      *     // ... provide filter here
@@ -52029,56 +51987,56 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    updateManyAndReturn<T extends DoctorDistributionGiftItemUpdateManyAndReturnArgs>(args: SelectSubset<T, DoctorDistributionGiftItemUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DoctorDistributionGiftItemPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+    updateManyAndReturn<T extends SampleDistributionGiftItemUpdateManyAndReturnArgs>(args: SelectSubset<T, SampleDistributionGiftItemUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SampleDistributionGiftItemPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Create or update one DoctorDistributionGiftItem.
-     * @param {DoctorDistributionGiftItemUpsertArgs} args - Arguments to update or create a DoctorDistributionGiftItem.
+     * Create or update one SampleDistributionGiftItem.
+     * @param {SampleDistributionGiftItemUpsertArgs} args - Arguments to update or create a SampleDistributionGiftItem.
      * @example
-     * // Update or create a DoctorDistributionGiftItem
-     * const doctorDistributionGiftItem = await prisma.doctorDistributionGiftItem.upsert({
+     * // Update or create a SampleDistributionGiftItem
+     * const sampleDistributionGiftItem = await prisma.sampleDistributionGiftItem.upsert({
      *   create: {
-     *     // ... data to create a DoctorDistributionGiftItem
+     *     // ... data to create a SampleDistributionGiftItem
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the DoctorDistributionGiftItem we want to update
+     *     // ... the filter for the SampleDistributionGiftItem we want to update
      *   }
      * })
      */
-    upsert<T extends DoctorDistributionGiftItemUpsertArgs>(args: SelectSubset<T, DoctorDistributionGiftItemUpsertArgs<ExtArgs>>): Prisma__DoctorDistributionGiftItemClient<$Result.GetResult<Prisma.$DoctorDistributionGiftItemPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    upsert<T extends SampleDistributionGiftItemUpsertArgs>(args: SelectSubset<T, SampleDistributionGiftItemUpsertArgs<ExtArgs>>): Prisma__SampleDistributionGiftItemClient<$Result.GetResult<Prisma.$SampleDistributionGiftItemPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
 
     /**
-     * Count the number of DoctorDistributionGiftItems.
+     * Count the number of SampleDistributionGiftItems.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {DoctorDistributionGiftItemCountArgs} args - Arguments to filter DoctorDistributionGiftItems to count.
+     * @param {SampleDistributionGiftItemCountArgs} args - Arguments to filter SampleDistributionGiftItems to count.
      * @example
-     * // Count the number of DoctorDistributionGiftItems
-     * const count = await prisma.doctorDistributionGiftItem.count({
+     * // Count the number of SampleDistributionGiftItems
+     * const count = await prisma.sampleDistributionGiftItem.count({
      *   where: {
-     *     // ... the filter for the DoctorDistributionGiftItems we want to count
+     *     // ... the filter for the SampleDistributionGiftItems we want to count
      *   }
      * })
     **/
-    count<T extends DoctorDistributionGiftItemCountArgs>(
-      args?: Subset<T, DoctorDistributionGiftItemCountArgs>,
+    count<T extends SampleDistributionGiftItemCountArgs>(
+      args?: Subset<T, SampleDistributionGiftItemCountArgs>,
     ): Prisma.PrismaPromise<
       T extends $Utils.Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], DoctorDistributionGiftItemCountAggregateOutputType>
+          : GetScalarType<T['select'], SampleDistributionGiftItemCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a DoctorDistributionGiftItem.
+     * Allows you to perform aggregations operations on a SampleDistributionGiftItem.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {DoctorDistributionGiftItemAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {SampleDistributionGiftItemAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -52098,13 +52056,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends DoctorDistributionGiftItemAggregateArgs>(args: Subset<T, DoctorDistributionGiftItemAggregateArgs>): Prisma.PrismaPromise<GetDoctorDistributionGiftItemAggregateType<T>>
+    aggregate<T extends SampleDistributionGiftItemAggregateArgs>(args: Subset<T, SampleDistributionGiftItemAggregateArgs>): Prisma.PrismaPromise<GetSampleDistributionGiftItemAggregateType<T>>
 
     /**
-     * Group by DoctorDistributionGiftItem.
+     * Group by SampleDistributionGiftItem.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {DoctorDistributionGiftItemGroupByArgs} args - Group by arguments.
+     * @param {SampleDistributionGiftItemGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -52119,14 +52077,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends DoctorDistributionGiftItemGroupByArgs,
+      T extends SampleDistributionGiftItemGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: DoctorDistributionGiftItemGroupByArgs['orderBy'] }
-        : { orderBy?: DoctorDistributionGiftItemGroupByArgs['orderBy'] },
+        ? { orderBy: SampleDistributionGiftItemGroupByArgs['orderBy'] }
+        : { orderBy?: SampleDistributionGiftItemGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends MaybeTupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -52175,23 +52133,22 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, DoctorDistributionGiftItemGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetDoctorDistributionGiftItemGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, SampleDistributionGiftItemGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSampleDistributionGiftItemGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
   /**
-   * Fields of the DoctorDistributionGiftItem model
+   * Fields of the SampleDistributionGiftItem model
    */
-  readonly fields: DoctorDistributionGiftItemFieldRefs;
+  readonly fields: SampleDistributionGiftItemFieldRefs;
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for DoctorDistributionGiftItem.
+   * The delegate class that acts as a "Promise-like" for SampleDistributionGiftItem.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__DoctorDistributionGiftItemClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+  export interface Prisma__SampleDistributionGiftItemClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    doctorDistribution<T extends DoctorDistributionDefaultArgs<ExtArgs> = {}>(args?: Subset<T, DoctorDistributionDefaultArgs<ExtArgs>>): Prisma__DoctorDistributionClient<$Result.GetResult<Prisma.$DoctorDistributionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    gift<T extends GiftDefaultArgs<ExtArgs> = {}>(args?: Subset<T, GiftDefaultArgs<ExtArgs>>): Prisma__GiftClient<$Result.GetResult<Prisma.$GiftPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    sampleDistribution<T extends SampleDistributionDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SampleDistributionDefaultArgs<ExtArgs>>): Prisma__SampleDistributionClient<$Result.GetResult<Prisma.$SampleDistributionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     fromInventory<T extends UserGiftInventoryDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserGiftInventoryDefaultArgs<ExtArgs>>): Prisma__UserGiftInventoryClient<$Result.GetResult<Prisma.$UserGiftInventoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -52219,429 +52176,428 @@ export namespace Prisma {
 
 
   /**
-   * Fields of the DoctorDistributionGiftItem model
+   * Fields of the SampleDistributionGiftItem model
    */
-  interface DoctorDistributionGiftItemFieldRefs {
-    readonly id: FieldRef<"DoctorDistributionGiftItem", 'String'>
-    readonly doctorDistributionId: FieldRef<"DoctorDistributionGiftItem", 'String'>
-    readonly giftId: FieldRef<"DoctorDistributionGiftItem", 'String'>
-    readonly fromInventoryId: FieldRef<"DoctorDistributionGiftItem", 'String'>
-    readonly quantity: FieldRef<"DoctorDistributionGiftItem", 'Int'>
-    readonly unitCost: FieldRef<"DoctorDistributionGiftItem", 'Decimal'>
-    readonly totalCost: FieldRef<"DoctorDistributionGiftItem", 'Decimal'>
-    readonly createdAt: FieldRef<"DoctorDistributionGiftItem", 'DateTime'>
-    readonly updatedAt: FieldRef<"DoctorDistributionGiftItem", 'DateTime'>
+  interface SampleDistributionGiftItemFieldRefs {
+    readonly id: FieldRef<"SampleDistributionGiftItem", 'String'>
+    readonly sampleDistributionId: FieldRef<"SampleDistributionGiftItem", 'String'>
+    readonly fromInventoryId: FieldRef<"SampleDistributionGiftItem", 'String'>
+    readonly quantity: FieldRef<"SampleDistributionGiftItem", 'Int'>
+    readonly unitCost: FieldRef<"SampleDistributionGiftItem", 'Decimal'>
+    readonly totalCost: FieldRef<"SampleDistributionGiftItem", 'Decimal'>
+    readonly createdAt: FieldRef<"SampleDistributionGiftItem", 'DateTime'>
+    readonly updatedAt: FieldRef<"SampleDistributionGiftItem", 'DateTime'>
   }
     
 
   // Custom InputTypes
   /**
-   * DoctorDistributionGiftItem findUnique
+   * SampleDistributionGiftItem findUnique
    */
-  export type DoctorDistributionGiftItemFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SampleDistributionGiftItemFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the DoctorDistributionGiftItem
+     * Select specific fields to fetch from the SampleDistributionGiftItem
      */
-    select?: DoctorDistributionGiftItemSelect<ExtArgs> | null
+    select?: SampleDistributionGiftItemSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the DoctorDistributionGiftItem
+     * Omit specific fields from the SampleDistributionGiftItem
      */
-    omit?: DoctorDistributionGiftItemOmit<ExtArgs> | null
+    omit?: SampleDistributionGiftItemOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: DoctorDistributionGiftItemInclude<ExtArgs> | null
+    include?: SampleDistributionGiftItemInclude<ExtArgs> | null
     /**
-     * Filter, which DoctorDistributionGiftItem to fetch.
+     * Filter, which SampleDistributionGiftItem to fetch.
      */
-    where: DoctorDistributionGiftItemWhereUniqueInput
+    where: SampleDistributionGiftItemWhereUniqueInput
   }
 
   /**
-   * DoctorDistributionGiftItem findUniqueOrThrow
+   * SampleDistributionGiftItem findUniqueOrThrow
    */
-  export type DoctorDistributionGiftItemFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SampleDistributionGiftItemFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the DoctorDistributionGiftItem
+     * Select specific fields to fetch from the SampleDistributionGiftItem
      */
-    select?: DoctorDistributionGiftItemSelect<ExtArgs> | null
+    select?: SampleDistributionGiftItemSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the DoctorDistributionGiftItem
+     * Omit specific fields from the SampleDistributionGiftItem
      */
-    omit?: DoctorDistributionGiftItemOmit<ExtArgs> | null
+    omit?: SampleDistributionGiftItemOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: DoctorDistributionGiftItemInclude<ExtArgs> | null
+    include?: SampleDistributionGiftItemInclude<ExtArgs> | null
     /**
-     * Filter, which DoctorDistributionGiftItem to fetch.
+     * Filter, which SampleDistributionGiftItem to fetch.
      */
-    where: DoctorDistributionGiftItemWhereUniqueInput
+    where: SampleDistributionGiftItemWhereUniqueInput
   }
 
   /**
-   * DoctorDistributionGiftItem findFirst
+   * SampleDistributionGiftItem findFirst
    */
-  export type DoctorDistributionGiftItemFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SampleDistributionGiftItemFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the DoctorDistributionGiftItem
+     * Select specific fields to fetch from the SampleDistributionGiftItem
      */
-    select?: DoctorDistributionGiftItemSelect<ExtArgs> | null
+    select?: SampleDistributionGiftItemSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the DoctorDistributionGiftItem
+     * Omit specific fields from the SampleDistributionGiftItem
      */
-    omit?: DoctorDistributionGiftItemOmit<ExtArgs> | null
+    omit?: SampleDistributionGiftItemOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: DoctorDistributionGiftItemInclude<ExtArgs> | null
+    include?: SampleDistributionGiftItemInclude<ExtArgs> | null
     /**
-     * Filter, which DoctorDistributionGiftItem to fetch.
+     * Filter, which SampleDistributionGiftItem to fetch.
      */
-    where?: DoctorDistributionGiftItemWhereInput
+    where?: SampleDistributionGiftItemWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of DoctorDistributionGiftItems to fetch.
+     * Determine the order of SampleDistributionGiftItems to fetch.
      */
-    orderBy?: DoctorDistributionGiftItemOrderByWithRelationInput | DoctorDistributionGiftItemOrderByWithRelationInput[]
+    orderBy?: SampleDistributionGiftItemOrderByWithRelationInput | SampleDistributionGiftItemOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for DoctorDistributionGiftItems.
+     * Sets the position for searching for SampleDistributionGiftItems.
      */
-    cursor?: DoctorDistributionGiftItemWhereUniqueInput
+    cursor?: SampleDistributionGiftItemWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` DoctorDistributionGiftItems from the position of the cursor.
+     * Take `±n` SampleDistributionGiftItems from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` DoctorDistributionGiftItems.
+     * Skip the first `n` SampleDistributionGiftItems.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of DoctorDistributionGiftItems.
+     * Filter by unique combinations of SampleDistributionGiftItems.
      */
-    distinct?: DoctorDistributionGiftItemScalarFieldEnum | DoctorDistributionGiftItemScalarFieldEnum[]
+    distinct?: SampleDistributionGiftItemScalarFieldEnum | SampleDistributionGiftItemScalarFieldEnum[]
   }
 
   /**
-   * DoctorDistributionGiftItem findFirstOrThrow
+   * SampleDistributionGiftItem findFirstOrThrow
    */
-  export type DoctorDistributionGiftItemFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SampleDistributionGiftItemFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the DoctorDistributionGiftItem
+     * Select specific fields to fetch from the SampleDistributionGiftItem
      */
-    select?: DoctorDistributionGiftItemSelect<ExtArgs> | null
+    select?: SampleDistributionGiftItemSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the DoctorDistributionGiftItem
+     * Omit specific fields from the SampleDistributionGiftItem
      */
-    omit?: DoctorDistributionGiftItemOmit<ExtArgs> | null
+    omit?: SampleDistributionGiftItemOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: DoctorDistributionGiftItemInclude<ExtArgs> | null
+    include?: SampleDistributionGiftItemInclude<ExtArgs> | null
     /**
-     * Filter, which DoctorDistributionGiftItem to fetch.
+     * Filter, which SampleDistributionGiftItem to fetch.
      */
-    where?: DoctorDistributionGiftItemWhereInput
+    where?: SampleDistributionGiftItemWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of DoctorDistributionGiftItems to fetch.
+     * Determine the order of SampleDistributionGiftItems to fetch.
      */
-    orderBy?: DoctorDistributionGiftItemOrderByWithRelationInput | DoctorDistributionGiftItemOrderByWithRelationInput[]
+    orderBy?: SampleDistributionGiftItemOrderByWithRelationInput | SampleDistributionGiftItemOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for DoctorDistributionGiftItems.
+     * Sets the position for searching for SampleDistributionGiftItems.
      */
-    cursor?: DoctorDistributionGiftItemWhereUniqueInput
+    cursor?: SampleDistributionGiftItemWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` DoctorDistributionGiftItems from the position of the cursor.
+     * Take `±n` SampleDistributionGiftItems from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` DoctorDistributionGiftItems.
+     * Skip the first `n` SampleDistributionGiftItems.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of DoctorDistributionGiftItems.
+     * Filter by unique combinations of SampleDistributionGiftItems.
      */
-    distinct?: DoctorDistributionGiftItemScalarFieldEnum | DoctorDistributionGiftItemScalarFieldEnum[]
+    distinct?: SampleDistributionGiftItemScalarFieldEnum | SampleDistributionGiftItemScalarFieldEnum[]
   }
 
   /**
-   * DoctorDistributionGiftItem findMany
+   * SampleDistributionGiftItem findMany
    */
-  export type DoctorDistributionGiftItemFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SampleDistributionGiftItemFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the DoctorDistributionGiftItem
+     * Select specific fields to fetch from the SampleDistributionGiftItem
      */
-    select?: DoctorDistributionGiftItemSelect<ExtArgs> | null
+    select?: SampleDistributionGiftItemSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the DoctorDistributionGiftItem
+     * Omit specific fields from the SampleDistributionGiftItem
      */
-    omit?: DoctorDistributionGiftItemOmit<ExtArgs> | null
+    omit?: SampleDistributionGiftItemOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: DoctorDistributionGiftItemInclude<ExtArgs> | null
+    include?: SampleDistributionGiftItemInclude<ExtArgs> | null
     /**
-     * Filter, which DoctorDistributionGiftItems to fetch.
+     * Filter, which SampleDistributionGiftItems to fetch.
      */
-    where?: DoctorDistributionGiftItemWhereInput
+    where?: SampleDistributionGiftItemWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of DoctorDistributionGiftItems to fetch.
+     * Determine the order of SampleDistributionGiftItems to fetch.
      */
-    orderBy?: DoctorDistributionGiftItemOrderByWithRelationInput | DoctorDistributionGiftItemOrderByWithRelationInput[]
+    orderBy?: SampleDistributionGiftItemOrderByWithRelationInput | SampleDistributionGiftItemOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing DoctorDistributionGiftItems.
+     * Sets the position for listing SampleDistributionGiftItems.
      */
-    cursor?: DoctorDistributionGiftItemWhereUniqueInput
+    cursor?: SampleDistributionGiftItemWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` DoctorDistributionGiftItems from the position of the cursor.
+     * Take `±n` SampleDistributionGiftItems from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` DoctorDistributionGiftItems.
+     * Skip the first `n` SampleDistributionGiftItems.
      */
     skip?: number
-    distinct?: DoctorDistributionGiftItemScalarFieldEnum | DoctorDistributionGiftItemScalarFieldEnum[]
+    distinct?: SampleDistributionGiftItemScalarFieldEnum | SampleDistributionGiftItemScalarFieldEnum[]
   }
 
   /**
-   * DoctorDistributionGiftItem create
+   * SampleDistributionGiftItem create
    */
-  export type DoctorDistributionGiftItemCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SampleDistributionGiftItemCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the DoctorDistributionGiftItem
+     * Select specific fields to fetch from the SampleDistributionGiftItem
      */
-    select?: DoctorDistributionGiftItemSelect<ExtArgs> | null
+    select?: SampleDistributionGiftItemSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the DoctorDistributionGiftItem
+     * Omit specific fields from the SampleDistributionGiftItem
      */
-    omit?: DoctorDistributionGiftItemOmit<ExtArgs> | null
+    omit?: SampleDistributionGiftItemOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: DoctorDistributionGiftItemInclude<ExtArgs> | null
+    include?: SampleDistributionGiftItemInclude<ExtArgs> | null
     /**
-     * The data needed to create a DoctorDistributionGiftItem.
+     * The data needed to create a SampleDistributionGiftItem.
      */
-    data: XOR<DoctorDistributionGiftItemCreateInput, DoctorDistributionGiftItemUncheckedCreateInput>
+    data: XOR<SampleDistributionGiftItemCreateInput, SampleDistributionGiftItemUncheckedCreateInput>
   }
 
   /**
-   * DoctorDistributionGiftItem createMany
+   * SampleDistributionGiftItem createMany
    */
-  export type DoctorDistributionGiftItemCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SampleDistributionGiftItemCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to create many DoctorDistributionGiftItems.
+     * The data used to create many SampleDistributionGiftItems.
      */
-    data: DoctorDistributionGiftItemCreateManyInput | DoctorDistributionGiftItemCreateManyInput[]
+    data: SampleDistributionGiftItemCreateManyInput | SampleDistributionGiftItemCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * DoctorDistributionGiftItem createManyAndReturn
+   * SampleDistributionGiftItem createManyAndReturn
    */
-  export type DoctorDistributionGiftItemCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SampleDistributionGiftItemCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the DoctorDistributionGiftItem
+     * Select specific fields to fetch from the SampleDistributionGiftItem
      */
-    select?: DoctorDistributionGiftItemSelectCreateManyAndReturn<ExtArgs> | null
+    select?: SampleDistributionGiftItemSelectCreateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the DoctorDistributionGiftItem
+     * Omit specific fields from the SampleDistributionGiftItem
      */
-    omit?: DoctorDistributionGiftItemOmit<ExtArgs> | null
+    omit?: SampleDistributionGiftItemOmit<ExtArgs> | null
     /**
-     * The data used to create many DoctorDistributionGiftItems.
+     * The data used to create many SampleDistributionGiftItems.
      */
-    data: DoctorDistributionGiftItemCreateManyInput | DoctorDistributionGiftItemCreateManyInput[]
+    data: SampleDistributionGiftItemCreateManyInput | SampleDistributionGiftItemCreateManyInput[]
     skipDuplicates?: boolean
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: DoctorDistributionGiftItemIncludeCreateManyAndReturn<ExtArgs> | null
+    include?: SampleDistributionGiftItemIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * DoctorDistributionGiftItem update
+   * SampleDistributionGiftItem update
    */
-  export type DoctorDistributionGiftItemUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SampleDistributionGiftItemUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the DoctorDistributionGiftItem
+     * Select specific fields to fetch from the SampleDistributionGiftItem
      */
-    select?: DoctorDistributionGiftItemSelect<ExtArgs> | null
+    select?: SampleDistributionGiftItemSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the DoctorDistributionGiftItem
+     * Omit specific fields from the SampleDistributionGiftItem
      */
-    omit?: DoctorDistributionGiftItemOmit<ExtArgs> | null
+    omit?: SampleDistributionGiftItemOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: DoctorDistributionGiftItemInclude<ExtArgs> | null
+    include?: SampleDistributionGiftItemInclude<ExtArgs> | null
     /**
-     * The data needed to update a DoctorDistributionGiftItem.
+     * The data needed to update a SampleDistributionGiftItem.
      */
-    data: XOR<DoctorDistributionGiftItemUpdateInput, DoctorDistributionGiftItemUncheckedUpdateInput>
+    data: XOR<SampleDistributionGiftItemUpdateInput, SampleDistributionGiftItemUncheckedUpdateInput>
     /**
-     * Choose, which DoctorDistributionGiftItem to update.
+     * Choose, which SampleDistributionGiftItem to update.
      */
-    where: DoctorDistributionGiftItemWhereUniqueInput
+    where: SampleDistributionGiftItemWhereUniqueInput
   }
 
   /**
-   * DoctorDistributionGiftItem updateMany
+   * SampleDistributionGiftItem updateMany
    */
-  export type DoctorDistributionGiftItemUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SampleDistributionGiftItemUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to update DoctorDistributionGiftItems.
+     * The data used to update SampleDistributionGiftItems.
      */
-    data: XOR<DoctorDistributionGiftItemUpdateManyMutationInput, DoctorDistributionGiftItemUncheckedUpdateManyInput>
+    data: XOR<SampleDistributionGiftItemUpdateManyMutationInput, SampleDistributionGiftItemUncheckedUpdateManyInput>
     /**
-     * Filter which DoctorDistributionGiftItems to update
+     * Filter which SampleDistributionGiftItems to update
      */
-    where?: DoctorDistributionGiftItemWhereInput
+    where?: SampleDistributionGiftItemWhereInput
     /**
-     * Limit how many DoctorDistributionGiftItems to update.
+     * Limit how many SampleDistributionGiftItems to update.
      */
     limit?: number
   }
 
   /**
-   * DoctorDistributionGiftItem updateManyAndReturn
+   * SampleDistributionGiftItem updateManyAndReturn
    */
-  export type DoctorDistributionGiftItemUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SampleDistributionGiftItemUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the DoctorDistributionGiftItem
+     * Select specific fields to fetch from the SampleDistributionGiftItem
      */
-    select?: DoctorDistributionGiftItemSelectUpdateManyAndReturn<ExtArgs> | null
+    select?: SampleDistributionGiftItemSelectUpdateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the DoctorDistributionGiftItem
+     * Omit specific fields from the SampleDistributionGiftItem
      */
-    omit?: DoctorDistributionGiftItemOmit<ExtArgs> | null
+    omit?: SampleDistributionGiftItemOmit<ExtArgs> | null
     /**
-     * The data used to update DoctorDistributionGiftItems.
+     * The data used to update SampleDistributionGiftItems.
      */
-    data: XOR<DoctorDistributionGiftItemUpdateManyMutationInput, DoctorDistributionGiftItemUncheckedUpdateManyInput>
+    data: XOR<SampleDistributionGiftItemUpdateManyMutationInput, SampleDistributionGiftItemUncheckedUpdateManyInput>
     /**
-     * Filter which DoctorDistributionGiftItems to update
+     * Filter which SampleDistributionGiftItems to update
      */
-    where?: DoctorDistributionGiftItemWhereInput
+    where?: SampleDistributionGiftItemWhereInput
     /**
-     * Limit how many DoctorDistributionGiftItems to update.
+     * Limit how many SampleDistributionGiftItems to update.
      */
     limit?: number
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: DoctorDistributionGiftItemIncludeUpdateManyAndReturn<ExtArgs> | null
+    include?: SampleDistributionGiftItemIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * DoctorDistributionGiftItem upsert
+   * SampleDistributionGiftItem upsert
    */
-  export type DoctorDistributionGiftItemUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SampleDistributionGiftItemUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the DoctorDistributionGiftItem
+     * Select specific fields to fetch from the SampleDistributionGiftItem
      */
-    select?: DoctorDistributionGiftItemSelect<ExtArgs> | null
+    select?: SampleDistributionGiftItemSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the DoctorDistributionGiftItem
+     * Omit specific fields from the SampleDistributionGiftItem
      */
-    omit?: DoctorDistributionGiftItemOmit<ExtArgs> | null
+    omit?: SampleDistributionGiftItemOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: DoctorDistributionGiftItemInclude<ExtArgs> | null
+    include?: SampleDistributionGiftItemInclude<ExtArgs> | null
     /**
-     * The filter to search for the DoctorDistributionGiftItem to update in case it exists.
+     * The filter to search for the SampleDistributionGiftItem to update in case it exists.
      */
-    where: DoctorDistributionGiftItemWhereUniqueInput
+    where: SampleDistributionGiftItemWhereUniqueInput
     /**
-     * In case the DoctorDistributionGiftItem found by the `where` argument doesn't exist, create a new DoctorDistributionGiftItem with this data.
+     * In case the SampleDistributionGiftItem found by the `where` argument doesn't exist, create a new SampleDistributionGiftItem with this data.
      */
-    create: XOR<DoctorDistributionGiftItemCreateInput, DoctorDistributionGiftItemUncheckedCreateInput>
+    create: XOR<SampleDistributionGiftItemCreateInput, SampleDistributionGiftItemUncheckedCreateInput>
     /**
-     * In case the DoctorDistributionGiftItem was found with the provided `where` argument, update it with this data.
+     * In case the SampleDistributionGiftItem was found with the provided `where` argument, update it with this data.
      */
-    update: XOR<DoctorDistributionGiftItemUpdateInput, DoctorDistributionGiftItemUncheckedUpdateInput>
+    update: XOR<SampleDistributionGiftItemUpdateInput, SampleDistributionGiftItemUncheckedUpdateInput>
   }
 
   /**
-   * DoctorDistributionGiftItem delete
+   * SampleDistributionGiftItem delete
    */
-  export type DoctorDistributionGiftItemDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SampleDistributionGiftItemDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the DoctorDistributionGiftItem
+     * Select specific fields to fetch from the SampleDistributionGiftItem
      */
-    select?: DoctorDistributionGiftItemSelect<ExtArgs> | null
+    select?: SampleDistributionGiftItemSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the DoctorDistributionGiftItem
+     * Omit specific fields from the SampleDistributionGiftItem
      */
-    omit?: DoctorDistributionGiftItemOmit<ExtArgs> | null
+    omit?: SampleDistributionGiftItemOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: DoctorDistributionGiftItemInclude<ExtArgs> | null
+    include?: SampleDistributionGiftItemInclude<ExtArgs> | null
     /**
-     * Filter which DoctorDistributionGiftItem to delete.
+     * Filter which SampleDistributionGiftItem to delete.
      */
-    where: DoctorDistributionGiftItemWhereUniqueInput
+    where: SampleDistributionGiftItemWhereUniqueInput
   }
 
   /**
-   * DoctorDistributionGiftItem deleteMany
+   * SampleDistributionGiftItem deleteMany
    */
-  export type DoctorDistributionGiftItemDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SampleDistributionGiftItemDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which DoctorDistributionGiftItems to delete
+     * Filter which SampleDistributionGiftItems to delete
      */
-    where?: DoctorDistributionGiftItemWhereInput
+    where?: SampleDistributionGiftItemWhereInput
     /**
-     * Limit how many DoctorDistributionGiftItems to delete.
+     * Limit how many SampleDistributionGiftItems to delete.
      */
     limit?: number
   }
 
   /**
-   * DoctorDistributionGiftItem without action
+   * SampleDistributionGiftItem without action
    */
-  export type DoctorDistributionGiftItemDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SampleDistributionGiftItemDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the DoctorDistributionGiftItem
+     * Select specific fields to fetch from the SampleDistributionGiftItem
      */
-    select?: DoctorDistributionGiftItemSelect<ExtArgs> | null
+    select?: SampleDistributionGiftItemSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the DoctorDistributionGiftItem
+     * Omit specific fields from the SampleDistributionGiftItem
      */
-    omit?: DoctorDistributionGiftItemOmit<ExtArgs> | null
+    omit?: SampleDistributionGiftItemOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: DoctorDistributionGiftItemInclude<ExtArgs> | null
+    include?: SampleDistributionGiftItemInclude<ExtArgs> | null
   }
 
 
@@ -54376,22 +54332,22 @@ export namespace Prisma {
   export type UserGiftInventoryScalarFieldEnum = (typeof UserGiftInventoryScalarFieldEnum)[keyof typeof UserGiftInventoryScalarFieldEnum]
 
 
-  export const DoctorDistributionScalarFieldEnum: {
+  export const SampleDistributionScalarFieldEnum: {
     id: 'id',
-    doctorInteractionId: 'doctorInteractionId',
+    doctorId: 'doctorId',
+    chemistId: 'chemistId',
     employeeId: 'employeeId',
     distributedAt: 'distributedAt',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
 
-  export type DoctorDistributionScalarFieldEnum = (typeof DoctorDistributionScalarFieldEnum)[keyof typeof DoctorDistributionScalarFieldEnum]
+  export type SampleDistributionScalarFieldEnum = (typeof SampleDistributionScalarFieldEnum)[keyof typeof SampleDistributionScalarFieldEnum]
 
 
-  export const DoctorDistributionDrugItemScalarFieldEnum: {
+  export const SampleDistributionDrugItemScalarFieldEnum: {
     id: 'id',
-    doctorDistributionId: 'doctorDistributionId',
-    drugId: 'drugId',
+    sampleDistributionId: 'sampleDistributionId',
     fromInventoryId: 'fromInventoryId',
     quantity: 'quantity',
     unitCost: 'unitCost',
@@ -54400,13 +54356,12 @@ export namespace Prisma {
     updatedAt: 'updatedAt'
   };
 
-  export type DoctorDistributionDrugItemScalarFieldEnum = (typeof DoctorDistributionDrugItemScalarFieldEnum)[keyof typeof DoctorDistributionDrugItemScalarFieldEnum]
+  export type SampleDistributionDrugItemScalarFieldEnum = (typeof SampleDistributionDrugItemScalarFieldEnum)[keyof typeof SampleDistributionDrugItemScalarFieldEnum]
 
 
-  export const DoctorDistributionGiftItemScalarFieldEnum: {
+  export const SampleDistributionGiftItemScalarFieldEnum: {
     id: 'id',
-    doctorDistributionId: 'doctorDistributionId',
-    giftId: 'giftId',
+    sampleDistributionId: 'sampleDistributionId',
     fromInventoryId: 'fromInventoryId',
     quantity: 'quantity',
     unitCost: 'unitCost',
@@ -54415,7 +54370,7 @@ export namespace Prisma {
     updatedAt: 'updatedAt'
   };
 
-  export type DoctorDistributionGiftItemScalarFieldEnum = (typeof DoctorDistributionGiftItemScalarFieldEnum)[keyof typeof DoctorDistributionGiftItemScalarFieldEnum]
+  export type SampleDistributionGiftItemScalarFieldEnum = (typeof SampleDistributionGiftItemScalarFieldEnum)[keyof typeof SampleDistributionGiftItemScalarFieldEnum]
 
 
   export const AuditLogScalarFieldEnum: {
@@ -54783,7 +54738,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryListRelationFilter
     giftInventories?: UserGiftInventoryListRelationFilter
     giftsCreated?: GiftListRelationFilter
-    doctorDistributions?: DoctorDistributionListRelationFilter
+    sampleDistributions?: SampleDistributionListRelationFilter
     taskPlans?: TaskPlannerListRelationFilter
     doctorTasks?: DoctorTaskListRelationFilter
     chemistTasks?: ChemistTaskListRelationFilter
@@ -54835,7 +54790,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryOrderByRelationAggregateInput
     giftInventories?: UserGiftInventoryOrderByRelationAggregateInput
     giftsCreated?: GiftOrderByRelationAggregateInput
-    doctorDistributions?: DoctorDistributionOrderByRelationAggregateInput
+    sampleDistributions?: SampleDistributionOrderByRelationAggregateInput
     taskPlans?: TaskPlannerOrderByRelationAggregateInput
     doctorTasks?: DoctorTaskOrderByRelationAggregateInput
     chemistTasks?: ChemistTaskOrderByRelationAggregateInput
@@ -54890,7 +54845,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryListRelationFilter
     giftInventories?: UserGiftInventoryListRelationFilter
     giftsCreated?: GiftListRelationFilter
-    doctorDistributions?: DoctorDistributionListRelationFilter
+    sampleDistributions?: SampleDistributionListRelationFilter
     taskPlans?: TaskPlannerListRelationFilter
     doctorTasks?: DoctorTaskListRelationFilter
     chemistTasks?: ChemistTaskListRelationFilter
@@ -55534,6 +55489,7 @@ export namespace Prisma {
     notes?: DoctorNoteListRelationFilter
     chemistRelations?: DoctorChemistRelationListRelationFilter
     DoctorTask?: DoctorTaskListRelationFilter
+    sampleDistributions?: SampleDistributionListRelationFilter
   }
 
   export type DoctorOrderByWithRelationInput = {
@@ -55559,6 +55515,7 @@ export namespace Prisma {
     notes?: DoctorNoteOrderByRelationAggregateInput
     chemistRelations?: DoctorChemistRelationOrderByRelationAggregateInput
     DoctorTask?: DoctorTaskOrderByRelationAggregateInput
+    sampleDistributions?: SampleDistributionOrderByRelationAggregateInput
   }
 
   export type DoctorWhereUniqueInput = Prisma.AtLeast<{
@@ -55587,6 +55544,7 @@ export namespace Prisma {
     notes?: DoctorNoteListRelationFilter
     chemistRelations?: DoctorChemistRelationListRelationFilter
     DoctorTask?: DoctorTaskListRelationFilter
+    sampleDistributions?: SampleDistributionListRelationFilter
   }, "id">
 
   export type DoctorOrderByWithAggregationInput = {
@@ -55893,7 +55851,6 @@ export namespace Prisma {
     doctor?: XOR<DoctorScalarRelationFilter, DoctorWhereInput>
     employee?: XOR<EmployeeScalarRelationFilter, EmployeeWhereInput>
     hospital?: XOR<HospitalNullableScalarRelationFilter, HospitalWhereInput> | null
-    DoctorDistribution?: DoctorDistributionListRelationFilter
     DoctorTask?: XOR<DoctorTaskNullableScalarRelationFilter, DoctorTaskWhereInput> | null
   }
 
@@ -55914,7 +55871,6 @@ export namespace Prisma {
     doctor?: DoctorOrderByWithRelationInput
     employee?: EmployeeOrderByWithRelationInput
     hospital?: HospitalOrderByWithRelationInput
-    DoctorDistribution?: DoctorDistributionOrderByRelationAggregateInput
     DoctorTask?: DoctorTaskOrderByWithRelationInput
   }
 
@@ -55938,7 +55894,6 @@ export namespace Prisma {
     doctor?: XOR<DoctorScalarRelationFilter, DoctorWhereInput>
     employee?: XOR<EmployeeScalarRelationFilter, EmployeeWhereInput>
     hospital?: XOR<HospitalNullableScalarRelationFilter, HospitalWhereInput> | null
-    DoctorDistribution?: DoctorDistributionListRelationFilter
     DoctorTask?: XOR<DoctorTaskNullableScalarRelationFilter, DoctorTaskWhereInput> | null
   }, "id">
 
@@ -56010,7 +55965,6 @@ export namespace Prisma {
     orderItems?: OrderItemListRelationFilter
     rcpaData?: RcpaDrugDataListRelationFilter
     UserDrugInventory?: UserDrugInventoryListRelationFilter
-    DoctorDistributionDrugItem?: DoctorDistributionDrugItemListRelationFilter
   }
 
   export type DrugOrderByWithRelationInput = {
@@ -56038,7 +55992,6 @@ export namespace Prisma {
     orderItems?: OrderItemOrderByRelationAggregateInput
     rcpaData?: RcpaDrugDataOrderByRelationAggregateInput
     UserDrugInventory?: UserDrugInventoryOrderByRelationAggregateInput
-    DoctorDistributionDrugItem?: DoctorDistributionDrugItemOrderByRelationAggregateInput
   }
 
   export type DrugWhereUniqueInput = Prisma.AtLeast<{
@@ -56069,7 +56022,6 @@ export namespace Prisma {
     orderItems?: OrderItemListRelationFilter
     rcpaData?: RcpaDrugDataListRelationFilter
     UserDrugInventory?: UserDrugInventoryListRelationFilter
-    DoctorDistributionDrugItem?: DoctorDistributionDrugItemListRelationFilter
   }, "id">
 
   export type DrugOrderByWithAggregationInput = {
@@ -56160,6 +56112,7 @@ export namespace Prisma {
     orders?: OrderListRelationFilter
     rcpaReports?: RcpaReportListRelationFilter
     chemistTasks?: ChemistTaskListRelationFilter
+    sampleDistributions?: SampleDistributionListRelationFilter
   }
 
   export type ChemistOrderByWithRelationInput = {
@@ -56193,6 +56146,7 @@ export namespace Prisma {
     orders?: OrderOrderByRelationAggregateInput
     rcpaReports?: RcpaReportOrderByRelationAggregateInput
     chemistTasks?: ChemistTaskOrderByRelationAggregateInput
+    sampleDistributions?: SampleDistributionOrderByRelationAggregateInput
   }
 
   export type ChemistWhereUniqueInput = Prisma.AtLeast<{
@@ -56229,6 +56183,7 @@ export namespace Prisma {
     orders?: OrderListRelationFilter
     rcpaReports?: RcpaReportListRelationFilter
     chemistTasks?: ChemistTaskListRelationFilter
+    sampleDistributions?: SampleDistributionListRelationFilter
   }, "id">
 
   export type ChemistOrderByWithAggregationInput = {
@@ -57756,7 +57711,6 @@ export namespace Prisma {
     isActive?: BoolFilter<"Gift"> | boolean
     createdBy?: XOR<EmployeeScalarRelationFilter, EmployeeWhereInput>
     userGiftInventories?: UserGiftInventoryListRelationFilter
-    doctorDistributionGiftItems?: DoctorDistributionGiftItemListRelationFilter
   }
 
   export type GiftOrderByWithRelationInput = {
@@ -57772,7 +57726,6 @@ export namespace Prisma {
     isActive?: SortOrder
     createdBy?: EmployeeOrderByWithRelationInput
     userGiftInventories?: UserGiftInventoryOrderByRelationAggregateInput
-    doctorDistributionGiftItems?: DoctorDistributionGiftItemOrderByRelationAggregateInput
   }
 
   export type GiftWhereUniqueInput = Prisma.AtLeast<{
@@ -57791,7 +57744,6 @@ export namespace Prisma {
     isActive?: BoolFilter<"Gift"> | boolean
     createdBy?: XOR<EmployeeScalarRelationFilter, EmployeeWhereInput>
     userGiftInventories?: UserGiftInventoryListRelationFilter
-    doctorDistributionGiftItems?: DoctorDistributionGiftItemListRelationFilter
   }, "id">
 
   export type GiftOrderByWithAggregationInput = {
@@ -57841,7 +57793,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"UserDrugInventory"> | Date | string
     employee?: XOR<EmployeeScalarRelationFilter, EmployeeWhereInput>
     drug?: XOR<DrugScalarRelationFilter, DrugWhereInput>
-    doctorDistributionDrugItems?: DoctorDistributionDrugItemListRelationFilter
+    sampleDistributionDrugItems?: SampleDistributionDrugItemListRelationFilter
   }
 
   export type UserDrugInventoryOrderByWithRelationInput = {
@@ -57854,7 +57806,7 @@ export namespace Prisma {
     updatedAt?: SortOrder
     employee?: EmployeeOrderByWithRelationInput
     drug?: DrugOrderByWithRelationInput
-    doctorDistributionDrugItems?: DoctorDistributionDrugItemOrderByRelationAggregateInput
+    sampleDistributionDrugItems?: SampleDistributionDrugItemOrderByRelationAggregateInput
   }
 
   export type UserDrugInventoryWhereUniqueInput = Prisma.AtLeast<{
@@ -57870,7 +57822,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"UserDrugInventory"> | Date | string
     employee?: XOR<EmployeeScalarRelationFilter, EmployeeWhereInput>
     drug?: XOR<DrugScalarRelationFilter, DrugWhereInput>
-    doctorDistributionDrugItems?: DoctorDistributionDrugItemListRelationFilter
+    sampleDistributionDrugItems?: SampleDistributionDrugItemListRelationFilter
   }, "id">
 
   export type UserDrugInventoryOrderByWithAggregationInput = {
@@ -57914,7 +57866,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"UserGiftInventory"> | Date | string
     employee?: XOR<EmployeeScalarRelationFilter, EmployeeWhereInput>
     gift?: XOR<GiftScalarRelationFilter, GiftWhereInput>
-    doctorDistributionGiftItems?: DoctorDistributionGiftItemListRelationFilter
+    sampleDistributionGiftItems?: SampleDistributionGiftItemListRelationFilter
   }
 
   export type UserGiftInventoryOrderByWithRelationInput = {
@@ -57927,7 +57879,7 @@ export namespace Prisma {
     updatedAt?: SortOrder
     employee?: EmployeeOrderByWithRelationInput
     gift?: GiftOrderByWithRelationInput
-    doctorDistributionGiftItems?: DoctorDistributionGiftItemOrderByRelationAggregateInput
+    sampleDistributionGiftItems?: SampleDistributionGiftItemOrderByRelationAggregateInput
   }
 
   export type UserGiftInventoryWhereUniqueInput = Prisma.AtLeast<{
@@ -57943,7 +57895,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"UserGiftInventory"> | Date | string
     employee?: XOR<EmployeeScalarRelationFilter, EmployeeWhereInput>
     gift?: XOR<GiftScalarRelationFilter, GiftWhereInput>
-    doctorDistributionGiftItems?: DoctorDistributionGiftItemListRelationFilter
+    sampleDistributionGiftItems?: SampleDistributionGiftItemListRelationFilter
   }, "id">
 
   export type UserGiftInventoryOrderByWithAggregationInput = {
@@ -57974,239 +57926,231 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"UserGiftInventory"> | Date | string
   }
 
-  export type DoctorDistributionWhereInput = {
-    AND?: DoctorDistributionWhereInput | DoctorDistributionWhereInput[]
-    OR?: DoctorDistributionWhereInput[]
-    NOT?: DoctorDistributionWhereInput | DoctorDistributionWhereInput[]
-    id?: StringFilter<"DoctorDistribution"> | string
-    doctorInteractionId?: StringFilter<"DoctorDistribution"> | string
-    employeeId?: StringFilter<"DoctorDistribution"> | string
-    distributedAt?: DateTimeFilter<"DoctorDistribution"> | Date | string
-    createdAt?: DateTimeFilter<"DoctorDistribution"> | Date | string
-    updatedAt?: DateTimeFilter<"DoctorDistribution"> | Date | string
-    doctorInteraction?: XOR<DoctorInteractionScalarRelationFilter, DoctorInteractionWhereInput>
+  export type SampleDistributionWhereInput = {
+    AND?: SampleDistributionWhereInput | SampleDistributionWhereInput[]
+    OR?: SampleDistributionWhereInput[]
+    NOT?: SampleDistributionWhereInput | SampleDistributionWhereInput[]
+    id?: StringFilter<"SampleDistribution"> | string
+    doctorId?: StringNullableFilter<"SampleDistribution"> | string | null
+    chemistId?: StringNullableFilter<"SampleDistribution"> | string | null
+    employeeId?: StringFilter<"SampleDistribution"> | string
+    distributedAt?: DateTimeFilter<"SampleDistribution"> | Date | string
+    createdAt?: DateTimeFilter<"SampleDistribution"> | Date | string
+    updatedAt?: DateTimeFilter<"SampleDistribution"> | Date | string
+    doctor?: XOR<DoctorNullableScalarRelationFilter, DoctorWhereInput> | null
+    chemist?: XOR<ChemistNullableScalarRelationFilter, ChemistWhereInput> | null
     employee?: XOR<EmployeeScalarRelationFilter, EmployeeWhereInput>
-    drugItems?: DoctorDistributionDrugItemListRelationFilter
-    giftItems?: DoctorDistributionGiftItemListRelationFilter
+    drugItems?: SampleDistributionDrugItemListRelationFilter
+    giftItems?: SampleDistributionGiftItemListRelationFilter
   }
 
-  export type DoctorDistributionOrderByWithRelationInput = {
+  export type SampleDistributionOrderByWithRelationInput = {
     id?: SortOrder
-    doctorInteractionId?: SortOrder
+    doctorId?: SortOrderInput | SortOrder
+    chemistId?: SortOrderInput | SortOrder
     employeeId?: SortOrder
     distributedAt?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    doctorInteraction?: DoctorInteractionOrderByWithRelationInput
+    doctor?: DoctorOrderByWithRelationInput
+    chemist?: ChemistOrderByWithRelationInput
     employee?: EmployeeOrderByWithRelationInput
-    drugItems?: DoctorDistributionDrugItemOrderByRelationAggregateInput
-    giftItems?: DoctorDistributionGiftItemOrderByRelationAggregateInput
+    drugItems?: SampleDistributionDrugItemOrderByRelationAggregateInput
+    giftItems?: SampleDistributionGiftItemOrderByRelationAggregateInput
   }
 
-  export type DoctorDistributionWhereUniqueInput = Prisma.AtLeast<{
+  export type SampleDistributionWhereUniqueInput = Prisma.AtLeast<{
     id?: string
-    AND?: DoctorDistributionWhereInput | DoctorDistributionWhereInput[]
-    OR?: DoctorDistributionWhereInput[]
-    NOT?: DoctorDistributionWhereInput | DoctorDistributionWhereInput[]
-    doctorInteractionId?: StringFilter<"DoctorDistribution"> | string
-    employeeId?: StringFilter<"DoctorDistribution"> | string
-    distributedAt?: DateTimeFilter<"DoctorDistribution"> | Date | string
-    createdAt?: DateTimeFilter<"DoctorDistribution"> | Date | string
-    updatedAt?: DateTimeFilter<"DoctorDistribution"> | Date | string
-    doctorInteraction?: XOR<DoctorInteractionScalarRelationFilter, DoctorInteractionWhereInput>
+    AND?: SampleDistributionWhereInput | SampleDistributionWhereInput[]
+    OR?: SampleDistributionWhereInput[]
+    NOT?: SampleDistributionWhereInput | SampleDistributionWhereInput[]
+    doctorId?: StringNullableFilter<"SampleDistribution"> | string | null
+    chemistId?: StringNullableFilter<"SampleDistribution"> | string | null
+    employeeId?: StringFilter<"SampleDistribution"> | string
+    distributedAt?: DateTimeFilter<"SampleDistribution"> | Date | string
+    createdAt?: DateTimeFilter<"SampleDistribution"> | Date | string
+    updatedAt?: DateTimeFilter<"SampleDistribution"> | Date | string
+    doctor?: XOR<DoctorNullableScalarRelationFilter, DoctorWhereInput> | null
+    chemist?: XOR<ChemistNullableScalarRelationFilter, ChemistWhereInput> | null
     employee?: XOR<EmployeeScalarRelationFilter, EmployeeWhereInput>
-    drugItems?: DoctorDistributionDrugItemListRelationFilter
-    giftItems?: DoctorDistributionGiftItemListRelationFilter
+    drugItems?: SampleDistributionDrugItemListRelationFilter
+    giftItems?: SampleDistributionGiftItemListRelationFilter
   }, "id">
 
-  export type DoctorDistributionOrderByWithAggregationInput = {
+  export type SampleDistributionOrderByWithAggregationInput = {
     id?: SortOrder
-    doctorInteractionId?: SortOrder
+    doctorId?: SortOrderInput | SortOrder
+    chemistId?: SortOrderInput | SortOrder
     employeeId?: SortOrder
     distributedAt?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    _count?: DoctorDistributionCountOrderByAggregateInput
-    _max?: DoctorDistributionMaxOrderByAggregateInput
-    _min?: DoctorDistributionMinOrderByAggregateInput
+    _count?: SampleDistributionCountOrderByAggregateInput
+    _max?: SampleDistributionMaxOrderByAggregateInput
+    _min?: SampleDistributionMinOrderByAggregateInput
   }
 
-  export type DoctorDistributionScalarWhereWithAggregatesInput = {
-    AND?: DoctorDistributionScalarWhereWithAggregatesInput | DoctorDistributionScalarWhereWithAggregatesInput[]
-    OR?: DoctorDistributionScalarWhereWithAggregatesInput[]
-    NOT?: DoctorDistributionScalarWhereWithAggregatesInput | DoctorDistributionScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"DoctorDistribution"> | string
-    doctorInteractionId?: StringWithAggregatesFilter<"DoctorDistribution"> | string
-    employeeId?: StringWithAggregatesFilter<"DoctorDistribution"> | string
-    distributedAt?: DateTimeWithAggregatesFilter<"DoctorDistribution"> | Date | string
-    createdAt?: DateTimeWithAggregatesFilter<"DoctorDistribution"> | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter<"DoctorDistribution"> | Date | string
+  export type SampleDistributionScalarWhereWithAggregatesInput = {
+    AND?: SampleDistributionScalarWhereWithAggregatesInput | SampleDistributionScalarWhereWithAggregatesInput[]
+    OR?: SampleDistributionScalarWhereWithAggregatesInput[]
+    NOT?: SampleDistributionScalarWhereWithAggregatesInput | SampleDistributionScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"SampleDistribution"> | string
+    doctorId?: StringNullableWithAggregatesFilter<"SampleDistribution"> | string | null
+    chemistId?: StringNullableWithAggregatesFilter<"SampleDistribution"> | string | null
+    employeeId?: StringWithAggregatesFilter<"SampleDistribution"> | string
+    distributedAt?: DateTimeWithAggregatesFilter<"SampleDistribution"> | Date | string
+    createdAt?: DateTimeWithAggregatesFilter<"SampleDistribution"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"SampleDistribution"> | Date | string
   }
 
-  export type DoctorDistributionDrugItemWhereInput = {
-    AND?: DoctorDistributionDrugItemWhereInput | DoctorDistributionDrugItemWhereInput[]
-    OR?: DoctorDistributionDrugItemWhereInput[]
-    NOT?: DoctorDistributionDrugItemWhereInput | DoctorDistributionDrugItemWhereInput[]
-    id?: StringFilter<"DoctorDistributionDrugItem"> | string
-    doctorDistributionId?: StringFilter<"DoctorDistributionDrugItem"> | string
-    drugId?: StringFilter<"DoctorDistributionDrugItem"> | string
-    fromInventoryId?: StringFilter<"DoctorDistributionDrugItem"> | string
-    quantity?: IntFilter<"DoctorDistributionDrugItem"> | number
-    unitCost?: DecimalFilter<"DoctorDistributionDrugItem"> | Decimal | DecimalJsLike | number | string
-    totalCost?: DecimalFilter<"DoctorDistributionDrugItem"> | Decimal | DecimalJsLike | number | string
-    createdAt?: DateTimeFilter<"DoctorDistributionDrugItem"> | Date | string
-    updatedAt?: DateTimeFilter<"DoctorDistributionDrugItem"> | Date | string
-    doctorDistribution?: XOR<DoctorDistributionScalarRelationFilter, DoctorDistributionWhereInput>
-    drug?: XOR<DrugScalarRelationFilter, DrugWhereInput>
+  export type SampleDistributionDrugItemWhereInput = {
+    AND?: SampleDistributionDrugItemWhereInput | SampleDistributionDrugItemWhereInput[]
+    OR?: SampleDistributionDrugItemWhereInput[]
+    NOT?: SampleDistributionDrugItemWhereInput | SampleDistributionDrugItemWhereInput[]
+    id?: StringFilter<"SampleDistributionDrugItem"> | string
+    sampleDistributionId?: StringFilter<"SampleDistributionDrugItem"> | string
+    fromInventoryId?: StringFilter<"SampleDistributionDrugItem"> | string
+    quantity?: IntFilter<"SampleDistributionDrugItem"> | number
+    unitCost?: DecimalFilter<"SampleDistributionDrugItem"> | Decimal | DecimalJsLike | number | string
+    totalCost?: DecimalFilter<"SampleDistributionDrugItem"> | Decimal | DecimalJsLike | number | string
+    createdAt?: DateTimeFilter<"SampleDistributionDrugItem"> | Date | string
+    updatedAt?: DateTimeFilter<"SampleDistributionDrugItem"> | Date | string
+    sampleDistribution?: XOR<SampleDistributionScalarRelationFilter, SampleDistributionWhereInput>
     fromInventory?: XOR<UserDrugInventoryScalarRelationFilter, UserDrugInventoryWhereInput>
   }
 
-  export type DoctorDistributionDrugItemOrderByWithRelationInput = {
+  export type SampleDistributionDrugItemOrderByWithRelationInput = {
     id?: SortOrder
-    doctorDistributionId?: SortOrder
-    drugId?: SortOrder
+    sampleDistributionId?: SortOrder
     fromInventoryId?: SortOrder
     quantity?: SortOrder
     unitCost?: SortOrder
     totalCost?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    doctorDistribution?: DoctorDistributionOrderByWithRelationInput
-    drug?: DrugOrderByWithRelationInput
+    sampleDistribution?: SampleDistributionOrderByWithRelationInput
     fromInventory?: UserDrugInventoryOrderByWithRelationInput
   }
 
-  export type DoctorDistributionDrugItemWhereUniqueInput = Prisma.AtLeast<{
+  export type SampleDistributionDrugItemWhereUniqueInput = Prisma.AtLeast<{
     id?: string
-    AND?: DoctorDistributionDrugItemWhereInput | DoctorDistributionDrugItemWhereInput[]
-    OR?: DoctorDistributionDrugItemWhereInput[]
-    NOT?: DoctorDistributionDrugItemWhereInput | DoctorDistributionDrugItemWhereInput[]
-    doctorDistributionId?: StringFilter<"DoctorDistributionDrugItem"> | string
-    drugId?: StringFilter<"DoctorDistributionDrugItem"> | string
-    fromInventoryId?: StringFilter<"DoctorDistributionDrugItem"> | string
-    quantity?: IntFilter<"DoctorDistributionDrugItem"> | number
-    unitCost?: DecimalFilter<"DoctorDistributionDrugItem"> | Decimal | DecimalJsLike | number | string
-    totalCost?: DecimalFilter<"DoctorDistributionDrugItem"> | Decimal | DecimalJsLike | number | string
-    createdAt?: DateTimeFilter<"DoctorDistributionDrugItem"> | Date | string
-    updatedAt?: DateTimeFilter<"DoctorDistributionDrugItem"> | Date | string
-    doctorDistribution?: XOR<DoctorDistributionScalarRelationFilter, DoctorDistributionWhereInput>
-    drug?: XOR<DrugScalarRelationFilter, DrugWhereInput>
+    AND?: SampleDistributionDrugItemWhereInput | SampleDistributionDrugItemWhereInput[]
+    OR?: SampleDistributionDrugItemWhereInput[]
+    NOT?: SampleDistributionDrugItemWhereInput | SampleDistributionDrugItemWhereInput[]
+    sampleDistributionId?: StringFilter<"SampleDistributionDrugItem"> | string
+    fromInventoryId?: StringFilter<"SampleDistributionDrugItem"> | string
+    quantity?: IntFilter<"SampleDistributionDrugItem"> | number
+    unitCost?: DecimalFilter<"SampleDistributionDrugItem"> | Decimal | DecimalJsLike | number | string
+    totalCost?: DecimalFilter<"SampleDistributionDrugItem"> | Decimal | DecimalJsLike | number | string
+    createdAt?: DateTimeFilter<"SampleDistributionDrugItem"> | Date | string
+    updatedAt?: DateTimeFilter<"SampleDistributionDrugItem"> | Date | string
+    sampleDistribution?: XOR<SampleDistributionScalarRelationFilter, SampleDistributionWhereInput>
     fromInventory?: XOR<UserDrugInventoryScalarRelationFilter, UserDrugInventoryWhereInput>
   }, "id">
 
-  export type DoctorDistributionDrugItemOrderByWithAggregationInput = {
+  export type SampleDistributionDrugItemOrderByWithAggregationInput = {
     id?: SortOrder
-    doctorDistributionId?: SortOrder
-    drugId?: SortOrder
+    sampleDistributionId?: SortOrder
     fromInventoryId?: SortOrder
     quantity?: SortOrder
     unitCost?: SortOrder
     totalCost?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    _count?: DoctorDistributionDrugItemCountOrderByAggregateInput
-    _avg?: DoctorDistributionDrugItemAvgOrderByAggregateInput
-    _max?: DoctorDistributionDrugItemMaxOrderByAggregateInput
-    _min?: DoctorDistributionDrugItemMinOrderByAggregateInput
-    _sum?: DoctorDistributionDrugItemSumOrderByAggregateInput
+    _count?: SampleDistributionDrugItemCountOrderByAggregateInput
+    _avg?: SampleDistributionDrugItemAvgOrderByAggregateInput
+    _max?: SampleDistributionDrugItemMaxOrderByAggregateInput
+    _min?: SampleDistributionDrugItemMinOrderByAggregateInput
+    _sum?: SampleDistributionDrugItemSumOrderByAggregateInput
   }
 
-  export type DoctorDistributionDrugItemScalarWhereWithAggregatesInput = {
-    AND?: DoctorDistributionDrugItemScalarWhereWithAggregatesInput | DoctorDistributionDrugItemScalarWhereWithAggregatesInput[]
-    OR?: DoctorDistributionDrugItemScalarWhereWithAggregatesInput[]
-    NOT?: DoctorDistributionDrugItemScalarWhereWithAggregatesInput | DoctorDistributionDrugItemScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"DoctorDistributionDrugItem"> | string
-    doctorDistributionId?: StringWithAggregatesFilter<"DoctorDistributionDrugItem"> | string
-    drugId?: StringWithAggregatesFilter<"DoctorDistributionDrugItem"> | string
-    fromInventoryId?: StringWithAggregatesFilter<"DoctorDistributionDrugItem"> | string
-    quantity?: IntWithAggregatesFilter<"DoctorDistributionDrugItem"> | number
-    unitCost?: DecimalWithAggregatesFilter<"DoctorDistributionDrugItem"> | Decimal | DecimalJsLike | number | string
-    totalCost?: DecimalWithAggregatesFilter<"DoctorDistributionDrugItem"> | Decimal | DecimalJsLike | number | string
-    createdAt?: DateTimeWithAggregatesFilter<"DoctorDistributionDrugItem"> | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter<"DoctorDistributionDrugItem"> | Date | string
+  export type SampleDistributionDrugItemScalarWhereWithAggregatesInput = {
+    AND?: SampleDistributionDrugItemScalarWhereWithAggregatesInput | SampleDistributionDrugItemScalarWhereWithAggregatesInput[]
+    OR?: SampleDistributionDrugItemScalarWhereWithAggregatesInput[]
+    NOT?: SampleDistributionDrugItemScalarWhereWithAggregatesInput | SampleDistributionDrugItemScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"SampleDistributionDrugItem"> | string
+    sampleDistributionId?: StringWithAggregatesFilter<"SampleDistributionDrugItem"> | string
+    fromInventoryId?: StringWithAggregatesFilter<"SampleDistributionDrugItem"> | string
+    quantity?: IntWithAggregatesFilter<"SampleDistributionDrugItem"> | number
+    unitCost?: DecimalWithAggregatesFilter<"SampleDistributionDrugItem"> | Decimal | DecimalJsLike | number | string
+    totalCost?: DecimalWithAggregatesFilter<"SampleDistributionDrugItem"> | Decimal | DecimalJsLike | number | string
+    createdAt?: DateTimeWithAggregatesFilter<"SampleDistributionDrugItem"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"SampleDistributionDrugItem"> | Date | string
   }
 
-  export type DoctorDistributionGiftItemWhereInput = {
-    AND?: DoctorDistributionGiftItemWhereInput | DoctorDistributionGiftItemWhereInput[]
-    OR?: DoctorDistributionGiftItemWhereInput[]
-    NOT?: DoctorDistributionGiftItemWhereInput | DoctorDistributionGiftItemWhereInput[]
-    id?: StringFilter<"DoctorDistributionGiftItem"> | string
-    doctorDistributionId?: StringFilter<"DoctorDistributionGiftItem"> | string
-    giftId?: StringFilter<"DoctorDistributionGiftItem"> | string
-    fromInventoryId?: StringFilter<"DoctorDistributionGiftItem"> | string
-    quantity?: IntFilter<"DoctorDistributionGiftItem"> | number
-    unitCost?: DecimalFilter<"DoctorDistributionGiftItem"> | Decimal | DecimalJsLike | number | string
-    totalCost?: DecimalFilter<"DoctorDistributionGiftItem"> | Decimal | DecimalJsLike | number | string
-    createdAt?: DateTimeFilter<"DoctorDistributionGiftItem"> | Date | string
-    updatedAt?: DateTimeFilter<"DoctorDistributionGiftItem"> | Date | string
-    doctorDistribution?: XOR<DoctorDistributionScalarRelationFilter, DoctorDistributionWhereInput>
-    gift?: XOR<GiftScalarRelationFilter, GiftWhereInput>
+  export type SampleDistributionGiftItemWhereInput = {
+    AND?: SampleDistributionGiftItemWhereInput | SampleDistributionGiftItemWhereInput[]
+    OR?: SampleDistributionGiftItemWhereInput[]
+    NOT?: SampleDistributionGiftItemWhereInput | SampleDistributionGiftItemWhereInput[]
+    id?: StringFilter<"SampleDistributionGiftItem"> | string
+    sampleDistributionId?: StringFilter<"SampleDistributionGiftItem"> | string
+    fromInventoryId?: StringFilter<"SampleDistributionGiftItem"> | string
+    quantity?: IntFilter<"SampleDistributionGiftItem"> | number
+    unitCost?: DecimalFilter<"SampleDistributionGiftItem"> | Decimal | DecimalJsLike | number | string
+    totalCost?: DecimalFilter<"SampleDistributionGiftItem"> | Decimal | DecimalJsLike | number | string
+    createdAt?: DateTimeFilter<"SampleDistributionGiftItem"> | Date | string
+    updatedAt?: DateTimeFilter<"SampleDistributionGiftItem"> | Date | string
+    sampleDistribution?: XOR<SampleDistributionScalarRelationFilter, SampleDistributionWhereInput>
     fromInventory?: XOR<UserGiftInventoryScalarRelationFilter, UserGiftInventoryWhereInput>
   }
 
-  export type DoctorDistributionGiftItemOrderByWithRelationInput = {
+  export type SampleDistributionGiftItemOrderByWithRelationInput = {
     id?: SortOrder
-    doctorDistributionId?: SortOrder
-    giftId?: SortOrder
+    sampleDistributionId?: SortOrder
     fromInventoryId?: SortOrder
     quantity?: SortOrder
     unitCost?: SortOrder
     totalCost?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    doctorDistribution?: DoctorDistributionOrderByWithRelationInput
-    gift?: GiftOrderByWithRelationInput
+    sampleDistribution?: SampleDistributionOrderByWithRelationInput
     fromInventory?: UserGiftInventoryOrderByWithRelationInput
   }
 
-  export type DoctorDistributionGiftItemWhereUniqueInput = Prisma.AtLeast<{
+  export type SampleDistributionGiftItemWhereUniqueInput = Prisma.AtLeast<{
     id?: string
-    AND?: DoctorDistributionGiftItemWhereInput | DoctorDistributionGiftItemWhereInput[]
-    OR?: DoctorDistributionGiftItemWhereInput[]
-    NOT?: DoctorDistributionGiftItemWhereInput | DoctorDistributionGiftItemWhereInput[]
-    doctorDistributionId?: StringFilter<"DoctorDistributionGiftItem"> | string
-    giftId?: StringFilter<"DoctorDistributionGiftItem"> | string
-    fromInventoryId?: StringFilter<"DoctorDistributionGiftItem"> | string
-    quantity?: IntFilter<"DoctorDistributionGiftItem"> | number
-    unitCost?: DecimalFilter<"DoctorDistributionGiftItem"> | Decimal | DecimalJsLike | number | string
-    totalCost?: DecimalFilter<"DoctorDistributionGiftItem"> | Decimal | DecimalJsLike | number | string
-    createdAt?: DateTimeFilter<"DoctorDistributionGiftItem"> | Date | string
-    updatedAt?: DateTimeFilter<"DoctorDistributionGiftItem"> | Date | string
-    doctorDistribution?: XOR<DoctorDistributionScalarRelationFilter, DoctorDistributionWhereInput>
-    gift?: XOR<GiftScalarRelationFilter, GiftWhereInput>
+    AND?: SampleDistributionGiftItemWhereInput | SampleDistributionGiftItemWhereInput[]
+    OR?: SampleDistributionGiftItemWhereInput[]
+    NOT?: SampleDistributionGiftItemWhereInput | SampleDistributionGiftItemWhereInput[]
+    sampleDistributionId?: StringFilter<"SampleDistributionGiftItem"> | string
+    fromInventoryId?: StringFilter<"SampleDistributionGiftItem"> | string
+    quantity?: IntFilter<"SampleDistributionGiftItem"> | number
+    unitCost?: DecimalFilter<"SampleDistributionGiftItem"> | Decimal | DecimalJsLike | number | string
+    totalCost?: DecimalFilter<"SampleDistributionGiftItem"> | Decimal | DecimalJsLike | number | string
+    createdAt?: DateTimeFilter<"SampleDistributionGiftItem"> | Date | string
+    updatedAt?: DateTimeFilter<"SampleDistributionGiftItem"> | Date | string
+    sampleDistribution?: XOR<SampleDistributionScalarRelationFilter, SampleDistributionWhereInput>
     fromInventory?: XOR<UserGiftInventoryScalarRelationFilter, UserGiftInventoryWhereInput>
   }, "id">
 
-  export type DoctorDistributionGiftItemOrderByWithAggregationInput = {
+  export type SampleDistributionGiftItemOrderByWithAggregationInput = {
     id?: SortOrder
-    doctorDistributionId?: SortOrder
-    giftId?: SortOrder
+    sampleDistributionId?: SortOrder
     fromInventoryId?: SortOrder
     quantity?: SortOrder
     unitCost?: SortOrder
     totalCost?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    _count?: DoctorDistributionGiftItemCountOrderByAggregateInput
-    _avg?: DoctorDistributionGiftItemAvgOrderByAggregateInput
-    _max?: DoctorDistributionGiftItemMaxOrderByAggregateInput
-    _min?: DoctorDistributionGiftItemMinOrderByAggregateInput
-    _sum?: DoctorDistributionGiftItemSumOrderByAggregateInput
+    _count?: SampleDistributionGiftItemCountOrderByAggregateInput
+    _avg?: SampleDistributionGiftItemAvgOrderByAggregateInput
+    _max?: SampleDistributionGiftItemMaxOrderByAggregateInput
+    _min?: SampleDistributionGiftItemMinOrderByAggregateInput
+    _sum?: SampleDistributionGiftItemSumOrderByAggregateInput
   }
 
-  export type DoctorDistributionGiftItemScalarWhereWithAggregatesInput = {
-    AND?: DoctorDistributionGiftItemScalarWhereWithAggregatesInput | DoctorDistributionGiftItemScalarWhereWithAggregatesInput[]
-    OR?: DoctorDistributionGiftItemScalarWhereWithAggregatesInput[]
-    NOT?: DoctorDistributionGiftItemScalarWhereWithAggregatesInput | DoctorDistributionGiftItemScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"DoctorDistributionGiftItem"> | string
-    doctorDistributionId?: StringWithAggregatesFilter<"DoctorDistributionGiftItem"> | string
-    giftId?: StringWithAggregatesFilter<"DoctorDistributionGiftItem"> | string
-    fromInventoryId?: StringWithAggregatesFilter<"DoctorDistributionGiftItem"> | string
-    quantity?: IntWithAggregatesFilter<"DoctorDistributionGiftItem"> | number
-    unitCost?: DecimalWithAggregatesFilter<"DoctorDistributionGiftItem"> | Decimal | DecimalJsLike | number | string
-    totalCost?: DecimalWithAggregatesFilter<"DoctorDistributionGiftItem"> | Decimal | DecimalJsLike | number | string
-    createdAt?: DateTimeWithAggregatesFilter<"DoctorDistributionGiftItem"> | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter<"DoctorDistributionGiftItem"> | Date | string
+  export type SampleDistributionGiftItemScalarWhereWithAggregatesInput = {
+    AND?: SampleDistributionGiftItemScalarWhereWithAggregatesInput | SampleDistributionGiftItemScalarWhereWithAggregatesInput[]
+    OR?: SampleDistributionGiftItemScalarWhereWithAggregatesInput[]
+    NOT?: SampleDistributionGiftItemScalarWhereWithAggregatesInput | SampleDistributionGiftItemScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"SampleDistributionGiftItem"> | string
+    sampleDistributionId?: StringWithAggregatesFilter<"SampleDistributionGiftItem"> | string
+    fromInventoryId?: StringWithAggregatesFilter<"SampleDistributionGiftItem"> | string
+    quantity?: IntWithAggregatesFilter<"SampleDistributionGiftItem"> | number
+    unitCost?: DecimalWithAggregatesFilter<"SampleDistributionGiftItem"> | Decimal | DecimalJsLike | number | string
+    totalCost?: DecimalWithAggregatesFilter<"SampleDistributionGiftItem"> | Decimal | DecimalJsLike | number | string
+    createdAt?: DateTimeWithAggregatesFilter<"SampleDistributionGiftItem"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"SampleDistributionGiftItem"> | Date | string
   }
 
   export type AuditLogWhereInput = {
@@ -58332,7 +58276,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryCreateNestedManyWithoutEmployeeInput
     giftInventories?: UserGiftInventoryCreateNestedManyWithoutEmployeeInput
     giftsCreated?: GiftCreateNestedManyWithoutCreatedByInput
-    doctorDistributions?: DoctorDistributionCreateNestedManyWithoutEmployeeInput
+    sampleDistributions?: SampleDistributionCreateNestedManyWithoutEmployeeInput
     taskPlans?: TaskPlannerCreateNestedManyWithoutEmployeeInput
     doctorTasks?: DoctorTaskCreateNestedManyWithoutEmployeeInput
     chemistTasks?: ChemistTaskCreateNestedManyWithoutEmployeeInput
@@ -58382,7 +58326,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryUncheckedCreateNestedManyWithoutEmployeeInput
     giftInventories?: UserGiftInventoryUncheckedCreateNestedManyWithoutEmployeeInput
     giftsCreated?: GiftUncheckedCreateNestedManyWithoutCreatedByInput
-    doctorDistributions?: DoctorDistributionUncheckedCreateNestedManyWithoutEmployeeInput
+    sampleDistributions?: SampleDistributionUncheckedCreateNestedManyWithoutEmployeeInput
     taskPlans?: TaskPlannerUncheckedCreateNestedManyWithoutEmployeeInput
     doctorTasks?: DoctorTaskUncheckedCreateNestedManyWithoutEmployeeInput
     chemistTasks?: ChemistTaskUncheckedCreateNestedManyWithoutEmployeeInput
@@ -58432,7 +58376,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryUpdateManyWithoutEmployeeNestedInput
     giftInventories?: UserGiftInventoryUpdateManyWithoutEmployeeNestedInput
     giftsCreated?: GiftUpdateManyWithoutCreatedByNestedInput
-    doctorDistributions?: DoctorDistributionUpdateManyWithoutEmployeeNestedInput
+    sampleDistributions?: SampleDistributionUpdateManyWithoutEmployeeNestedInput
     taskPlans?: TaskPlannerUpdateManyWithoutEmployeeNestedInput
     doctorTasks?: DoctorTaskUpdateManyWithoutEmployeeNestedInput
     chemistTasks?: ChemistTaskUpdateManyWithoutEmployeeNestedInput
@@ -58482,7 +58426,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryUncheckedUpdateManyWithoutEmployeeNestedInput
     giftInventories?: UserGiftInventoryUncheckedUpdateManyWithoutEmployeeNestedInput
     giftsCreated?: GiftUncheckedUpdateManyWithoutCreatedByNestedInput
-    doctorDistributions?: DoctorDistributionUncheckedUpdateManyWithoutEmployeeNestedInput
+    sampleDistributions?: SampleDistributionUncheckedUpdateManyWithoutEmployeeNestedInput
     taskPlans?: TaskPlannerUncheckedUpdateManyWithoutEmployeeNestedInput
     doctorTasks?: DoctorTaskUncheckedUpdateManyWithoutEmployeeNestedInput
     chemistTasks?: ChemistTaskUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -59199,6 +59143,7 @@ export namespace Prisma {
     notes?: DoctorNoteCreateNestedManyWithoutDoctorInput
     chemistRelations?: DoctorChemistRelationCreateNestedManyWithoutDoctorInput
     DoctorTask?: DoctorTaskCreateNestedManyWithoutDoctorInput
+    sampleDistributions?: SampleDistributionCreateNestedManyWithoutDoctorInput
   }
 
   export type DoctorUncheckedCreateInput = {
@@ -59223,6 +59168,7 @@ export namespace Prisma {
     notes?: DoctorNoteUncheckedCreateNestedManyWithoutDoctorInput
     chemistRelations?: DoctorChemistRelationUncheckedCreateNestedManyWithoutDoctorInput
     DoctorTask?: DoctorTaskUncheckedCreateNestedManyWithoutDoctorInput
+    sampleDistributions?: SampleDistributionUncheckedCreateNestedManyWithoutDoctorInput
   }
 
   export type DoctorUpdateInput = {
@@ -59247,6 +59193,7 @@ export namespace Prisma {
     notes?: DoctorNoteUpdateManyWithoutDoctorNestedInput
     chemistRelations?: DoctorChemistRelationUpdateManyWithoutDoctorNestedInput
     DoctorTask?: DoctorTaskUpdateManyWithoutDoctorNestedInput
+    sampleDistributions?: SampleDistributionUpdateManyWithoutDoctorNestedInput
   }
 
   export type DoctorUncheckedUpdateInput = {
@@ -59271,6 +59218,7 @@ export namespace Prisma {
     notes?: DoctorNoteUncheckedUpdateManyWithoutDoctorNestedInput
     chemistRelations?: DoctorChemistRelationUncheckedUpdateManyWithoutDoctorNestedInput
     DoctorTask?: DoctorTaskUncheckedUpdateManyWithoutDoctorNestedInput
+    sampleDistributions?: SampleDistributionUncheckedUpdateManyWithoutDoctorNestedInput
   }
 
   export type DoctorCreateManyInput = {
@@ -59592,7 +59540,6 @@ export namespace Prisma {
     doctor: DoctorCreateNestedOneWithoutInteractionsInput
     employee: EmployeeCreateNestedOneWithoutDoctorInteractionsInput
     hospital?: HospitalCreateNestedOneWithoutDoctorInteractionsInput
-    DoctorDistribution?: DoctorDistributionCreateNestedManyWithoutDoctorInteractionInput
     DoctorTask?: DoctorTaskCreateNestedOneWithoutDoctorInteractionsInput
   }
 
@@ -59610,7 +59557,6 @@ export namespace Prisma {
     rating?: number | null
     createdAt?: Date | string
     doctorTaskId?: string | null
-    DoctorDistribution?: DoctorDistributionUncheckedCreateNestedManyWithoutDoctorInteractionInput
   }
 
   export type DoctorInteractionUpdateInput = {
@@ -59626,7 +59572,6 @@ export namespace Prisma {
     doctor?: DoctorUpdateOneRequiredWithoutInteractionsNestedInput
     employee?: EmployeeUpdateOneRequiredWithoutDoctorInteractionsNestedInput
     hospital?: HospitalUpdateOneWithoutDoctorInteractionsNestedInput
-    DoctorDistribution?: DoctorDistributionUpdateManyWithoutDoctorInteractionNestedInput
     DoctorTask?: DoctorTaskUpdateOneWithoutDoctorInteractionsNestedInput
   }
 
@@ -59644,7 +59589,6 @@ export namespace Prisma {
     rating?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     doctorTaskId?: NullableStringFieldUpdateOperationsInput | string | null
-    DoctorDistribution?: DoctorDistributionUncheckedUpdateManyWithoutDoctorInteractionNestedInput
   }
 
   export type DoctorInteractionCreateManyInput = {
@@ -59715,7 +59659,6 @@ export namespace Prisma {
     orderItems?: OrderItemCreateNestedManyWithoutDrugInput
     rcpaData?: RcpaDrugDataCreateNestedManyWithoutDrugInput
     UserDrugInventory?: UserDrugInventoryCreateNestedManyWithoutDrugInput
-    DoctorDistributionDrugItem?: DoctorDistributionDrugItemCreateNestedManyWithoutDrugInput
   }
 
   export type DrugUncheckedCreateInput = {
@@ -59742,7 +59685,6 @@ export namespace Prisma {
     orderItems?: OrderItemUncheckedCreateNestedManyWithoutDrugInput
     rcpaData?: RcpaDrugDataUncheckedCreateNestedManyWithoutDrugInput
     UserDrugInventory?: UserDrugInventoryUncheckedCreateNestedManyWithoutDrugInput
-    DoctorDistributionDrugItem?: DoctorDistributionDrugItemUncheckedCreateNestedManyWithoutDrugInput
   }
 
   export type DrugUpdateInput = {
@@ -59769,7 +59711,6 @@ export namespace Prisma {
     orderItems?: OrderItemUpdateManyWithoutDrugNestedInput
     rcpaData?: RcpaDrugDataUpdateManyWithoutDrugNestedInput
     UserDrugInventory?: UserDrugInventoryUpdateManyWithoutDrugNestedInput
-    DoctorDistributionDrugItem?: DoctorDistributionDrugItemUpdateManyWithoutDrugNestedInput
   }
 
   export type DrugUncheckedUpdateInput = {
@@ -59796,7 +59737,6 @@ export namespace Prisma {
     orderItems?: OrderItemUncheckedUpdateManyWithoutDrugNestedInput
     rcpaData?: RcpaDrugDataUncheckedUpdateManyWithoutDrugNestedInput
     UserDrugInventory?: UserDrugInventoryUncheckedUpdateManyWithoutDrugNestedInput
-    DoctorDistributionDrugItem?: DoctorDistributionDrugItemUncheckedUpdateManyWithoutDrugNestedInput
   }
 
   export type DrugCreateManyInput = {
@@ -59895,6 +59835,7 @@ export namespace Prisma {
     orders?: OrderCreateNestedManyWithoutChemistInput
     rcpaReports?: RcpaReportCreateNestedManyWithoutChemistInput
     chemistTasks?: ChemistTaskCreateNestedManyWithoutChemistInput
+    sampleDistributions?: SampleDistributionCreateNestedManyWithoutChemistInput
   }
 
   export type ChemistUncheckedCreateInput = {
@@ -59925,6 +59866,7 @@ export namespace Prisma {
     orders?: OrderUncheckedCreateNestedManyWithoutChemistInput
     rcpaReports?: RcpaReportUncheckedCreateNestedManyWithoutChemistInput
     chemistTasks?: ChemistTaskUncheckedCreateNestedManyWithoutChemistInput
+    sampleDistributions?: SampleDistributionUncheckedCreateNestedManyWithoutChemistInput
   }
 
   export type ChemistUpdateInput = {
@@ -59955,6 +59897,7 @@ export namespace Prisma {
     orders?: OrderUpdateManyWithoutChemistNestedInput
     rcpaReports?: RcpaReportUpdateManyWithoutChemistNestedInput
     chemistTasks?: ChemistTaskUpdateManyWithoutChemistNestedInput
+    sampleDistributions?: SampleDistributionUpdateManyWithoutChemistNestedInput
   }
 
   export type ChemistUncheckedUpdateInput = {
@@ -59985,6 +59928,7 @@ export namespace Prisma {
     orders?: OrderUncheckedUpdateManyWithoutChemistNestedInput
     rcpaReports?: RcpaReportUncheckedUpdateManyWithoutChemistNestedInput
     chemistTasks?: ChemistTaskUncheckedUpdateManyWithoutChemistNestedInput
+    sampleDistributions?: SampleDistributionUncheckedUpdateManyWithoutChemistNestedInput
   }
 
   export type ChemistCreateManyInput = {
@@ -61601,7 +61545,6 @@ export namespace Prisma {
     isActive?: boolean
     createdBy: EmployeeCreateNestedOneWithoutGiftsCreatedInput
     userGiftInventories?: UserGiftInventoryCreateNestedManyWithoutGiftInput
-    doctorDistributionGiftItems?: DoctorDistributionGiftItemCreateNestedManyWithoutGiftInput
   }
 
   export type GiftUncheckedCreateInput = {
@@ -61616,7 +61559,6 @@ export namespace Prisma {
     createdById: string
     isActive?: boolean
     userGiftInventories?: UserGiftInventoryUncheckedCreateNestedManyWithoutGiftInput
-    doctorDistributionGiftItems?: DoctorDistributionGiftItemUncheckedCreateNestedManyWithoutGiftInput
   }
 
   export type GiftUpdateInput = {
@@ -61631,7 +61573,6 @@ export namespace Prisma {
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdBy?: EmployeeUpdateOneRequiredWithoutGiftsCreatedNestedInput
     userGiftInventories?: UserGiftInventoryUpdateManyWithoutGiftNestedInput
-    doctorDistributionGiftItems?: DoctorDistributionGiftItemUpdateManyWithoutGiftNestedInput
   }
 
   export type GiftUncheckedUpdateInput = {
@@ -61646,7 +61587,6 @@ export namespace Prisma {
     createdById?: StringFieldUpdateOperationsInput | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
     userGiftInventories?: UserGiftInventoryUncheckedUpdateManyWithoutGiftNestedInput
-    doctorDistributionGiftItems?: DoctorDistributionGiftItemUncheckedUpdateManyWithoutGiftNestedInput
   }
 
   export type GiftCreateManyInput = {
@@ -61695,7 +61635,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     employee: EmployeeCreateNestedOneWithoutDrugInventoriesInput
     drug: DrugCreateNestedOneWithoutUserDrugInventoryInput
-    doctorDistributionDrugItems?: DoctorDistributionDrugItemCreateNestedManyWithoutFromInventoryInput
+    sampleDistributionDrugItems?: SampleDistributionDrugItemCreateNestedManyWithoutFromInventoryInput
   }
 
   export type UserDrugInventoryUncheckedCreateInput = {
@@ -61706,7 +61646,7 @@ export namespace Prisma {
     lastRestockedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    doctorDistributionDrugItems?: DoctorDistributionDrugItemUncheckedCreateNestedManyWithoutFromInventoryInput
+    sampleDistributionDrugItems?: SampleDistributionDrugItemUncheckedCreateNestedManyWithoutFromInventoryInput
   }
 
   export type UserDrugInventoryUpdateInput = {
@@ -61717,7 +61657,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     employee?: EmployeeUpdateOneRequiredWithoutDrugInventoriesNestedInput
     drug?: DrugUpdateOneRequiredWithoutUserDrugInventoryNestedInput
-    doctorDistributionDrugItems?: DoctorDistributionDrugItemUpdateManyWithoutFromInventoryNestedInput
+    sampleDistributionDrugItems?: SampleDistributionDrugItemUpdateManyWithoutFromInventoryNestedInput
   }
 
   export type UserDrugInventoryUncheckedUpdateInput = {
@@ -61728,7 +61668,7 @@ export namespace Prisma {
     lastRestockedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    doctorDistributionDrugItems?: DoctorDistributionDrugItemUncheckedUpdateManyWithoutFromInventoryNestedInput
+    sampleDistributionDrugItems?: SampleDistributionDrugItemUncheckedUpdateManyWithoutFromInventoryNestedInput
   }
 
   export type UserDrugInventoryCreateManyInput = {
@@ -61767,7 +61707,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     employee: EmployeeCreateNestedOneWithoutGiftInventoriesInput
     gift: GiftCreateNestedOneWithoutUserGiftInventoriesInput
-    doctorDistributionGiftItems?: DoctorDistributionGiftItemCreateNestedManyWithoutFromInventoryInput
+    sampleDistributionGiftItems?: SampleDistributionGiftItemCreateNestedManyWithoutFromInventoryInput
   }
 
   export type UserGiftInventoryUncheckedCreateInput = {
@@ -61778,7 +61718,7 @@ export namespace Prisma {
     lastRestockedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    doctorDistributionGiftItems?: DoctorDistributionGiftItemUncheckedCreateNestedManyWithoutFromInventoryInput
+    sampleDistributionGiftItems?: SampleDistributionGiftItemUncheckedCreateNestedManyWithoutFromInventoryInput
   }
 
   export type UserGiftInventoryUpdateInput = {
@@ -61789,7 +61729,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     employee?: EmployeeUpdateOneRequiredWithoutGiftInventoriesNestedInput
     gift?: GiftUpdateOneRequiredWithoutUserGiftInventoriesNestedInput
-    doctorDistributionGiftItems?: DoctorDistributionGiftItemUpdateManyWithoutFromInventoryNestedInput
+    sampleDistributionGiftItems?: SampleDistributionGiftItemUpdateManyWithoutFromInventoryNestedInput
   }
 
   export type UserGiftInventoryUncheckedUpdateInput = {
@@ -61800,7 +61740,7 @@ export namespace Prisma {
     lastRestockedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    doctorDistributionGiftItems?: DoctorDistributionGiftItemUncheckedUpdateManyWithoutFromInventoryNestedInput
+    sampleDistributionGiftItems?: SampleDistributionGiftItemUncheckedUpdateManyWithoutFromInventoryNestedInput
   }
 
   export type UserGiftInventoryCreateManyInput = {
@@ -61831,91 +61771,95 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type DoctorDistributionCreateInput = {
+  export type SampleDistributionCreateInput = {
     id?: string
     distributedAt: Date | string
     createdAt?: Date | string
     updatedAt?: Date | string
-    doctorInteraction: DoctorInteractionCreateNestedOneWithoutDoctorDistributionInput
-    employee: EmployeeCreateNestedOneWithoutDoctorDistributionsInput
-    drugItems?: DoctorDistributionDrugItemCreateNestedManyWithoutDoctorDistributionInput
-    giftItems?: DoctorDistributionGiftItemCreateNestedManyWithoutDoctorDistributionInput
+    doctor?: DoctorCreateNestedOneWithoutSampleDistributionsInput
+    chemist?: ChemistCreateNestedOneWithoutSampleDistributionsInput
+    employee: EmployeeCreateNestedOneWithoutSampleDistributionsInput
+    drugItems?: SampleDistributionDrugItemCreateNestedManyWithoutSampleDistributionInput
+    giftItems?: SampleDistributionGiftItemCreateNestedManyWithoutSampleDistributionInput
   }
 
-  export type DoctorDistributionUncheckedCreateInput = {
+  export type SampleDistributionUncheckedCreateInput = {
     id?: string
-    doctorInteractionId: string
+    doctorId?: string | null
+    chemistId?: string | null
     employeeId: string
     distributedAt: Date | string
     createdAt?: Date | string
     updatedAt?: Date | string
-    drugItems?: DoctorDistributionDrugItemUncheckedCreateNestedManyWithoutDoctorDistributionInput
-    giftItems?: DoctorDistributionGiftItemUncheckedCreateNestedManyWithoutDoctorDistributionInput
+    drugItems?: SampleDistributionDrugItemUncheckedCreateNestedManyWithoutSampleDistributionInput
+    giftItems?: SampleDistributionGiftItemUncheckedCreateNestedManyWithoutSampleDistributionInput
   }
 
-  export type DoctorDistributionUpdateInput = {
+  export type SampleDistributionUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     distributedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    doctorInteraction?: DoctorInteractionUpdateOneRequiredWithoutDoctorDistributionNestedInput
-    employee?: EmployeeUpdateOneRequiredWithoutDoctorDistributionsNestedInput
-    drugItems?: DoctorDistributionDrugItemUpdateManyWithoutDoctorDistributionNestedInput
-    giftItems?: DoctorDistributionGiftItemUpdateManyWithoutDoctorDistributionNestedInput
+    doctor?: DoctorUpdateOneWithoutSampleDistributionsNestedInput
+    chemist?: ChemistUpdateOneWithoutSampleDistributionsNestedInput
+    employee?: EmployeeUpdateOneRequiredWithoutSampleDistributionsNestedInput
+    drugItems?: SampleDistributionDrugItemUpdateManyWithoutSampleDistributionNestedInput
+    giftItems?: SampleDistributionGiftItemUpdateManyWithoutSampleDistributionNestedInput
   }
 
-  export type DoctorDistributionUncheckedUpdateInput = {
+  export type SampleDistributionUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    doctorInteractionId?: StringFieldUpdateOperationsInput | string
+    doctorId?: NullableStringFieldUpdateOperationsInput | string | null
+    chemistId?: NullableStringFieldUpdateOperationsInput | string | null
     employeeId?: StringFieldUpdateOperationsInput | string
     distributedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    drugItems?: DoctorDistributionDrugItemUncheckedUpdateManyWithoutDoctorDistributionNestedInput
-    giftItems?: DoctorDistributionGiftItemUncheckedUpdateManyWithoutDoctorDistributionNestedInput
+    drugItems?: SampleDistributionDrugItemUncheckedUpdateManyWithoutSampleDistributionNestedInput
+    giftItems?: SampleDistributionGiftItemUncheckedUpdateManyWithoutSampleDistributionNestedInput
   }
 
-  export type DoctorDistributionCreateManyInput = {
+  export type SampleDistributionCreateManyInput = {
     id?: string
-    doctorInteractionId: string
+    doctorId?: string | null
+    chemistId?: string | null
     employeeId: string
     distributedAt: Date | string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
-  export type DoctorDistributionUpdateManyMutationInput = {
+  export type SampleDistributionUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     distributedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type DoctorDistributionUncheckedUpdateManyInput = {
+  export type SampleDistributionUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    doctorInteractionId?: StringFieldUpdateOperationsInput | string
+    doctorId?: NullableStringFieldUpdateOperationsInput | string | null
+    chemistId?: NullableStringFieldUpdateOperationsInput | string | null
     employeeId?: StringFieldUpdateOperationsInput | string
     distributedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type DoctorDistributionDrugItemCreateInput = {
+  export type SampleDistributionDrugItemCreateInput = {
     id?: string
     quantity: number
     unitCost: Decimal | DecimalJsLike | number | string
     totalCost: Decimal | DecimalJsLike | number | string
     createdAt?: Date | string
     updatedAt?: Date | string
-    doctorDistribution: DoctorDistributionCreateNestedOneWithoutDrugItemsInput
-    drug: DrugCreateNestedOneWithoutDoctorDistributionDrugItemInput
-    fromInventory: UserDrugInventoryCreateNestedOneWithoutDoctorDistributionDrugItemsInput
+    sampleDistribution: SampleDistributionCreateNestedOneWithoutDrugItemsInput
+    fromInventory: UserDrugInventoryCreateNestedOneWithoutSampleDistributionDrugItemsInput
   }
 
-  export type DoctorDistributionDrugItemUncheckedCreateInput = {
+  export type SampleDistributionDrugItemUncheckedCreateInput = {
     id?: string
-    doctorDistributionId: string
-    drugId: string
+    sampleDistributionId: string
     fromInventoryId: string
     quantity: number
     unitCost: Decimal | DecimalJsLike | number | string
@@ -61924,22 +61868,20 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type DoctorDistributionDrugItemUpdateInput = {
+  export type SampleDistributionDrugItemUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     quantity?: IntFieldUpdateOperationsInput | number
     unitCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     totalCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    doctorDistribution?: DoctorDistributionUpdateOneRequiredWithoutDrugItemsNestedInput
-    drug?: DrugUpdateOneRequiredWithoutDoctorDistributionDrugItemNestedInput
-    fromInventory?: UserDrugInventoryUpdateOneRequiredWithoutDoctorDistributionDrugItemsNestedInput
+    sampleDistribution?: SampleDistributionUpdateOneRequiredWithoutDrugItemsNestedInput
+    fromInventory?: UserDrugInventoryUpdateOneRequiredWithoutSampleDistributionDrugItemsNestedInput
   }
 
-  export type DoctorDistributionDrugItemUncheckedUpdateInput = {
+  export type SampleDistributionDrugItemUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    doctorDistributionId?: StringFieldUpdateOperationsInput | string
-    drugId?: StringFieldUpdateOperationsInput | string
+    sampleDistributionId?: StringFieldUpdateOperationsInput | string
     fromInventoryId?: StringFieldUpdateOperationsInput | string
     quantity?: IntFieldUpdateOperationsInput | number
     unitCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
@@ -61948,10 +61890,9 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type DoctorDistributionDrugItemCreateManyInput = {
+  export type SampleDistributionDrugItemCreateManyInput = {
     id?: string
-    doctorDistributionId: string
-    drugId: string
+    sampleDistributionId: string
     fromInventoryId: string
     quantity: number
     unitCost: Decimal | DecimalJsLike | number | string
@@ -61960,7 +61901,7 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type DoctorDistributionDrugItemUpdateManyMutationInput = {
+  export type SampleDistributionDrugItemUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     quantity?: IntFieldUpdateOperationsInput | number
     unitCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
@@ -61969,10 +61910,9 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type DoctorDistributionDrugItemUncheckedUpdateManyInput = {
+  export type SampleDistributionDrugItemUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    doctorDistributionId?: StringFieldUpdateOperationsInput | string
-    drugId?: StringFieldUpdateOperationsInput | string
+    sampleDistributionId?: StringFieldUpdateOperationsInput | string
     fromInventoryId?: StringFieldUpdateOperationsInput | string
     quantity?: IntFieldUpdateOperationsInput | number
     unitCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
@@ -61981,22 +61921,20 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type DoctorDistributionGiftItemCreateInput = {
+  export type SampleDistributionGiftItemCreateInput = {
     id?: string
     quantity: number
     unitCost: Decimal | DecimalJsLike | number | string
     totalCost: Decimal | DecimalJsLike | number | string
     createdAt?: Date | string
     updatedAt?: Date | string
-    doctorDistribution: DoctorDistributionCreateNestedOneWithoutGiftItemsInput
-    gift: GiftCreateNestedOneWithoutDoctorDistributionGiftItemsInput
-    fromInventory: UserGiftInventoryCreateNestedOneWithoutDoctorDistributionGiftItemsInput
+    sampleDistribution: SampleDistributionCreateNestedOneWithoutGiftItemsInput
+    fromInventory: UserGiftInventoryCreateNestedOneWithoutSampleDistributionGiftItemsInput
   }
 
-  export type DoctorDistributionGiftItemUncheckedCreateInput = {
+  export type SampleDistributionGiftItemUncheckedCreateInput = {
     id?: string
-    doctorDistributionId: string
-    giftId: string
+    sampleDistributionId: string
     fromInventoryId: string
     quantity: number
     unitCost: Decimal | DecimalJsLike | number | string
@@ -62005,22 +61943,20 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type DoctorDistributionGiftItemUpdateInput = {
+  export type SampleDistributionGiftItemUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     quantity?: IntFieldUpdateOperationsInput | number
     unitCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     totalCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    doctorDistribution?: DoctorDistributionUpdateOneRequiredWithoutGiftItemsNestedInput
-    gift?: GiftUpdateOneRequiredWithoutDoctorDistributionGiftItemsNestedInput
-    fromInventory?: UserGiftInventoryUpdateOneRequiredWithoutDoctorDistributionGiftItemsNestedInput
+    sampleDistribution?: SampleDistributionUpdateOneRequiredWithoutGiftItemsNestedInput
+    fromInventory?: UserGiftInventoryUpdateOneRequiredWithoutSampleDistributionGiftItemsNestedInput
   }
 
-  export type DoctorDistributionGiftItemUncheckedUpdateInput = {
+  export type SampleDistributionGiftItemUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    doctorDistributionId?: StringFieldUpdateOperationsInput | string
-    giftId?: StringFieldUpdateOperationsInput | string
+    sampleDistributionId?: StringFieldUpdateOperationsInput | string
     fromInventoryId?: StringFieldUpdateOperationsInput | string
     quantity?: IntFieldUpdateOperationsInput | number
     unitCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
@@ -62029,10 +61965,9 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type DoctorDistributionGiftItemCreateManyInput = {
+  export type SampleDistributionGiftItemCreateManyInput = {
     id?: string
-    doctorDistributionId: string
-    giftId: string
+    sampleDistributionId: string
     fromInventoryId: string
     quantity: number
     unitCost: Decimal | DecimalJsLike | number | string
@@ -62041,7 +61976,7 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type DoctorDistributionGiftItemUpdateManyMutationInput = {
+  export type SampleDistributionGiftItemUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     quantity?: IntFieldUpdateOperationsInput | number
     unitCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
@@ -62050,10 +61985,9 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type DoctorDistributionGiftItemUncheckedUpdateManyInput = {
+  export type SampleDistributionGiftItemUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    doctorDistributionId?: StringFieldUpdateOperationsInput | string
-    giftId?: StringFieldUpdateOperationsInput | string
+    sampleDistributionId?: StringFieldUpdateOperationsInput | string
     fromInventoryId?: StringFieldUpdateOperationsInput | string
     quantity?: IntFieldUpdateOperationsInput | number
     unitCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
@@ -62357,10 +62291,10 @@ export namespace Prisma {
     none?: GiftWhereInput
   }
 
-  export type DoctorDistributionListRelationFilter = {
-    every?: DoctorDistributionWhereInput
-    some?: DoctorDistributionWhereInput
-    none?: DoctorDistributionWhereInput
+  export type SampleDistributionListRelationFilter = {
+    every?: SampleDistributionWhereInput
+    some?: SampleDistributionWhereInput
+    none?: SampleDistributionWhereInput
   }
 
   export type TaskPlannerListRelationFilter = {
@@ -62472,7 +62406,7 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
-  export type DoctorDistributionOrderByRelationAggregateInput = {
+  export type SampleDistributionOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -63382,21 +63316,11 @@ export namespace Prisma {
     none?: RcpaDrugDataWhereInput
   }
 
-  export type DoctorDistributionDrugItemListRelationFilter = {
-    every?: DoctorDistributionDrugItemWhereInput
-    some?: DoctorDistributionDrugItemWhereInput
-    none?: DoctorDistributionDrugItemWhereInput
-  }
-
   export type OrderItemOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
   export type RcpaDrugDataOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type DoctorDistributionDrugItemOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -64571,16 +64495,6 @@ export namespace Prisma {
     _max?: NestedEnumExpenseClaimStatusFilter<$PrismaModel>
   }
 
-  export type DoctorDistributionGiftItemListRelationFilter = {
-    every?: DoctorDistributionGiftItemWhereInput
-    some?: DoctorDistributionGiftItemWhereInput
-    none?: DoctorDistributionGiftItemWhereInput
-  }
-
-  export type DoctorDistributionGiftItemOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
   export type GiftCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
@@ -64622,6 +64536,16 @@ export namespace Prisma {
 
   export type GiftSumOrderByAggregateInput = {
     unitCost?: SortOrder
+  }
+
+  export type SampleDistributionDrugItemListRelationFilter = {
+    every?: SampleDistributionDrugItemWhereInput
+    some?: SampleDistributionDrugItemWhereInput
+    none?: SampleDistributionDrugItemWhereInput
+  }
+
+  export type SampleDistributionDrugItemOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
   export type UserDrugInventoryCountOrderByAggregateInput = {
@@ -64667,6 +64591,16 @@ export namespace Prisma {
     isNot?: GiftWhereInput
   }
 
+  export type SampleDistributionGiftItemListRelationFilter = {
+    every?: SampleDistributionGiftItemWhereInput
+    some?: SampleDistributionGiftItemWhereInput
+    none?: SampleDistributionGiftItemWhereInput
+  }
+
+  export type SampleDistributionGiftItemOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type UserGiftInventoryCountOrderByAggregateInput = {
     id?: SortOrder
     employeeId?: SortOrder
@@ -64705,41 +64639,44 @@ export namespace Prisma {
     quantity?: SortOrder
   }
 
-  export type DoctorInteractionScalarRelationFilter = {
-    is?: DoctorInteractionWhereInput
-    isNot?: DoctorInteractionWhereInput
+  export type DoctorNullableScalarRelationFilter = {
+    is?: DoctorWhereInput | null
+    isNot?: DoctorWhereInput | null
   }
 
-  export type DoctorDistributionCountOrderByAggregateInput = {
+  export type SampleDistributionCountOrderByAggregateInput = {
     id?: SortOrder
-    doctorInteractionId?: SortOrder
+    doctorId?: SortOrder
+    chemistId?: SortOrder
     employeeId?: SortOrder
     distributedAt?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
-  export type DoctorDistributionMaxOrderByAggregateInput = {
+  export type SampleDistributionMaxOrderByAggregateInput = {
     id?: SortOrder
-    doctorInteractionId?: SortOrder
+    doctorId?: SortOrder
+    chemistId?: SortOrder
     employeeId?: SortOrder
     distributedAt?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
-  export type DoctorDistributionMinOrderByAggregateInput = {
+  export type SampleDistributionMinOrderByAggregateInput = {
     id?: SortOrder
-    doctorInteractionId?: SortOrder
+    doctorId?: SortOrder
+    chemistId?: SortOrder
     employeeId?: SortOrder
     distributedAt?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
-  export type DoctorDistributionScalarRelationFilter = {
-    is?: DoctorDistributionWhereInput
-    isNot?: DoctorDistributionWhereInput
+  export type SampleDistributionScalarRelationFilter = {
+    is?: SampleDistributionWhereInput
+    isNot?: SampleDistributionWhereInput
   }
 
   export type UserDrugInventoryScalarRelationFilter = {
@@ -64747,10 +64684,9 @@ export namespace Prisma {
     isNot?: UserDrugInventoryWhereInput
   }
 
-  export type DoctorDistributionDrugItemCountOrderByAggregateInput = {
+  export type SampleDistributionDrugItemCountOrderByAggregateInput = {
     id?: SortOrder
-    doctorDistributionId?: SortOrder
-    drugId?: SortOrder
+    sampleDistributionId?: SortOrder
     fromInventoryId?: SortOrder
     quantity?: SortOrder
     unitCost?: SortOrder
@@ -64759,16 +64695,15 @@ export namespace Prisma {
     updatedAt?: SortOrder
   }
 
-  export type DoctorDistributionDrugItemAvgOrderByAggregateInput = {
+  export type SampleDistributionDrugItemAvgOrderByAggregateInput = {
     quantity?: SortOrder
     unitCost?: SortOrder
     totalCost?: SortOrder
   }
 
-  export type DoctorDistributionDrugItemMaxOrderByAggregateInput = {
+  export type SampleDistributionDrugItemMaxOrderByAggregateInput = {
     id?: SortOrder
-    doctorDistributionId?: SortOrder
-    drugId?: SortOrder
+    sampleDistributionId?: SortOrder
     fromInventoryId?: SortOrder
     quantity?: SortOrder
     unitCost?: SortOrder
@@ -64777,10 +64712,9 @@ export namespace Prisma {
     updatedAt?: SortOrder
   }
 
-  export type DoctorDistributionDrugItemMinOrderByAggregateInput = {
+  export type SampleDistributionDrugItemMinOrderByAggregateInput = {
     id?: SortOrder
-    doctorDistributionId?: SortOrder
-    drugId?: SortOrder
+    sampleDistributionId?: SortOrder
     fromInventoryId?: SortOrder
     quantity?: SortOrder
     unitCost?: SortOrder
@@ -64789,7 +64723,7 @@ export namespace Prisma {
     updatedAt?: SortOrder
   }
 
-  export type DoctorDistributionDrugItemSumOrderByAggregateInput = {
+  export type SampleDistributionDrugItemSumOrderByAggregateInput = {
     quantity?: SortOrder
     unitCost?: SortOrder
     totalCost?: SortOrder
@@ -64800,10 +64734,9 @@ export namespace Prisma {
     isNot?: UserGiftInventoryWhereInput
   }
 
-  export type DoctorDistributionGiftItemCountOrderByAggregateInput = {
+  export type SampleDistributionGiftItemCountOrderByAggregateInput = {
     id?: SortOrder
-    doctorDistributionId?: SortOrder
-    giftId?: SortOrder
+    sampleDistributionId?: SortOrder
     fromInventoryId?: SortOrder
     quantity?: SortOrder
     unitCost?: SortOrder
@@ -64812,16 +64745,15 @@ export namespace Prisma {
     updatedAt?: SortOrder
   }
 
-  export type DoctorDistributionGiftItemAvgOrderByAggregateInput = {
+  export type SampleDistributionGiftItemAvgOrderByAggregateInput = {
     quantity?: SortOrder
     unitCost?: SortOrder
     totalCost?: SortOrder
   }
 
-  export type DoctorDistributionGiftItemMaxOrderByAggregateInput = {
+  export type SampleDistributionGiftItemMaxOrderByAggregateInput = {
     id?: SortOrder
-    doctorDistributionId?: SortOrder
-    giftId?: SortOrder
+    sampleDistributionId?: SortOrder
     fromInventoryId?: SortOrder
     quantity?: SortOrder
     unitCost?: SortOrder
@@ -64830,10 +64762,9 @@ export namespace Prisma {
     updatedAt?: SortOrder
   }
 
-  export type DoctorDistributionGiftItemMinOrderByAggregateInput = {
+  export type SampleDistributionGiftItemMinOrderByAggregateInput = {
     id?: SortOrder
-    doctorDistributionId?: SortOrder
-    giftId?: SortOrder
+    sampleDistributionId?: SortOrder
     fromInventoryId?: SortOrder
     quantity?: SortOrder
     unitCost?: SortOrder
@@ -64842,7 +64773,7 @@ export namespace Prisma {
     updatedAt?: SortOrder
   }
 
-  export type DoctorDistributionGiftItemSumOrderByAggregateInput = {
+  export type SampleDistributionGiftItemSumOrderByAggregateInput = {
     quantity?: SortOrder
     unitCost?: SortOrder
     totalCost?: SortOrder
@@ -65048,11 +64979,11 @@ export namespace Prisma {
     connect?: GiftWhereUniqueInput | GiftWhereUniqueInput[]
   }
 
-  export type DoctorDistributionCreateNestedManyWithoutEmployeeInput = {
-    create?: XOR<DoctorDistributionCreateWithoutEmployeeInput, DoctorDistributionUncheckedCreateWithoutEmployeeInput> | DoctorDistributionCreateWithoutEmployeeInput[] | DoctorDistributionUncheckedCreateWithoutEmployeeInput[]
-    connectOrCreate?: DoctorDistributionCreateOrConnectWithoutEmployeeInput | DoctorDistributionCreateOrConnectWithoutEmployeeInput[]
-    createMany?: DoctorDistributionCreateManyEmployeeInputEnvelope
-    connect?: DoctorDistributionWhereUniqueInput | DoctorDistributionWhereUniqueInput[]
+  export type SampleDistributionCreateNestedManyWithoutEmployeeInput = {
+    create?: XOR<SampleDistributionCreateWithoutEmployeeInput, SampleDistributionUncheckedCreateWithoutEmployeeInput> | SampleDistributionCreateWithoutEmployeeInput[] | SampleDistributionUncheckedCreateWithoutEmployeeInput[]
+    connectOrCreate?: SampleDistributionCreateOrConnectWithoutEmployeeInput | SampleDistributionCreateOrConnectWithoutEmployeeInput[]
+    createMany?: SampleDistributionCreateManyEmployeeInputEnvelope
+    connect?: SampleDistributionWhereUniqueInput | SampleDistributionWhereUniqueInput[]
   }
 
   export type TaskPlannerCreateNestedManyWithoutEmployeeInput = {
@@ -65236,11 +65167,11 @@ export namespace Prisma {
     connect?: GiftWhereUniqueInput | GiftWhereUniqueInput[]
   }
 
-  export type DoctorDistributionUncheckedCreateNestedManyWithoutEmployeeInput = {
-    create?: XOR<DoctorDistributionCreateWithoutEmployeeInput, DoctorDistributionUncheckedCreateWithoutEmployeeInput> | DoctorDistributionCreateWithoutEmployeeInput[] | DoctorDistributionUncheckedCreateWithoutEmployeeInput[]
-    connectOrCreate?: DoctorDistributionCreateOrConnectWithoutEmployeeInput | DoctorDistributionCreateOrConnectWithoutEmployeeInput[]
-    createMany?: DoctorDistributionCreateManyEmployeeInputEnvelope
-    connect?: DoctorDistributionWhereUniqueInput | DoctorDistributionWhereUniqueInput[]
+  export type SampleDistributionUncheckedCreateNestedManyWithoutEmployeeInput = {
+    create?: XOR<SampleDistributionCreateWithoutEmployeeInput, SampleDistributionUncheckedCreateWithoutEmployeeInput> | SampleDistributionCreateWithoutEmployeeInput[] | SampleDistributionUncheckedCreateWithoutEmployeeInput[]
+    connectOrCreate?: SampleDistributionCreateOrConnectWithoutEmployeeInput | SampleDistributionCreateOrConnectWithoutEmployeeInput[]
+    createMany?: SampleDistributionCreateManyEmployeeInputEnvelope
+    connect?: SampleDistributionWhereUniqueInput | SampleDistributionWhereUniqueInput[]
   }
 
   export type TaskPlannerUncheckedCreateNestedManyWithoutEmployeeInput = {
@@ -65627,18 +65558,18 @@ export namespace Prisma {
     deleteMany?: GiftScalarWhereInput | GiftScalarWhereInput[]
   }
 
-  export type DoctorDistributionUpdateManyWithoutEmployeeNestedInput = {
-    create?: XOR<DoctorDistributionCreateWithoutEmployeeInput, DoctorDistributionUncheckedCreateWithoutEmployeeInput> | DoctorDistributionCreateWithoutEmployeeInput[] | DoctorDistributionUncheckedCreateWithoutEmployeeInput[]
-    connectOrCreate?: DoctorDistributionCreateOrConnectWithoutEmployeeInput | DoctorDistributionCreateOrConnectWithoutEmployeeInput[]
-    upsert?: DoctorDistributionUpsertWithWhereUniqueWithoutEmployeeInput | DoctorDistributionUpsertWithWhereUniqueWithoutEmployeeInput[]
-    createMany?: DoctorDistributionCreateManyEmployeeInputEnvelope
-    set?: DoctorDistributionWhereUniqueInput | DoctorDistributionWhereUniqueInput[]
-    disconnect?: DoctorDistributionWhereUniqueInput | DoctorDistributionWhereUniqueInput[]
-    delete?: DoctorDistributionWhereUniqueInput | DoctorDistributionWhereUniqueInput[]
-    connect?: DoctorDistributionWhereUniqueInput | DoctorDistributionWhereUniqueInput[]
-    update?: DoctorDistributionUpdateWithWhereUniqueWithoutEmployeeInput | DoctorDistributionUpdateWithWhereUniqueWithoutEmployeeInput[]
-    updateMany?: DoctorDistributionUpdateManyWithWhereWithoutEmployeeInput | DoctorDistributionUpdateManyWithWhereWithoutEmployeeInput[]
-    deleteMany?: DoctorDistributionScalarWhereInput | DoctorDistributionScalarWhereInput[]
+  export type SampleDistributionUpdateManyWithoutEmployeeNestedInput = {
+    create?: XOR<SampleDistributionCreateWithoutEmployeeInput, SampleDistributionUncheckedCreateWithoutEmployeeInput> | SampleDistributionCreateWithoutEmployeeInput[] | SampleDistributionUncheckedCreateWithoutEmployeeInput[]
+    connectOrCreate?: SampleDistributionCreateOrConnectWithoutEmployeeInput | SampleDistributionCreateOrConnectWithoutEmployeeInput[]
+    upsert?: SampleDistributionUpsertWithWhereUniqueWithoutEmployeeInput | SampleDistributionUpsertWithWhereUniqueWithoutEmployeeInput[]
+    createMany?: SampleDistributionCreateManyEmployeeInputEnvelope
+    set?: SampleDistributionWhereUniqueInput | SampleDistributionWhereUniqueInput[]
+    disconnect?: SampleDistributionWhereUniqueInput | SampleDistributionWhereUniqueInput[]
+    delete?: SampleDistributionWhereUniqueInput | SampleDistributionWhereUniqueInput[]
+    connect?: SampleDistributionWhereUniqueInput | SampleDistributionWhereUniqueInput[]
+    update?: SampleDistributionUpdateWithWhereUniqueWithoutEmployeeInput | SampleDistributionUpdateWithWhereUniqueWithoutEmployeeInput[]
+    updateMany?: SampleDistributionUpdateManyWithWhereWithoutEmployeeInput | SampleDistributionUpdateManyWithWhereWithoutEmployeeInput[]
+    deleteMany?: SampleDistributionScalarWhereInput | SampleDistributionScalarWhereInput[]
   }
 
   export type TaskPlannerUpdateManyWithoutEmployeeNestedInput = {
@@ -66001,18 +65932,18 @@ export namespace Prisma {
     deleteMany?: GiftScalarWhereInput | GiftScalarWhereInput[]
   }
 
-  export type DoctorDistributionUncheckedUpdateManyWithoutEmployeeNestedInput = {
-    create?: XOR<DoctorDistributionCreateWithoutEmployeeInput, DoctorDistributionUncheckedCreateWithoutEmployeeInput> | DoctorDistributionCreateWithoutEmployeeInput[] | DoctorDistributionUncheckedCreateWithoutEmployeeInput[]
-    connectOrCreate?: DoctorDistributionCreateOrConnectWithoutEmployeeInput | DoctorDistributionCreateOrConnectWithoutEmployeeInput[]
-    upsert?: DoctorDistributionUpsertWithWhereUniqueWithoutEmployeeInput | DoctorDistributionUpsertWithWhereUniqueWithoutEmployeeInput[]
-    createMany?: DoctorDistributionCreateManyEmployeeInputEnvelope
-    set?: DoctorDistributionWhereUniqueInput | DoctorDistributionWhereUniqueInput[]
-    disconnect?: DoctorDistributionWhereUniqueInput | DoctorDistributionWhereUniqueInput[]
-    delete?: DoctorDistributionWhereUniqueInput | DoctorDistributionWhereUniqueInput[]
-    connect?: DoctorDistributionWhereUniqueInput | DoctorDistributionWhereUniqueInput[]
-    update?: DoctorDistributionUpdateWithWhereUniqueWithoutEmployeeInput | DoctorDistributionUpdateWithWhereUniqueWithoutEmployeeInput[]
-    updateMany?: DoctorDistributionUpdateManyWithWhereWithoutEmployeeInput | DoctorDistributionUpdateManyWithWhereWithoutEmployeeInput[]
-    deleteMany?: DoctorDistributionScalarWhereInput | DoctorDistributionScalarWhereInput[]
+  export type SampleDistributionUncheckedUpdateManyWithoutEmployeeNestedInput = {
+    create?: XOR<SampleDistributionCreateWithoutEmployeeInput, SampleDistributionUncheckedCreateWithoutEmployeeInput> | SampleDistributionCreateWithoutEmployeeInput[] | SampleDistributionUncheckedCreateWithoutEmployeeInput[]
+    connectOrCreate?: SampleDistributionCreateOrConnectWithoutEmployeeInput | SampleDistributionCreateOrConnectWithoutEmployeeInput[]
+    upsert?: SampleDistributionUpsertWithWhereUniqueWithoutEmployeeInput | SampleDistributionUpsertWithWhereUniqueWithoutEmployeeInput[]
+    createMany?: SampleDistributionCreateManyEmployeeInputEnvelope
+    set?: SampleDistributionWhereUniqueInput | SampleDistributionWhereUniqueInput[]
+    disconnect?: SampleDistributionWhereUniqueInput | SampleDistributionWhereUniqueInput[]
+    delete?: SampleDistributionWhereUniqueInput | SampleDistributionWhereUniqueInput[]
+    connect?: SampleDistributionWhereUniqueInput | SampleDistributionWhereUniqueInput[]
+    update?: SampleDistributionUpdateWithWhereUniqueWithoutEmployeeInput | SampleDistributionUpdateWithWhereUniqueWithoutEmployeeInput[]
+    updateMany?: SampleDistributionUpdateManyWithWhereWithoutEmployeeInput | SampleDistributionUpdateManyWithWhereWithoutEmployeeInput[]
+    deleteMany?: SampleDistributionScalarWhereInput | SampleDistributionScalarWhereInput[]
   }
 
   export type TaskPlannerUncheckedUpdateManyWithoutEmployeeNestedInput = {
@@ -66641,6 +66572,13 @@ export namespace Prisma {
     connect?: DoctorTaskWhereUniqueInput | DoctorTaskWhereUniqueInput[]
   }
 
+  export type SampleDistributionCreateNestedManyWithoutDoctorInput = {
+    create?: XOR<SampleDistributionCreateWithoutDoctorInput, SampleDistributionUncheckedCreateWithoutDoctorInput> | SampleDistributionCreateWithoutDoctorInput[] | SampleDistributionUncheckedCreateWithoutDoctorInput[]
+    connectOrCreate?: SampleDistributionCreateOrConnectWithoutDoctorInput | SampleDistributionCreateOrConnectWithoutDoctorInput[]
+    createMany?: SampleDistributionCreateManyDoctorInputEnvelope
+    connect?: SampleDistributionWhereUniqueInput | SampleDistributionWhereUniqueInput[]
+  }
+
   export type DoctorHospitalAssociationUncheckedCreateNestedManyWithoutDoctorInput = {
     create?: XOR<DoctorHospitalAssociationCreateWithoutDoctorInput, DoctorHospitalAssociationUncheckedCreateWithoutDoctorInput> | DoctorHospitalAssociationCreateWithoutDoctorInput[] | DoctorHospitalAssociationUncheckedCreateWithoutDoctorInput[]
     connectOrCreate?: DoctorHospitalAssociationCreateOrConnectWithoutDoctorInput | DoctorHospitalAssociationCreateOrConnectWithoutDoctorInput[]
@@ -66681,6 +66619,13 @@ export namespace Prisma {
     connectOrCreate?: DoctorTaskCreateOrConnectWithoutDoctorInput | DoctorTaskCreateOrConnectWithoutDoctorInput[]
     createMany?: DoctorTaskCreateManyDoctorInputEnvelope
     connect?: DoctorTaskWhereUniqueInput | DoctorTaskWhereUniqueInput[]
+  }
+
+  export type SampleDistributionUncheckedCreateNestedManyWithoutDoctorInput = {
+    create?: XOR<SampleDistributionCreateWithoutDoctorInput, SampleDistributionUncheckedCreateWithoutDoctorInput> | SampleDistributionCreateWithoutDoctorInput[] | SampleDistributionUncheckedCreateWithoutDoctorInput[]
+    connectOrCreate?: SampleDistributionCreateOrConnectWithoutDoctorInput | SampleDistributionCreateOrConnectWithoutDoctorInput[]
+    createMany?: SampleDistributionCreateManyDoctorInputEnvelope
+    connect?: SampleDistributionWhereUniqueInput | SampleDistributionWhereUniqueInput[]
   }
 
   export type NullableIntFieldUpdateOperationsInput = {
@@ -66783,6 +66728,20 @@ export namespace Prisma {
     deleteMany?: DoctorTaskScalarWhereInput | DoctorTaskScalarWhereInput[]
   }
 
+  export type SampleDistributionUpdateManyWithoutDoctorNestedInput = {
+    create?: XOR<SampleDistributionCreateWithoutDoctorInput, SampleDistributionUncheckedCreateWithoutDoctorInput> | SampleDistributionCreateWithoutDoctorInput[] | SampleDistributionUncheckedCreateWithoutDoctorInput[]
+    connectOrCreate?: SampleDistributionCreateOrConnectWithoutDoctorInput | SampleDistributionCreateOrConnectWithoutDoctorInput[]
+    upsert?: SampleDistributionUpsertWithWhereUniqueWithoutDoctorInput | SampleDistributionUpsertWithWhereUniqueWithoutDoctorInput[]
+    createMany?: SampleDistributionCreateManyDoctorInputEnvelope
+    set?: SampleDistributionWhereUniqueInput | SampleDistributionWhereUniqueInput[]
+    disconnect?: SampleDistributionWhereUniqueInput | SampleDistributionWhereUniqueInput[]
+    delete?: SampleDistributionWhereUniqueInput | SampleDistributionWhereUniqueInput[]
+    connect?: SampleDistributionWhereUniqueInput | SampleDistributionWhereUniqueInput[]
+    update?: SampleDistributionUpdateWithWhereUniqueWithoutDoctorInput | SampleDistributionUpdateWithWhereUniqueWithoutDoctorInput[]
+    updateMany?: SampleDistributionUpdateManyWithWhereWithoutDoctorInput | SampleDistributionUpdateManyWithWhereWithoutDoctorInput[]
+    deleteMany?: SampleDistributionScalarWhereInput | SampleDistributionScalarWhereInput[]
+  }
+
   export type DoctorHospitalAssociationUncheckedUpdateManyWithoutDoctorNestedInput = {
     create?: XOR<DoctorHospitalAssociationCreateWithoutDoctorInput, DoctorHospitalAssociationUncheckedCreateWithoutDoctorInput> | DoctorHospitalAssociationCreateWithoutDoctorInput[] | DoctorHospitalAssociationUncheckedCreateWithoutDoctorInput[]
     connectOrCreate?: DoctorHospitalAssociationCreateOrConnectWithoutDoctorInput | DoctorHospitalAssociationCreateOrConnectWithoutDoctorInput[]
@@ -66865,6 +66824,20 @@ export namespace Prisma {
     update?: DoctorTaskUpdateWithWhereUniqueWithoutDoctorInput | DoctorTaskUpdateWithWhereUniqueWithoutDoctorInput[]
     updateMany?: DoctorTaskUpdateManyWithWhereWithoutDoctorInput | DoctorTaskUpdateManyWithWhereWithoutDoctorInput[]
     deleteMany?: DoctorTaskScalarWhereInput | DoctorTaskScalarWhereInput[]
+  }
+
+  export type SampleDistributionUncheckedUpdateManyWithoutDoctorNestedInput = {
+    create?: XOR<SampleDistributionCreateWithoutDoctorInput, SampleDistributionUncheckedCreateWithoutDoctorInput> | SampleDistributionCreateWithoutDoctorInput[] | SampleDistributionUncheckedCreateWithoutDoctorInput[]
+    connectOrCreate?: SampleDistributionCreateOrConnectWithoutDoctorInput | SampleDistributionCreateOrConnectWithoutDoctorInput[]
+    upsert?: SampleDistributionUpsertWithWhereUniqueWithoutDoctorInput | SampleDistributionUpsertWithWhereUniqueWithoutDoctorInput[]
+    createMany?: SampleDistributionCreateManyDoctorInputEnvelope
+    set?: SampleDistributionWhereUniqueInput | SampleDistributionWhereUniqueInput[]
+    disconnect?: SampleDistributionWhereUniqueInput | SampleDistributionWhereUniqueInput[]
+    delete?: SampleDistributionWhereUniqueInput | SampleDistributionWhereUniqueInput[]
+    connect?: SampleDistributionWhereUniqueInput | SampleDistributionWhereUniqueInput[]
+    update?: SampleDistributionUpdateWithWhereUniqueWithoutDoctorInput | SampleDistributionUpdateWithWhereUniqueWithoutDoctorInput[]
+    updateMany?: SampleDistributionUpdateManyWithWhereWithoutDoctorInput | SampleDistributionUpdateManyWithWhereWithoutDoctorInput[]
+    deleteMany?: SampleDistributionScalarWhereInput | SampleDistributionScalarWhereInput[]
   }
 
   export type DoctorCreateNestedOneWithoutHospitalAssociationsInput = {
@@ -66977,24 +66950,10 @@ export namespace Prisma {
     connect?: HospitalWhereUniqueInput
   }
 
-  export type DoctorDistributionCreateNestedManyWithoutDoctorInteractionInput = {
-    create?: XOR<DoctorDistributionCreateWithoutDoctorInteractionInput, DoctorDistributionUncheckedCreateWithoutDoctorInteractionInput> | DoctorDistributionCreateWithoutDoctorInteractionInput[] | DoctorDistributionUncheckedCreateWithoutDoctorInteractionInput[]
-    connectOrCreate?: DoctorDistributionCreateOrConnectWithoutDoctorInteractionInput | DoctorDistributionCreateOrConnectWithoutDoctorInteractionInput[]
-    createMany?: DoctorDistributionCreateManyDoctorInteractionInputEnvelope
-    connect?: DoctorDistributionWhereUniqueInput | DoctorDistributionWhereUniqueInput[]
-  }
-
   export type DoctorTaskCreateNestedOneWithoutDoctorInteractionsInput = {
     create?: XOR<DoctorTaskCreateWithoutDoctorInteractionsInput, DoctorTaskUncheckedCreateWithoutDoctorInteractionsInput>
     connectOrCreate?: DoctorTaskCreateOrConnectWithoutDoctorInteractionsInput
     connect?: DoctorTaskWhereUniqueInput
-  }
-
-  export type DoctorDistributionUncheckedCreateNestedManyWithoutDoctorInteractionInput = {
-    create?: XOR<DoctorDistributionCreateWithoutDoctorInteractionInput, DoctorDistributionUncheckedCreateWithoutDoctorInteractionInput> | DoctorDistributionCreateWithoutDoctorInteractionInput[] | DoctorDistributionUncheckedCreateWithoutDoctorInteractionInput[]
-    connectOrCreate?: DoctorDistributionCreateOrConnectWithoutDoctorInteractionInput | DoctorDistributionCreateOrConnectWithoutDoctorInteractionInput[]
-    createMany?: DoctorDistributionCreateManyDoctorInteractionInputEnvelope
-    connect?: DoctorDistributionWhereUniqueInput | DoctorDistributionWhereUniqueInput[]
   }
 
   export type EnumInteractionTypeFieldUpdateOperationsInput = {
@@ -67027,20 +66986,6 @@ export namespace Prisma {
     update?: XOR<XOR<HospitalUpdateToOneWithWhereWithoutDoctorInteractionsInput, HospitalUpdateWithoutDoctorInteractionsInput>, HospitalUncheckedUpdateWithoutDoctorInteractionsInput>
   }
 
-  export type DoctorDistributionUpdateManyWithoutDoctorInteractionNestedInput = {
-    create?: XOR<DoctorDistributionCreateWithoutDoctorInteractionInput, DoctorDistributionUncheckedCreateWithoutDoctorInteractionInput> | DoctorDistributionCreateWithoutDoctorInteractionInput[] | DoctorDistributionUncheckedCreateWithoutDoctorInteractionInput[]
-    connectOrCreate?: DoctorDistributionCreateOrConnectWithoutDoctorInteractionInput | DoctorDistributionCreateOrConnectWithoutDoctorInteractionInput[]
-    upsert?: DoctorDistributionUpsertWithWhereUniqueWithoutDoctorInteractionInput | DoctorDistributionUpsertWithWhereUniqueWithoutDoctorInteractionInput[]
-    createMany?: DoctorDistributionCreateManyDoctorInteractionInputEnvelope
-    set?: DoctorDistributionWhereUniqueInput | DoctorDistributionWhereUniqueInput[]
-    disconnect?: DoctorDistributionWhereUniqueInput | DoctorDistributionWhereUniqueInput[]
-    delete?: DoctorDistributionWhereUniqueInput | DoctorDistributionWhereUniqueInput[]
-    connect?: DoctorDistributionWhereUniqueInput | DoctorDistributionWhereUniqueInput[]
-    update?: DoctorDistributionUpdateWithWhereUniqueWithoutDoctorInteractionInput | DoctorDistributionUpdateWithWhereUniqueWithoutDoctorInteractionInput[]
-    updateMany?: DoctorDistributionUpdateManyWithWhereWithoutDoctorInteractionInput | DoctorDistributionUpdateManyWithWhereWithoutDoctorInteractionInput[]
-    deleteMany?: DoctorDistributionScalarWhereInput | DoctorDistributionScalarWhereInput[]
-  }
-
   export type DoctorTaskUpdateOneWithoutDoctorInteractionsNestedInput = {
     create?: XOR<DoctorTaskCreateWithoutDoctorInteractionsInput, DoctorTaskUncheckedCreateWithoutDoctorInteractionsInput>
     connectOrCreate?: DoctorTaskCreateOrConnectWithoutDoctorInteractionsInput
@@ -67049,20 +66994,6 @@ export namespace Prisma {
     delete?: DoctorTaskWhereInput | boolean
     connect?: DoctorTaskWhereUniqueInput
     update?: XOR<XOR<DoctorTaskUpdateToOneWithWhereWithoutDoctorInteractionsInput, DoctorTaskUpdateWithoutDoctorInteractionsInput>, DoctorTaskUncheckedUpdateWithoutDoctorInteractionsInput>
-  }
-
-  export type DoctorDistributionUncheckedUpdateManyWithoutDoctorInteractionNestedInput = {
-    create?: XOR<DoctorDistributionCreateWithoutDoctorInteractionInput, DoctorDistributionUncheckedCreateWithoutDoctorInteractionInput> | DoctorDistributionCreateWithoutDoctorInteractionInput[] | DoctorDistributionUncheckedCreateWithoutDoctorInteractionInput[]
-    connectOrCreate?: DoctorDistributionCreateOrConnectWithoutDoctorInteractionInput | DoctorDistributionCreateOrConnectWithoutDoctorInteractionInput[]
-    upsert?: DoctorDistributionUpsertWithWhereUniqueWithoutDoctorInteractionInput | DoctorDistributionUpsertWithWhereUniqueWithoutDoctorInteractionInput[]
-    createMany?: DoctorDistributionCreateManyDoctorInteractionInputEnvelope
-    set?: DoctorDistributionWhereUniqueInput | DoctorDistributionWhereUniqueInput[]
-    disconnect?: DoctorDistributionWhereUniqueInput | DoctorDistributionWhereUniqueInput[]
-    delete?: DoctorDistributionWhereUniqueInput | DoctorDistributionWhereUniqueInput[]
-    connect?: DoctorDistributionWhereUniqueInput | DoctorDistributionWhereUniqueInput[]
-    update?: DoctorDistributionUpdateWithWhereUniqueWithoutDoctorInteractionInput | DoctorDistributionUpdateWithWhereUniqueWithoutDoctorInteractionInput[]
-    updateMany?: DoctorDistributionUpdateManyWithWhereWithoutDoctorInteractionInput | DoctorDistributionUpdateManyWithWhereWithoutDoctorInteractionInput[]
-    deleteMany?: DoctorDistributionScalarWhereInput | DoctorDistributionScalarWhereInput[]
   }
 
   export type EmployeeCreateNestedOneWithoutDrugsCreatedInput = {
@@ -67092,13 +67023,6 @@ export namespace Prisma {
     connect?: UserDrugInventoryWhereUniqueInput | UserDrugInventoryWhereUniqueInput[]
   }
 
-  export type DoctorDistributionDrugItemCreateNestedManyWithoutDrugInput = {
-    create?: XOR<DoctorDistributionDrugItemCreateWithoutDrugInput, DoctorDistributionDrugItemUncheckedCreateWithoutDrugInput> | DoctorDistributionDrugItemCreateWithoutDrugInput[] | DoctorDistributionDrugItemUncheckedCreateWithoutDrugInput[]
-    connectOrCreate?: DoctorDistributionDrugItemCreateOrConnectWithoutDrugInput | DoctorDistributionDrugItemCreateOrConnectWithoutDrugInput[]
-    createMany?: DoctorDistributionDrugItemCreateManyDrugInputEnvelope
-    connect?: DoctorDistributionDrugItemWhereUniqueInput | DoctorDistributionDrugItemWhereUniqueInput[]
-  }
-
   export type OrderItemUncheckedCreateNestedManyWithoutDrugInput = {
     create?: XOR<OrderItemCreateWithoutDrugInput, OrderItemUncheckedCreateWithoutDrugInput> | OrderItemCreateWithoutDrugInput[] | OrderItemUncheckedCreateWithoutDrugInput[]
     connectOrCreate?: OrderItemCreateOrConnectWithoutDrugInput | OrderItemCreateOrConnectWithoutDrugInput[]
@@ -67118,13 +67042,6 @@ export namespace Prisma {
     connectOrCreate?: UserDrugInventoryCreateOrConnectWithoutDrugInput | UserDrugInventoryCreateOrConnectWithoutDrugInput[]
     createMany?: UserDrugInventoryCreateManyDrugInputEnvelope
     connect?: UserDrugInventoryWhereUniqueInput | UserDrugInventoryWhereUniqueInput[]
-  }
-
-  export type DoctorDistributionDrugItemUncheckedCreateNestedManyWithoutDrugInput = {
-    create?: XOR<DoctorDistributionDrugItemCreateWithoutDrugInput, DoctorDistributionDrugItemUncheckedCreateWithoutDrugInput> | DoctorDistributionDrugItemCreateWithoutDrugInput[] | DoctorDistributionDrugItemUncheckedCreateWithoutDrugInput[]
-    connectOrCreate?: DoctorDistributionDrugItemCreateOrConnectWithoutDrugInput | DoctorDistributionDrugItemCreateOrConnectWithoutDrugInput[]
-    createMany?: DoctorDistributionDrugItemCreateManyDrugInputEnvelope
-    connect?: DoctorDistributionDrugItemWhereUniqueInput | DoctorDistributionDrugItemWhereUniqueInput[]
   }
 
   export type EmployeeUpdateOneRequiredWithoutDrugsCreatedNestedInput = {
@@ -67177,20 +67094,6 @@ export namespace Prisma {
     deleteMany?: UserDrugInventoryScalarWhereInput | UserDrugInventoryScalarWhereInput[]
   }
 
-  export type DoctorDistributionDrugItemUpdateManyWithoutDrugNestedInput = {
-    create?: XOR<DoctorDistributionDrugItemCreateWithoutDrugInput, DoctorDistributionDrugItemUncheckedCreateWithoutDrugInput> | DoctorDistributionDrugItemCreateWithoutDrugInput[] | DoctorDistributionDrugItemUncheckedCreateWithoutDrugInput[]
-    connectOrCreate?: DoctorDistributionDrugItemCreateOrConnectWithoutDrugInput | DoctorDistributionDrugItemCreateOrConnectWithoutDrugInput[]
-    upsert?: DoctorDistributionDrugItemUpsertWithWhereUniqueWithoutDrugInput | DoctorDistributionDrugItemUpsertWithWhereUniqueWithoutDrugInput[]
-    createMany?: DoctorDistributionDrugItemCreateManyDrugInputEnvelope
-    set?: DoctorDistributionDrugItemWhereUniqueInput | DoctorDistributionDrugItemWhereUniqueInput[]
-    disconnect?: DoctorDistributionDrugItemWhereUniqueInput | DoctorDistributionDrugItemWhereUniqueInput[]
-    delete?: DoctorDistributionDrugItemWhereUniqueInput | DoctorDistributionDrugItemWhereUniqueInput[]
-    connect?: DoctorDistributionDrugItemWhereUniqueInput | DoctorDistributionDrugItemWhereUniqueInput[]
-    update?: DoctorDistributionDrugItemUpdateWithWhereUniqueWithoutDrugInput | DoctorDistributionDrugItemUpdateWithWhereUniqueWithoutDrugInput[]
-    updateMany?: DoctorDistributionDrugItemUpdateManyWithWhereWithoutDrugInput | DoctorDistributionDrugItemUpdateManyWithWhereWithoutDrugInput[]
-    deleteMany?: DoctorDistributionDrugItemScalarWhereInput | DoctorDistributionDrugItemScalarWhereInput[]
-  }
-
   export type OrderItemUncheckedUpdateManyWithoutDrugNestedInput = {
     create?: XOR<OrderItemCreateWithoutDrugInput, OrderItemUncheckedCreateWithoutDrugInput> | OrderItemCreateWithoutDrugInput[] | OrderItemUncheckedCreateWithoutDrugInput[]
     connectOrCreate?: OrderItemCreateOrConnectWithoutDrugInput | OrderItemCreateOrConnectWithoutDrugInput[]
@@ -67231,20 +67134,6 @@ export namespace Prisma {
     update?: UserDrugInventoryUpdateWithWhereUniqueWithoutDrugInput | UserDrugInventoryUpdateWithWhereUniqueWithoutDrugInput[]
     updateMany?: UserDrugInventoryUpdateManyWithWhereWithoutDrugInput | UserDrugInventoryUpdateManyWithWhereWithoutDrugInput[]
     deleteMany?: UserDrugInventoryScalarWhereInput | UserDrugInventoryScalarWhereInput[]
-  }
-
-  export type DoctorDistributionDrugItemUncheckedUpdateManyWithoutDrugNestedInput = {
-    create?: XOR<DoctorDistributionDrugItemCreateWithoutDrugInput, DoctorDistributionDrugItemUncheckedCreateWithoutDrugInput> | DoctorDistributionDrugItemCreateWithoutDrugInput[] | DoctorDistributionDrugItemUncheckedCreateWithoutDrugInput[]
-    connectOrCreate?: DoctorDistributionDrugItemCreateOrConnectWithoutDrugInput | DoctorDistributionDrugItemCreateOrConnectWithoutDrugInput[]
-    upsert?: DoctorDistributionDrugItemUpsertWithWhereUniqueWithoutDrugInput | DoctorDistributionDrugItemUpsertWithWhereUniqueWithoutDrugInput[]
-    createMany?: DoctorDistributionDrugItemCreateManyDrugInputEnvelope
-    set?: DoctorDistributionDrugItemWhereUniqueInput | DoctorDistributionDrugItemWhereUniqueInput[]
-    disconnect?: DoctorDistributionDrugItemWhereUniqueInput | DoctorDistributionDrugItemWhereUniqueInput[]
-    delete?: DoctorDistributionDrugItemWhereUniqueInput | DoctorDistributionDrugItemWhereUniqueInput[]
-    connect?: DoctorDistributionDrugItemWhereUniqueInput | DoctorDistributionDrugItemWhereUniqueInput[]
-    update?: DoctorDistributionDrugItemUpdateWithWhereUniqueWithoutDrugInput | DoctorDistributionDrugItemUpdateWithWhereUniqueWithoutDrugInput[]
-    updateMany?: DoctorDistributionDrugItemUpdateManyWithWhereWithoutDrugInput | DoctorDistributionDrugItemUpdateManyWithWhereWithoutDrugInput[]
-    deleteMany?: DoctorDistributionDrugItemScalarWhereInput | DoctorDistributionDrugItemScalarWhereInput[]
   }
 
   export type ChemistChainCreateNestedOneWithoutChemistsInput = {
@@ -67307,6 +67196,13 @@ export namespace Prisma {
     connect?: ChemistTaskWhereUniqueInput | ChemistTaskWhereUniqueInput[]
   }
 
+  export type SampleDistributionCreateNestedManyWithoutChemistInput = {
+    create?: XOR<SampleDistributionCreateWithoutChemistInput, SampleDistributionUncheckedCreateWithoutChemistInput> | SampleDistributionCreateWithoutChemistInput[] | SampleDistributionUncheckedCreateWithoutChemistInput[]
+    connectOrCreate?: SampleDistributionCreateOrConnectWithoutChemistInput | SampleDistributionCreateOrConnectWithoutChemistInput[]
+    createMany?: SampleDistributionCreateManyChemistInputEnvelope
+    connect?: SampleDistributionWhereUniqueInput | SampleDistributionWhereUniqueInput[]
+  }
+
   export type ChemistNoteUncheckedCreateNestedManyWithoutChemistInput = {
     create?: XOR<ChemistNoteCreateWithoutChemistInput, ChemistNoteUncheckedCreateWithoutChemistInput> | ChemistNoteCreateWithoutChemistInput[] | ChemistNoteUncheckedCreateWithoutChemistInput[]
     connectOrCreate?: ChemistNoteCreateOrConnectWithoutChemistInput | ChemistNoteCreateOrConnectWithoutChemistInput[]
@@ -67347,6 +67243,13 @@ export namespace Prisma {
     connectOrCreate?: ChemistTaskCreateOrConnectWithoutChemistInput | ChemistTaskCreateOrConnectWithoutChemistInput[]
     createMany?: ChemistTaskCreateManyChemistInputEnvelope
     connect?: ChemistTaskWhereUniqueInput | ChemistTaskWhereUniqueInput[]
+  }
+
+  export type SampleDistributionUncheckedCreateNestedManyWithoutChemistInput = {
+    create?: XOR<SampleDistributionCreateWithoutChemistInput, SampleDistributionUncheckedCreateWithoutChemistInput> | SampleDistributionCreateWithoutChemistInput[] | SampleDistributionUncheckedCreateWithoutChemistInput[]
+    connectOrCreate?: SampleDistributionCreateOrConnectWithoutChemistInput | SampleDistributionCreateOrConnectWithoutChemistInput[]
+    createMany?: SampleDistributionCreateManyChemistInputEnvelope
+    connect?: SampleDistributionWhereUniqueInput | SampleDistributionWhereUniqueInput[]
   }
 
   export type EnumChemistTypeFieldUpdateOperationsInput = {
@@ -67463,6 +67366,20 @@ export namespace Prisma {
     deleteMany?: ChemistTaskScalarWhereInput | ChemistTaskScalarWhereInput[]
   }
 
+  export type SampleDistributionUpdateManyWithoutChemistNestedInput = {
+    create?: XOR<SampleDistributionCreateWithoutChemistInput, SampleDistributionUncheckedCreateWithoutChemistInput> | SampleDistributionCreateWithoutChemistInput[] | SampleDistributionUncheckedCreateWithoutChemistInput[]
+    connectOrCreate?: SampleDistributionCreateOrConnectWithoutChemistInput | SampleDistributionCreateOrConnectWithoutChemistInput[]
+    upsert?: SampleDistributionUpsertWithWhereUniqueWithoutChemistInput | SampleDistributionUpsertWithWhereUniqueWithoutChemistInput[]
+    createMany?: SampleDistributionCreateManyChemistInputEnvelope
+    set?: SampleDistributionWhereUniqueInput | SampleDistributionWhereUniqueInput[]
+    disconnect?: SampleDistributionWhereUniqueInput | SampleDistributionWhereUniqueInput[]
+    delete?: SampleDistributionWhereUniqueInput | SampleDistributionWhereUniqueInput[]
+    connect?: SampleDistributionWhereUniqueInput | SampleDistributionWhereUniqueInput[]
+    update?: SampleDistributionUpdateWithWhereUniqueWithoutChemistInput | SampleDistributionUpdateWithWhereUniqueWithoutChemistInput[]
+    updateMany?: SampleDistributionUpdateManyWithWhereWithoutChemistInput | SampleDistributionUpdateManyWithWhereWithoutChemistInput[]
+    deleteMany?: SampleDistributionScalarWhereInput | SampleDistributionScalarWhereInput[]
+  }
+
   export type ChemistNoteUncheckedUpdateManyWithoutChemistNestedInput = {
     create?: XOR<ChemistNoteCreateWithoutChemistInput, ChemistNoteUncheckedCreateWithoutChemistInput> | ChemistNoteCreateWithoutChemistInput[] | ChemistNoteUncheckedCreateWithoutChemistInput[]
     connectOrCreate?: ChemistNoteCreateOrConnectWithoutChemistInput | ChemistNoteCreateOrConnectWithoutChemistInput[]
@@ -67545,6 +67462,20 @@ export namespace Prisma {
     update?: ChemistTaskUpdateWithWhereUniqueWithoutChemistInput | ChemistTaskUpdateWithWhereUniqueWithoutChemistInput[]
     updateMany?: ChemistTaskUpdateManyWithWhereWithoutChemistInput | ChemistTaskUpdateManyWithWhereWithoutChemistInput[]
     deleteMany?: ChemistTaskScalarWhereInput | ChemistTaskScalarWhereInput[]
+  }
+
+  export type SampleDistributionUncheckedUpdateManyWithoutChemistNestedInput = {
+    create?: XOR<SampleDistributionCreateWithoutChemistInput, SampleDistributionUncheckedCreateWithoutChemistInput> | SampleDistributionCreateWithoutChemistInput[] | SampleDistributionUncheckedCreateWithoutChemistInput[]
+    connectOrCreate?: SampleDistributionCreateOrConnectWithoutChemistInput | SampleDistributionCreateOrConnectWithoutChemistInput[]
+    upsert?: SampleDistributionUpsertWithWhereUniqueWithoutChemistInput | SampleDistributionUpsertWithWhereUniqueWithoutChemistInput[]
+    createMany?: SampleDistributionCreateManyChemistInputEnvelope
+    set?: SampleDistributionWhereUniqueInput | SampleDistributionWhereUniqueInput[]
+    disconnect?: SampleDistributionWhereUniqueInput | SampleDistributionWhereUniqueInput[]
+    delete?: SampleDistributionWhereUniqueInput | SampleDistributionWhereUniqueInput[]
+    connect?: SampleDistributionWhereUniqueInput | SampleDistributionWhereUniqueInput[]
+    update?: SampleDistributionUpdateWithWhereUniqueWithoutChemistInput | SampleDistributionUpdateWithWhereUniqueWithoutChemistInput[]
+    updateMany?: SampleDistributionUpdateManyWithWhereWithoutChemistInput | SampleDistributionUpdateManyWithWhereWithoutChemistInput[]
+    deleteMany?: SampleDistributionScalarWhereInput | SampleDistributionScalarWhereInput[]
   }
 
   export type ChemistCreateNestedOneWithoutNotesInput = {
@@ -68588,25 +68519,11 @@ export namespace Prisma {
     connect?: UserGiftInventoryWhereUniqueInput | UserGiftInventoryWhereUniqueInput[]
   }
 
-  export type DoctorDistributionGiftItemCreateNestedManyWithoutGiftInput = {
-    create?: XOR<DoctorDistributionGiftItemCreateWithoutGiftInput, DoctorDistributionGiftItemUncheckedCreateWithoutGiftInput> | DoctorDistributionGiftItemCreateWithoutGiftInput[] | DoctorDistributionGiftItemUncheckedCreateWithoutGiftInput[]
-    connectOrCreate?: DoctorDistributionGiftItemCreateOrConnectWithoutGiftInput | DoctorDistributionGiftItemCreateOrConnectWithoutGiftInput[]
-    createMany?: DoctorDistributionGiftItemCreateManyGiftInputEnvelope
-    connect?: DoctorDistributionGiftItemWhereUniqueInput | DoctorDistributionGiftItemWhereUniqueInput[]
-  }
-
   export type UserGiftInventoryUncheckedCreateNestedManyWithoutGiftInput = {
     create?: XOR<UserGiftInventoryCreateWithoutGiftInput, UserGiftInventoryUncheckedCreateWithoutGiftInput> | UserGiftInventoryCreateWithoutGiftInput[] | UserGiftInventoryUncheckedCreateWithoutGiftInput[]
     connectOrCreate?: UserGiftInventoryCreateOrConnectWithoutGiftInput | UserGiftInventoryCreateOrConnectWithoutGiftInput[]
     createMany?: UserGiftInventoryCreateManyGiftInputEnvelope
     connect?: UserGiftInventoryWhereUniqueInput | UserGiftInventoryWhereUniqueInput[]
-  }
-
-  export type DoctorDistributionGiftItemUncheckedCreateNestedManyWithoutGiftInput = {
-    create?: XOR<DoctorDistributionGiftItemCreateWithoutGiftInput, DoctorDistributionGiftItemUncheckedCreateWithoutGiftInput> | DoctorDistributionGiftItemCreateWithoutGiftInput[] | DoctorDistributionGiftItemUncheckedCreateWithoutGiftInput[]
-    connectOrCreate?: DoctorDistributionGiftItemCreateOrConnectWithoutGiftInput | DoctorDistributionGiftItemCreateOrConnectWithoutGiftInput[]
-    createMany?: DoctorDistributionGiftItemCreateManyGiftInputEnvelope
-    connect?: DoctorDistributionGiftItemWhereUniqueInput | DoctorDistributionGiftItemWhereUniqueInput[]
   }
 
   export type EmployeeUpdateOneRequiredWithoutGiftsCreatedNestedInput = {
@@ -68631,20 +68548,6 @@ export namespace Prisma {
     deleteMany?: UserGiftInventoryScalarWhereInput | UserGiftInventoryScalarWhereInput[]
   }
 
-  export type DoctorDistributionGiftItemUpdateManyWithoutGiftNestedInput = {
-    create?: XOR<DoctorDistributionGiftItemCreateWithoutGiftInput, DoctorDistributionGiftItemUncheckedCreateWithoutGiftInput> | DoctorDistributionGiftItemCreateWithoutGiftInput[] | DoctorDistributionGiftItemUncheckedCreateWithoutGiftInput[]
-    connectOrCreate?: DoctorDistributionGiftItemCreateOrConnectWithoutGiftInput | DoctorDistributionGiftItemCreateOrConnectWithoutGiftInput[]
-    upsert?: DoctorDistributionGiftItemUpsertWithWhereUniqueWithoutGiftInput | DoctorDistributionGiftItemUpsertWithWhereUniqueWithoutGiftInput[]
-    createMany?: DoctorDistributionGiftItemCreateManyGiftInputEnvelope
-    set?: DoctorDistributionGiftItemWhereUniqueInput | DoctorDistributionGiftItemWhereUniqueInput[]
-    disconnect?: DoctorDistributionGiftItemWhereUniqueInput | DoctorDistributionGiftItemWhereUniqueInput[]
-    delete?: DoctorDistributionGiftItemWhereUniqueInput | DoctorDistributionGiftItemWhereUniqueInput[]
-    connect?: DoctorDistributionGiftItemWhereUniqueInput | DoctorDistributionGiftItemWhereUniqueInput[]
-    update?: DoctorDistributionGiftItemUpdateWithWhereUniqueWithoutGiftInput | DoctorDistributionGiftItemUpdateWithWhereUniqueWithoutGiftInput[]
-    updateMany?: DoctorDistributionGiftItemUpdateManyWithWhereWithoutGiftInput | DoctorDistributionGiftItemUpdateManyWithWhereWithoutGiftInput[]
-    deleteMany?: DoctorDistributionGiftItemScalarWhereInput | DoctorDistributionGiftItemScalarWhereInput[]
-  }
-
   export type UserGiftInventoryUncheckedUpdateManyWithoutGiftNestedInput = {
     create?: XOR<UserGiftInventoryCreateWithoutGiftInput, UserGiftInventoryUncheckedCreateWithoutGiftInput> | UserGiftInventoryCreateWithoutGiftInput[] | UserGiftInventoryUncheckedCreateWithoutGiftInput[]
     connectOrCreate?: UserGiftInventoryCreateOrConnectWithoutGiftInput | UserGiftInventoryCreateOrConnectWithoutGiftInput[]
@@ -68659,20 +68562,6 @@ export namespace Prisma {
     deleteMany?: UserGiftInventoryScalarWhereInput | UserGiftInventoryScalarWhereInput[]
   }
 
-  export type DoctorDistributionGiftItemUncheckedUpdateManyWithoutGiftNestedInput = {
-    create?: XOR<DoctorDistributionGiftItemCreateWithoutGiftInput, DoctorDistributionGiftItemUncheckedCreateWithoutGiftInput> | DoctorDistributionGiftItemCreateWithoutGiftInput[] | DoctorDistributionGiftItemUncheckedCreateWithoutGiftInput[]
-    connectOrCreate?: DoctorDistributionGiftItemCreateOrConnectWithoutGiftInput | DoctorDistributionGiftItemCreateOrConnectWithoutGiftInput[]
-    upsert?: DoctorDistributionGiftItemUpsertWithWhereUniqueWithoutGiftInput | DoctorDistributionGiftItemUpsertWithWhereUniqueWithoutGiftInput[]
-    createMany?: DoctorDistributionGiftItemCreateManyGiftInputEnvelope
-    set?: DoctorDistributionGiftItemWhereUniqueInput | DoctorDistributionGiftItemWhereUniqueInput[]
-    disconnect?: DoctorDistributionGiftItemWhereUniqueInput | DoctorDistributionGiftItemWhereUniqueInput[]
-    delete?: DoctorDistributionGiftItemWhereUniqueInput | DoctorDistributionGiftItemWhereUniqueInput[]
-    connect?: DoctorDistributionGiftItemWhereUniqueInput | DoctorDistributionGiftItemWhereUniqueInput[]
-    update?: DoctorDistributionGiftItemUpdateWithWhereUniqueWithoutGiftInput | DoctorDistributionGiftItemUpdateWithWhereUniqueWithoutGiftInput[]
-    updateMany?: DoctorDistributionGiftItemUpdateManyWithWhereWithoutGiftInput | DoctorDistributionGiftItemUpdateManyWithWhereWithoutGiftInput[]
-    deleteMany?: DoctorDistributionGiftItemScalarWhereInput | DoctorDistributionGiftItemScalarWhereInput[]
-  }
-
   export type EmployeeCreateNestedOneWithoutDrugInventoriesInput = {
     create?: XOR<EmployeeCreateWithoutDrugInventoriesInput, EmployeeUncheckedCreateWithoutDrugInventoriesInput>
     connectOrCreate?: EmployeeCreateOrConnectWithoutDrugInventoriesInput
@@ -68685,18 +68574,18 @@ export namespace Prisma {
     connect?: DrugWhereUniqueInput
   }
 
-  export type DoctorDistributionDrugItemCreateNestedManyWithoutFromInventoryInput = {
-    create?: XOR<DoctorDistributionDrugItemCreateWithoutFromInventoryInput, DoctorDistributionDrugItemUncheckedCreateWithoutFromInventoryInput> | DoctorDistributionDrugItemCreateWithoutFromInventoryInput[] | DoctorDistributionDrugItemUncheckedCreateWithoutFromInventoryInput[]
-    connectOrCreate?: DoctorDistributionDrugItemCreateOrConnectWithoutFromInventoryInput | DoctorDistributionDrugItemCreateOrConnectWithoutFromInventoryInput[]
-    createMany?: DoctorDistributionDrugItemCreateManyFromInventoryInputEnvelope
-    connect?: DoctorDistributionDrugItemWhereUniqueInput | DoctorDistributionDrugItemWhereUniqueInput[]
+  export type SampleDistributionDrugItemCreateNestedManyWithoutFromInventoryInput = {
+    create?: XOR<SampleDistributionDrugItemCreateWithoutFromInventoryInput, SampleDistributionDrugItemUncheckedCreateWithoutFromInventoryInput> | SampleDistributionDrugItemCreateWithoutFromInventoryInput[] | SampleDistributionDrugItemUncheckedCreateWithoutFromInventoryInput[]
+    connectOrCreate?: SampleDistributionDrugItemCreateOrConnectWithoutFromInventoryInput | SampleDistributionDrugItemCreateOrConnectWithoutFromInventoryInput[]
+    createMany?: SampleDistributionDrugItemCreateManyFromInventoryInputEnvelope
+    connect?: SampleDistributionDrugItemWhereUniqueInput | SampleDistributionDrugItemWhereUniqueInput[]
   }
 
-  export type DoctorDistributionDrugItemUncheckedCreateNestedManyWithoutFromInventoryInput = {
-    create?: XOR<DoctorDistributionDrugItemCreateWithoutFromInventoryInput, DoctorDistributionDrugItemUncheckedCreateWithoutFromInventoryInput> | DoctorDistributionDrugItemCreateWithoutFromInventoryInput[] | DoctorDistributionDrugItemUncheckedCreateWithoutFromInventoryInput[]
-    connectOrCreate?: DoctorDistributionDrugItemCreateOrConnectWithoutFromInventoryInput | DoctorDistributionDrugItemCreateOrConnectWithoutFromInventoryInput[]
-    createMany?: DoctorDistributionDrugItemCreateManyFromInventoryInputEnvelope
-    connect?: DoctorDistributionDrugItemWhereUniqueInput | DoctorDistributionDrugItemWhereUniqueInput[]
+  export type SampleDistributionDrugItemUncheckedCreateNestedManyWithoutFromInventoryInput = {
+    create?: XOR<SampleDistributionDrugItemCreateWithoutFromInventoryInput, SampleDistributionDrugItemUncheckedCreateWithoutFromInventoryInput> | SampleDistributionDrugItemCreateWithoutFromInventoryInput[] | SampleDistributionDrugItemUncheckedCreateWithoutFromInventoryInput[]
+    connectOrCreate?: SampleDistributionDrugItemCreateOrConnectWithoutFromInventoryInput | SampleDistributionDrugItemCreateOrConnectWithoutFromInventoryInput[]
+    createMany?: SampleDistributionDrugItemCreateManyFromInventoryInputEnvelope
+    connect?: SampleDistributionDrugItemWhereUniqueInput | SampleDistributionDrugItemWhereUniqueInput[]
   }
 
   export type EmployeeUpdateOneRequiredWithoutDrugInventoriesNestedInput = {
@@ -68715,32 +68604,32 @@ export namespace Prisma {
     update?: XOR<XOR<DrugUpdateToOneWithWhereWithoutUserDrugInventoryInput, DrugUpdateWithoutUserDrugInventoryInput>, DrugUncheckedUpdateWithoutUserDrugInventoryInput>
   }
 
-  export type DoctorDistributionDrugItemUpdateManyWithoutFromInventoryNestedInput = {
-    create?: XOR<DoctorDistributionDrugItemCreateWithoutFromInventoryInput, DoctorDistributionDrugItemUncheckedCreateWithoutFromInventoryInput> | DoctorDistributionDrugItemCreateWithoutFromInventoryInput[] | DoctorDistributionDrugItemUncheckedCreateWithoutFromInventoryInput[]
-    connectOrCreate?: DoctorDistributionDrugItemCreateOrConnectWithoutFromInventoryInput | DoctorDistributionDrugItemCreateOrConnectWithoutFromInventoryInput[]
-    upsert?: DoctorDistributionDrugItemUpsertWithWhereUniqueWithoutFromInventoryInput | DoctorDistributionDrugItemUpsertWithWhereUniqueWithoutFromInventoryInput[]
-    createMany?: DoctorDistributionDrugItemCreateManyFromInventoryInputEnvelope
-    set?: DoctorDistributionDrugItemWhereUniqueInput | DoctorDistributionDrugItemWhereUniqueInput[]
-    disconnect?: DoctorDistributionDrugItemWhereUniqueInput | DoctorDistributionDrugItemWhereUniqueInput[]
-    delete?: DoctorDistributionDrugItemWhereUniqueInput | DoctorDistributionDrugItemWhereUniqueInput[]
-    connect?: DoctorDistributionDrugItemWhereUniqueInput | DoctorDistributionDrugItemWhereUniqueInput[]
-    update?: DoctorDistributionDrugItemUpdateWithWhereUniqueWithoutFromInventoryInput | DoctorDistributionDrugItemUpdateWithWhereUniqueWithoutFromInventoryInput[]
-    updateMany?: DoctorDistributionDrugItemUpdateManyWithWhereWithoutFromInventoryInput | DoctorDistributionDrugItemUpdateManyWithWhereWithoutFromInventoryInput[]
-    deleteMany?: DoctorDistributionDrugItemScalarWhereInput | DoctorDistributionDrugItemScalarWhereInput[]
+  export type SampleDistributionDrugItemUpdateManyWithoutFromInventoryNestedInput = {
+    create?: XOR<SampleDistributionDrugItemCreateWithoutFromInventoryInput, SampleDistributionDrugItemUncheckedCreateWithoutFromInventoryInput> | SampleDistributionDrugItemCreateWithoutFromInventoryInput[] | SampleDistributionDrugItemUncheckedCreateWithoutFromInventoryInput[]
+    connectOrCreate?: SampleDistributionDrugItemCreateOrConnectWithoutFromInventoryInput | SampleDistributionDrugItemCreateOrConnectWithoutFromInventoryInput[]
+    upsert?: SampleDistributionDrugItemUpsertWithWhereUniqueWithoutFromInventoryInput | SampleDistributionDrugItemUpsertWithWhereUniqueWithoutFromInventoryInput[]
+    createMany?: SampleDistributionDrugItemCreateManyFromInventoryInputEnvelope
+    set?: SampleDistributionDrugItemWhereUniqueInput | SampleDistributionDrugItemWhereUniqueInput[]
+    disconnect?: SampleDistributionDrugItemWhereUniqueInput | SampleDistributionDrugItemWhereUniqueInput[]
+    delete?: SampleDistributionDrugItemWhereUniqueInput | SampleDistributionDrugItemWhereUniqueInput[]
+    connect?: SampleDistributionDrugItemWhereUniqueInput | SampleDistributionDrugItemWhereUniqueInput[]
+    update?: SampleDistributionDrugItemUpdateWithWhereUniqueWithoutFromInventoryInput | SampleDistributionDrugItemUpdateWithWhereUniqueWithoutFromInventoryInput[]
+    updateMany?: SampleDistributionDrugItemUpdateManyWithWhereWithoutFromInventoryInput | SampleDistributionDrugItemUpdateManyWithWhereWithoutFromInventoryInput[]
+    deleteMany?: SampleDistributionDrugItemScalarWhereInput | SampleDistributionDrugItemScalarWhereInput[]
   }
 
-  export type DoctorDistributionDrugItemUncheckedUpdateManyWithoutFromInventoryNestedInput = {
-    create?: XOR<DoctorDistributionDrugItemCreateWithoutFromInventoryInput, DoctorDistributionDrugItemUncheckedCreateWithoutFromInventoryInput> | DoctorDistributionDrugItemCreateWithoutFromInventoryInput[] | DoctorDistributionDrugItemUncheckedCreateWithoutFromInventoryInput[]
-    connectOrCreate?: DoctorDistributionDrugItemCreateOrConnectWithoutFromInventoryInput | DoctorDistributionDrugItemCreateOrConnectWithoutFromInventoryInput[]
-    upsert?: DoctorDistributionDrugItemUpsertWithWhereUniqueWithoutFromInventoryInput | DoctorDistributionDrugItemUpsertWithWhereUniqueWithoutFromInventoryInput[]
-    createMany?: DoctorDistributionDrugItemCreateManyFromInventoryInputEnvelope
-    set?: DoctorDistributionDrugItemWhereUniqueInput | DoctorDistributionDrugItemWhereUniqueInput[]
-    disconnect?: DoctorDistributionDrugItemWhereUniqueInput | DoctorDistributionDrugItemWhereUniqueInput[]
-    delete?: DoctorDistributionDrugItemWhereUniqueInput | DoctorDistributionDrugItemWhereUniqueInput[]
-    connect?: DoctorDistributionDrugItemWhereUniqueInput | DoctorDistributionDrugItemWhereUniqueInput[]
-    update?: DoctorDistributionDrugItemUpdateWithWhereUniqueWithoutFromInventoryInput | DoctorDistributionDrugItemUpdateWithWhereUniqueWithoutFromInventoryInput[]
-    updateMany?: DoctorDistributionDrugItemUpdateManyWithWhereWithoutFromInventoryInput | DoctorDistributionDrugItemUpdateManyWithWhereWithoutFromInventoryInput[]
-    deleteMany?: DoctorDistributionDrugItemScalarWhereInput | DoctorDistributionDrugItemScalarWhereInput[]
+  export type SampleDistributionDrugItemUncheckedUpdateManyWithoutFromInventoryNestedInput = {
+    create?: XOR<SampleDistributionDrugItemCreateWithoutFromInventoryInput, SampleDistributionDrugItemUncheckedCreateWithoutFromInventoryInput> | SampleDistributionDrugItemCreateWithoutFromInventoryInput[] | SampleDistributionDrugItemUncheckedCreateWithoutFromInventoryInput[]
+    connectOrCreate?: SampleDistributionDrugItemCreateOrConnectWithoutFromInventoryInput | SampleDistributionDrugItemCreateOrConnectWithoutFromInventoryInput[]
+    upsert?: SampleDistributionDrugItemUpsertWithWhereUniqueWithoutFromInventoryInput | SampleDistributionDrugItemUpsertWithWhereUniqueWithoutFromInventoryInput[]
+    createMany?: SampleDistributionDrugItemCreateManyFromInventoryInputEnvelope
+    set?: SampleDistributionDrugItemWhereUniqueInput | SampleDistributionDrugItemWhereUniqueInput[]
+    disconnect?: SampleDistributionDrugItemWhereUniqueInput | SampleDistributionDrugItemWhereUniqueInput[]
+    delete?: SampleDistributionDrugItemWhereUniqueInput | SampleDistributionDrugItemWhereUniqueInput[]
+    connect?: SampleDistributionDrugItemWhereUniqueInput | SampleDistributionDrugItemWhereUniqueInput[]
+    update?: SampleDistributionDrugItemUpdateWithWhereUniqueWithoutFromInventoryInput | SampleDistributionDrugItemUpdateWithWhereUniqueWithoutFromInventoryInput[]
+    updateMany?: SampleDistributionDrugItemUpdateManyWithWhereWithoutFromInventoryInput | SampleDistributionDrugItemUpdateManyWithWhereWithoutFromInventoryInput[]
+    deleteMany?: SampleDistributionDrugItemScalarWhereInput | SampleDistributionDrugItemScalarWhereInput[]
   }
 
   export type EmployeeCreateNestedOneWithoutGiftInventoriesInput = {
@@ -68755,18 +68644,18 @@ export namespace Prisma {
     connect?: GiftWhereUniqueInput
   }
 
-  export type DoctorDistributionGiftItemCreateNestedManyWithoutFromInventoryInput = {
-    create?: XOR<DoctorDistributionGiftItemCreateWithoutFromInventoryInput, DoctorDistributionGiftItemUncheckedCreateWithoutFromInventoryInput> | DoctorDistributionGiftItemCreateWithoutFromInventoryInput[] | DoctorDistributionGiftItemUncheckedCreateWithoutFromInventoryInput[]
-    connectOrCreate?: DoctorDistributionGiftItemCreateOrConnectWithoutFromInventoryInput | DoctorDistributionGiftItemCreateOrConnectWithoutFromInventoryInput[]
-    createMany?: DoctorDistributionGiftItemCreateManyFromInventoryInputEnvelope
-    connect?: DoctorDistributionGiftItemWhereUniqueInput | DoctorDistributionGiftItemWhereUniqueInput[]
+  export type SampleDistributionGiftItemCreateNestedManyWithoutFromInventoryInput = {
+    create?: XOR<SampleDistributionGiftItemCreateWithoutFromInventoryInput, SampleDistributionGiftItemUncheckedCreateWithoutFromInventoryInput> | SampleDistributionGiftItemCreateWithoutFromInventoryInput[] | SampleDistributionGiftItemUncheckedCreateWithoutFromInventoryInput[]
+    connectOrCreate?: SampleDistributionGiftItemCreateOrConnectWithoutFromInventoryInput | SampleDistributionGiftItemCreateOrConnectWithoutFromInventoryInput[]
+    createMany?: SampleDistributionGiftItemCreateManyFromInventoryInputEnvelope
+    connect?: SampleDistributionGiftItemWhereUniqueInput | SampleDistributionGiftItemWhereUniqueInput[]
   }
 
-  export type DoctorDistributionGiftItemUncheckedCreateNestedManyWithoutFromInventoryInput = {
-    create?: XOR<DoctorDistributionGiftItemCreateWithoutFromInventoryInput, DoctorDistributionGiftItemUncheckedCreateWithoutFromInventoryInput> | DoctorDistributionGiftItemCreateWithoutFromInventoryInput[] | DoctorDistributionGiftItemUncheckedCreateWithoutFromInventoryInput[]
-    connectOrCreate?: DoctorDistributionGiftItemCreateOrConnectWithoutFromInventoryInput | DoctorDistributionGiftItemCreateOrConnectWithoutFromInventoryInput[]
-    createMany?: DoctorDistributionGiftItemCreateManyFromInventoryInputEnvelope
-    connect?: DoctorDistributionGiftItemWhereUniqueInput | DoctorDistributionGiftItemWhereUniqueInput[]
+  export type SampleDistributionGiftItemUncheckedCreateNestedManyWithoutFromInventoryInput = {
+    create?: XOR<SampleDistributionGiftItemCreateWithoutFromInventoryInput, SampleDistributionGiftItemUncheckedCreateWithoutFromInventoryInput> | SampleDistributionGiftItemCreateWithoutFromInventoryInput[] | SampleDistributionGiftItemUncheckedCreateWithoutFromInventoryInput[]
+    connectOrCreate?: SampleDistributionGiftItemCreateOrConnectWithoutFromInventoryInput | SampleDistributionGiftItemCreateOrConnectWithoutFromInventoryInput[]
+    createMany?: SampleDistributionGiftItemCreateManyFromInventoryInputEnvelope
+    connect?: SampleDistributionGiftItemWhereUniqueInput | SampleDistributionGiftItemWhereUniqueInput[]
   }
 
   export type EmployeeUpdateOneRequiredWithoutGiftInventoriesNestedInput = {
@@ -68785,228 +68674,218 @@ export namespace Prisma {
     update?: XOR<XOR<GiftUpdateToOneWithWhereWithoutUserGiftInventoriesInput, GiftUpdateWithoutUserGiftInventoriesInput>, GiftUncheckedUpdateWithoutUserGiftInventoriesInput>
   }
 
-  export type DoctorDistributionGiftItemUpdateManyWithoutFromInventoryNestedInput = {
-    create?: XOR<DoctorDistributionGiftItemCreateWithoutFromInventoryInput, DoctorDistributionGiftItemUncheckedCreateWithoutFromInventoryInput> | DoctorDistributionGiftItemCreateWithoutFromInventoryInput[] | DoctorDistributionGiftItemUncheckedCreateWithoutFromInventoryInput[]
-    connectOrCreate?: DoctorDistributionGiftItemCreateOrConnectWithoutFromInventoryInput | DoctorDistributionGiftItemCreateOrConnectWithoutFromInventoryInput[]
-    upsert?: DoctorDistributionGiftItemUpsertWithWhereUniqueWithoutFromInventoryInput | DoctorDistributionGiftItemUpsertWithWhereUniqueWithoutFromInventoryInput[]
-    createMany?: DoctorDistributionGiftItemCreateManyFromInventoryInputEnvelope
-    set?: DoctorDistributionGiftItemWhereUniqueInput | DoctorDistributionGiftItemWhereUniqueInput[]
-    disconnect?: DoctorDistributionGiftItemWhereUniqueInput | DoctorDistributionGiftItemWhereUniqueInput[]
-    delete?: DoctorDistributionGiftItemWhereUniqueInput | DoctorDistributionGiftItemWhereUniqueInput[]
-    connect?: DoctorDistributionGiftItemWhereUniqueInput | DoctorDistributionGiftItemWhereUniqueInput[]
-    update?: DoctorDistributionGiftItemUpdateWithWhereUniqueWithoutFromInventoryInput | DoctorDistributionGiftItemUpdateWithWhereUniqueWithoutFromInventoryInput[]
-    updateMany?: DoctorDistributionGiftItemUpdateManyWithWhereWithoutFromInventoryInput | DoctorDistributionGiftItemUpdateManyWithWhereWithoutFromInventoryInput[]
-    deleteMany?: DoctorDistributionGiftItemScalarWhereInput | DoctorDistributionGiftItemScalarWhereInput[]
+  export type SampleDistributionGiftItemUpdateManyWithoutFromInventoryNestedInput = {
+    create?: XOR<SampleDistributionGiftItemCreateWithoutFromInventoryInput, SampleDistributionGiftItemUncheckedCreateWithoutFromInventoryInput> | SampleDistributionGiftItemCreateWithoutFromInventoryInput[] | SampleDistributionGiftItemUncheckedCreateWithoutFromInventoryInput[]
+    connectOrCreate?: SampleDistributionGiftItemCreateOrConnectWithoutFromInventoryInput | SampleDistributionGiftItemCreateOrConnectWithoutFromInventoryInput[]
+    upsert?: SampleDistributionGiftItemUpsertWithWhereUniqueWithoutFromInventoryInput | SampleDistributionGiftItemUpsertWithWhereUniqueWithoutFromInventoryInput[]
+    createMany?: SampleDistributionGiftItemCreateManyFromInventoryInputEnvelope
+    set?: SampleDistributionGiftItemWhereUniqueInput | SampleDistributionGiftItemWhereUniqueInput[]
+    disconnect?: SampleDistributionGiftItemWhereUniqueInput | SampleDistributionGiftItemWhereUniqueInput[]
+    delete?: SampleDistributionGiftItemWhereUniqueInput | SampleDistributionGiftItemWhereUniqueInput[]
+    connect?: SampleDistributionGiftItemWhereUniqueInput | SampleDistributionGiftItemWhereUniqueInput[]
+    update?: SampleDistributionGiftItemUpdateWithWhereUniqueWithoutFromInventoryInput | SampleDistributionGiftItemUpdateWithWhereUniqueWithoutFromInventoryInput[]
+    updateMany?: SampleDistributionGiftItemUpdateManyWithWhereWithoutFromInventoryInput | SampleDistributionGiftItemUpdateManyWithWhereWithoutFromInventoryInput[]
+    deleteMany?: SampleDistributionGiftItemScalarWhereInput | SampleDistributionGiftItemScalarWhereInput[]
   }
 
-  export type DoctorDistributionGiftItemUncheckedUpdateManyWithoutFromInventoryNestedInput = {
-    create?: XOR<DoctorDistributionGiftItemCreateWithoutFromInventoryInput, DoctorDistributionGiftItemUncheckedCreateWithoutFromInventoryInput> | DoctorDistributionGiftItemCreateWithoutFromInventoryInput[] | DoctorDistributionGiftItemUncheckedCreateWithoutFromInventoryInput[]
-    connectOrCreate?: DoctorDistributionGiftItemCreateOrConnectWithoutFromInventoryInput | DoctorDistributionGiftItemCreateOrConnectWithoutFromInventoryInput[]
-    upsert?: DoctorDistributionGiftItemUpsertWithWhereUniqueWithoutFromInventoryInput | DoctorDistributionGiftItemUpsertWithWhereUniqueWithoutFromInventoryInput[]
-    createMany?: DoctorDistributionGiftItemCreateManyFromInventoryInputEnvelope
-    set?: DoctorDistributionGiftItemWhereUniqueInput | DoctorDistributionGiftItemWhereUniqueInput[]
-    disconnect?: DoctorDistributionGiftItemWhereUniqueInput | DoctorDistributionGiftItemWhereUniqueInput[]
-    delete?: DoctorDistributionGiftItemWhereUniqueInput | DoctorDistributionGiftItemWhereUniqueInput[]
-    connect?: DoctorDistributionGiftItemWhereUniqueInput | DoctorDistributionGiftItemWhereUniqueInput[]
-    update?: DoctorDistributionGiftItemUpdateWithWhereUniqueWithoutFromInventoryInput | DoctorDistributionGiftItemUpdateWithWhereUniqueWithoutFromInventoryInput[]
-    updateMany?: DoctorDistributionGiftItemUpdateManyWithWhereWithoutFromInventoryInput | DoctorDistributionGiftItemUpdateManyWithWhereWithoutFromInventoryInput[]
-    deleteMany?: DoctorDistributionGiftItemScalarWhereInput | DoctorDistributionGiftItemScalarWhereInput[]
+  export type SampleDistributionGiftItemUncheckedUpdateManyWithoutFromInventoryNestedInput = {
+    create?: XOR<SampleDistributionGiftItemCreateWithoutFromInventoryInput, SampleDistributionGiftItemUncheckedCreateWithoutFromInventoryInput> | SampleDistributionGiftItemCreateWithoutFromInventoryInput[] | SampleDistributionGiftItemUncheckedCreateWithoutFromInventoryInput[]
+    connectOrCreate?: SampleDistributionGiftItemCreateOrConnectWithoutFromInventoryInput | SampleDistributionGiftItemCreateOrConnectWithoutFromInventoryInput[]
+    upsert?: SampleDistributionGiftItemUpsertWithWhereUniqueWithoutFromInventoryInput | SampleDistributionGiftItemUpsertWithWhereUniqueWithoutFromInventoryInput[]
+    createMany?: SampleDistributionGiftItemCreateManyFromInventoryInputEnvelope
+    set?: SampleDistributionGiftItemWhereUniqueInput | SampleDistributionGiftItemWhereUniqueInput[]
+    disconnect?: SampleDistributionGiftItemWhereUniqueInput | SampleDistributionGiftItemWhereUniqueInput[]
+    delete?: SampleDistributionGiftItemWhereUniqueInput | SampleDistributionGiftItemWhereUniqueInput[]
+    connect?: SampleDistributionGiftItemWhereUniqueInput | SampleDistributionGiftItemWhereUniqueInput[]
+    update?: SampleDistributionGiftItemUpdateWithWhereUniqueWithoutFromInventoryInput | SampleDistributionGiftItemUpdateWithWhereUniqueWithoutFromInventoryInput[]
+    updateMany?: SampleDistributionGiftItemUpdateManyWithWhereWithoutFromInventoryInput | SampleDistributionGiftItemUpdateManyWithWhereWithoutFromInventoryInput[]
+    deleteMany?: SampleDistributionGiftItemScalarWhereInput | SampleDistributionGiftItemScalarWhereInput[]
   }
 
-  export type DoctorInteractionCreateNestedOneWithoutDoctorDistributionInput = {
-    create?: XOR<DoctorInteractionCreateWithoutDoctorDistributionInput, DoctorInteractionUncheckedCreateWithoutDoctorDistributionInput>
-    connectOrCreate?: DoctorInteractionCreateOrConnectWithoutDoctorDistributionInput
-    connect?: DoctorInteractionWhereUniqueInput
+  export type DoctorCreateNestedOneWithoutSampleDistributionsInput = {
+    create?: XOR<DoctorCreateWithoutSampleDistributionsInput, DoctorUncheckedCreateWithoutSampleDistributionsInput>
+    connectOrCreate?: DoctorCreateOrConnectWithoutSampleDistributionsInput
+    connect?: DoctorWhereUniqueInput
   }
 
-  export type EmployeeCreateNestedOneWithoutDoctorDistributionsInput = {
-    create?: XOR<EmployeeCreateWithoutDoctorDistributionsInput, EmployeeUncheckedCreateWithoutDoctorDistributionsInput>
-    connectOrCreate?: EmployeeCreateOrConnectWithoutDoctorDistributionsInput
+  export type ChemistCreateNestedOneWithoutSampleDistributionsInput = {
+    create?: XOR<ChemistCreateWithoutSampleDistributionsInput, ChemistUncheckedCreateWithoutSampleDistributionsInput>
+    connectOrCreate?: ChemistCreateOrConnectWithoutSampleDistributionsInput
+    connect?: ChemistWhereUniqueInput
+  }
+
+  export type EmployeeCreateNestedOneWithoutSampleDistributionsInput = {
+    create?: XOR<EmployeeCreateWithoutSampleDistributionsInput, EmployeeUncheckedCreateWithoutSampleDistributionsInput>
+    connectOrCreate?: EmployeeCreateOrConnectWithoutSampleDistributionsInput
     connect?: EmployeeWhereUniqueInput
   }
 
-  export type DoctorDistributionDrugItemCreateNestedManyWithoutDoctorDistributionInput = {
-    create?: XOR<DoctorDistributionDrugItemCreateWithoutDoctorDistributionInput, DoctorDistributionDrugItemUncheckedCreateWithoutDoctorDistributionInput> | DoctorDistributionDrugItemCreateWithoutDoctorDistributionInput[] | DoctorDistributionDrugItemUncheckedCreateWithoutDoctorDistributionInput[]
-    connectOrCreate?: DoctorDistributionDrugItemCreateOrConnectWithoutDoctorDistributionInput | DoctorDistributionDrugItemCreateOrConnectWithoutDoctorDistributionInput[]
-    createMany?: DoctorDistributionDrugItemCreateManyDoctorDistributionInputEnvelope
-    connect?: DoctorDistributionDrugItemWhereUniqueInput | DoctorDistributionDrugItemWhereUniqueInput[]
+  export type SampleDistributionDrugItemCreateNestedManyWithoutSampleDistributionInput = {
+    create?: XOR<SampleDistributionDrugItemCreateWithoutSampleDistributionInput, SampleDistributionDrugItemUncheckedCreateWithoutSampleDistributionInput> | SampleDistributionDrugItemCreateWithoutSampleDistributionInput[] | SampleDistributionDrugItemUncheckedCreateWithoutSampleDistributionInput[]
+    connectOrCreate?: SampleDistributionDrugItemCreateOrConnectWithoutSampleDistributionInput | SampleDistributionDrugItemCreateOrConnectWithoutSampleDistributionInput[]
+    createMany?: SampleDistributionDrugItemCreateManySampleDistributionInputEnvelope
+    connect?: SampleDistributionDrugItemWhereUniqueInput | SampleDistributionDrugItemWhereUniqueInput[]
   }
 
-  export type DoctorDistributionGiftItemCreateNestedManyWithoutDoctorDistributionInput = {
-    create?: XOR<DoctorDistributionGiftItemCreateWithoutDoctorDistributionInput, DoctorDistributionGiftItemUncheckedCreateWithoutDoctorDistributionInput> | DoctorDistributionGiftItemCreateWithoutDoctorDistributionInput[] | DoctorDistributionGiftItemUncheckedCreateWithoutDoctorDistributionInput[]
-    connectOrCreate?: DoctorDistributionGiftItemCreateOrConnectWithoutDoctorDistributionInput | DoctorDistributionGiftItemCreateOrConnectWithoutDoctorDistributionInput[]
-    createMany?: DoctorDistributionGiftItemCreateManyDoctorDistributionInputEnvelope
-    connect?: DoctorDistributionGiftItemWhereUniqueInput | DoctorDistributionGiftItemWhereUniqueInput[]
+  export type SampleDistributionGiftItemCreateNestedManyWithoutSampleDistributionInput = {
+    create?: XOR<SampleDistributionGiftItemCreateWithoutSampleDistributionInput, SampleDistributionGiftItemUncheckedCreateWithoutSampleDistributionInput> | SampleDistributionGiftItemCreateWithoutSampleDistributionInput[] | SampleDistributionGiftItemUncheckedCreateWithoutSampleDistributionInput[]
+    connectOrCreate?: SampleDistributionGiftItemCreateOrConnectWithoutSampleDistributionInput | SampleDistributionGiftItemCreateOrConnectWithoutSampleDistributionInput[]
+    createMany?: SampleDistributionGiftItemCreateManySampleDistributionInputEnvelope
+    connect?: SampleDistributionGiftItemWhereUniqueInput | SampleDistributionGiftItemWhereUniqueInput[]
   }
 
-  export type DoctorDistributionDrugItemUncheckedCreateNestedManyWithoutDoctorDistributionInput = {
-    create?: XOR<DoctorDistributionDrugItemCreateWithoutDoctorDistributionInput, DoctorDistributionDrugItemUncheckedCreateWithoutDoctorDistributionInput> | DoctorDistributionDrugItemCreateWithoutDoctorDistributionInput[] | DoctorDistributionDrugItemUncheckedCreateWithoutDoctorDistributionInput[]
-    connectOrCreate?: DoctorDistributionDrugItemCreateOrConnectWithoutDoctorDistributionInput | DoctorDistributionDrugItemCreateOrConnectWithoutDoctorDistributionInput[]
-    createMany?: DoctorDistributionDrugItemCreateManyDoctorDistributionInputEnvelope
-    connect?: DoctorDistributionDrugItemWhereUniqueInput | DoctorDistributionDrugItemWhereUniqueInput[]
+  export type SampleDistributionDrugItemUncheckedCreateNestedManyWithoutSampleDistributionInput = {
+    create?: XOR<SampleDistributionDrugItemCreateWithoutSampleDistributionInput, SampleDistributionDrugItemUncheckedCreateWithoutSampleDistributionInput> | SampleDistributionDrugItemCreateWithoutSampleDistributionInput[] | SampleDistributionDrugItemUncheckedCreateWithoutSampleDistributionInput[]
+    connectOrCreate?: SampleDistributionDrugItemCreateOrConnectWithoutSampleDistributionInput | SampleDistributionDrugItemCreateOrConnectWithoutSampleDistributionInput[]
+    createMany?: SampleDistributionDrugItemCreateManySampleDistributionInputEnvelope
+    connect?: SampleDistributionDrugItemWhereUniqueInput | SampleDistributionDrugItemWhereUniqueInput[]
   }
 
-  export type DoctorDistributionGiftItemUncheckedCreateNestedManyWithoutDoctorDistributionInput = {
-    create?: XOR<DoctorDistributionGiftItemCreateWithoutDoctorDistributionInput, DoctorDistributionGiftItemUncheckedCreateWithoutDoctorDistributionInput> | DoctorDistributionGiftItemCreateWithoutDoctorDistributionInput[] | DoctorDistributionGiftItemUncheckedCreateWithoutDoctorDistributionInput[]
-    connectOrCreate?: DoctorDistributionGiftItemCreateOrConnectWithoutDoctorDistributionInput | DoctorDistributionGiftItemCreateOrConnectWithoutDoctorDistributionInput[]
-    createMany?: DoctorDistributionGiftItemCreateManyDoctorDistributionInputEnvelope
-    connect?: DoctorDistributionGiftItemWhereUniqueInput | DoctorDistributionGiftItemWhereUniqueInput[]
+  export type SampleDistributionGiftItemUncheckedCreateNestedManyWithoutSampleDistributionInput = {
+    create?: XOR<SampleDistributionGiftItemCreateWithoutSampleDistributionInput, SampleDistributionGiftItemUncheckedCreateWithoutSampleDistributionInput> | SampleDistributionGiftItemCreateWithoutSampleDistributionInput[] | SampleDistributionGiftItemUncheckedCreateWithoutSampleDistributionInput[]
+    connectOrCreate?: SampleDistributionGiftItemCreateOrConnectWithoutSampleDistributionInput | SampleDistributionGiftItemCreateOrConnectWithoutSampleDistributionInput[]
+    createMany?: SampleDistributionGiftItemCreateManySampleDistributionInputEnvelope
+    connect?: SampleDistributionGiftItemWhereUniqueInput | SampleDistributionGiftItemWhereUniqueInput[]
   }
 
-  export type DoctorInteractionUpdateOneRequiredWithoutDoctorDistributionNestedInput = {
-    create?: XOR<DoctorInteractionCreateWithoutDoctorDistributionInput, DoctorInteractionUncheckedCreateWithoutDoctorDistributionInput>
-    connectOrCreate?: DoctorInteractionCreateOrConnectWithoutDoctorDistributionInput
-    upsert?: DoctorInteractionUpsertWithoutDoctorDistributionInput
-    connect?: DoctorInteractionWhereUniqueInput
-    update?: XOR<XOR<DoctorInteractionUpdateToOneWithWhereWithoutDoctorDistributionInput, DoctorInteractionUpdateWithoutDoctorDistributionInput>, DoctorInteractionUncheckedUpdateWithoutDoctorDistributionInput>
+  export type DoctorUpdateOneWithoutSampleDistributionsNestedInput = {
+    create?: XOR<DoctorCreateWithoutSampleDistributionsInput, DoctorUncheckedCreateWithoutSampleDistributionsInput>
+    connectOrCreate?: DoctorCreateOrConnectWithoutSampleDistributionsInput
+    upsert?: DoctorUpsertWithoutSampleDistributionsInput
+    disconnect?: DoctorWhereInput | boolean
+    delete?: DoctorWhereInput | boolean
+    connect?: DoctorWhereUniqueInput
+    update?: XOR<XOR<DoctorUpdateToOneWithWhereWithoutSampleDistributionsInput, DoctorUpdateWithoutSampleDistributionsInput>, DoctorUncheckedUpdateWithoutSampleDistributionsInput>
   }
 
-  export type EmployeeUpdateOneRequiredWithoutDoctorDistributionsNestedInput = {
-    create?: XOR<EmployeeCreateWithoutDoctorDistributionsInput, EmployeeUncheckedCreateWithoutDoctorDistributionsInput>
-    connectOrCreate?: EmployeeCreateOrConnectWithoutDoctorDistributionsInput
-    upsert?: EmployeeUpsertWithoutDoctorDistributionsInput
+  export type ChemistUpdateOneWithoutSampleDistributionsNestedInput = {
+    create?: XOR<ChemistCreateWithoutSampleDistributionsInput, ChemistUncheckedCreateWithoutSampleDistributionsInput>
+    connectOrCreate?: ChemistCreateOrConnectWithoutSampleDistributionsInput
+    upsert?: ChemistUpsertWithoutSampleDistributionsInput
+    disconnect?: ChemistWhereInput | boolean
+    delete?: ChemistWhereInput | boolean
+    connect?: ChemistWhereUniqueInput
+    update?: XOR<XOR<ChemistUpdateToOneWithWhereWithoutSampleDistributionsInput, ChemistUpdateWithoutSampleDistributionsInput>, ChemistUncheckedUpdateWithoutSampleDistributionsInput>
+  }
+
+  export type EmployeeUpdateOneRequiredWithoutSampleDistributionsNestedInput = {
+    create?: XOR<EmployeeCreateWithoutSampleDistributionsInput, EmployeeUncheckedCreateWithoutSampleDistributionsInput>
+    connectOrCreate?: EmployeeCreateOrConnectWithoutSampleDistributionsInput
+    upsert?: EmployeeUpsertWithoutSampleDistributionsInput
     connect?: EmployeeWhereUniqueInput
-    update?: XOR<XOR<EmployeeUpdateToOneWithWhereWithoutDoctorDistributionsInput, EmployeeUpdateWithoutDoctorDistributionsInput>, EmployeeUncheckedUpdateWithoutDoctorDistributionsInput>
+    update?: XOR<XOR<EmployeeUpdateToOneWithWhereWithoutSampleDistributionsInput, EmployeeUpdateWithoutSampleDistributionsInput>, EmployeeUncheckedUpdateWithoutSampleDistributionsInput>
   }
 
-  export type DoctorDistributionDrugItemUpdateManyWithoutDoctorDistributionNestedInput = {
-    create?: XOR<DoctorDistributionDrugItemCreateWithoutDoctorDistributionInput, DoctorDistributionDrugItemUncheckedCreateWithoutDoctorDistributionInput> | DoctorDistributionDrugItemCreateWithoutDoctorDistributionInput[] | DoctorDistributionDrugItemUncheckedCreateWithoutDoctorDistributionInput[]
-    connectOrCreate?: DoctorDistributionDrugItemCreateOrConnectWithoutDoctorDistributionInput | DoctorDistributionDrugItemCreateOrConnectWithoutDoctorDistributionInput[]
-    upsert?: DoctorDistributionDrugItemUpsertWithWhereUniqueWithoutDoctorDistributionInput | DoctorDistributionDrugItemUpsertWithWhereUniqueWithoutDoctorDistributionInput[]
-    createMany?: DoctorDistributionDrugItemCreateManyDoctorDistributionInputEnvelope
-    set?: DoctorDistributionDrugItemWhereUniqueInput | DoctorDistributionDrugItemWhereUniqueInput[]
-    disconnect?: DoctorDistributionDrugItemWhereUniqueInput | DoctorDistributionDrugItemWhereUniqueInput[]
-    delete?: DoctorDistributionDrugItemWhereUniqueInput | DoctorDistributionDrugItemWhereUniqueInput[]
-    connect?: DoctorDistributionDrugItemWhereUniqueInput | DoctorDistributionDrugItemWhereUniqueInput[]
-    update?: DoctorDistributionDrugItemUpdateWithWhereUniqueWithoutDoctorDistributionInput | DoctorDistributionDrugItemUpdateWithWhereUniqueWithoutDoctorDistributionInput[]
-    updateMany?: DoctorDistributionDrugItemUpdateManyWithWhereWithoutDoctorDistributionInput | DoctorDistributionDrugItemUpdateManyWithWhereWithoutDoctorDistributionInput[]
-    deleteMany?: DoctorDistributionDrugItemScalarWhereInput | DoctorDistributionDrugItemScalarWhereInput[]
+  export type SampleDistributionDrugItemUpdateManyWithoutSampleDistributionNestedInput = {
+    create?: XOR<SampleDistributionDrugItemCreateWithoutSampleDistributionInput, SampleDistributionDrugItemUncheckedCreateWithoutSampleDistributionInput> | SampleDistributionDrugItemCreateWithoutSampleDistributionInput[] | SampleDistributionDrugItemUncheckedCreateWithoutSampleDistributionInput[]
+    connectOrCreate?: SampleDistributionDrugItemCreateOrConnectWithoutSampleDistributionInput | SampleDistributionDrugItemCreateOrConnectWithoutSampleDistributionInput[]
+    upsert?: SampleDistributionDrugItemUpsertWithWhereUniqueWithoutSampleDistributionInput | SampleDistributionDrugItemUpsertWithWhereUniqueWithoutSampleDistributionInput[]
+    createMany?: SampleDistributionDrugItemCreateManySampleDistributionInputEnvelope
+    set?: SampleDistributionDrugItemWhereUniqueInput | SampleDistributionDrugItemWhereUniqueInput[]
+    disconnect?: SampleDistributionDrugItemWhereUniqueInput | SampleDistributionDrugItemWhereUniqueInput[]
+    delete?: SampleDistributionDrugItemWhereUniqueInput | SampleDistributionDrugItemWhereUniqueInput[]
+    connect?: SampleDistributionDrugItemWhereUniqueInput | SampleDistributionDrugItemWhereUniqueInput[]
+    update?: SampleDistributionDrugItemUpdateWithWhereUniqueWithoutSampleDistributionInput | SampleDistributionDrugItemUpdateWithWhereUniqueWithoutSampleDistributionInput[]
+    updateMany?: SampleDistributionDrugItemUpdateManyWithWhereWithoutSampleDistributionInput | SampleDistributionDrugItemUpdateManyWithWhereWithoutSampleDistributionInput[]
+    deleteMany?: SampleDistributionDrugItemScalarWhereInput | SampleDistributionDrugItemScalarWhereInput[]
   }
 
-  export type DoctorDistributionGiftItemUpdateManyWithoutDoctorDistributionNestedInput = {
-    create?: XOR<DoctorDistributionGiftItemCreateWithoutDoctorDistributionInput, DoctorDistributionGiftItemUncheckedCreateWithoutDoctorDistributionInput> | DoctorDistributionGiftItemCreateWithoutDoctorDistributionInput[] | DoctorDistributionGiftItemUncheckedCreateWithoutDoctorDistributionInput[]
-    connectOrCreate?: DoctorDistributionGiftItemCreateOrConnectWithoutDoctorDistributionInput | DoctorDistributionGiftItemCreateOrConnectWithoutDoctorDistributionInput[]
-    upsert?: DoctorDistributionGiftItemUpsertWithWhereUniqueWithoutDoctorDistributionInput | DoctorDistributionGiftItemUpsertWithWhereUniqueWithoutDoctorDistributionInput[]
-    createMany?: DoctorDistributionGiftItemCreateManyDoctorDistributionInputEnvelope
-    set?: DoctorDistributionGiftItemWhereUniqueInput | DoctorDistributionGiftItemWhereUniqueInput[]
-    disconnect?: DoctorDistributionGiftItemWhereUniqueInput | DoctorDistributionGiftItemWhereUniqueInput[]
-    delete?: DoctorDistributionGiftItemWhereUniqueInput | DoctorDistributionGiftItemWhereUniqueInput[]
-    connect?: DoctorDistributionGiftItemWhereUniqueInput | DoctorDistributionGiftItemWhereUniqueInput[]
-    update?: DoctorDistributionGiftItemUpdateWithWhereUniqueWithoutDoctorDistributionInput | DoctorDistributionGiftItemUpdateWithWhereUniqueWithoutDoctorDistributionInput[]
-    updateMany?: DoctorDistributionGiftItemUpdateManyWithWhereWithoutDoctorDistributionInput | DoctorDistributionGiftItemUpdateManyWithWhereWithoutDoctorDistributionInput[]
-    deleteMany?: DoctorDistributionGiftItemScalarWhereInput | DoctorDistributionGiftItemScalarWhereInput[]
+  export type SampleDistributionGiftItemUpdateManyWithoutSampleDistributionNestedInput = {
+    create?: XOR<SampleDistributionGiftItemCreateWithoutSampleDistributionInput, SampleDistributionGiftItemUncheckedCreateWithoutSampleDistributionInput> | SampleDistributionGiftItemCreateWithoutSampleDistributionInput[] | SampleDistributionGiftItemUncheckedCreateWithoutSampleDistributionInput[]
+    connectOrCreate?: SampleDistributionGiftItemCreateOrConnectWithoutSampleDistributionInput | SampleDistributionGiftItemCreateOrConnectWithoutSampleDistributionInput[]
+    upsert?: SampleDistributionGiftItemUpsertWithWhereUniqueWithoutSampleDistributionInput | SampleDistributionGiftItemUpsertWithWhereUniqueWithoutSampleDistributionInput[]
+    createMany?: SampleDistributionGiftItemCreateManySampleDistributionInputEnvelope
+    set?: SampleDistributionGiftItemWhereUniqueInput | SampleDistributionGiftItemWhereUniqueInput[]
+    disconnect?: SampleDistributionGiftItemWhereUniqueInput | SampleDistributionGiftItemWhereUniqueInput[]
+    delete?: SampleDistributionGiftItemWhereUniqueInput | SampleDistributionGiftItemWhereUniqueInput[]
+    connect?: SampleDistributionGiftItemWhereUniqueInput | SampleDistributionGiftItemWhereUniqueInput[]
+    update?: SampleDistributionGiftItemUpdateWithWhereUniqueWithoutSampleDistributionInput | SampleDistributionGiftItemUpdateWithWhereUniqueWithoutSampleDistributionInput[]
+    updateMany?: SampleDistributionGiftItemUpdateManyWithWhereWithoutSampleDistributionInput | SampleDistributionGiftItemUpdateManyWithWhereWithoutSampleDistributionInput[]
+    deleteMany?: SampleDistributionGiftItemScalarWhereInput | SampleDistributionGiftItemScalarWhereInput[]
   }
 
-  export type DoctorDistributionDrugItemUncheckedUpdateManyWithoutDoctorDistributionNestedInput = {
-    create?: XOR<DoctorDistributionDrugItemCreateWithoutDoctorDistributionInput, DoctorDistributionDrugItemUncheckedCreateWithoutDoctorDistributionInput> | DoctorDistributionDrugItemCreateWithoutDoctorDistributionInput[] | DoctorDistributionDrugItemUncheckedCreateWithoutDoctorDistributionInput[]
-    connectOrCreate?: DoctorDistributionDrugItemCreateOrConnectWithoutDoctorDistributionInput | DoctorDistributionDrugItemCreateOrConnectWithoutDoctorDistributionInput[]
-    upsert?: DoctorDistributionDrugItemUpsertWithWhereUniqueWithoutDoctorDistributionInput | DoctorDistributionDrugItemUpsertWithWhereUniqueWithoutDoctorDistributionInput[]
-    createMany?: DoctorDistributionDrugItemCreateManyDoctorDistributionInputEnvelope
-    set?: DoctorDistributionDrugItemWhereUniqueInput | DoctorDistributionDrugItemWhereUniqueInput[]
-    disconnect?: DoctorDistributionDrugItemWhereUniqueInput | DoctorDistributionDrugItemWhereUniqueInput[]
-    delete?: DoctorDistributionDrugItemWhereUniqueInput | DoctorDistributionDrugItemWhereUniqueInput[]
-    connect?: DoctorDistributionDrugItemWhereUniqueInput | DoctorDistributionDrugItemWhereUniqueInput[]
-    update?: DoctorDistributionDrugItemUpdateWithWhereUniqueWithoutDoctorDistributionInput | DoctorDistributionDrugItemUpdateWithWhereUniqueWithoutDoctorDistributionInput[]
-    updateMany?: DoctorDistributionDrugItemUpdateManyWithWhereWithoutDoctorDistributionInput | DoctorDistributionDrugItemUpdateManyWithWhereWithoutDoctorDistributionInput[]
-    deleteMany?: DoctorDistributionDrugItemScalarWhereInput | DoctorDistributionDrugItemScalarWhereInput[]
+  export type SampleDistributionDrugItemUncheckedUpdateManyWithoutSampleDistributionNestedInput = {
+    create?: XOR<SampleDistributionDrugItemCreateWithoutSampleDistributionInput, SampleDistributionDrugItemUncheckedCreateWithoutSampleDistributionInput> | SampleDistributionDrugItemCreateWithoutSampleDistributionInput[] | SampleDistributionDrugItemUncheckedCreateWithoutSampleDistributionInput[]
+    connectOrCreate?: SampleDistributionDrugItemCreateOrConnectWithoutSampleDistributionInput | SampleDistributionDrugItemCreateOrConnectWithoutSampleDistributionInput[]
+    upsert?: SampleDistributionDrugItemUpsertWithWhereUniqueWithoutSampleDistributionInput | SampleDistributionDrugItemUpsertWithWhereUniqueWithoutSampleDistributionInput[]
+    createMany?: SampleDistributionDrugItemCreateManySampleDistributionInputEnvelope
+    set?: SampleDistributionDrugItemWhereUniqueInput | SampleDistributionDrugItemWhereUniqueInput[]
+    disconnect?: SampleDistributionDrugItemWhereUniqueInput | SampleDistributionDrugItemWhereUniqueInput[]
+    delete?: SampleDistributionDrugItemWhereUniqueInput | SampleDistributionDrugItemWhereUniqueInput[]
+    connect?: SampleDistributionDrugItemWhereUniqueInput | SampleDistributionDrugItemWhereUniqueInput[]
+    update?: SampleDistributionDrugItemUpdateWithWhereUniqueWithoutSampleDistributionInput | SampleDistributionDrugItemUpdateWithWhereUniqueWithoutSampleDistributionInput[]
+    updateMany?: SampleDistributionDrugItemUpdateManyWithWhereWithoutSampleDistributionInput | SampleDistributionDrugItemUpdateManyWithWhereWithoutSampleDistributionInput[]
+    deleteMany?: SampleDistributionDrugItemScalarWhereInput | SampleDistributionDrugItemScalarWhereInput[]
   }
 
-  export type DoctorDistributionGiftItemUncheckedUpdateManyWithoutDoctorDistributionNestedInput = {
-    create?: XOR<DoctorDistributionGiftItemCreateWithoutDoctorDistributionInput, DoctorDistributionGiftItemUncheckedCreateWithoutDoctorDistributionInput> | DoctorDistributionGiftItemCreateWithoutDoctorDistributionInput[] | DoctorDistributionGiftItemUncheckedCreateWithoutDoctorDistributionInput[]
-    connectOrCreate?: DoctorDistributionGiftItemCreateOrConnectWithoutDoctorDistributionInput | DoctorDistributionGiftItemCreateOrConnectWithoutDoctorDistributionInput[]
-    upsert?: DoctorDistributionGiftItemUpsertWithWhereUniqueWithoutDoctorDistributionInput | DoctorDistributionGiftItemUpsertWithWhereUniqueWithoutDoctorDistributionInput[]
-    createMany?: DoctorDistributionGiftItemCreateManyDoctorDistributionInputEnvelope
-    set?: DoctorDistributionGiftItemWhereUniqueInput | DoctorDistributionGiftItemWhereUniqueInput[]
-    disconnect?: DoctorDistributionGiftItemWhereUniqueInput | DoctorDistributionGiftItemWhereUniqueInput[]
-    delete?: DoctorDistributionGiftItemWhereUniqueInput | DoctorDistributionGiftItemWhereUniqueInput[]
-    connect?: DoctorDistributionGiftItemWhereUniqueInput | DoctorDistributionGiftItemWhereUniqueInput[]
-    update?: DoctorDistributionGiftItemUpdateWithWhereUniqueWithoutDoctorDistributionInput | DoctorDistributionGiftItemUpdateWithWhereUniqueWithoutDoctorDistributionInput[]
-    updateMany?: DoctorDistributionGiftItemUpdateManyWithWhereWithoutDoctorDistributionInput | DoctorDistributionGiftItemUpdateManyWithWhereWithoutDoctorDistributionInput[]
-    deleteMany?: DoctorDistributionGiftItemScalarWhereInput | DoctorDistributionGiftItemScalarWhereInput[]
+  export type SampleDistributionGiftItemUncheckedUpdateManyWithoutSampleDistributionNestedInput = {
+    create?: XOR<SampleDistributionGiftItemCreateWithoutSampleDistributionInput, SampleDistributionGiftItemUncheckedCreateWithoutSampleDistributionInput> | SampleDistributionGiftItemCreateWithoutSampleDistributionInput[] | SampleDistributionGiftItemUncheckedCreateWithoutSampleDistributionInput[]
+    connectOrCreate?: SampleDistributionGiftItemCreateOrConnectWithoutSampleDistributionInput | SampleDistributionGiftItemCreateOrConnectWithoutSampleDistributionInput[]
+    upsert?: SampleDistributionGiftItemUpsertWithWhereUniqueWithoutSampleDistributionInput | SampleDistributionGiftItemUpsertWithWhereUniqueWithoutSampleDistributionInput[]
+    createMany?: SampleDistributionGiftItemCreateManySampleDistributionInputEnvelope
+    set?: SampleDistributionGiftItemWhereUniqueInput | SampleDistributionGiftItemWhereUniqueInput[]
+    disconnect?: SampleDistributionGiftItemWhereUniqueInput | SampleDistributionGiftItemWhereUniqueInput[]
+    delete?: SampleDistributionGiftItemWhereUniqueInput | SampleDistributionGiftItemWhereUniqueInput[]
+    connect?: SampleDistributionGiftItemWhereUniqueInput | SampleDistributionGiftItemWhereUniqueInput[]
+    update?: SampleDistributionGiftItemUpdateWithWhereUniqueWithoutSampleDistributionInput | SampleDistributionGiftItemUpdateWithWhereUniqueWithoutSampleDistributionInput[]
+    updateMany?: SampleDistributionGiftItemUpdateManyWithWhereWithoutSampleDistributionInput | SampleDistributionGiftItemUpdateManyWithWhereWithoutSampleDistributionInput[]
+    deleteMany?: SampleDistributionGiftItemScalarWhereInput | SampleDistributionGiftItemScalarWhereInput[]
   }
 
-  export type DoctorDistributionCreateNestedOneWithoutDrugItemsInput = {
-    create?: XOR<DoctorDistributionCreateWithoutDrugItemsInput, DoctorDistributionUncheckedCreateWithoutDrugItemsInput>
-    connectOrCreate?: DoctorDistributionCreateOrConnectWithoutDrugItemsInput
-    connect?: DoctorDistributionWhereUniqueInput
+  export type SampleDistributionCreateNestedOneWithoutDrugItemsInput = {
+    create?: XOR<SampleDistributionCreateWithoutDrugItemsInput, SampleDistributionUncheckedCreateWithoutDrugItemsInput>
+    connectOrCreate?: SampleDistributionCreateOrConnectWithoutDrugItemsInput
+    connect?: SampleDistributionWhereUniqueInput
   }
 
-  export type DrugCreateNestedOneWithoutDoctorDistributionDrugItemInput = {
-    create?: XOR<DrugCreateWithoutDoctorDistributionDrugItemInput, DrugUncheckedCreateWithoutDoctorDistributionDrugItemInput>
-    connectOrCreate?: DrugCreateOrConnectWithoutDoctorDistributionDrugItemInput
-    connect?: DrugWhereUniqueInput
-  }
-
-  export type UserDrugInventoryCreateNestedOneWithoutDoctorDistributionDrugItemsInput = {
-    create?: XOR<UserDrugInventoryCreateWithoutDoctorDistributionDrugItemsInput, UserDrugInventoryUncheckedCreateWithoutDoctorDistributionDrugItemsInput>
-    connectOrCreate?: UserDrugInventoryCreateOrConnectWithoutDoctorDistributionDrugItemsInput
+  export type UserDrugInventoryCreateNestedOneWithoutSampleDistributionDrugItemsInput = {
+    create?: XOR<UserDrugInventoryCreateWithoutSampleDistributionDrugItemsInput, UserDrugInventoryUncheckedCreateWithoutSampleDistributionDrugItemsInput>
+    connectOrCreate?: UserDrugInventoryCreateOrConnectWithoutSampleDistributionDrugItemsInput
     connect?: UserDrugInventoryWhereUniqueInput
   }
 
-  export type DoctorDistributionUpdateOneRequiredWithoutDrugItemsNestedInput = {
-    create?: XOR<DoctorDistributionCreateWithoutDrugItemsInput, DoctorDistributionUncheckedCreateWithoutDrugItemsInput>
-    connectOrCreate?: DoctorDistributionCreateOrConnectWithoutDrugItemsInput
-    upsert?: DoctorDistributionUpsertWithoutDrugItemsInput
-    connect?: DoctorDistributionWhereUniqueInput
-    update?: XOR<XOR<DoctorDistributionUpdateToOneWithWhereWithoutDrugItemsInput, DoctorDistributionUpdateWithoutDrugItemsInput>, DoctorDistributionUncheckedUpdateWithoutDrugItemsInput>
+  export type SampleDistributionUpdateOneRequiredWithoutDrugItemsNestedInput = {
+    create?: XOR<SampleDistributionCreateWithoutDrugItemsInput, SampleDistributionUncheckedCreateWithoutDrugItemsInput>
+    connectOrCreate?: SampleDistributionCreateOrConnectWithoutDrugItemsInput
+    upsert?: SampleDistributionUpsertWithoutDrugItemsInput
+    connect?: SampleDistributionWhereUniqueInput
+    update?: XOR<XOR<SampleDistributionUpdateToOneWithWhereWithoutDrugItemsInput, SampleDistributionUpdateWithoutDrugItemsInput>, SampleDistributionUncheckedUpdateWithoutDrugItemsInput>
   }
 
-  export type DrugUpdateOneRequiredWithoutDoctorDistributionDrugItemNestedInput = {
-    create?: XOR<DrugCreateWithoutDoctorDistributionDrugItemInput, DrugUncheckedCreateWithoutDoctorDistributionDrugItemInput>
-    connectOrCreate?: DrugCreateOrConnectWithoutDoctorDistributionDrugItemInput
-    upsert?: DrugUpsertWithoutDoctorDistributionDrugItemInput
-    connect?: DrugWhereUniqueInput
-    update?: XOR<XOR<DrugUpdateToOneWithWhereWithoutDoctorDistributionDrugItemInput, DrugUpdateWithoutDoctorDistributionDrugItemInput>, DrugUncheckedUpdateWithoutDoctorDistributionDrugItemInput>
-  }
-
-  export type UserDrugInventoryUpdateOneRequiredWithoutDoctorDistributionDrugItemsNestedInput = {
-    create?: XOR<UserDrugInventoryCreateWithoutDoctorDistributionDrugItemsInput, UserDrugInventoryUncheckedCreateWithoutDoctorDistributionDrugItemsInput>
-    connectOrCreate?: UserDrugInventoryCreateOrConnectWithoutDoctorDistributionDrugItemsInput
-    upsert?: UserDrugInventoryUpsertWithoutDoctorDistributionDrugItemsInput
+  export type UserDrugInventoryUpdateOneRequiredWithoutSampleDistributionDrugItemsNestedInput = {
+    create?: XOR<UserDrugInventoryCreateWithoutSampleDistributionDrugItemsInput, UserDrugInventoryUncheckedCreateWithoutSampleDistributionDrugItemsInput>
+    connectOrCreate?: UserDrugInventoryCreateOrConnectWithoutSampleDistributionDrugItemsInput
+    upsert?: UserDrugInventoryUpsertWithoutSampleDistributionDrugItemsInput
     connect?: UserDrugInventoryWhereUniqueInput
-    update?: XOR<XOR<UserDrugInventoryUpdateToOneWithWhereWithoutDoctorDistributionDrugItemsInput, UserDrugInventoryUpdateWithoutDoctorDistributionDrugItemsInput>, UserDrugInventoryUncheckedUpdateWithoutDoctorDistributionDrugItemsInput>
+    update?: XOR<XOR<UserDrugInventoryUpdateToOneWithWhereWithoutSampleDistributionDrugItemsInput, UserDrugInventoryUpdateWithoutSampleDistributionDrugItemsInput>, UserDrugInventoryUncheckedUpdateWithoutSampleDistributionDrugItemsInput>
   }
 
-  export type DoctorDistributionCreateNestedOneWithoutGiftItemsInput = {
-    create?: XOR<DoctorDistributionCreateWithoutGiftItemsInput, DoctorDistributionUncheckedCreateWithoutGiftItemsInput>
-    connectOrCreate?: DoctorDistributionCreateOrConnectWithoutGiftItemsInput
-    connect?: DoctorDistributionWhereUniqueInput
+  export type SampleDistributionCreateNestedOneWithoutGiftItemsInput = {
+    create?: XOR<SampleDistributionCreateWithoutGiftItemsInput, SampleDistributionUncheckedCreateWithoutGiftItemsInput>
+    connectOrCreate?: SampleDistributionCreateOrConnectWithoutGiftItemsInput
+    connect?: SampleDistributionWhereUniqueInput
   }
 
-  export type GiftCreateNestedOneWithoutDoctorDistributionGiftItemsInput = {
-    create?: XOR<GiftCreateWithoutDoctorDistributionGiftItemsInput, GiftUncheckedCreateWithoutDoctorDistributionGiftItemsInput>
-    connectOrCreate?: GiftCreateOrConnectWithoutDoctorDistributionGiftItemsInput
-    connect?: GiftWhereUniqueInput
-  }
-
-  export type UserGiftInventoryCreateNestedOneWithoutDoctorDistributionGiftItemsInput = {
-    create?: XOR<UserGiftInventoryCreateWithoutDoctorDistributionGiftItemsInput, UserGiftInventoryUncheckedCreateWithoutDoctorDistributionGiftItemsInput>
-    connectOrCreate?: UserGiftInventoryCreateOrConnectWithoutDoctorDistributionGiftItemsInput
+  export type UserGiftInventoryCreateNestedOneWithoutSampleDistributionGiftItemsInput = {
+    create?: XOR<UserGiftInventoryCreateWithoutSampleDistributionGiftItemsInput, UserGiftInventoryUncheckedCreateWithoutSampleDistributionGiftItemsInput>
+    connectOrCreate?: UserGiftInventoryCreateOrConnectWithoutSampleDistributionGiftItemsInput
     connect?: UserGiftInventoryWhereUniqueInput
   }
 
-  export type DoctorDistributionUpdateOneRequiredWithoutGiftItemsNestedInput = {
-    create?: XOR<DoctorDistributionCreateWithoutGiftItemsInput, DoctorDistributionUncheckedCreateWithoutGiftItemsInput>
-    connectOrCreate?: DoctorDistributionCreateOrConnectWithoutGiftItemsInput
-    upsert?: DoctorDistributionUpsertWithoutGiftItemsInput
-    connect?: DoctorDistributionWhereUniqueInput
-    update?: XOR<XOR<DoctorDistributionUpdateToOneWithWhereWithoutGiftItemsInput, DoctorDistributionUpdateWithoutGiftItemsInput>, DoctorDistributionUncheckedUpdateWithoutGiftItemsInput>
+  export type SampleDistributionUpdateOneRequiredWithoutGiftItemsNestedInput = {
+    create?: XOR<SampleDistributionCreateWithoutGiftItemsInput, SampleDistributionUncheckedCreateWithoutGiftItemsInput>
+    connectOrCreate?: SampleDistributionCreateOrConnectWithoutGiftItemsInput
+    upsert?: SampleDistributionUpsertWithoutGiftItemsInput
+    connect?: SampleDistributionWhereUniqueInput
+    update?: XOR<XOR<SampleDistributionUpdateToOneWithWhereWithoutGiftItemsInput, SampleDistributionUpdateWithoutGiftItemsInput>, SampleDistributionUncheckedUpdateWithoutGiftItemsInput>
   }
 
-  export type GiftUpdateOneRequiredWithoutDoctorDistributionGiftItemsNestedInput = {
-    create?: XOR<GiftCreateWithoutDoctorDistributionGiftItemsInput, GiftUncheckedCreateWithoutDoctorDistributionGiftItemsInput>
-    connectOrCreate?: GiftCreateOrConnectWithoutDoctorDistributionGiftItemsInput
-    upsert?: GiftUpsertWithoutDoctorDistributionGiftItemsInput
-    connect?: GiftWhereUniqueInput
-    update?: XOR<XOR<GiftUpdateToOneWithWhereWithoutDoctorDistributionGiftItemsInput, GiftUpdateWithoutDoctorDistributionGiftItemsInput>, GiftUncheckedUpdateWithoutDoctorDistributionGiftItemsInput>
-  }
-
-  export type UserGiftInventoryUpdateOneRequiredWithoutDoctorDistributionGiftItemsNestedInput = {
-    create?: XOR<UserGiftInventoryCreateWithoutDoctorDistributionGiftItemsInput, UserGiftInventoryUncheckedCreateWithoutDoctorDistributionGiftItemsInput>
-    connectOrCreate?: UserGiftInventoryCreateOrConnectWithoutDoctorDistributionGiftItemsInput
-    upsert?: UserGiftInventoryUpsertWithoutDoctorDistributionGiftItemsInput
+  export type UserGiftInventoryUpdateOneRequiredWithoutSampleDistributionGiftItemsNestedInput = {
+    create?: XOR<UserGiftInventoryCreateWithoutSampleDistributionGiftItemsInput, UserGiftInventoryUncheckedCreateWithoutSampleDistributionGiftItemsInput>
+    connectOrCreate?: UserGiftInventoryCreateOrConnectWithoutSampleDistributionGiftItemsInput
+    upsert?: UserGiftInventoryUpsertWithoutSampleDistributionGiftItemsInput
     connect?: UserGiftInventoryWhereUniqueInput
-    update?: XOR<XOR<UserGiftInventoryUpdateToOneWithWhereWithoutDoctorDistributionGiftItemsInput, UserGiftInventoryUpdateWithoutDoctorDistributionGiftItemsInput>, UserGiftInventoryUncheckedUpdateWithoutDoctorDistributionGiftItemsInput>
+    update?: XOR<XOR<UserGiftInventoryUpdateToOneWithWhereWithoutSampleDistributionGiftItemsInput, UserGiftInventoryUpdateWithoutSampleDistributionGiftItemsInput>, UserGiftInventoryUncheckedUpdateWithoutSampleDistributionGiftItemsInput>
   }
 
   export type EmployeeCreateNestedOneWithoutAuditLogsInput = {
@@ -69555,7 +69434,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryCreateNestedManyWithoutEmployeeInput
     giftInventories?: UserGiftInventoryCreateNestedManyWithoutEmployeeInput
     giftsCreated?: GiftCreateNestedManyWithoutCreatedByInput
-    doctorDistributions?: DoctorDistributionCreateNestedManyWithoutEmployeeInput
+    sampleDistributions?: SampleDistributionCreateNestedManyWithoutEmployeeInput
     taskPlans?: TaskPlannerCreateNestedManyWithoutEmployeeInput
     doctorTasks?: DoctorTaskCreateNestedManyWithoutEmployeeInput
     chemistTasks?: ChemistTaskCreateNestedManyWithoutEmployeeInput
@@ -69604,7 +69483,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryUncheckedCreateNestedManyWithoutEmployeeInput
     giftInventories?: UserGiftInventoryUncheckedCreateNestedManyWithoutEmployeeInput
     giftsCreated?: GiftUncheckedCreateNestedManyWithoutCreatedByInput
-    doctorDistributions?: DoctorDistributionUncheckedCreateNestedManyWithoutEmployeeInput
+    sampleDistributions?: SampleDistributionUncheckedCreateNestedManyWithoutEmployeeInput
     taskPlans?: TaskPlannerUncheckedCreateNestedManyWithoutEmployeeInput
     doctorTasks?: DoctorTaskUncheckedCreateNestedManyWithoutEmployeeInput
     chemistTasks?: ChemistTaskUncheckedCreateNestedManyWithoutEmployeeInput
@@ -69658,7 +69537,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryCreateNestedManyWithoutEmployeeInput
     giftInventories?: UserGiftInventoryCreateNestedManyWithoutEmployeeInput
     giftsCreated?: GiftCreateNestedManyWithoutCreatedByInput
-    doctorDistributions?: DoctorDistributionCreateNestedManyWithoutEmployeeInput
+    sampleDistributions?: SampleDistributionCreateNestedManyWithoutEmployeeInput
     taskPlans?: TaskPlannerCreateNestedManyWithoutEmployeeInput
     doctorTasks?: DoctorTaskCreateNestedManyWithoutEmployeeInput
     chemistTasks?: ChemistTaskCreateNestedManyWithoutEmployeeInput
@@ -69707,7 +69586,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryUncheckedCreateNestedManyWithoutEmployeeInput
     giftInventories?: UserGiftInventoryUncheckedCreateNestedManyWithoutEmployeeInput
     giftsCreated?: GiftUncheckedCreateNestedManyWithoutCreatedByInput
-    doctorDistributions?: DoctorDistributionUncheckedCreateNestedManyWithoutEmployeeInput
+    sampleDistributions?: SampleDistributionUncheckedCreateNestedManyWithoutEmployeeInput
     taskPlans?: TaskPlannerUncheckedCreateNestedManyWithoutEmployeeInput
     doctorTasks?: DoctorTaskUncheckedCreateNestedManyWithoutEmployeeInput
     chemistTasks?: ChemistTaskUncheckedCreateNestedManyWithoutEmployeeInput
@@ -69886,7 +69765,6 @@ export namespace Prisma {
     createdAt?: Date | string
     doctor: DoctorCreateNestedOneWithoutInteractionsInput
     hospital?: HospitalCreateNestedOneWithoutDoctorInteractionsInput
-    DoctorDistribution?: DoctorDistributionCreateNestedManyWithoutDoctorInteractionInput
     DoctorTask?: DoctorTaskCreateNestedOneWithoutDoctorInteractionsInput
   }
 
@@ -69903,7 +69781,6 @@ export namespace Prisma {
     rating?: number | null
     createdAt?: Date | string
     doctorTaskId?: string | null
-    DoctorDistribution?: DoctorDistributionUncheckedCreateNestedManyWithoutDoctorInteractionInput
   }
 
   export type DoctorInteractionCreateOrConnectWithoutEmployeeInput = {
@@ -70155,6 +70032,7 @@ export namespace Prisma {
     notes?: DoctorNoteCreateNestedManyWithoutDoctorInput
     chemistRelations?: DoctorChemistRelationCreateNestedManyWithoutDoctorInput
     DoctorTask?: DoctorTaskCreateNestedManyWithoutDoctorInput
+    sampleDistributions?: SampleDistributionCreateNestedManyWithoutDoctorInput
   }
 
   export type DoctorUncheckedCreateWithoutCreatedByInput = {
@@ -70178,6 +70056,7 @@ export namespace Prisma {
     notes?: DoctorNoteUncheckedCreateNestedManyWithoutDoctorInput
     chemistRelations?: DoctorChemistRelationUncheckedCreateNestedManyWithoutDoctorInput
     DoctorTask?: DoctorTaskUncheckedCreateNestedManyWithoutDoctorInput
+    sampleDistributions?: SampleDistributionUncheckedCreateNestedManyWithoutDoctorInput
   }
 
   export type DoctorCreateOrConnectWithoutCreatedByInput = {
@@ -70213,7 +70092,6 @@ export namespace Prisma {
     orderItems?: OrderItemCreateNestedManyWithoutDrugInput
     rcpaData?: RcpaDrugDataCreateNestedManyWithoutDrugInput
     UserDrugInventory?: UserDrugInventoryCreateNestedManyWithoutDrugInput
-    DoctorDistributionDrugItem?: DoctorDistributionDrugItemCreateNestedManyWithoutDrugInput
   }
 
   export type DrugUncheckedCreateWithoutCreatedByInput = {
@@ -70239,7 +70117,6 @@ export namespace Prisma {
     orderItems?: OrderItemUncheckedCreateNestedManyWithoutDrugInput
     rcpaData?: RcpaDrugDataUncheckedCreateNestedManyWithoutDrugInput
     UserDrugInventory?: UserDrugInventoryUncheckedCreateNestedManyWithoutDrugInput
-    DoctorDistributionDrugItem?: DoctorDistributionDrugItemUncheckedCreateNestedManyWithoutDrugInput
   }
 
   export type DrugCreateOrConnectWithoutCreatedByInput = {
@@ -70279,6 +70156,7 @@ export namespace Prisma {
     orders?: OrderCreateNestedManyWithoutChemistInput
     rcpaReports?: RcpaReportCreateNestedManyWithoutChemistInput
     chemistTasks?: ChemistTaskCreateNestedManyWithoutChemistInput
+    sampleDistributions?: SampleDistributionCreateNestedManyWithoutChemistInput
   }
 
   export type ChemistUncheckedCreateWithoutCreatedByInput = {
@@ -70308,6 +70186,7 @@ export namespace Prisma {
     orders?: OrderUncheckedCreateNestedManyWithoutChemistInput
     rcpaReports?: RcpaReportUncheckedCreateNestedManyWithoutChemistInput
     chemistTasks?: ChemistTaskUncheckedCreateNestedManyWithoutChemistInput
+    sampleDistributions?: SampleDistributionUncheckedCreateNestedManyWithoutChemistInput
   }
 
   export type ChemistCreateOrConnectWithoutCreatedByInput = {
@@ -70435,7 +70314,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     drug: DrugCreateNestedOneWithoutUserDrugInventoryInput
-    doctorDistributionDrugItems?: DoctorDistributionDrugItemCreateNestedManyWithoutFromInventoryInput
+    sampleDistributionDrugItems?: SampleDistributionDrugItemCreateNestedManyWithoutFromInventoryInput
   }
 
   export type UserDrugInventoryUncheckedCreateWithoutEmployeeInput = {
@@ -70445,7 +70324,7 @@ export namespace Prisma {
     lastRestockedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    doctorDistributionDrugItems?: DoctorDistributionDrugItemUncheckedCreateNestedManyWithoutFromInventoryInput
+    sampleDistributionDrugItems?: SampleDistributionDrugItemUncheckedCreateNestedManyWithoutFromInventoryInput
   }
 
   export type UserDrugInventoryCreateOrConnectWithoutEmployeeInput = {
@@ -70465,7 +70344,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     gift: GiftCreateNestedOneWithoutUserGiftInventoriesInput
-    doctorDistributionGiftItems?: DoctorDistributionGiftItemCreateNestedManyWithoutFromInventoryInput
+    sampleDistributionGiftItems?: SampleDistributionGiftItemCreateNestedManyWithoutFromInventoryInput
   }
 
   export type UserGiftInventoryUncheckedCreateWithoutEmployeeInput = {
@@ -70475,7 +70354,7 @@ export namespace Prisma {
     lastRestockedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    doctorDistributionGiftItems?: DoctorDistributionGiftItemUncheckedCreateNestedManyWithoutFromInventoryInput
+    sampleDistributionGiftItems?: SampleDistributionGiftItemUncheckedCreateNestedManyWithoutFromInventoryInput
   }
 
   export type UserGiftInventoryCreateOrConnectWithoutEmployeeInput = {
@@ -70499,7 +70378,6 @@ export namespace Prisma {
     updatedAt?: Date | string
     isActive?: boolean
     userGiftInventories?: UserGiftInventoryCreateNestedManyWithoutGiftInput
-    doctorDistributionGiftItems?: DoctorDistributionGiftItemCreateNestedManyWithoutGiftInput
   }
 
   export type GiftUncheckedCreateWithoutCreatedByInput = {
@@ -70513,7 +70391,6 @@ export namespace Prisma {
     updatedAt?: Date | string
     isActive?: boolean
     userGiftInventories?: UserGiftInventoryUncheckedCreateNestedManyWithoutGiftInput
-    doctorDistributionGiftItems?: DoctorDistributionGiftItemUncheckedCreateNestedManyWithoutGiftInput
   }
 
   export type GiftCreateOrConnectWithoutCreatedByInput = {
@@ -70526,33 +70403,35 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type DoctorDistributionCreateWithoutEmployeeInput = {
+  export type SampleDistributionCreateWithoutEmployeeInput = {
     id?: string
     distributedAt: Date | string
     createdAt?: Date | string
     updatedAt?: Date | string
-    doctorInteraction: DoctorInteractionCreateNestedOneWithoutDoctorDistributionInput
-    drugItems?: DoctorDistributionDrugItemCreateNestedManyWithoutDoctorDistributionInput
-    giftItems?: DoctorDistributionGiftItemCreateNestedManyWithoutDoctorDistributionInput
+    doctor?: DoctorCreateNestedOneWithoutSampleDistributionsInput
+    chemist?: ChemistCreateNestedOneWithoutSampleDistributionsInput
+    drugItems?: SampleDistributionDrugItemCreateNestedManyWithoutSampleDistributionInput
+    giftItems?: SampleDistributionGiftItemCreateNestedManyWithoutSampleDistributionInput
   }
 
-  export type DoctorDistributionUncheckedCreateWithoutEmployeeInput = {
+  export type SampleDistributionUncheckedCreateWithoutEmployeeInput = {
     id?: string
-    doctorInteractionId: string
+    doctorId?: string | null
+    chemistId?: string | null
     distributedAt: Date | string
     createdAt?: Date | string
     updatedAt?: Date | string
-    drugItems?: DoctorDistributionDrugItemUncheckedCreateNestedManyWithoutDoctorDistributionInput
-    giftItems?: DoctorDistributionGiftItemUncheckedCreateNestedManyWithoutDoctorDistributionInput
+    drugItems?: SampleDistributionDrugItemUncheckedCreateNestedManyWithoutSampleDistributionInput
+    giftItems?: SampleDistributionGiftItemUncheckedCreateNestedManyWithoutSampleDistributionInput
   }
 
-  export type DoctorDistributionCreateOrConnectWithoutEmployeeInput = {
-    where: DoctorDistributionWhereUniqueInput
-    create: XOR<DoctorDistributionCreateWithoutEmployeeInput, DoctorDistributionUncheckedCreateWithoutEmployeeInput>
+  export type SampleDistributionCreateOrConnectWithoutEmployeeInput = {
+    where: SampleDistributionWhereUniqueInput
+    create: XOR<SampleDistributionCreateWithoutEmployeeInput, SampleDistributionUncheckedCreateWithoutEmployeeInput>
   }
 
-  export type DoctorDistributionCreateManyEmployeeInputEnvelope = {
-    data: DoctorDistributionCreateManyEmployeeInput | DoctorDistributionCreateManyEmployeeInput[]
+  export type SampleDistributionCreateManyEmployeeInputEnvelope = {
+    data: SampleDistributionCreateManyEmployeeInput | SampleDistributionCreateManyEmployeeInput[]
     skipDuplicates?: boolean
   }
 
@@ -70753,7 +70632,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryUpdateManyWithoutEmployeeNestedInput
     giftInventories?: UserGiftInventoryUpdateManyWithoutEmployeeNestedInput
     giftsCreated?: GiftUpdateManyWithoutCreatedByNestedInput
-    doctorDistributions?: DoctorDistributionUpdateManyWithoutEmployeeNestedInput
+    sampleDistributions?: SampleDistributionUpdateManyWithoutEmployeeNestedInput
     taskPlans?: TaskPlannerUpdateManyWithoutEmployeeNestedInput
     doctorTasks?: DoctorTaskUpdateManyWithoutEmployeeNestedInput
     chemistTasks?: ChemistTaskUpdateManyWithoutEmployeeNestedInput
@@ -70802,7 +70681,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryUncheckedUpdateManyWithoutEmployeeNestedInput
     giftInventories?: UserGiftInventoryUncheckedUpdateManyWithoutEmployeeNestedInput
     giftsCreated?: GiftUncheckedUpdateManyWithoutCreatedByNestedInput
-    doctorDistributions?: DoctorDistributionUncheckedUpdateManyWithoutEmployeeNestedInput
+    sampleDistributions?: SampleDistributionUncheckedUpdateManyWithoutEmployeeNestedInput
     taskPlans?: TaskPlannerUncheckedUpdateManyWithoutEmployeeNestedInput
     doctorTasks?: DoctorTaskUncheckedUpdateManyWithoutEmployeeNestedInput
     chemistTasks?: ChemistTaskUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -71544,32 +71423,33 @@ export namespace Prisma {
     isActive?: BoolFilter<"Gift"> | boolean
   }
 
-  export type DoctorDistributionUpsertWithWhereUniqueWithoutEmployeeInput = {
-    where: DoctorDistributionWhereUniqueInput
-    update: XOR<DoctorDistributionUpdateWithoutEmployeeInput, DoctorDistributionUncheckedUpdateWithoutEmployeeInput>
-    create: XOR<DoctorDistributionCreateWithoutEmployeeInput, DoctorDistributionUncheckedCreateWithoutEmployeeInput>
+  export type SampleDistributionUpsertWithWhereUniqueWithoutEmployeeInput = {
+    where: SampleDistributionWhereUniqueInput
+    update: XOR<SampleDistributionUpdateWithoutEmployeeInput, SampleDistributionUncheckedUpdateWithoutEmployeeInput>
+    create: XOR<SampleDistributionCreateWithoutEmployeeInput, SampleDistributionUncheckedCreateWithoutEmployeeInput>
   }
 
-  export type DoctorDistributionUpdateWithWhereUniqueWithoutEmployeeInput = {
-    where: DoctorDistributionWhereUniqueInput
-    data: XOR<DoctorDistributionUpdateWithoutEmployeeInput, DoctorDistributionUncheckedUpdateWithoutEmployeeInput>
+  export type SampleDistributionUpdateWithWhereUniqueWithoutEmployeeInput = {
+    where: SampleDistributionWhereUniqueInput
+    data: XOR<SampleDistributionUpdateWithoutEmployeeInput, SampleDistributionUncheckedUpdateWithoutEmployeeInput>
   }
 
-  export type DoctorDistributionUpdateManyWithWhereWithoutEmployeeInput = {
-    where: DoctorDistributionScalarWhereInput
-    data: XOR<DoctorDistributionUpdateManyMutationInput, DoctorDistributionUncheckedUpdateManyWithoutEmployeeInput>
+  export type SampleDistributionUpdateManyWithWhereWithoutEmployeeInput = {
+    where: SampleDistributionScalarWhereInput
+    data: XOR<SampleDistributionUpdateManyMutationInput, SampleDistributionUncheckedUpdateManyWithoutEmployeeInput>
   }
 
-  export type DoctorDistributionScalarWhereInput = {
-    AND?: DoctorDistributionScalarWhereInput | DoctorDistributionScalarWhereInput[]
-    OR?: DoctorDistributionScalarWhereInput[]
-    NOT?: DoctorDistributionScalarWhereInput | DoctorDistributionScalarWhereInput[]
-    id?: StringFilter<"DoctorDistribution"> | string
-    doctorInteractionId?: StringFilter<"DoctorDistribution"> | string
-    employeeId?: StringFilter<"DoctorDistribution"> | string
-    distributedAt?: DateTimeFilter<"DoctorDistribution"> | Date | string
-    createdAt?: DateTimeFilter<"DoctorDistribution"> | Date | string
-    updatedAt?: DateTimeFilter<"DoctorDistribution"> | Date | string
+  export type SampleDistributionScalarWhereInput = {
+    AND?: SampleDistributionScalarWhereInput | SampleDistributionScalarWhereInput[]
+    OR?: SampleDistributionScalarWhereInput[]
+    NOT?: SampleDistributionScalarWhereInput | SampleDistributionScalarWhereInput[]
+    id?: StringFilter<"SampleDistribution"> | string
+    doctorId?: StringNullableFilter<"SampleDistribution"> | string | null
+    chemistId?: StringNullableFilter<"SampleDistribution"> | string | null
+    employeeId?: StringFilter<"SampleDistribution"> | string
+    distributedAt?: DateTimeFilter<"SampleDistribution"> | Date | string
+    createdAt?: DateTimeFilter<"SampleDistribution"> | Date | string
+    updatedAt?: DateTimeFilter<"SampleDistribution"> | Date | string
   }
 
   export type TaskPlannerUpsertWithWhereUniqueWithoutEmployeeInput = {
@@ -71740,7 +71620,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryCreateNestedManyWithoutEmployeeInput
     giftInventories?: UserGiftInventoryCreateNestedManyWithoutEmployeeInput
     giftsCreated?: GiftCreateNestedManyWithoutCreatedByInput
-    doctorDistributions?: DoctorDistributionCreateNestedManyWithoutEmployeeInput
+    sampleDistributions?: SampleDistributionCreateNestedManyWithoutEmployeeInput
     taskPlans?: TaskPlannerCreateNestedManyWithoutEmployeeInput
     doctorTasks?: DoctorTaskCreateNestedManyWithoutEmployeeInput
     chemistTasks?: ChemistTaskCreateNestedManyWithoutEmployeeInput
@@ -71789,7 +71669,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryUncheckedCreateNestedManyWithoutEmployeeInput
     giftInventories?: UserGiftInventoryUncheckedCreateNestedManyWithoutEmployeeInput
     giftsCreated?: GiftUncheckedCreateNestedManyWithoutCreatedByInput
-    doctorDistributions?: DoctorDistributionUncheckedCreateNestedManyWithoutEmployeeInput
+    sampleDistributions?: SampleDistributionUncheckedCreateNestedManyWithoutEmployeeInput
     taskPlans?: TaskPlannerUncheckedCreateNestedManyWithoutEmployeeInput
     doctorTasks?: DoctorTaskUncheckedCreateNestedManyWithoutEmployeeInput
     chemistTasks?: ChemistTaskUncheckedCreateNestedManyWithoutEmployeeInput
@@ -71843,7 +71723,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryCreateNestedManyWithoutEmployeeInput
     giftInventories?: UserGiftInventoryCreateNestedManyWithoutEmployeeInput
     giftsCreated?: GiftCreateNestedManyWithoutCreatedByInput
-    doctorDistributions?: DoctorDistributionCreateNestedManyWithoutEmployeeInput
+    sampleDistributions?: SampleDistributionCreateNestedManyWithoutEmployeeInput
     taskPlans?: TaskPlannerCreateNestedManyWithoutEmployeeInput
     doctorTasks?: DoctorTaskCreateNestedManyWithoutEmployeeInput
     chemistTasks?: ChemistTaskCreateNestedManyWithoutEmployeeInput
@@ -71892,7 +71772,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryUncheckedCreateNestedManyWithoutEmployeeInput
     giftInventories?: UserGiftInventoryUncheckedCreateNestedManyWithoutEmployeeInput
     giftsCreated?: GiftUncheckedCreateNestedManyWithoutCreatedByInput
-    doctorDistributions?: DoctorDistributionUncheckedCreateNestedManyWithoutEmployeeInput
+    sampleDistributions?: SampleDistributionUncheckedCreateNestedManyWithoutEmployeeInput
     taskPlans?: TaskPlannerUncheckedCreateNestedManyWithoutEmployeeInput
     doctorTasks?: DoctorTaskUncheckedCreateNestedManyWithoutEmployeeInput
     chemistTasks?: ChemistTaskUncheckedCreateNestedManyWithoutEmployeeInput
@@ -71962,7 +71842,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryUpdateManyWithoutEmployeeNestedInput
     giftInventories?: UserGiftInventoryUpdateManyWithoutEmployeeNestedInput
     giftsCreated?: GiftUpdateManyWithoutCreatedByNestedInput
-    doctorDistributions?: DoctorDistributionUpdateManyWithoutEmployeeNestedInput
+    sampleDistributions?: SampleDistributionUpdateManyWithoutEmployeeNestedInput
     taskPlans?: TaskPlannerUpdateManyWithoutEmployeeNestedInput
     doctorTasks?: DoctorTaskUpdateManyWithoutEmployeeNestedInput
     chemistTasks?: ChemistTaskUpdateManyWithoutEmployeeNestedInput
@@ -72011,7 +71891,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryUncheckedUpdateManyWithoutEmployeeNestedInput
     giftInventories?: UserGiftInventoryUncheckedUpdateManyWithoutEmployeeNestedInput
     giftsCreated?: GiftUncheckedUpdateManyWithoutCreatedByNestedInput
-    doctorDistributions?: DoctorDistributionUncheckedUpdateManyWithoutEmployeeNestedInput
+    sampleDistributions?: SampleDistributionUncheckedUpdateManyWithoutEmployeeNestedInput
     taskPlans?: TaskPlannerUncheckedUpdateManyWithoutEmployeeNestedInput
     doctorTasks?: DoctorTaskUncheckedUpdateManyWithoutEmployeeNestedInput
     chemistTasks?: ChemistTaskUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -72216,6 +72096,7 @@ export namespace Prisma {
     orders?: OrderCreateNestedManyWithoutChemistInput
     rcpaReports?: RcpaReportCreateNestedManyWithoutChemistInput
     chemistTasks?: ChemistTaskCreateNestedManyWithoutChemistInput
+    sampleDistributions?: SampleDistributionCreateNestedManyWithoutChemistInput
   }
 
   export type ChemistUncheckedCreateWithoutTerritoryInput = {
@@ -72245,6 +72126,7 @@ export namespace Prisma {
     orders?: OrderUncheckedCreateNestedManyWithoutChemistInput
     rcpaReports?: RcpaReportUncheckedCreateNestedManyWithoutChemistInput
     chemistTasks?: ChemistTaskUncheckedCreateNestedManyWithoutChemistInput
+    sampleDistributions?: SampleDistributionUncheckedCreateNestedManyWithoutChemistInput
   }
 
   export type ChemistCreateOrConnectWithoutTerritoryInput = {
@@ -72441,7 +72323,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryCreateNestedManyWithoutEmployeeInput
     giftInventories?: UserGiftInventoryCreateNestedManyWithoutEmployeeInput
     giftsCreated?: GiftCreateNestedManyWithoutCreatedByInput
-    doctorDistributions?: DoctorDistributionCreateNestedManyWithoutEmployeeInput
+    sampleDistributions?: SampleDistributionCreateNestedManyWithoutEmployeeInput
     taskPlans?: TaskPlannerCreateNestedManyWithoutEmployeeInput
     doctorTasks?: DoctorTaskCreateNestedManyWithoutEmployeeInput
     chemistTasks?: ChemistTaskCreateNestedManyWithoutEmployeeInput
@@ -72490,7 +72372,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryUncheckedCreateNestedManyWithoutEmployeeInput
     giftInventories?: UserGiftInventoryUncheckedCreateNestedManyWithoutEmployeeInput
     giftsCreated?: GiftUncheckedCreateNestedManyWithoutCreatedByInput
-    doctorDistributions?: DoctorDistributionUncheckedCreateNestedManyWithoutEmployeeInput
+    sampleDistributions?: SampleDistributionUncheckedCreateNestedManyWithoutEmployeeInput
     taskPlans?: TaskPlannerUncheckedCreateNestedManyWithoutEmployeeInput
     doctorTasks?: DoctorTaskUncheckedCreateNestedManyWithoutEmployeeInput
     chemistTasks?: ChemistTaskUncheckedCreateNestedManyWithoutEmployeeInput
@@ -72588,7 +72470,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryUpdateManyWithoutEmployeeNestedInput
     giftInventories?: UserGiftInventoryUpdateManyWithoutEmployeeNestedInput
     giftsCreated?: GiftUpdateManyWithoutCreatedByNestedInput
-    doctorDistributions?: DoctorDistributionUpdateManyWithoutEmployeeNestedInput
+    sampleDistributions?: SampleDistributionUpdateManyWithoutEmployeeNestedInput
     taskPlans?: TaskPlannerUpdateManyWithoutEmployeeNestedInput
     doctorTasks?: DoctorTaskUpdateManyWithoutEmployeeNestedInput
     chemistTasks?: ChemistTaskUpdateManyWithoutEmployeeNestedInput
@@ -72637,7 +72519,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryUncheckedUpdateManyWithoutEmployeeNestedInput
     giftInventories?: UserGiftInventoryUncheckedUpdateManyWithoutEmployeeNestedInput
     giftsCreated?: GiftUncheckedUpdateManyWithoutCreatedByNestedInput
-    doctorDistributions?: DoctorDistributionUncheckedUpdateManyWithoutEmployeeNestedInput
+    sampleDistributions?: SampleDistributionUncheckedUpdateManyWithoutEmployeeNestedInput
     taskPlans?: TaskPlannerUncheckedUpdateManyWithoutEmployeeNestedInput
     doctorTasks?: DoctorTaskUncheckedUpdateManyWithoutEmployeeNestedInput
     chemistTasks?: ChemistTaskUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -72725,7 +72607,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryCreateNestedManyWithoutEmployeeInput
     giftInventories?: UserGiftInventoryCreateNestedManyWithoutEmployeeInput
     giftsCreated?: GiftCreateNestedManyWithoutCreatedByInput
-    doctorDistributions?: DoctorDistributionCreateNestedManyWithoutEmployeeInput
+    sampleDistributions?: SampleDistributionCreateNestedManyWithoutEmployeeInput
     taskPlans?: TaskPlannerCreateNestedManyWithoutEmployeeInput
     doctorTasks?: DoctorTaskCreateNestedManyWithoutEmployeeInput
     chemistTasks?: ChemistTaskCreateNestedManyWithoutEmployeeInput
@@ -72774,7 +72656,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryUncheckedCreateNestedManyWithoutEmployeeInput
     giftInventories?: UserGiftInventoryUncheckedCreateNestedManyWithoutEmployeeInput
     giftsCreated?: GiftUncheckedCreateNestedManyWithoutCreatedByInput
-    doctorDistributions?: DoctorDistributionUncheckedCreateNestedManyWithoutEmployeeInput
+    sampleDistributions?: SampleDistributionUncheckedCreateNestedManyWithoutEmployeeInput
     taskPlans?: TaskPlannerUncheckedCreateNestedManyWithoutEmployeeInput
     doctorTasks?: DoctorTaskUncheckedCreateNestedManyWithoutEmployeeInput
     chemistTasks?: ChemistTaskUncheckedCreateNestedManyWithoutEmployeeInput
@@ -72839,7 +72721,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryUpdateManyWithoutEmployeeNestedInput
     giftInventories?: UserGiftInventoryUpdateManyWithoutEmployeeNestedInput
     giftsCreated?: GiftUpdateManyWithoutCreatedByNestedInput
-    doctorDistributions?: DoctorDistributionUpdateManyWithoutEmployeeNestedInput
+    sampleDistributions?: SampleDistributionUpdateManyWithoutEmployeeNestedInput
     taskPlans?: TaskPlannerUpdateManyWithoutEmployeeNestedInput
     doctorTasks?: DoctorTaskUpdateManyWithoutEmployeeNestedInput
     chemistTasks?: ChemistTaskUpdateManyWithoutEmployeeNestedInput
@@ -72888,7 +72770,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryUncheckedUpdateManyWithoutEmployeeNestedInput
     giftInventories?: UserGiftInventoryUncheckedUpdateManyWithoutEmployeeNestedInput
     giftsCreated?: GiftUncheckedUpdateManyWithoutCreatedByNestedInput
-    doctorDistributions?: DoctorDistributionUncheckedUpdateManyWithoutEmployeeNestedInput
+    sampleDistributions?: SampleDistributionUncheckedUpdateManyWithoutEmployeeNestedInput
     taskPlans?: TaskPlannerUncheckedUpdateManyWithoutEmployeeNestedInput
     doctorTasks?: DoctorTaskUncheckedUpdateManyWithoutEmployeeNestedInput
     chemistTasks?: ChemistTaskUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -72996,6 +72878,7 @@ export namespace Prisma {
     orders?: OrderCreateNestedManyWithoutChemistInput
     rcpaReports?: RcpaReportCreateNestedManyWithoutChemistInput
     chemistTasks?: ChemistTaskCreateNestedManyWithoutChemistInput
+    sampleDistributions?: SampleDistributionCreateNestedManyWithoutChemistInput
   }
 
   export type ChemistUncheckedCreateWithoutChemistChainInput = {
@@ -73025,6 +72908,7 @@ export namespace Prisma {
     orders?: OrderUncheckedCreateNestedManyWithoutChemistInput
     rcpaReports?: RcpaReportUncheckedCreateNestedManyWithoutChemistInput
     chemistTasks?: ChemistTaskUncheckedCreateNestedManyWithoutChemistInput
+    sampleDistributions?: SampleDistributionUncheckedCreateNestedManyWithoutChemistInput
   }
 
   export type ChemistCreateOrConnectWithoutChemistChainInput = {
@@ -73199,7 +73083,6 @@ export namespace Prisma {
     createdAt?: Date | string
     doctor: DoctorCreateNestedOneWithoutInteractionsInput
     employee: EmployeeCreateNestedOneWithoutDoctorInteractionsInput
-    DoctorDistribution?: DoctorDistributionCreateNestedManyWithoutDoctorInteractionInput
     DoctorTask?: DoctorTaskCreateNestedOneWithoutDoctorInteractionsInput
   }
 
@@ -73216,7 +73099,6 @@ export namespace Prisma {
     rating?: number | null
     createdAt?: Date | string
     doctorTaskId?: string | null
-    DoctorDistribution?: DoctorDistributionUncheckedCreateNestedManyWithoutDoctorInteractionInput
   }
 
   export type DoctorInteractionCreateOrConnectWithoutHospitalInput = {
@@ -73427,7 +73309,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryCreateNestedManyWithoutEmployeeInput
     giftInventories?: UserGiftInventoryCreateNestedManyWithoutEmployeeInput
     giftsCreated?: GiftCreateNestedManyWithoutCreatedByInput
-    doctorDistributions?: DoctorDistributionCreateNestedManyWithoutEmployeeInput
+    sampleDistributions?: SampleDistributionCreateNestedManyWithoutEmployeeInput
     taskPlans?: TaskPlannerCreateNestedManyWithoutEmployeeInput
     doctorTasks?: DoctorTaskCreateNestedManyWithoutEmployeeInput
     chemistTasks?: ChemistTaskCreateNestedManyWithoutEmployeeInput
@@ -73476,7 +73358,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryUncheckedCreateNestedManyWithoutEmployeeInput
     giftInventories?: UserGiftInventoryUncheckedCreateNestedManyWithoutEmployeeInput
     giftsCreated?: GiftUncheckedCreateNestedManyWithoutCreatedByInput
-    doctorDistributions?: DoctorDistributionUncheckedCreateNestedManyWithoutEmployeeInput
+    sampleDistributions?: SampleDistributionUncheckedCreateNestedManyWithoutEmployeeInput
     taskPlans?: TaskPlannerUncheckedCreateNestedManyWithoutEmployeeInput
     doctorTasks?: DoctorTaskUncheckedCreateNestedManyWithoutEmployeeInput
     chemistTasks?: ChemistTaskUncheckedCreateNestedManyWithoutEmployeeInput
@@ -73572,7 +73454,6 @@ export namespace Prisma {
     createdAt?: Date | string
     employee: EmployeeCreateNestedOneWithoutDoctorInteractionsInput
     hospital?: HospitalCreateNestedOneWithoutDoctorInteractionsInput
-    DoctorDistribution?: DoctorDistributionCreateNestedManyWithoutDoctorInteractionInput
     DoctorTask?: DoctorTaskCreateNestedOneWithoutDoctorInteractionsInput
   }
 
@@ -73589,7 +73470,6 @@ export namespace Prisma {
     rating?: number | null
     createdAt?: Date | string
     doctorTaskId?: string | null
-    DoctorDistribution?: DoctorDistributionUncheckedCreateNestedManyWithoutDoctorInteractionInput
   }
 
   export type DoctorInteractionCreateOrConnectWithoutDoctorInput = {
@@ -73688,6 +73568,38 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type SampleDistributionCreateWithoutDoctorInput = {
+    id?: string
+    distributedAt: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    chemist?: ChemistCreateNestedOneWithoutSampleDistributionsInput
+    employee: EmployeeCreateNestedOneWithoutSampleDistributionsInput
+    drugItems?: SampleDistributionDrugItemCreateNestedManyWithoutSampleDistributionInput
+    giftItems?: SampleDistributionGiftItemCreateNestedManyWithoutSampleDistributionInput
+  }
+
+  export type SampleDistributionUncheckedCreateWithoutDoctorInput = {
+    id?: string
+    chemistId?: string | null
+    employeeId: string
+    distributedAt: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    drugItems?: SampleDistributionDrugItemUncheckedCreateNestedManyWithoutSampleDistributionInput
+    giftItems?: SampleDistributionGiftItemUncheckedCreateNestedManyWithoutSampleDistributionInput
+  }
+
+  export type SampleDistributionCreateOrConnectWithoutDoctorInput = {
+    where: SampleDistributionWhereUniqueInput
+    create: XOR<SampleDistributionCreateWithoutDoctorInput, SampleDistributionUncheckedCreateWithoutDoctorInput>
+  }
+
+  export type SampleDistributionCreateManyDoctorInputEnvelope = {
+    data: SampleDistributionCreateManyDoctorInput | SampleDistributionCreateManyDoctorInput[]
+    skipDuplicates?: boolean
+  }
+
   export type EmployeeUpsertWithoutDoctorsCreatedInput = {
     update: XOR<EmployeeUpdateWithoutDoctorsCreatedInput, EmployeeUncheckedUpdateWithoutDoctorsCreatedInput>
     create: XOR<EmployeeCreateWithoutDoctorsCreatedInput, EmployeeUncheckedCreateWithoutDoctorsCreatedInput>
@@ -73741,7 +73653,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryUpdateManyWithoutEmployeeNestedInput
     giftInventories?: UserGiftInventoryUpdateManyWithoutEmployeeNestedInput
     giftsCreated?: GiftUpdateManyWithoutCreatedByNestedInput
-    doctorDistributions?: DoctorDistributionUpdateManyWithoutEmployeeNestedInput
+    sampleDistributions?: SampleDistributionUpdateManyWithoutEmployeeNestedInput
     taskPlans?: TaskPlannerUpdateManyWithoutEmployeeNestedInput
     doctorTasks?: DoctorTaskUpdateManyWithoutEmployeeNestedInput
     chemistTasks?: ChemistTaskUpdateManyWithoutEmployeeNestedInput
@@ -73790,7 +73702,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryUncheckedUpdateManyWithoutEmployeeNestedInput
     giftInventories?: UserGiftInventoryUncheckedUpdateManyWithoutEmployeeNestedInput
     giftsCreated?: GiftUncheckedUpdateManyWithoutCreatedByNestedInput
-    doctorDistributions?: DoctorDistributionUncheckedUpdateManyWithoutEmployeeNestedInput
+    sampleDistributions?: SampleDistributionUncheckedUpdateManyWithoutEmployeeNestedInput
     taskPlans?: TaskPlannerUncheckedUpdateManyWithoutEmployeeNestedInput
     doctorTasks?: DoctorTaskUncheckedUpdateManyWithoutEmployeeNestedInput
     chemistTasks?: ChemistTaskUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -73893,6 +73805,22 @@ export namespace Prisma {
     data: XOR<DoctorTaskUpdateManyMutationInput, DoctorTaskUncheckedUpdateManyWithoutDoctorInput>
   }
 
+  export type SampleDistributionUpsertWithWhereUniqueWithoutDoctorInput = {
+    where: SampleDistributionWhereUniqueInput
+    update: XOR<SampleDistributionUpdateWithoutDoctorInput, SampleDistributionUncheckedUpdateWithoutDoctorInput>
+    create: XOR<SampleDistributionCreateWithoutDoctorInput, SampleDistributionUncheckedCreateWithoutDoctorInput>
+  }
+
+  export type SampleDistributionUpdateWithWhereUniqueWithoutDoctorInput = {
+    where: SampleDistributionWhereUniqueInput
+    data: XOR<SampleDistributionUpdateWithoutDoctorInput, SampleDistributionUncheckedUpdateWithoutDoctorInput>
+  }
+
+  export type SampleDistributionUpdateManyWithWhereWithoutDoctorInput = {
+    where: SampleDistributionScalarWhereInput
+    data: XOR<SampleDistributionUpdateManyMutationInput, SampleDistributionUncheckedUpdateManyWithoutDoctorInput>
+  }
+
   export type DoctorCreateWithoutHospitalAssociationsInput = {
     id?: string
     organizationId: string
@@ -73914,6 +73842,7 @@ export namespace Prisma {
     notes?: DoctorNoteCreateNestedManyWithoutDoctorInput
     chemistRelations?: DoctorChemistRelationCreateNestedManyWithoutDoctorInput
     DoctorTask?: DoctorTaskCreateNestedManyWithoutDoctorInput
+    sampleDistributions?: SampleDistributionCreateNestedManyWithoutDoctorInput
   }
 
   export type DoctorUncheckedCreateWithoutHospitalAssociationsInput = {
@@ -73937,6 +73866,7 @@ export namespace Prisma {
     notes?: DoctorNoteUncheckedCreateNestedManyWithoutDoctorInput
     chemistRelations?: DoctorChemistRelationUncheckedCreateNestedManyWithoutDoctorInput
     DoctorTask?: DoctorTaskUncheckedCreateNestedManyWithoutDoctorInput
+    sampleDistributions?: SampleDistributionUncheckedCreateNestedManyWithoutDoctorInput
   }
 
   export type DoctorCreateOrConnectWithoutHospitalAssociationsInput = {
@@ -74029,6 +73959,7 @@ export namespace Prisma {
     notes?: DoctorNoteUpdateManyWithoutDoctorNestedInput
     chemistRelations?: DoctorChemistRelationUpdateManyWithoutDoctorNestedInput
     DoctorTask?: DoctorTaskUpdateManyWithoutDoctorNestedInput
+    sampleDistributions?: SampleDistributionUpdateManyWithoutDoctorNestedInput
   }
 
   export type DoctorUncheckedUpdateWithoutHospitalAssociationsInput = {
@@ -74052,6 +73983,7 @@ export namespace Prisma {
     notes?: DoctorNoteUncheckedUpdateManyWithoutDoctorNestedInput
     chemistRelations?: DoctorChemistRelationUncheckedUpdateManyWithoutDoctorNestedInput
     DoctorTask?: DoctorTaskUncheckedUpdateManyWithoutDoctorNestedInput
+    sampleDistributions?: SampleDistributionUncheckedUpdateManyWithoutDoctorNestedInput
   }
 
   export type HospitalUpsertWithoutDoctorAssociationsInput = {
@@ -74134,6 +74066,7 @@ export namespace Prisma {
     notes?: DoctorNoteCreateNestedManyWithoutDoctorInput
     chemistRelations?: DoctorChemistRelationCreateNestedManyWithoutDoctorInput
     DoctorTask?: DoctorTaskCreateNestedManyWithoutDoctorInput
+    sampleDistributions?: SampleDistributionCreateNestedManyWithoutDoctorInput
   }
 
   export type DoctorUncheckedCreateWithoutConsultationSchedulesInput = {
@@ -74157,6 +74090,7 @@ export namespace Prisma {
     notes?: DoctorNoteUncheckedCreateNestedManyWithoutDoctorInput
     chemistRelations?: DoctorChemistRelationUncheckedCreateNestedManyWithoutDoctorInput
     DoctorTask?: DoctorTaskUncheckedCreateNestedManyWithoutDoctorInput
+    sampleDistributions?: SampleDistributionUncheckedCreateNestedManyWithoutDoctorInput
   }
 
   export type DoctorCreateOrConnectWithoutConsultationSchedulesInput = {
@@ -74249,6 +74183,7 @@ export namespace Prisma {
     notes?: DoctorNoteUpdateManyWithoutDoctorNestedInput
     chemistRelations?: DoctorChemistRelationUpdateManyWithoutDoctorNestedInput
     DoctorTask?: DoctorTaskUpdateManyWithoutDoctorNestedInput
+    sampleDistributions?: SampleDistributionUpdateManyWithoutDoctorNestedInput
   }
 
   export type DoctorUncheckedUpdateWithoutConsultationSchedulesInput = {
@@ -74272,6 +74207,7 @@ export namespace Prisma {
     notes?: DoctorNoteUncheckedUpdateManyWithoutDoctorNestedInput
     chemistRelations?: DoctorChemistRelationUncheckedUpdateManyWithoutDoctorNestedInput
     DoctorTask?: DoctorTaskUncheckedUpdateManyWithoutDoctorNestedInput
+    sampleDistributions?: SampleDistributionUncheckedUpdateManyWithoutDoctorNestedInput
   }
 
   export type HospitalUpsertWithoutConsultationSchedulesInput = {
@@ -74354,6 +74290,7 @@ export namespace Prisma {
     interactions?: DoctorInteractionCreateNestedManyWithoutDoctorInput
     chemistRelations?: DoctorChemistRelationCreateNestedManyWithoutDoctorInput
     DoctorTask?: DoctorTaskCreateNestedManyWithoutDoctorInput
+    sampleDistributions?: SampleDistributionCreateNestedManyWithoutDoctorInput
   }
 
   export type DoctorUncheckedCreateWithoutNotesInput = {
@@ -74377,6 +74314,7 @@ export namespace Prisma {
     interactions?: DoctorInteractionUncheckedCreateNestedManyWithoutDoctorInput
     chemistRelations?: DoctorChemistRelationUncheckedCreateNestedManyWithoutDoctorInput
     DoctorTask?: DoctorTaskUncheckedCreateNestedManyWithoutDoctorInput
+    sampleDistributions?: SampleDistributionUncheckedCreateNestedManyWithoutDoctorInput
   }
 
   export type DoctorCreateOrConnectWithoutNotesInput = {
@@ -74426,7 +74364,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryCreateNestedManyWithoutEmployeeInput
     giftInventories?: UserGiftInventoryCreateNestedManyWithoutEmployeeInput
     giftsCreated?: GiftCreateNestedManyWithoutCreatedByInput
-    doctorDistributions?: DoctorDistributionCreateNestedManyWithoutEmployeeInput
+    sampleDistributions?: SampleDistributionCreateNestedManyWithoutEmployeeInput
     taskPlans?: TaskPlannerCreateNestedManyWithoutEmployeeInput
     doctorTasks?: DoctorTaskCreateNestedManyWithoutEmployeeInput
     chemistTasks?: ChemistTaskCreateNestedManyWithoutEmployeeInput
@@ -74475,7 +74413,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryUncheckedCreateNestedManyWithoutEmployeeInput
     giftInventories?: UserGiftInventoryUncheckedCreateNestedManyWithoutEmployeeInput
     giftsCreated?: GiftUncheckedCreateNestedManyWithoutCreatedByInput
-    doctorDistributions?: DoctorDistributionUncheckedCreateNestedManyWithoutEmployeeInput
+    sampleDistributions?: SampleDistributionUncheckedCreateNestedManyWithoutEmployeeInput
     taskPlans?: TaskPlannerUncheckedCreateNestedManyWithoutEmployeeInput
     doctorTasks?: DoctorTaskUncheckedCreateNestedManyWithoutEmployeeInput
     chemistTasks?: ChemistTaskUncheckedCreateNestedManyWithoutEmployeeInput
@@ -74519,6 +74457,7 @@ export namespace Prisma {
     interactions?: DoctorInteractionUpdateManyWithoutDoctorNestedInput
     chemistRelations?: DoctorChemistRelationUpdateManyWithoutDoctorNestedInput
     DoctorTask?: DoctorTaskUpdateManyWithoutDoctorNestedInput
+    sampleDistributions?: SampleDistributionUpdateManyWithoutDoctorNestedInput
   }
 
   export type DoctorUncheckedUpdateWithoutNotesInput = {
@@ -74542,6 +74481,7 @@ export namespace Prisma {
     interactions?: DoctorInteractionUncheckedUpdateManyWithoutDoctorNestedInput
     chemistRelations?: DoctorChemistRelationUncheckedUpdateManyWithoutDoctorNestedInput
     DoctorTask?: DoctorTaskUncheckedUpdateManyWithoutDoctorNestedInput
+    sampleDistributions?: SampleDistributionUncheckedUpdateManyWithoutDoctorNestedInput
   }
 
   export type EmployeeUpsertWithoutDoctorNotesInput = {
@@ -74597,7 +74537,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryUpdateManyWithoutEmployeeNestedInput
     giftInventories?: UserGiftInventoryUpdateManyWithoutEmployeeNestedInput
     giftsCreated?: GiftUpdateManyWithoutCreatedByNestedInput
-    doctorDistributions?: DoctorDistributionUpdateManyWithoutEmployeeNestedInput
+    sampleDistributions?: SampleDistributionUpdateManyWithoutEmployeeNestedInput
     taskPlans?: TaskPlannerUpdateManyWithoutEmployeeNestedInput
     doctorTasks?: DoctorTaskUpdateManyWithoutEmployeeNestedInput
     chemistTasks?: ChemistTaskUpdateManyWithoutEmployeeNestedInput
@@ -74646,7 +74586,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryUncheckedUpdateManyWithoutEmployeeNestedInput
     giftInventories?: UserGiftInventoryUncheckedUpdateManyWithoutEmployeeNestedInput
     giftsCreated?: GiftUncheckedUpdateManyWithoutCreatedByNestedInput
-    doctorDistributions?: DoctorDistributionUncheckedUpdateManyWithoutEmployeeNestedInput
+    sampleDistributions?: SampleDistributionUncheckedUpdateManyWithoutEmployeeNestedInput
     taskPlans?: TaskPlannerUncheckedUpdateManyWithoutEmployeeNestedInput
     doctorTasks?: DoctorTaskUncheckedUpdateManyWithoutEmployeeNestedInput
     chemistTasks?: ChemistTaskUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -74674,6 +74614,7 @@ export namespace Prisma {
     notes?: DoctorNoteCreateNestedManyWithoutDoctorInput
     chemistRelations?: DoctorChemistRelationCreateNestedManyWithoutDoctorInput
     DoctorTask?: DoctorTaskCreateNestedManyWithoutDoctorInput
+    sampleDistributions?: SampleDistributionCreateNestedManyWithoutDoctorInput
   }
 
   export type DoctorUncheckedCreateWithoutInteractionsInput = {
@@ -74697,6 +74638,7 @@ export namespace Prisma {
     notes?: DoctorNoteUncheckedCreateNestedManyWithoutDoctorInput
     chemistRelations?: DoctorChemistRelationUncheckedCreateNestedManyWithoutDoctorInput
     DoctorTask?: DoctorTaskUncheckedCreateNestedManyWithoutDoctorInput
+    sampleDistributions?: SampleDistributionUncheckedCreateNestedManyWithoutDoctorInput
   }
 
   export type DoctorCreateOrConnectWithoutInteractionsInput = {
@@ -74746,7 +74688,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryCreateNestedManyWithoutEmployeeInput
     giftInventories?: UserGiftInventoryCreateNestedManyWithoutEmployeeInput
     giftsCreated?: GiftCreateNestedManyWithoutCreatedByInput
-    doctorDistributions?: DoctorDistributionCreateNestedManyWithoutEmployeeInput
+    sampleDistributions?: SampleDistributionCreateNestedManyWithoutEmployeeInput
     taskPlans?: TaskPlannerCreateNestedManyWithoutEmployeeInput
     doctorTasks?: DoctorTaskCreateNestedManyWithoutEmployeeInput
     chemistTasks?: ChemistTaskCreateNestedManyWithoutEmployeeInput
@@ -74795,7 +74737,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryUncheckedCreateNestedManyWithoutEmployeeInput
     giftInventories?: UserGiftInventoryUncheckedCreateNestedManyWithoutEmployeeInput
     giftsCreated?: GiftUncheckedCreateNestedManyWithoutCreatedByInput
-    doctorDistributions?: DoctorDistributionUncheckedCreateNestedManyWithoutEmployeeInput
+    sampleDistributions?: SampleDistributionUncheckedCreateNestedManyWithoutEmployeeInput
     taskPlans?: TaskPlannerUncheckedCreateNestedManyWithoutEmployeeInput
     doctorTasks?: DoctorTaskUncheckedCreateNestedManyWithoutEmployeeInput
     chemistTasks?: ChemistTaskUncheckedCreateNestedManyWithoutEmployeeInput
@@ -74858,36 +74800,6 @@ export namespace Prisma {
   export type HospitalCreateOrConnectWithoutDoctorInteractionsInput = {
     where: HospitalWhereUniqueInput
     create: XOR<HospitalCreateWithoutDoctorInteractionsInput, HospitalUncheckedCreateWithoutDoctorInteractionsInput>
-  }
-
-  export type DoctorDistributionCreateWithoutDoctorInteractionInput = {
-    id?: string
-    distributedAt: Date | string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    employee: EmployeeCreateNestedOneWithoutDoctorDistributionsInput
-    drugItems?: DoctorDistributionDrugItemCreateNestedManyWithoutDoctorDistributionInput
-    giftItems?: DoctorDistributionGiftItemCreateNestedManyWithoutDoctorDistributionInput
-  }
-
-  export type DoctorDistributionUncheckedCreateWithoutDoctorInteractionInput = {
-    id?: string
-    employeeId: string
-    distributedAt: Date | string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    drugItems?: DoctorDistributionDrugItemUncheckedCreateNestedManyWithoutDoctorDistributionInput
-    giftItems?: DoctorDistributionGiftItemUncheckedCreateNestedManyWithoutDoctorDistributionInput
-  }
-
-  export type DoctorDistributionCreateOrConnectWithoutDoctorInteractionInput = {
-    where: DoctorDistributionWhereUniqueInput
-    create: XOR<DoctorDistributionCreateWithoutDoctorInteractionInput, DoctorDistributionUncheckedCreateWithoutDoctorInteractionInput>
-  }
-
-  export type DoctorDistributionCreateManyDoctorInteractionInputEnvelope = {
-    data: DoctorDistributionCreateManyDoctorInteractionInput | DoctorDistributionCreateManyDoctorInteractionInput[]
-    skipDuplicates?: boolean
   }
 
   export type DoctorTaskCreateWithoutDoctorInteractionsInput = {
@@ -74953,6 +74865,7 @@ export namespace Prisma {
     notes?: DoctorNoteUpdateManyWithoutDoctorNestedInput
     chemistRelations?: DoctorChemistRelationUpdateManyWithoutDoctorNestedInput
     DoctorTask?: DoctorTaskUpdateManyWithoutDoctorNestedInput
+    sampleDistributions?: SampleDistributionUpdateManyWithoutDoctorNestedInput
   }
 
   export type DoctorUncheckedUpdateWithoutInteractionsInput = {
@@ -74976,6 +74889,7 @@ export namespace Prisma {
     notes?: DoctorNoteUncheckedUpdateManyWithoutDoctorNestedInput
     chemistRelations?: DoctorChemistRelationUncheckedUpdateManyWithoutDoctorNestedInput
     DoctorTask?: DoctorTaskUncheckedUpdateManyWithoutDoctorNestedInput
+    sampleDistributions?: SampleDistributionUncheckedUpdateManyWithoutDoctorNestedInput
   }
 
   export type EmployeeUpsertWithoutDoctorInteractionsInput = {
@@ -75031,7 +74945,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryUpdateManyWithoutEmployeeNestedInput
     giftInventories?: UserGiftInventoryUpdateManyWithoutEmployeeNestedInput
     giftsCreated?: GiftUpdateManyWithoutCreatedByNestedInput
-    doctorDistributions?: DoctorDistributionUpdateManyWithoutEmployeeNestedInput
+    sampleDistributions?: SampleDistributionUpdateManyWithoutEmployeeNestedInput
     taskPlans?: TaskPlannerUpdateManyWithoutEmployeeNestedInput
     doctorTasks?: DoctorTaskUpdateManyWithoutEmployeeNestedInput
     chemistTasks?: ChemistTaskUpdateManyWithoutEmployeeNestedInput
@@ -75080,7 +74994,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryUncheckedUpdateManyWithoutEmployeeNestedInput
     giftInventories?: UserGiftInventoryUncheckedUpdateManyWithoutEmployeeNestedInput
     giftsCreated?: GiftUncheckedUpdateManyWithoutCreatedByNestedInput
-    doctorDistributions?: DoctorDistributionUncheckedUpdateManyWithoutEmployeeNestedInput
+    sampleDistributions?: SampleDistributionUncheckedUpdateManyWithoutEmployeeNestedInput
     taskPlans?: TaskPlannerUncheckedUpdateManyWithoutEmployeeNestedInput
     doctorTasks?: DoctorTaskUncheckedUpdateManyWithoutEmployeeNestedInput
     chemistTasks?: ChemistTaskUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -75144,22 +75058,6 @@ export namespace Prisma {
     isActive?: BoolFieldUpdateOperationsInput | boolean
     doctorAssociations?: DoctorHospitalAssociationUncheckedUpdateManyWithoutHospitalNestedInput
     consultationSchedules?: DoctorConsultationScheduleUncheckedUpdateManyWithoutHospitalNestedInput
-  }
-
-  export type DoctorDistributionUpsertWithWhereUniqueWithoutDoctorInteractionInput = {
-    where: DoctorDistributionWhereUniqueInput
-    update: XOR<DoctorDistributionUpdateWithoutDoctorInteractionInput, DoctorDistributionUncheckedUpdateWithoutDoctorInteractionInput>
-    create: XOR<DoctorDistributionCreateWithoutDoctorInteractionInput, DoctorDistributionUncheckedCreateWithoutDoctorInteractionInput>
-  }
-
-  export type DoctorDistributionUpdateWithWhereUniqueWithoutDoctorInteractionInput = {
-    where: DoctorDistributionWhereUniqueInput
-    data: XOR<DoctorDistributionUpdateWithoutDoctorInteractionInput, DoctorDistributionUncheckedUpdateWithoutDoctorInteractionInput>
-  }
-
-  export type DoctorDistributionUpdateManyWithWhereWithoutDoctorInteractionInput = {
-    where: DoctorDistributionScalarWhereInput
-    data: XOR<DoctorDistributionUpdateManyMutationInput, DoctorDistributionUncheckedUpdateManyWithoutDoctorInteractionInput>
   }
 
   export type DoctorTaskUpsertWithoutDoctorInteractionsInput = {
@@ -75241,7 +75139,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryCreateNestedManyWithoutEmployeeInput
     giftInventories?: UserGiftInventoryCreateNestedManyWithoutEmployeeInput
     giftsCreated?: GiftCreateNestedManyWithoutCreatedByInput
-    doctorDistributions?: DoctorDistributionCreateNestedManyWithoutEmployeeInput
+    sampleDistributions?: SampleDistributionCreateNestedManyWithoutEmployeeInput
     taskPlans?: TaskPlannerCreateNestedManyWithoutEmployeeInput
     doctorTasks?: DoctorTaskCreateNestedManyWithoutEmployeeInput
     chemistTasks?: ChemistTaskCreateNestedManyWithoutEmployeeInput
@@ -75290,7 +75188,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryUncheckedCreateNestedManyWithoutEmployeeInput
     giftInventories?: UserGiftInventoryUncheckedCreateNestedManyWithoutEmployeeInput
     giftsCreated?: GiftUncheckedCreateNestedManyWithoutCreatedByInput
-    doctorDistributions?: DoctorDistributionUncheckedCreateNestedManyWithoutEmployeeInput
+    sampleDistributions?: SampleDistributionUncheckedCreateNestedManyWithoutEmployeeInput
     taskPlans?: TaskPlannerUncheckedCreateNestedManyWithoutEmployeeInput
     doctorTasks?: DoctorTaskUncheckedCreateNestedManyWithoutEmployeeInput
     chemistTasks?: ChemistTaskUncheckedCreateNestedManyWithoutEmployeeInput
@@ -75367,7 +75265,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     employee: EmployeeCreateNestedOneWithoutDrugInventoriesInput
-    doctorDistributionDrugItems?: DoctorDistributionDrugItemCreateNestedManyWithoutFromInventoryInput
+    sampleDistributionDrugItems?: SampleDistributionDrugItemCreateNestedManyWithoutFromInventoryInput
   }
 
   export type UserDrugInventoryUncheckedCreateWithoutDrugInput = {
@@ -75377,7 +75275,7 @@ export namespace Prisma {
     lastRestockedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    doctorDistributionDrugItems?: DoctorDistributionDrugItemUncheckedCreateNestedManyWithoutFromInventoryInput
+    sampleDistributionDrugItems?: SampleDistributionDrugItemUncheckedCreateNestedManyWithoutFromInventoryInput
   }
 
   export type UserDrugInventoryCreateOrConnectWithoutDrugInput = {
@@ -75387,38 +75285,6 @@ export namespace Prisma {
 
   export type UserDrugInventoryCreateManyDrugInputEnvelope = {
     data: UserDrugInventoryCreateManyDrugInput | UserDrugInventoryCreateManyDrugInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type DoctorDistributionDrugItemCreateWithoutDrugInput = {
-    id?: string
-    quantity: number
-    unitCost: Decimal | DecimalJsLike | number | string
-    totalCost: Decimal | DecimalJsLike | number | string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    doctorDistribution: DoctorDistributionCreateNestedOneWithoutDrugItemsInput
-    fromInventory: UserDrugInventoryCreateNestedOneWithoutDoctorDistributionDrugItemsInput
-  }
-
-  export type DoctorDistributionDrugItemUncheckedCreateWithoutDrugInput = {
-    id?: string
-    doctorDistributionId: string
-    fromInventoryId: string
-    quantity: number
-    unitCost: Decimal | DecimalJsLike | number | string
-    totalCost: Decimal | DecimalJsLike | number | string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type DoctorDistributionDrugItemCreateOrConnectWithoutDrugInput = {
-    where: DoctorDistributionDrugItemWhereUniqueInput
-    create: XOR<DoctorDistributionDrugItemCreateWithoutDrugInput, DoctorDistributionDrugItemUncheckedCreateWithoutDrugInput>
-  }
-
-  export type DoctorDistributionDrugItemCreateManyDrugInputEnvelope = {
-    data: DoctorDistributionDrugItemCreateManyDrugInput | DoctorDistributionDrugItemCreateManyDrugInput[]
     skipDuplicates?: boolean
   }
 
@@ -75475,7 +75341,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryUpdateManyWithoutEmployeeNestedInput
     giftInventories?: UserGiftInventoryUpdateManyWithoutEmployeeNestedInput
     giftsCreated?: GiftUpdateManyWithoutCreatedByNestedInput
-    doctorDistributions?: DoctorDistributionUpdateManyWithoutEmployeeNestedInput
+    sampleDistributions?: SampleDistributionUpdateManyWithoutEmployeeNestedInput
     taskPlans?: TaskPlannerUpdateManyWithoutEmployeeNestedInput
     doctorTasks?: DoctorTaskUpdateManyWithoutEmployeeNestedInput
     chemistTasks?: ChemistTaskUpdateManyWithoutEmployeeNestedInput
@@ -75524,7 +75390,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryUncheckedUpdateManyWithoutEmployeeNestedInput
     giftInventories?: UserGiftInventoryUncheckedUpdateManyWithoutEmployeeNestedInput
     giftsCreated?: GiftUncheckedUpdateManyWithoutCreatedByNestedInput
-    doctorDistributions?: DoctorDistributionUncheckedUpdateManyWithoutEmployeeNestedInput
+    sampleDistributions?: SampleDistributionUncheckedUpdateManyWithoutEmployeeNestedInput
     taskPlans?: TaskPlannerUncheckedUpdateManyWithoutEmployeeNestedInput
     doctorTasks?: DoctorTaskUncheckedUpdateManyWithoutEmployeeNestedInput
     chemistTasks?: ChemistTaskUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -75604,37 +75470,6 @@ export namespace Prisma {
   export type UserDrugInventoryUpdateManyWithWhereWithoutDrugInput = {
     where: UserDrugInventoryScalarWhereInput
     data: XOR<UserDrugInventoryUpdateManyMutationInput, UserDrugInventoryUncheckedUpdateManyWithoutDrugInput>
-  }
-
-  export type DoctorDistributionDrugItemUpsertWithWhereUniqueWithoutDrugInput = {
-    where: DoctorDistributionDrugItemWhereUniqueInput
-    update: XOR<DoctorDistributionDrugItemUpdateWithoutDrugInput, DoctorDistributionDrugItemUncheckedUpdateWithoutDrugInput>
-    create: XOR<DoctorDistributionDrugItemCreateWithoutDrugInput, DoctorDistributionDrugItemUncheckedCreateWithoutDrugInput>
-  }
-
-  export type DoctorDistributionDrugItemUpdateWithWhereUniqueWithoutDrugInput = {
-    where: DoctorDistributionDrugItemWhereUniqueInput
-    data: XOR<DoctorDistributionDrugItemUpdateWithoutDrugInput, DoctorDistributionDrugItemUncheckedUpdateWithoutDrugInput>
-  }
-
-  export type DoctorDistributionDrugItemUpdateManyWithWhereWithoutDrugInput = {
-    where: DoctorDistributionDrugItemScalarWhereInput
-    data: XOR<DoctorDistributionDrugItemUpdateManyMutationInput, DoctorDistributionDrugItemUncheckedUpdateManyWithoutDrugInput>
-  }
-
-  export type DoctorDistributionDrugItemScalarWhereInput = {
-    AND?: DoctorDistributionDrugItemScalarWhereInput | DoctorDistributionDrugItemScalarWhereInput[]
-    OR?: DoctorDistributionDrugItemScalarWhereInput[]
-    NOT?: DoctorDistributionDrugItemScalarWhereInput | DoctorDistributionDrugItemScalarWhereInput[]
-    id?: StringFilter<"DoctorDistributionDrugItem"> | string
-    doctorDistributionId?: StringFilter<"DoctorDistributionDrugItem"> | string
-    drugId?: StringFilter<"DoctorDistributionDrugItem"> | string
-    fromInventoryId?: StringFilter<"DoctorDistributionDrugItem"> | string
-    quantity?: IntFilter<"DoctorDistributionDrugItem"> | number
-    unitCost?: DecimalFilter<"DoctorDistributionDrugItem"> | Decimal | DecimalJsLike | number | string
-    totalCost?: DecimalFilter<"DoctorDistributionDrugItem"> | Decimal | DecimalJsLike | number | string
-    createdAt?: DateTimeFilter<"DoctorDistributionDrugItem"> | Date | string
-    updatedAt?: DateTimeFilter<"DoctorDistributionDrugItem"> | Date | string
   }
 
   export type ChemistChainCreateWithoutChemistsInput = {
@@ -75741,7 +75576,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryCreateNestedManyWithoutEmployeeInput
     giftInventories?: UserGiftInventoryCreateNestedManyWithoutEmployeeInput
     giftsCreated?: GiftCreateNestedManyWithoutCreatedByInput
-    doctorDistributions?: DoctorDistributionCreateNestedManyWithoutEmployeeInput
+    sampleDistributions?: SampleDistributionCreateNestedManyWithoutEmployeeInput
     taskPlans?: TaskPlannerCreateNestedManyWithoutEmployeeInput
     doctorTasks?: DoctorTaskCreateNestedManyWithoutEmployeeInput
     chemistTasks?: ChemistTaskCreateNestedManyWithoutEmployeeInput
@@ -75790,7 +75625,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryUncheckedCreateNestedManyWithoutEmployeeInput
     giftInventories?: UserGiftInventoryUncheckedCreateNestedManyWithoutEmployeeInput
     giftsCreated?: GiftUncheckedCreateNestedManyWithoutCreatedByInput
-    doctorDistributions?: DoctorDistributionUncheckedCreateNestedManyWithoutEmployeeInput
+    sampleDistributions?: SampleDistributionUncheckedCreateNestedManyWithoutEmployeeInput
     taskPlans?: TaskPlannerUncheckedCreateNestedManyWithoutEmployeeInput
     doctorTasks?: DoctorTaskUncheckedCreateNestedManyWithoutEmployeeInput
     chemistTasks?: ChemistTaskUncheckedCreateNestedManyWithoutEmployeeInput
@@ -76002,6 +75837,38 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type SampleDistributionCreateWithoutChemistInput = {
+    id?: string
+    distributedAt: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    doctor?: DoctorCreateNestedOneWithoutSampleDistributionsInput
+    employee: EmployeeCreateNestedOneWithoutSampleDistributionsInput
+    drugItems?: SampleDistributionDrugItemCreateNestedManyWithoutSampleDistributionInput
+    giftItems?: SampleDistributionGiftItemCreateNestedManyWithoutSampleDistributionInput
+  }
+
+  export type SampleDistributionUncheckedCreateWithoutChemistInput = {
+    id?: string
+    doctorId?: string | null
+    employeeId: string
+    distributedAt: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    drugItems?: SampleDistributionDrugItemUncheckedCreateNestedManyWithoutSampleDistributionInput
+    giftItems?: SampleDistributionGiftItemUncheckedCreateNestedManyWithoutSampleDistributionInput
+  }
+
+  export type SampleDistributionCreateOrConnectWithoutChemistInput = {
+    where: SampleDistributionWhereUniqueInput
+    create: XOR<SampleDistributionCreateWithoutChemistInput, SampleDistributionUncheckedCreateWithoutChemistInput>
+  }
+
+  export type SampleDistributionCreateManyChemistInputEnvelope = {
+    data: SampleDistributionCreateManyChemistInput | SampleDistributionCreateManyChemistInput[]
+    skipDuplicates?: boolean
+  }
+
   export type ChemistChainUpsertWithoutChemistsInput = {
     update: XOR<ChemistChainUpdateWithoutChemistsInput, ChemistChainUncheckedUpdateWithoutChemistsInput>
     create: XOR<ChemistChainCreateWithoutChemistsInput, ChemistChainUncheckedCreateWithoutChemistsInput>
@@ -76129,7 +75996,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryUpdateManyWithoutEmployeeNestedInput
     giftInventories?: UserGiftInventoryUpdateManyWithoutEmployeeNestedInput
     giftsCreated?: GiftUpdateManyWithoutCreatedByNestedInput
-    doctorDistributions?: DoctorDistributionUpdateManyWithoutEmployeeNestedInput
+    sampleDistributions?: SampleDistributionUpdateManyWithoutEmployeeNestedInput
     taskPlans?: TaskPlannerUpdateManyWithoutEmployeeNestedInput
     doctorTasks?: DoctorTaskUpdateManyWithoutEmployeeNestedInput
     chemistTasks?: ChemistTaskUpdateManyWithoutEmployeeNestedInput
@@ -76178,7 +76045,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryUncheckedUpdateManyWithoutEmployeeNestedInput
     giftInventories?: UserGiftInventoryUncheckedUpdateManyWithoutEmployeeNestedInput
     giftsCreated?: GiftUncheckedUpdateManyWithoutCreatedByNestedInput
-    doctorDistributions?: DoctorDistributionUncheckedUpdateManyWithoutEmployeeNestedInput
+    sampleDistributions?: SampleDistributionUncheckedUpdateManyWithoutEmployeeNestedInput
     taskPlans?: TaskPlannerUncheckedUpdateManyWithoutEmployeeNestedInput
     doctorTasks?: DoctorTaskUncheckedUpdateManyWithoutEmployeeNestedInput
     chemistTasks?: ChemistTaskUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -76281,6 +76148,22 @@ export namespace Prisma {
     data: XOR<ChemistTaskUpdateManyMutationInput, ChemistTaskUncheckedUpdateManyWithoutChemistInput>
   }
 
+  export type SampleDistributionUpsertWithWhereUniqueWithoutChemistInput = {
+    where: SampleDistributionWhereUniqueInput
+    update: XOR<SampleDistributionUpdateWithoutChemistInput, SampleDistributionUncheckedUpdateWithoutChemistInput>
+    create: XOR<SampleDistributionCreateWithoutChemistInput, SampleDistributionUncheckedCreateWithoutChemistInput>
+  }
+
+  export type SampleDistributionUpdateWithWhereUniqueWithoutChemistInput = {
+    where: SampleDistributionWhereUniqueInput
+    data: XOR<SampleDistributionUpdateWithoutChemistInput, SampleDistributionUncheckedUpdateWithoutChemistInput>
+  }
+
+  export type SampleDistributionUpdateManyWithWhereWithoutChemistInput = {
+    where: SampleDistributionScalarWhereInput
+    data: XOR<SampleDistributionUpdateManyMutationInput, SampleDistributionUncheckedUpdateManyWithoutChemistInput>
+  }
+
   export type ChemistCreateWithoutNotesInput = {
     id?: string
     organizationId: string
@@ -76308,6 +76191,7 @@ export namespace Prisma {
     orders?: OrderCreateNestedManyWithoutChemistInput
     rcpaReports?: RcpaReportCreateNestedManyWithoutChemistInput
     chemistTasks?: ChemistTaskCreateNestedManyWithoutChemistInput
+    sampleDistributions?: SampleDistributionCreateNestedManyWithoutChemistInput
   }
 
   export type ChemistUncheckedCreateWithoutNotesInput = {
@@ -76337,6 +76221,7 @@ export namespace Prisma {
     orders?: OrderUncheckedCreateNestedManyWithoutChemistInput
     rcpaReports?: RcpaReportUncheckedCreateNestedManyWithoutChemistInput
     chemistTasks?: ChemistTaskUncheckedCreateNestedManyWithoutChemistInput
+    sampleDistributions?: SampleDistributionUncheckedCreateNestedManyWithoutChemistInput
   }
 
   export type ChemistCreateOrConnectWithoutNotesInput = {
@@ -76386,7 +76271,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryCreateNestedManyWithoutEmployeeInput
     giftInventories?: UserGiftInventoryCreateNestedManyWithoutEmployeeInput
     giftsCreated?: GiftCreateNestedManyWithoutCreatedByInput
-    doctorDistributions?: DoctorDistributionCreateNestedManyWithoutEmployeeInput
+    sampleDistributions?: SampleDistributionCreateNestedManyWithoutEmployeeInput
     taskPlans?: TaskPlannerCreateNestedManyWithoutEmployeeInput
     doctorTasks?: DoctorTaskCreateNestedManyWithoutEmployeeInput
     chemistTasks?: ChemistTaskCreateNestedManyWithoutEmployeeInput
@@ -76435,7 +76320,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryUncheckedCreateNestedManyWithoutEmployeeInput
     giftInventories?: UserGiftInventoryUncheckedCreateNestedManyWithoutEmployeeInput
     giftsCreated?: GiftUncheckedCreateNestedManyWithoutCreatedByInput
-    doctorDistributions?: DoctorDistributionUncheckedCreateNestedManyWithoutEmployeeInput
+    sampleDistributions?: SampleDistributionUncheckedCreateNestedManyWithoutEmployeeInput
     taskPlans?: TaskPlannerUncheckedCreateNestedManyWithoutEmployeeInput
     doctorTasks?: DoctorTaskUncheckedCreateNestedManyWithoutEmployeeInput
     chemistTasks?: ChemistTaskUncheckedCreateNestedManyWithoutEmployeeInput
@@ -76485,6 +76370,7 @@ export namespace Prisma {
     orders?: OrderUpdateManyWithoutChemistNestedInput
     rcpaReports?: RcpaReportUpdateManyWithoutChemistNestedInput
     chemistTasks?: ChemistTaskUpdateManyWithoutChemistNestedInput
+    sampleDistributions?: SampleDistributionUpdateManyWithoutChemistNestedInput
   }
 
   export type ChemistUncheckedUpdateWithoutNotesInput = {
@@ -76514,6 +76400,7 @@ export namespace Prisma {
     orders?: OrderUncheckedUpdateManyWithoutChemistNestedInput
     rcpaReports?: RcpaReportUncheckedUpdateManyWithoutChemistNestedInput
     chemistTasks?: ChemistTaskUncheckedUpdateManyWithoutChemistNestedInput
+    sampleDistributions?: SampleDistributionUncheckedUpdateManyWithoutChemistNestedInput
   }
 
   export type EmployeeUpsertWithoutChemistNotesInput = {
@@ -76569,7 +76456,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryUpdateManyWithoutEmployeeNestedInput
     giftInventories?: UserGiftInventoryUpdateManyWithoutEmployeeNestedInput
     giftsCreated?: GiftUpdateManyWithoutCreatedByNestedInput
-    doctorDistributions?: DoctorDistributionUpdateManyWithoutEmployeeNestedInput
+    sampleDistributions?: SampleDistributionUpdateManyWithoutEmployeeNestedInput
     taskPlans?: TaskPlannerUpdateManyWithoutEmployeeNestedInput
     doctorTasks?: DoctorTaskUpdateManyWithoutEmployeeNestedInput
     chemistTasks?: ChemistTaskUpdateManyWithoutEmployeeNestedInput
@@ -76618,7 +76505,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryUncheckedUpdateManyWithoutEmployeeNestedInput
     giftInventories?: UserGiftInventoryUncheckedUpdateManyWithoutEmployeeNestedInput
     giftsCreated?: GiftUncheckedUpdateManyWithoutCreatedByNestedInput
-    doctorDistributions?: DoctorDistributionUncheckedUpdateManyWithoutEmployeeNestedInput
+    sampleDistributions?: SampleDistributionUncheckedUpdateManyWithoutEmployeeNestedInput
     taskPlans?: TaskPlannerUncheckedUpdateManyWithoutEmployeeNestedInput
     doctorTasks?: DoctorTaskUncheckedUpdateManyWithoutEmployeeNestedInput
     chemistTasks?: ChemistTaskUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -76652,6 +76539,7 @@ export namespace Prisma {
     orders?: OrderCreateNestedManyWithoutChemistInput
     rcpaReports?: RcpaReportCreateNestedManyWithoutChemistInput
     chemistTasks?: ChemistTaskCreateNestedManyWithoutChemistInput
+    sampleDistributions?: SampleDistributionCreateNestedManyWithoutChemistInput
   }
 
   export type ChemistUncheckedCreateWithoutInteractionsInput = {
@@ -76681,6 +76569,7 @@ export namespace Prisma {
     orders?: OrderUncheckedCreateNestedManyWithoutChemistInput
     rcpaReports?: RcpaReportUncheckedCreateNestedManyWithoutChemistInput
     chemistTasks?: ChemistTaskUncheckedCreateNestedManyWithoutChemistInput
+    sampleDistributions?: SampleDistributionUncheckedCreateNestedManyWithoutChemistInput
   }
 
   export type ChemistCreateOrConnectWithoutInteractionsInput = {
@@ -76730,7 +76619,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryCreateNestedManyWithoutEmployeeInput
     giftInventories?: UserGiftInventoryCreateNestedManyWithoutEmployeeInput
     giftsCreated?: GiftCreateNestedManyWithoutCreatedByInput
-    doctorDistributions?: DoctorDistributionCreateNestedManyWithoutEmployeeInput
+    sampleDistributions?: SampleDistributionCreateNestedManyWithoutEmployeeInput
     taskPlans?: TaskPlannerCreateNestedManyWithoutEmployeeInput
     doctorTasks?: DoctorTaskCreateNestedManyWithoutEmployeeInput
     chemistTasks?: ChemistTaskCreateNestedManyWithoutEmployeeInput
@@ -76779,7 +76668,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryUncheckedCreateNestedManyWithoutEmployeeInput
     giftInventories?: UserGiftInventoryUncheckedCreateNestedManyWithoutEmployeeInput
     giftsCreated?: GiftUncheckedCreateNestedManyWithoutCreatedByInput
-    doctorDistributions?: DoctorDistributionUncheckedCreateNestedManyWithoutEmployeeInput
+    sampleDistributions?: SampleDistributionUncheckedCreateNestedManyWithoutEmployeeInput
     taskPlans?: TaskPlannerUncheckedCreateNestedManyWithoutEmployeeInput
     doctorTasks?: DoctorTaskUncheckedCreateNestedManyWithoutEmployeeInput
     chemistTasks?: ChemistTaskUncheckedCreateNestedManyWithoutEmployeeInput
@@ -76860,6 +76749,7 @@ export namespace Prisma {
     orders?: OrderUpdateManyWithoutChemistNestedInput
     rcpaReports?: RcpaReportUpdateManyWithoutChemistNestedInput
     chemistTasks?: ChemistTaskUpdateManyWithoutChemistNestedInput
+    sampleDistributions?: SampleDistributionUpdateManyWithoutChemistNestedInput
   }
 
   export type ChemistUncheckedUpdateWithoutInteractionsInput = {
@@ -76889,6 +76779,7 @@ export namespace Prisma {
     orders?: OrderUncheckedUpdateManyWithoutChemistNestedInput
     rcpaReports?: RcpaReportUncheckedUpdateManyWithoutChemistNestedInput
     chemistTasks?: ChemistTaskUncheckedUpdateManyWithoutChemistNestedInput
+    sampleDistributions?: SampleDistributionUncheckedUpdateManyWithoutChemistNestedInput
   }
 
   export type EmployeeUpsertWithoutChemistInteractionsInput = {
@@ -76944,7 +76835,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryUpdateManyWithoutEmployeeNestedInput
     giftInventories?: UserGiftInventoryUpdateManyWithoutEmployeeNestedInput
     giftsCreated?: GiftUpdateManyWithoutCreatedByNestedInput
-    doctorDistributions?: DoctorDistributionUpdateManyWithoutEmployeeNestedInput
+    sampleDistributions?: SampleDistributionUpdateManyWithoutEmployeeNestedInput
     taskPlans?: TaskPlannerUpdateManyWithoutEmployeeNestedInput
     doctorTasks?: DoctorTaskUpdateManyWithoutEmployeeNestedInput
     chemistTasks?: ChemistTaskUpdateManyWithoutEmployeeNestedInput
@@ -76993,7 +76884,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryUncheckedUpdateManyWithoutEmployeeNestedInput
     giftInventories?: UserGiftInventoryUncheckedUpdateManyWithoutEmployeeNestedInput
     giftsCreated?: GiftUncheckedUpdateManyWithoutCreatedByNestedInput
-    doctorDistributions?: DoctorDistributionUncheckedUpdateManyWithoutEmployeeNestedInput
+    sampleDistributions?: SampleDistributionUncheckedUpdateManyWithoutEmployeeNestedInput
     taskPlans?: TaskPlannerUncheckedUpdateManyWithoutEmployeeNestedInput
     doctorTasks?: DoctorTaskUncheckedUpdateManyWithoutEmployeeNestedInput
     chemistTasks?: ChemistTaskUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -77058,6 +76949,7 @@ export namespace Prisma {
     interactions?: DoctorInteractionCreateNestedManyWithoutDoctorInput
     notes?: DoctorNoteCreateNestedManyWithoutDoctorInput
     DoctorTask?: DoctorTaskCreateNestedManyWithoutDoctorInput
+    sampleDistributions?: SampleDistributionCreateNestedManyWithoutDoctorInput
   }
 
   export type DoctorUncheckedCreateWithoutChemistRelationsInput = {
@@ -77081,6 +76973,7 @@ export namespace Prisma {
     interactions?: DoctorInteractionUncheckedCreateNestedManyWithoutDoctorInput
     notes?: DoctorNoteUncheckedCreateNestedManyWithoutDoctorInput
     DoctorTask?: DoctorTaskUncheckedCreateNestedManyWithoutDoctorInput
+    sampleDistributions?: SampleDistributionUncheckedCreateNestedManyWithoutDoctorInput
   }
 
   export type DoctorCreateOrConnectWithoutChemistRelationsInput = {
@@ -77115,6 +77008,7 @@ export namespace Prisma {
     orders?: OrderCreateNestedManyWithoutChemistInput
     rcpaReports?: RcpaReportCreateNestedManyWithoutChemistInput
     chemistTasks?: ChemistTaskCreateNestedManyWithoutChemistInput
+    sampleDistributions?: SampleDistributionCreateNestedManyWithoutChemistInput
   }
 
   export type ChemistUncheckedCreateWithoutDoctorRelationsInput = {
@@ -77144,6 +77038,7 @@ export namespace Prisma {
     orders?: OrderUncheckedCreateNestedManyWithoutChemistInput
     rcpaReports?: RcpaReportUncheckedCreateNestedManyWithoutChemistInput
     chemistTasks?: ChemistTaskUncheckedCreateNestedManyWithoutChemistInput
+    sampleDistributions?: SampleDistributionUncheckedCreateNestedManyWithoutChemistInput
   }
 
   export type ChemistCreateOrConnectWithoutDoctorRelationsInput = {
@@ -77193,7 +77088,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryCreateNestedManyWithoutEmployeeInput
     giftInventories?: UserGiftInventoryCreateNestedManyWithoutEmployeeInput
     giftsCreated?: GiftCreateNestedManyWithoutCreatedByInput
-    doctorDistributions?: DoctorDistributionCreateNestedManyWithoutEmployeeInput
+    sampleDistributions?: SampleDistributionCreateNestedManyWithoutEmployeeInput
     taskPlans?: TaskPlannerCreateNestedManyWithoutEmployeeInput
     doctorTasks?: DoctorTaskCreateNestedManyWithoutEmployeeInput
     chemistTasks?: ChemistTaskCreateNestedManyWithoutEmployeeInput
@@ -77242,7 +77137,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryUncheckedCreateNestedManyWithoutEmployeeInput
     giftInventories?: UserGiftInventoryUncheckedCreateNestedManyWithoutEmployeeInput
     giftsCreated?: GiftUncheckedCreateNestedManyWithoutCreatedByInput
-    doctorDistributions?: DoctorDistributionUncheckedCreateNestedManyWithoutEmployeeInput
+    sampleDistributions?: SampleDistributionUncheckedCreateNestedManyWithoutEmployeeInput
     taskPlans?: TaskPlannerUncheckedCreateNestedManyWithoutEmployeeInput
     doctorTasks?: DoctorTaskUncheckedCreateNestedManyWithoutEmployeeInput
     chemistTasks?: ChemistTaskUncheckedCreateNestedManyWithoutEmployeeInput
@@ -77286,6 +77181,7 @@ export namespace Prisma {
     interactions?: DoctorInteractionUpdateManyWithoutDoctorNestedInput
     notes?: DoctorNoteUpdateManyWithoutDoctorNestedInput
     DoctorTask?: DoctorTaskUpdateManyWithoutDoctorNestedInput
+    sampleDistributions?: SampleDistributionUpdateManyWithoutDoctorNestedInput
   }
 
   export type DoctorUncheckedUpdateWithoutChemistRelationsInput = {
@@ -77309,6 +77205,7 @@ export namespace Prisma {
     interactions?: DoctorInteractionUncheckedUpdateManyWithoutDoctorNestedInput
     notes?: DoctorNoteUncheckedUpdateManyWithoutDoctorNestedInput
     DoctorTask?: DoctorTaskUncheckedUpdateManyWithoutDoctorNestedInput
+    sampleDistributions?: SampleDistributionUncheckedUpdateManyWithoutDoctorNestedInput
   }
 
   export type ChemistUpsertWithoutDoctorRelationsInput = {
@@ -77349,6 +77246,7 @@ export namespace Prisma {
     orders?: OrderUpdateManyWithoutChemistNestedInput
     rcpaReports?: RcpaReportUpdateManyWithoutChemistNestedInput
     chemistTasks?: ChemistTaskUpdateManyWithoutChemistNestedInput
+    sampleDistributions?: SampleDistributionUpdateManyWithoutChemistNestedInput
   }
 
   export type ChemistUncheckedUpdateWithoutDoctorRelationsInput = {
@@ -77378,6 +77276,7 @@ export namespace Prisma {
     orders?: OrderUncheckedUpdateManyWithoutChemistNestedInput
     rcpaReports?: RcpaReportUncheckedUpdateManyWithoutChemistNestedInput
     chemistTasks?: ChemistTaskUncheckedUpdateManyWithoutChemistNestedInput
+    sampleDistributions?: SampleDistributionUncheckedUpdateManyWithoutChemistNestedInput
   }
 
   export type EmployeeUpsertWithoutDoctorChemistRelationsInput = {
@@ -77433,7 +77332,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryUpdateManyWithoutEmployeeNestedInput
     giftInventories?: UserGiftInventoryUpdateManyWithoutEmployeeNestedInput
     giftsCreated?: GiftUpdateManyWithoutCreatedByNestedInput
-    doctorDistributions?: DoctorDistributionUpdateManyWithoutEmployeeNestedInput
+    sampleDistributions?: SampleDistributionUpdateManyWithoutEmployeeNestedInput
     taskPlans?: TaskPlannerUpdateManyWithoutEmployeeNestedInput
     doctorTasks?: DoctorTaskUpdateManyWithoutEmployeeNestedInput
     chemistTasks?: ChemistTaskUpdateManyWithoutEmployeeNestedInput
@@ -77482,7 +77381,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryUncheckedUpdateManyWithoutEmployeeNestedInput
     giftInventories?: UserGiftInventoryUncheckedUpdateManyWithoutEmployeeNestedInput
     giftsCreated?: GiftUncheckedUpdateManyWithoutCreatedByNestedInput
-    doctorDistributions?: DoctorDistributionUncheckedUpdateManyWithoutEmployeeNestedInput
+    sampleDistributions?: SampleDistributionUncheckedUpdateManyWithoutEmployeeNestedInput
     taskPlans?: TaskPlannerUncheckedUpdateManyWithoutEmployeeNestedInput
     doctorTasks?: DoctorTaskUncheckedUpdateManyWithoutEmployeeNestedInput
     chemistTasks?: ChemistTaskUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -77516,6 +77415,7 @@ export namespace Prisma {
     doctorRelations?: DoctorChemistRelationCreateNestedManyWithoutChemistInput
     rcpaReports?: RcpaReportCreateNestedManyWithoutChemistInput
     chemistTasks?: ChemistTaskCreateNestedManyWithoutChemistInput
+    sampleDistributions?: SampleDistributionCreateNestedManyWithoutChemistInput
   }
 
   export type ChemistUncheckedCreateWithoutOrdersInput = {
@@ -77545,6 +77445,7 @@ export namespace Prisma {
     doctorRelations?: DoctorChemistRelationUncheckedCreateNestedManyWithoutChemistInput
     rcpaReports?: RcpaReportUncheckedCreateNestedManyWithoutChemistInput
     chemistTasks?: ChemistTaskUncheckedCreateNestedManyWithoutChemistInput
+    sampleDistributions?: SampleDistributionUncheckedCreateNestedManyWithoutChemistInput
   }
 
   export type ChemistCreateOrConnectWithoutOrdersInput = {
@@ -77594,7 +77495,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryCreateNestedManyWithoutEmployeeInput
     giftInventories?: UserGiftInventoryCreateNestedManyWithoutEmployeeInput
     giftsCreated?: GiftCreateNestedManyWithoutCreatedByInput
-    doctorDistributions?: DoctorDistributionCreateNestedManyWithoutEmployeeInput
+    sampleDistributions?: SampleDistributionCreateNestedManyWithoutEmployeeInput
     taskPlans?: TaskPlannerCreateNestedManyWithoutEmployeeInput
     doctorTasks?: DoctorTaskCreateNestedManyWithoutEmployeeInput
     chemistTasks?: ChemistTaskCreateNestedManyWithoutEmployeeInput
@@ -77643,7 +77544,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryUncheckedCreateNestedManyWithoutEmployeeInput
     giftInventories?: UserGiftInventoryUncheckedCreateNestedManyWithoutEmployeeInput
     giftsCreated?: GiftUncheckedCreateNestedManyWithoutCreatedByInput
-    doctorDistributions?: DoctorDistributionUncheckedCreateNestedManyWithoutEmployeeInput
+    sampleDistributions?: SampleDistributionUncheckedCreateNestedManyWithoutEmployeeInput
     taskPlans?: TaskPlannerUncheckedCreateNestedManyWithoutEmployeeInput
     doctorTasks?: DoctorTaskUncheckedCreateNestedManyWithoutEmployeeInput
     chemistTasks?: ChemistTaskUncheckedCreateNestedManyWithoutEmployeeInput
@@ -77719,6 +77620,7 @@ export namespace Prisma {
     doctorRelations?: DoctorChemistRelationUpdateManyWithoutChemistNestedInput
     rcpaReports?: RcpaReportUpdateManyWithoutChemistNestedInput
     chemistTasks?: ChemistTaskUpdateManyWithoutChemistNestedInput
+    sampleDistributions?: SampleDistributionUpdateManyWithoutChemistNestedInput
   }
 
   export type ChemistUncheckedUpdateWithoutOrdersInput = {
@@ -77748,6 +77650,7 @@ export namespace Prisma {
     doctorRelations?: DoctorChemistRelationUncheckedUpdateManyWithoutChemistNestedInput
     rcpaReports?: RcpaReportUncheckedUpdateManyWithoutChemistNestedInput
     chemistTasks?: ChemistTaskUncheckedUpdateManyWithoutChemistNestedInput
+    sampleDistributions?: SampleDistributionUncheckedUpdateManyWithoutChemistNestedInput
   }
 
   export type EmployeeUpsertWithoutOrdersCreatedInput = {
@@ -77803,7 +77706,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryUpdateManyWithoutEmployeeNestedInput
     giftInventories?: UserGiftInventoryUpdateManyWithoutEmployeeNestedInput
     giftsCreated?: GiftUpdateManyWithoutCreatedByNestedInput
-    doctorDistributions?: DoctorDistributionUpdateManyWithoutEmployeeNestedInput
+    sampleDistributions?: SampleDistributionUpdateManyWithoutEmployeeNestedInput
     taskPlans?: TaskPlannerUpdateManyWithoutEmployeeNestedInput
     doctorTasks?: DoctorTaskUpdateManyWithoutEmployeeNestedInput
     chemistTasks?: ChemistTaskUpdateManyWithoutEmployeeNestedInput
@@ -77852,7 +77755,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryUncheckedUpdateManyWithoutEmployeeNestedInput
     giftInventories?: UserGiftInventoryUncheckedUpdateManyWithoutEmployeeNestedInput
     giftsCreated?: GiftUncheckedUpdateManyWithoutCreatedByNestedInput
-    doctorDistributions?: DoctorDistributionUncheckedUpdateManyWithoutEmployeeNestedInput
+    sampleDistributions?: SampleDistributionUncheckedUpdateManyWithoutEmployeeNestedInput
     taskPlans?: TaskPlannerUncheckedUpdateManyWithoutEmployeeNestedInput
     doctorTasks?: DoctorTaskUncheckedUpdateManyWithoutEmployeeNestedInput
     chemistTasks?: ChemistTaskUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -77931,7 +77834,6 @@ export namespace Prisma {
     createdBy: EmployeeCreateNestedOneWithoutDrugsCreatedInput
     rcpaData?: RcpaDrugDataCreateNestedManyWithoutDrugInput
     UserDrugInventory?: UserDrugInventoryCreateNestedManyWithoutDrugInput
-    DoctorDistributionDrugItem?: DoctorDistributionDrugItemCreateNestedManyWithoutDrugInput
   }
 
   export type DrugUncheckedCreateWithoutOrderItemsInput = {
@@ -77957,7 +77859,6 @@ export namespace Prisma {
     isActive?: boolean
     rcpaData?: RcpaDrugDataUncheckedCreateNestedManyWithoutDrugInput
     UserDrugInventory?: UserDrugInventoryUncheckedCreateNestedManyWithoutDrugInput
-    DoctorDistributionDrugItem?: DoctorDistributionDrugItemUncheckedCreateNestedManyWithoutDrugInput
   }
 
   export type DrugCreateOrConnectWithoutOrderItemsInput = {
@@ -78038,7 +77939,6 @@ export namespace Prisma {
     createdBy?: EmployeeUpdateOneRequiredWithoutDrugsCreatedNestedInput
     rcpaData?: RcpaDrugDataUpdateManyWithoutDrugNestedInput
     UserDrugInventory?: UserDrugInventoryUpdateManyWithoutDrugNestedInput
-    DoctorDistributionDrugItem?: DoctorDistributionDrugItemUpdateManyWithoutDrugNestedInput
   }
 
   export type DrugUncheckedUpdateWithoutOrderItemsInput = {
@@ -78064,7 +77964,6 @@ export namespace Prisma {
     isActive?: BoolFieldUpdateOperationsInput | boolean
     rcpaData?: RcpaDrugDataUncheckedUpdateManyWithoutDrugNestedInput
     UserDrugInventory?: UserDrugInventoryUncheckedUpdateManyWithoutDrugNestedInput
-    DoctorDistributionDrugItem?: DoctorDistributionDrugItemUncheckedUpdateManyWithoutDrugNestedInput
   }
 
   export type EmployeeCreateWithoutDcrReportsInput = {
@@ -78109,7 +78008,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryCreateNestedManyWithoutEmployeeInput
     giftInventories?: UserGiftInventoryCreateNestedManyWithoutEmployeeInput
     giftsCreated?: GiftCreateNestedManyWithoutCreatedByInput
-    doctorDistributions?: DoctorDistributionCreateNestedManyWithoutEmployeeInput
+    sampleDistributions?: SampleDistributionCreateNestedManyWithoutEmployeeInput
     taskPlans?: TaskPlannerCreateNestedManyWithoutEmployeeInput
     doctorTasks?: DoctorTaskCreateNestedManyWithoutEmployeeInput
     chemistTasks?: ChemistTaskCreateNestedManyWithoutEmployeeInput
@@ -78158,7 +78057,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryUncheckedCreateNestedManyWithoutEmployeeInput
     giftInventories?: UserGiftInventoryUncheckedCreateNestedManyWithoutEmployeeInput
     giftsCreated?: GiftUncheckedCreateNestedManyWithoutCreatedByInput
-    doctorDistributions?: DoctorDistributionUncheckedCreateNestedManyWithoutEmployeeInput
+    sampleDistributions?: SampleDistributionUncheckedCreateNestedManyWithoutEmployeeInput
     taskPlans?: TaskPlannerUncheckedCreateNestedManyWithoutEmployeeInput
     doctorTasks?: DoctorTaskUncheckedCreateNestedManyWithoutEmployeeInput
     chemistTasks?: ChemistTaskUncheckedCreateNestedManyWithoutEmployeeInput
@@ -78223,7 +78122,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryUpdateManyWithoutEmployeeNestedInput
     giftInventories?: UserGiftInventoryUpdateManyWithoutEmployeeNestedInput
     giftsCreated?: GiftUpdateManyWithoutCreatedByNestedInput
-    doctorDistributions?: DoctorDistributionUpdateManyWithoutEmployeeNestedInput
+    sampleDistributions?: SampleDistributionUpdateManyWithoutEmployeeNestedInput
     taskPlans?: TaskPlannerUpdateManyWithoutEmployeeNestedInput
     doctorTasks?: DoctorTaskUpdateManyWithoutEmployeeNestedInput
     chemistTasks?: ChemistTaskUpdateManyWithoutEmployeeNestedInput
@@ -78272,7 +78171,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryUncheckedUpdateManyWithoutEmployeeNestedInput
     giftInventories?: UserGiftInventoryUncheckedUpdateManyWithoutEmployeeNestedInput
     giftsCreated?: GiftUncheckedUpdateManyWithoutCreatedByNestedInput
-    doctorDistributions?: DoctorDistributionUncheckedUpdateManyWithoutEmployeeNestedInput
+    sampleDistributions?: SampleDistributionUncheckedUpdateManyWithoutEmployeeNestedInput
     taskPlans?: TaskPlannerUncheckedUpdateManyWithoutEmployeeNestedInput
     doctorTasks?: DoctorTaskUncheckedUpdateManyWithoutEmployeeNestedInput
     chemistTasks?: ChemistTaskUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -78321,7 +78220,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryCreateNestedManyWithoutEmployeeInput
     giftInventories?: UserGiftInventoryCreateNestedManyWithoutEmployeeInput
     giftsCreated?: GiftCreateNestedManyWithoutCreatedByInput
-    doctorDistributions?: DoctorDistributionCreateNestedManyWithoutEmployeeInput
+    sampleDistributions?: SampleDistributionCreateNestedManyWithoutEmployeeInput
     taskPlans?: TaskPlannerCreateNestedManyWithoutEmployeeInput
     doctorTasks?: DoctorTaskCreateNestedManyWithoutEmployeeInput
     chemistTasks?: ChemistTaskCreateNestedManyWithoutEmployeeInput
@@ -78370,7 +78269,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryUncheckedCreateNestedManyWithoutEmployeeInput
     giftInventories?: UserGiftInventoryUncheckedCreateNestedManyWithoutEmployeeInput
     giftsCreated?: GiftUncheckedCreateNestedManyWithoutCreatedByInput
-    doctorDistributions?: DoctorDistributionUncheckedCreateNestedManyWithoutEmployeeInput
+    sampleDistributions?: SampleDistributionUncheckedCreateNestedManyWithoutEmployeeInput
     taskPlans?: TaskPlannerUncheckedCreateNestedManyWithoutEmployeeInput
     doctorTasks?: DoctorTaskUncheckedCreateNestedManyWithoutEmployeeInput
     chemistTasks?: ChemistTaskUncheckedCreateNestedManyWithoutEmployeeInput
@@ -78409,6 +78308,7 @@ export namespace Prisma {
     doctorRelations?: DoctorChemistRelationCreateNestedManyWithoutChemistInput
     orders?: OrderCreateNestedManyWithoutChemistInput
     chemistTasks?: ChemistTaskCreateNestedManyWithoutChemistInput
+    sampleDistributions?: SampleDistributionCreateNestedManyWithoutChemistInput
   }
 
   export type ChemistUncheckedCreateWithoutRcpaReportsInput = {
@@ -78438,6 +78338,7 @@ export namespace Prisma {
     doctorRelations?: DoctorChemistRelationUncheckedCreateNestedManyWithoutChemistInput
     orders?: OrderUncheckedCreateNestedManyWithoutChemistInput
     chemistTasks?: ChemistTaskUncheckedCreateNestedManyWithoutChemistInput
+    sampleDistributions?: SampleDistributionUncheckedCreateNestedManyWithoutChemistInput
   }
 
   export type ChemistCreateOrConnectWithoutRcpaReportsInput = {
@@ -78530,7 +78431,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryUpdateManyWithoutEmployeeNestedInput
     giftInventories?: UserGiftInventoryUpdateManyWithoutEmployeeNestedInput
     giftsCreated?: GiftUpdateManyWithoutCreatedByNestedInput
-    doctorDistributions?: DoctorDistributionUpdateManyWithoutEmployeeNestedInput
+    sampleDistributions?: SampleDistributionUpdateManyWithoutEmployeeNestedInput
     taskPlans?: TaskPlannerUpdateManyWithoutEmployeeNestedInput
     doctorTasks?: DoctorTaskUpdateManyWithoutEmployeeNestedInput
     chemistTasks?: ChemistTaskUpdateManyWithoutEmployeeNestedInput
@@ -78579,7 +78480,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryUncheckedUpdateManyWithoutEmployeeNestedInput
     giftInventories?: UserGiftInventoryUncheckedUpdateManyWithoutEmployeeNestedInput
     giftsCreated?: GiftUncheckedUpdateManyWithoutCreatedByNestedInput
-    doctorDistributions?: DoctorDistributionUncheckedUpdateManyWithoutEmployeeNestedInput
+    sampleDistributions?: SampleDistributionUncheckedUpdateManyWithoutEmployeeNestedInput
     taskPlans?: TaskPlannerUncheckedUpdateManyWithoutEmployeeNestedInput
     doctorTasks?: DoctorTaskUncheckedUpdateManyWithoutEmployeeNestedInput
     chemistTasks?: ChemistTaskUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -78624,6 +78525,7 @@ export namespace Prisma {
     doctorRelations?: DoctorChemistRelationUpdateManyWithoutChemistNestedInput
     orders?: OrderUpdateManyWithoutChemistNestedInput
     chemistTasks?: ChemistTaskUpdateManyWithoutChemistNestedInput
+    sampleDistributions?: SampleDistributionUpdateManyWithoutChemistNestedInput
   }
 
   export type ChemistUncheckedUpdateWithoutRcpaReportsInput = {
@@ -78653,6 +78555,7 @@ export namespace Prisma {
     doctorRelations?: DoctorChemistRelationUncheckedUpdateManyWithoutChemistNestedInput
     orders?: OrderUncheckedUpdateManyWithoutChemistNestedInput
     chemistTasks?: ChemistTaskUncheckedUpdateManyWithoutChemistNestedInput
+    sampleDistributions?: SampleDistributionUncheckedUpdateManyWithoutChemistNestedInput
   }
 
   export type RcpaDrugDataUpsertWithWhereUniqueWithoutRcpaReportInput = {
@@ -78727,7 +78630,6 @@ export namespace Prisma {
     createdBy: EmployeeCreateNestedOneWithoutDrugsCreatedInput
     orderItems?: OrderItemCreateNestedManyWithoutDrugInput
     UserDrugInventory?: UserDrugInventoryCreateNestedManyWithoutDrugInput
-    DoctorDistributionDrugItem?: DoctorDistributionDrugItemCreateNestedManyWithoutDrugInput
   }
 
   export type DrugUncheckedCreateWithoutRcpaDataInput = {
@@ -78753,7 +78655,6 @@ export namespace Prisma {
     isActive?: boolean
     orderItems?: OrderItemUncheckedCreateNestedManyWithoutDrugInput
     UserDrugInventory?: UserDrugInventoryUncheckedCreateNestedManyWithoutDrugInput
-    DoctorDistributionDrugItem?: DoctorDistributionDrugItemUncheckedCreateNestedManyWithoutDrugInput
   }
 
   export type DrugCreateOrConnectWithoutRcpaDataInput = {
@@ -78834,7 +78735,6 @@ export namespace Prisma {
     createdBy?: EmployeeUpdateOneRequiredWithoutDrugsCreatedNestedInput
     orderItems?: OrderItemUpdateManyWithoutDrugNestedInput
     UserDrugInventory?: UserDrugInventoryUpdateManyWithoutDrugNestedInput
-    DoctorDistributionDrugItem?: DoctorDistributionDrugItemUpdateManyWithoutDrugNestedInput
   }
 
   export type DrugUncheckedUpdateWithoutRcpaDataInput = {
@@ -78860,7 +78760,6 @@ export namespace Prisma {
     isActive?: BoolFieldUpdateOperationsInput | boolean
     orderItems?: OrderItemUncheckedUpdateManyWithoutDrugNestedInput
     UserDrugInventory?: UserDrugInventoryUncheckedUpdateManyWithoutDrugNestedInput
-    DoctorDistributionDrugItem?: DoctorDistributionDrugItemUncheckedUpdateManyWithoutDrugNestedInput
   }
 
   export type EmployeeCreateWithoutCheckInsInput = {
@@ -78905,7 +78804,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryCreateNestedManyWithoutEmployeeInput
     giftInventories?: UserGiftInventoryCreateNestedManyWithoutEmployeeInput
     giftsCreated?: GiftCreateNestedManyWithoutCreatedByInput
-    doctorDistributions?: DoctorDistributionCreateNestedManyWithoutEmployeeInput
+    sampleDistributions?: SampleDistributionCreateNestedManyWithoutEmployeeInput
     taskPlans?: TaskPlannerCreateNestedManyWithoutEmployeeInput
     doctorTasks?: DoctorTaskCreateNestedManyWithoutEmployeeInput
     chemistTasks?: ChemistTaskCreateNestedManyWithoutEmployeeInput
@@ -78954,7 +78853,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryUncheckedCreateNestedManyWithoutEmployeeInput
     giftInventories?: UserGiftInventoryUncheckedCreateNestedManyWithoutEmployeeInput
     giftsCreated?: GiftUncheckedCreateNestedManyWithoutCreatedByInput
-    doctorDistributions?: DoctorDistributionUncheckedCreateNestedManyWithoutEmployeeInput
+    sampleDistributions?: SampleDistributionUncheckedCreateNestedManyWithoutEmployeeInput
     taskPlans?: TaskPlannerUncheckedCreateNestedManyWithoutEmployeeInput
     doctorTasks?: DoctorTaskUncheckedCreateNestedManyWithoutEmployeeInput
     chemistTasks?: ChemistTaskUncheckedCreateNestedManyWithoutEmployeeInput
@@ -79019,7 +78918,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryUpdateManyWithoutEmployeeNestedInput
     giftInventories?: UserGiftInventoryUpdateManyWithoutEmployeeNestedInput
     giftsCreated?: GiftUpdateManyWithoutCreatedByNestedInput
-    doctorDistributions?: DoctorDistributionUpdateManyWithoutEmployeeNestedInput
+    sampleDistributions?: SampleDistributionUpdateManyWithoutEmployeeNestedInput
     taskPlans?: TaskPlannerUpdateManyWithoutEmployeeNestedInput
     doctorTasks?: DoctorTaskUpdateManyWithoutEmployeeNestedInput
     chemistTasks?: ChemistTaskUpdateManyWithoutEmployeeNestedInput
@@ -79068,7 +78967,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryUncheckedUpdateManyWithoutEmployeeNestedInput
     giftInventories?: UserGiftInventoryUncheckedUpdateManyWithoutEmployeeNestedInput
     giftsCreated?: GiftUncheckedUpdateManyWithoutCreatedByNestedInput
-    doctorDistributions?: DoctorDistributionUncheckedUpdateManyWithoutEmployeeNestedInput
+    sampleDistributions?: SampleDistributionUncheckedUpdateManyWithoutEmployeeNestedInput
     taskPlans?: TaskPlannerUncheckedUpdateManyWithoutEmployeeNestedInput
     doctorTasks?: DoctorTaskUncheckedUpdateManyWithoutEmployeeNestedInput
     chemistTasks?: ChemistTaskUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -79118,7 +79017,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryCreateNestedManyWithoutEmployeeInput
     giftInventories?: UserGiftInventoryCreateNestedManyWithoutEmployeeInput
     giftsCreated?: GiftCreateNestedManyWithoutCreatedByInput
-    doctorDistributions?: DoctorDistributionCreateNestedManyWithoutEmployeeInput
+    sampleDistributions?: SampleDistributionCreateNestedManyWithoutEmployeeInput
     doctorTasks?: DoctorTaskCreateNestedManyWithoutEmployeeInput
     chemistTasks?: ChemistTaskCreateNestedManyWithoutEmployeeInput
     tourPlanTasks?: TourPlanTaskCreateNestedManyWithoutEmployeeInput
@@ -79167,7 +79066,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryUncheckedCreateNestedManyWithoutEmployeeInput
     giftInventories?: UserGiftInventoryUncheckedCreateNestedManyWithoutEmployeeInput
     giftsCreated?: GiftUncheckedCreateNestedManyWithoutCreatedByInput
-    doctorDistributions?: DoctorDistributionUncheckedCreateNestedManyWithoutEmployeeInput
+    sampleDistributions?: SampleDistributionUncheckedCreateNestedManyWithoutEmployeeInput
     doctorTasks?: DoctorTaskUncheckedCreateNestedManyWithoutEmployeeInput
     chemistTasks?: ChemistTaskUncheckedCreateNestedManyWithoutEmployeeInput
     tourPlanTasks?: TourPlanTaskUncheckedCreateNestedManyWithoutEmployeeInput
@@ -79342,7 +79241,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryUpdateManyWithoutEmployeeNestedInput
     giftInventories?: UserGiftInventoryUpdateManyWithoutEmployeeNestedInput
     giftsCreated?: GiftUpdateManyWithoutCreatedByNestedInput
-    doctorDistributions?: DoctorDistributionUpdateManyWithoutEmployeeNestedInput
+    sampleDistributions?: SampleDistributionUpdateManyWithoutEmployeeNestedInput
     doctorTasks?: DoctorTaskUpdateManyWithoutEmployeeNestedInput
     chemistTasks?: ChemistTaskUpdateManyWithoutEmployeeNestedInput
     tourPlanTasks?: TourPlanTaskUpdateManyWithoutEmployeeNestedInput
@@ -79391,7 +79290,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryUncheckedUpdateManyWithoutEmployeeNestedInput
     giftInventories?: UserGiftInventoryUncheckedUpdateManyWithoutEmployeeNestedInput
     giftsCreated?: GiftUncheckedUpdateManyWithoutCreatedByNestedInput
-    doctorDistributions?: DoctorDistributionUncheckedUpdateManyWithoutEmployeeNestedInput
+    sampleDistributions?: SampleDistributionUncheckedUpdateManyWithoutEmployeeNestedInput
     doctorTasks?: DoctorTaskUncheckedUpdateManyWithoutEmployeeNestedInput
     chemistTasks?: ChemistTaskUncheckedUpdateManyWithoutEmployeeNestedInput
     tourPlanTasks?: TourPlanTaskUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -79517,7 +79416,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryCreateNestedManyWithoutEmployeeInput
     giftInventories?: UserGiftInventoryCreateNestedManyWithoutEmployeeInput
     giftsCreated?: GiftCreateNestedManyWithoutCreatedByInput
-    doctorDistributions?: DoctorDistributionCreateNestedManyWithoutEmployeeInput
+    sampleDistributions?: SampleDistributionCreateNestedManyWithoutEmployeeInput
     taskPlans?: TaskPlannerCreateNestedManyWithoutEmployeeInput
     chemistTasks?: ChemistTaskCreateNestedManyWithoutEmployeeInput
     tourPlanTasks?: TourPlanTaskCreateNestedManyWithoutEmployeeInput
@@ -79566,7 +79465,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryUncheckedCreateNestedManyWithoutEmployeeInput
     giftInventories?: UserGiftInventoryUncheckedCreateNestedManyWithoutEmployeeInput
     giftsCreated?: GiftUncheckedCreateNestedManyWithoutCreatedByInput
-    doctorDistributions?: DoctorDistributionUncheckedCreateNestedManyWithoutEmployeeInput
+    sampleDistributions?: SampleDistributionUncheckedCreateNestedManyWithoutEmployeeInput
     taskPlans?: TaskPlannerUncheckedCreateNestedManyWithoutEmployeeInput
     chemistTasks?: ChemistTaskUncheckedCreateNestedManyWithoutEmployeeInput
     tourPlanTasks?: TourPlanTaskUncheckedCreateNestedManyWithoutEmployeeInput
@@ -79598,6 +79497,7 @@ export namespace Prisma {
     interactions?: DoctorInteractionCreateNestedManyWithoutDoctorInput
     notes?: DoctorNoteCreateNestedManyWithoutDoctorInput
     chemistRelations?: DoctorChemistRelationCreateNestedManyWithoutDoctorInput
+    sampleDistributions?: SampleDistributionCreateNestedManyWithoutDoctorInput
   }
 
   export type DoctorUncheckedCreateWithoutDoctorTaskInput = {
@@ -79621,6 +79521,7 @@ export namespace Prisma {
     interactions?: DoctorInteractionUncheckedCreateNestedManyWithoutDoctorInput
     notes?: DoctorNoteUncheckedCreateNestedManyWithoutDoctorInput
     chemistRelations?: DoctorChemistRelationUncheckedCreateNestedManyWithoutDoctorInput
+    sampleDistributions?: SampleDistributionUncheckedCreateNestedManyWithoutDoctorInput
   }
 
   export type DoctorCreateOrConnectWithoutDoctorTaskInput = {
@@ -79641,7 +79542,6 @@ export namespace Prisma {
     doctor: DoctorCreateNestedOneWithoutInteractionsInput
     employee: EmployeeCreateNestedOneWithoutDoctorInteractionsInput
     hospital?: HospitalCreateNestedOneWithoutDoctorInteractionsInput
-    DoctorDistribution?: DoctorDistributionCreateNestedManyWithoutDoctorInteractionInput
   }
 
   export type DoctorInteractionUncheckedCreateWithoutDoctorTaskInput = {
@@ -79657,7 +79557,6 @@ export namespace Prisma {
     comments?: string | null
     rating?: number | null
     createdAt?: Date | string
-    DoctorDistribution?: DoctorDistributionUncheckedCreateNestedManyWithoutDoctorInteractionInput
   }
 
   export type DoctorInteractionCreateOrConnectWithoutDoctorTaskInput = {
@@ -79759,7 +79658,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryUpdateManyWithoutEmployeeNestedInput
     giftInventories?: UserGiftInventoryUpdateManyWithoutEmployeeNestedInput
     giftsCreated?: GiftUpdateManyWithoutCreatedByNestedInput
-    doctorDistributions?: DoctorDistributionUpdateManyWithoutEmployeeNestedInput
+    sampleDistributions?: SampleDistributionUpdateManyWithoutEmployeeNestedInput
     taskPlans?: TaskPlannerUpdateManyWithoutEmployeeNestedInput
     chemistTasks?: ChemistTaskUpdateManyWithoutEmployeeNestedInput
     tourPlanTasks?: TourPlanTaskUpdateManyWithoutEmployeeNestedInput
@@ -79808,7 +79707,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryUncheckedUpdateManyWithoutEmployeeNestedInput
     giftInventories?: UserGiftInventoryUncheckedUpdateManyWithoutEmployeeNestedInput
     giftsCreated?: GiftUncheckedUpdateManyWithoutCreatedByNestedInput
-    doctorDistributions?: DoctorDistributionUncheckedUpdateManyWithoutEmployeeNestedInput
+    sampleDistributions?: SampleDistributionUncheckedUpdateManyWithoutEmployeeNestedInput
     taskPlans?: TaskPlannerUncheckedUpdateManyWithoutEmployeeNestedInput
     chemistTasks?: ChemistTaskUncheckedUpdateManyWithoutEmployeeNestedInput
     tourPlanTasks?: TourPlanTaskUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -79846,6 +79745,7 @@ export namespace Prisma {
     interactions?: DoctorInteractionUpdateManyWithoutDoctorNestedInput
     notes?: DoctorNoteUpdateManyWithoutDoctorNestedInput
     chemistRelations?: DoctorChemistRelationUpdateManyWithoutDoctorNestedInput
+    sampleDistributions?: SampleDistributionUpdateManyWithoutDoctorNestedInput
   }
 
   export type DoctorUncheckedUpdateWithoutDoctorTaskInput = {
@@ -79869,6 +79769,7 @@ export namespace Prisma {
     interactions?: DoctorInteractionUncheckedUpdateManyWithoutDoctorNestedInput
     notes?: DoctorNoteUncheckedUpdateManyWithoutDoctorNestedInput
     chemistRelations?: DoctorChemistRelationUncheckedUpdateManyWithoutDoctorNestedInput
+    sampleDistributions?: SampleDistributionUncheckedUpdateManyWithoutDoctorNestedInput
   }
 
   export type DoctorInteractionUpsertWithWhereUniqueWithoutDoctorTaskInput = {
@@ -79959,7 +79860,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryCreateNestedManyWithoutEmployeeInput
     giftInventories?: UserGiftInventoryCreateNestedManyWithoutEmployeeInput
     giftsCreated?: GiftCreateNestedManyWithoutCreatedByInput
-    doctorDistributions?: DoctorDistributionCreateNestedManyWithoutEmployeeInput
+    sampleDistributions?: SampleDistributionCreateNestedManyWithoutEmployeeInput
     taskPlans?: TaskPlannerCreateNestedManyWithoutEmployeeInput
     doctorTasks?: DoctorTaskCreateNestedManyWithoutEmployeeInput
     tourPlanTasks?: TourPlanTaskCreateNestedManyWithoutEmployeeInput
@@ -80008,7 +79909,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryUncheckedCreateNestedManyWithoutEmployeeInput
     giftInventories?: UserGiftInventoryUncheckedCreateNestedManyWithoutEmployeeInput
     giftsCreated?: GiftUncheckedCreateNestedManyWithoutCreatedByInput
-    doctorDistributions?: DoctorDistributionUncheckedCreateNestedManyWithoutEmployeeInput
+    sampleDistributions?: SampleDistributionUncheckedCreateNestedManyWithoutEmployeeInput
     taskPlans?: TaskPlannerUncheckedCreateNestedManyWithoutEmployeeInput
     doctorTasks?: DoctorTaskUncheckedCreateNestedManyWithoutEmployeeInput
     tourPlanTasks?: TourPlanTaskUncheckedCreateNestedManyWithoutEmployeeInput
@@ -80046,6 +79947,7 @@ export namespace Prisma {
     doctorRelations?: DoctorChemistRelationCreateNestedManyWithoutChemistInput
     orders?: OrderCreateNestedManyWithoutChemistInput
     rcpaReports?: RcpaReportCreateNestedManyWithoutChemistInput
+    sampleDistributions?: SampleDistributionCreateNestedManyWithoutChemistInput
   }
 
   export type ChemistUncheckedCreateWithoutChemistTasksInput = {
@@ -80075,6 +79977,7 @@ export namespace Prisma {
     doctorRelations?: DoctorChemistRelationUncheckedCreateNestedManyWithoutChemistInput
     orders?: OrderUncheckedCreateNestedManyWithoutChemistInput
     rcpaReports?: RcpaReportUncheckedCreateNestedManyWithoutChemistInput
+    sampleDistributions?: SampleDistributionUncheckedCreateNestedManyWithoutChemistInput
   }
 
   export type ChemistCreateOrConnectWithoutChemistTasksInput = {
@@ -80209,7 +80112,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryUpdateManyWithoutEmployeeNestedInput
     giftInventories?: UserGiftInventoryUpdateManyWithoutEmployeeNestedInput
     giftsCreated?: GiftUpdateManyWithoutCreatedByNestedInput
-    doctorDistributions?: DoctorDistributionUpdateManyWithoutEmployeeNestedInput
+    sampleDistributions?: SampleDistributionUpdateManyWithoutEmployeeNestedInput
     taskPlans?: TaskPlannerUpdateManyWithoutEmployeeNestedInput
     doctorTasks?: DoctorTaskUpdateManyWithoutEmployeeNestedInput
     tourPlanTasks?: TourPlanTaskUpdateManyWithoutEmployeeNestedInput
@@ -80258,7 +80161,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryUncheckedUpdateManyWithoutEmployeeNestedInput
     giftInventories?: UserGiftInventoryUncheckedUpdateManyWithoutEmployeeNestedInput
     giftsCreated?: GiftUncheckedUpdateManyWithoutCreatedByNestedInput
-    doctorDistributions?: DoctorDistributionUncheckedUpdateManyWithoutEmployeeNestedInput
+    sampleDistributions?: SampleDistributionUncheckedUpdateManyWithoutEmployeeNestedInput
     taskPlans?: TaskPlannerUncheckedUpdateManyWithoutEmployeeNestedInput
     doctorTasks?: DoctorTaskUncheckedUpdateManyWithoutEmployeeNestedInput
     tourPlanTasks?: TourPlanTaskUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -80302,6 +80205,7 @@ export namespace Prisma {
     doctorRelations?: DoctorChemistRelationUpdateManyWithoutChemistNestedInput
     orders?: OrderUpdateManyWithoutChemistNestedInput
     rcpaReports?: RcpaReportUpdateManyWithoutChemistNestedInput
+    sampleDistributions?: SampleDistributionUpdateManyWithoutChemistNestedInput
   }
 
   export type ChemistUncheckedUpdateWithoutChemistTasksInput = {
@@ -80331,6 +80235,7 @@ export namespace Prisma {
     doctorRelations?: DoctorChemistRelationUncheckedUpdateManyWithoutChemistNestedInput
     orders?: OrderUncheckedUpdateManyWithoutChemistNestedInput
     rcpaReports?: RcpaReportUncheckedUpdateManyWithoutChemistNestedInput
+    sampleDistributions?: SampleDistributionUncheckedUpdateManyWithoutChemistNestedInput
   }
 
   export type ChemistInteractionUpsertWithWhereUniqueWithoutChemistTaskInput = {
@@ -80421,7 +80326,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryCreateNestedManyWithoutEmployeeInput
     giftInventories?: UserGiftInventoryCreateNestedManyWithoutEmployeeInput
     giftsCreated?: GiftCreateNestedManyWithoutCreatedByInput
-    doctorDistributions?: DoctorDistributionCreateNestedManyWithoutEmployeeInput
+    sampleDistributions?: SampleDistributionCreateNestedManyWithoutEmployeeInput
     taskPlans?: TaskPlannerCreateNestedManyWithoutEmployeeInput
     doctorTasks?: DoctorTaskCreateNestedManyWithoutEmployeeInput
     chemistTasks?: ChemistTaskCreateNestedManyWithoutEmployeeInput
@@ -80470,7 +80375,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryUncheckedCreateNestedManyWithoutEmployeeInput
     giftInventories?: UserGiftInventoryUncheckedCreateNestedManyWithoutEmployeeInput
     giftsCreated?: GiftUncheckedCreateNestedManyWithoutCreatedByInput
-    doctorDistributions?: DoctorDistributionUncheckedCreateNestedManyWithoutEmployeeInput
+    sampleDistributions?: SampleDistributionUncheckedCreateNestedManyWithoutEmployeeInput
     taskPlans?: TaskPlannerUncheckedCreateNestedManyWithoutEmployeeInput
     doctorTasks?: DoctorTaskUncheckedCreateNestedManyWithoutEmployeeInput
     chemistTasks?: ChemistTaskUncheckedCreateNestedManyWithoutEmployeeInput
@@ -80621,7 +80526,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryUpdateManyWithoutEmployeeNestedInput
     giftInventories?: UserGiftInventoryUpdateManyWithoutEmployeeNestedInput
     giftsCreated?: GiftUpdateManyWithoutCreatedByNestedInput
-    doctorDistributions?: DoctorDistributionUpdateManyWithoutEmployeeNestedInput
+    sampleDistributions?: SampleDistributionUpdateManyWithoutEmployeeNestedInput
     taskPlans?: TaskPlannerUpdateManyWithoutEmployeeNestedInput
     doctorTasks?: DoctorTaskUpdateManyWithoutEmployeeNestedInput
     chemistTasks?: ChemistTaskUpdateManyWithoutEmployeeNestedInput
@@ -80670,7 +80575,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryUncheckedUpdateManyWithoutEmployeeNestedInput
     giftInventories?: UserGiftInventoryUncheckedUpdateManyWithoutEmployeeNestedInput
     giftsCreated?: GiftUncheckedUpdateManyWithoutCreatedByNestedInput
-    doctorDistributions?: DoctorDistributionUncheckedUpdateManyWithoutEmployeeNestedInput
+    sampleDistributions?: SampleDistributionUncheckedUpdateManyWithoutEmployeeNestedInput
     taskPlans?: TaskPlannerUncheckedUpdateManyWithoutEmployeeNestedInput
     doctorTasks?: DoctorTaskUncheckedUpdateManyWithoutEmployeeNestedInput
     chemistTasks?: ChemistTaskUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -81146,7 +81051,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryCreateNestedManyWithoutEmployeeInput
     giftInventories?: UserGiftInventoryCreateNestedManyWithoutEmployeeInput
     giftsCreated?: GiftCreateNestedManyWithoutCreatedByInput
-    doctorDistributions?: DoctorDistributionCreateNestedManyWithoutEmployeeInput
+    sampleDistributions?: SampleDistributionCreateNestedManyWithoutEmployeeInput
     taskPlans?: TaskPlannerCreateNestedManyWithoutEmployeeInput
     doctorTasks?: DoctorTaskCreateNestedManyWithoutEmployeeInput
     chemistTasks?: ChemistTaskCreateNestedManyWithoutEmployeeInput
@@ -81195,7 +81100,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryUncheckedCreateNestedManyWithoutEmployeeInput
     giftInventories?: UserGiftInventoryUncheckedCreateNestedManyWithoutEmployeeInput
     giftsCreated?: GiftUncheckedCreateNestedManyWithoutCreatedByInput
-    doctorDistributions?: DoctorDistributionUncheckedCreateNestedManyWithoutEmployeeInput
+    sampleDistributions?: SampleDistributionUncheckedCreateNestedManyWithoutEmployeeInput
     taskPlans?: TaskPlannerUncheckedCreateNestedManyWithoutEmployeeInput
     doctorTasks?: DoctorTaskUncheckedCreateNestedManyWithoutEmployeeInput
     chemistTasks?: ChemistTaskUncheckedCreateNestedManyWithoutEmployeeInput
@@ -81307,7 +81212,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryCreateNestedManyWithoutEmployeeInput
     giftInventories?: UserGiftInventoryCreateNestedManyWithoutEmployeeInput
     giftsCreated?: GiftCreateNestedManyWithoutCreatedByInput
-    doctorDistributions?: DoctorDistributionCreateNestedManyWithoutEmployeeInput
+    sampleDistributions?: SampleDistributionCreateNestedManyWithoutEmployeeInput
     taskPlans?: TaskPlannerCreateNestedManyWithoutEmployeeInput
     doctorTasks?: DoctorTaskCreateNestedManyWithoutEmployeeInput
     chemistTasks?: ChemistTaskCreateNestedManyWithoutEmployeeInput
@@ -81356,7 +81261,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryUncheckedCreateNestedManyWithoutEmployeeInput
     giftInventories?: UserGiftInventoryUncheckedCreateNestedManyWithoutEmployeeInput
     giftsCreated?: GiftUncheckedCreateNestedManyWithoutCreatedByInput
-    doctorDistributions?: DoctorDistributionUncheckedCreateNestedManyWithoutEmployeeInput
+    sampleDistributions?: SampleDistributionUncheckedCreateNestedManyWithoutEmployeeInput
     taskPlans?: TaskPlannerUncheckedCreateNestedManyWithoutEmployeeInput
     doctorTasks?: DoctorTaskUncheckedCreateNestedManyWithoutEmployeeInput
     chemistTasks?: ChemistTaskUncheckedCreateNestedManyWithoutEmployeeInput
@@ -81421,7 +81326,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryUpdateManyWithoutEmployeeNestedInput
     giftInventories?: UserGiftInventoryUpdateManyWithoutEmployeeNestedInput
     giftsCreated?: GiftUpdateManyWithoutCreatedByNestedInput
-    doctorDistributions?: DoctorDistributionUpdateManyWithoutEmployeeNestedInput
+    sampleDistributions?: SampleDistributionUpdateManyWithoutEmployeeNestedInput
     taskPlans?: TaskPlannerUpdateManyWithoutEmployeeNestedInput
     doctorTasks?: DoctorTaskUpdateManyWithoutEmployeeNestedInput
     chemistTasks?: ChemistTaskUpdateManyWithoutEmployeeNestedInput
@@ -81470,7 +81375,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryUncheckedUpdateManyWithoutEmployeeNestedInput
     giftInventories?: UserGiftInventoryUncheckedUpdateManyWithoutEmployeeNestedInput
     giftsCreated?: GiftUncheckedUpdateManyWithoutCreatedByNestedInput
-    doctorDistributions?: DoctorDistributionUncheckedUpdateManyWithoutEmployeeNestedInput
+    sampleDistributions?: SampleDistributionUncheckedUpdateManyWithoutEmployeeNestedInput
     taskPlans?: TaskPlannerUncheckedUpdateManyWithoutEmployeeNestedInput
     doctorTasks?: DoctorTaskUncheckedUpdateManyWithoutEmployeeNestedInput
     chemistTasks?: ChemistTaskUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -81600,7 +81505,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryUpdateManyWithoutEmployeeNestedInput
     giftInventories?: UserGiftInventoryUpdateManyWithoutEmployeeNestedInput
     giftsCreated?: GiftUpdateManyWithoutCreatedByNestedInput
-    doctorDistributions?: DoctorDistributionUpdateManyWithoutEmployeeNestedInput
+    sampleDistributions?: SampleDistributionUpdateManyWithoutEmployeeNestedInput
     taskPlans?: TaskPlannerUpdateManyWithoutEmployeeNestedInput
     doctorTasks?: DoctorTaskUpdateManyWithoutEmployeeNestedInput
     chemistTasks?: ChemistTaskUpdateManyWithoutEmployeeNestedInput
@@ -81649,7 +81554,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryUncheckedUpdateManyWithoutEmployeeNestedInput
     giftInventories?: UserGiftInventoryUncheckedUpdateManyWithoutEmployeeNestedInput
     giftsCreated?: GiftUncheckedUpdateManyWithoutCreatedByNestedInput
-    doctorDistributions?: DoctorDistributionUncheckedUpdateManyWithoutEmployeeNestedInput
+    sampleDistributions?: SampleDistributionUncheckedUpdateManyWithoutEmployeeNestedInput
     taskPlans?: TaskPlannerUncheckedUpdateManyWithoutEmployeeNestedInput
     doctorTasks?: DoctorTaskUncheckedUpdateManyWithoutEmployeeNestedInput
     chemistTasks?: ChemistTaskUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -81698,7 +81603,7 @@ export namespace Prisma {
     approvedClaims?: ExpenseClaimCreateNestedManyWithoutApproverInput
     drugInventories?: UserDrugInventoryCreateNestedManyWithoutEmployeeInput
     giftInventories?: UserGiftInventoryCreateNestedManyWithoutEmployeeInput
-    doctorDistributions?: DoctorDistributionCreateNestedManyWithoutEmployeeInput
+    sampleDistributions?: SampleDistributionCreateNestedManyWithoutEmployeeInput
     taskPlans?: TaskPlannerCreateNestedManyWithoutEmployeeInput
     doctorTasks?: DoctorTaskCreateNestedManyWithoutEmployeeInput
     chemistTasks?: ChemistTaskCreateNestedManyWithoutEmployeeInput
@@ -81747,7 +81652,7 @@ export namespace Prisma {
     approvedClaims?: ExpenseClaimUncheckedCreateNestedManyWithoutApproverInput
     drugInventories?: UserDrugInventoryUncheckedCreateNestedManyWithoutEmployeeInput
     giftInventories?: UserGiftInventoryUncheckedCreateNestedManyWithoutEmployeeInput
-    doctorDistributions?: DoctorDistributionUncheckedCreateNestedManyWithoutEmployeeInput
+    sampleDistributions?: SampleDistributionUncheckedCreateNestedManyWithoutEmployeeInput
     taskPlans?: TaskPlannerUncheckedCreateNestedManyWithoutEmployeeInput
     doctorTasks?: DoctorTaskUncheckedCreateNestedManyWithoutEmployeeInput
     chemistTasks?: ChemistTaskUncheckedCreateNestedManyWithoutEmployeeInput
@@ -81766,7 +81671,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     employee: EmployeeCreateNestedOneWithoutGiftInventoriesInput
-    doctorDistributionGiftItems?: DoctorDistributionGiftItemCreateNestedManyWithoutFromInventoryInput
+    sampleDistributionGiftItems?: SampleDistributionGiftItemCreateNestedManyWithoutFromInventoryInput
   }
 
   export type UserGiftInventoryUncheckedCreateWithoutGiftInput = {
@@ -81776,7 +81681,7 @@ export namespace Prisma {
     lastRestockedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    doctorDistributionGiftItems?: DoctorDistributionGiftItemUncheckedCreateNestedManyWithoutFromInventoryInput
+    sampleDistributionGiftItems?: SampleDistributionGiftItemUncheckedCreateNestedManyWithoutFromInventoryInput
   }
 
   export type UserGiftInventoryCreateOrConnectWithoutGiftInput = {
@@ -81786,38 +81691,6 @@ export namespace Prisma {
 
   export type UserGiftInventoryCreateManyGiftInputEnvelope = {
     data: UserGiftInventoryCreateManyGiftInput | UserGiftInventoryCreateManyGiftInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type DoctorDistributionGiftItemCreateWithoutGiftInput = {
-    id?: string
-    quantity: number
-    unitCost: Decimal | DecimalJsLike | number | string
-    totalCost: Decimal | DecimalJsLike | number | string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    doctorDistribution: DoctorDistributionCreateNestedOneWithoutGiftItemsInput
-    fromInventory: UserGiftInventoryCreateNestedOneWithoutDoctorDistributionGiftItemsInput
-  }
-
-  export type DoctorDistributionGiftItemUncheckedCreateWithoutGiftInput = {
-    id?: string
-    doctorDistributionId: string
-    fromInventoryId: string
-    quantity: number
-    unitCost: Decimal | DecimalJsLike | number | string
-    totalCost: Decimal | DecimalJsLike | number | string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type DoctorDistributionGiftItemCreateOrConnectWithoutGiftInput = {
-    where: DoctorDistributionGiftItemWhereUniqueInput
-    create: XOR<DoctorDistributionGiftItemCreateWithoutGiftInput, DoctorDistributionGiftItemUncheckedCreateWithoutGiftInput>
-  }
-
-  export type DoctorDistributionGiftItemCreateManyGiftInputEnvelope = {
-    data: DoctorDistributionGiftItemCreateManyGiftInput | DoctorDistributionGiftItemCreateManyGiftInput[]
     skipDuplicates?: boolean
   }
 
@@ -81874,7 +81747,7 @@ export namespace Prisma {
     approvedClaims?: ExpenseClaimUpdateManyWithoutApproverNestedInput
     drugInventories?: UserDrugInventoryUpdateManyWithoutEmployeeNestedInput
     giftInventories?: UserGiftInventoryUpdateManyWithoutEmployeeNestedInput
-    doctorDistributions?: DoctorDistributionUpdateManyWithoutEmployeeNestedInput
+    sampleDistributions?: SampleDistributionUpdateManyWithoutEmployeeNestedInput
     taskPlans?: TaskPlannerUpdateManyWithoutEmployeeNestedInput
     doctorTasks?: DoctorTaskUpdateManyWithoutEmployeeNestedInput
     chemistTasks?: ChemistTaskUpdateManyWithoutEmployeeNestedInput
@@ -81923,7 +81796,7 @@ export namespace Prisma {
     approvedClaims?: ExpenseClaimUncheckedUpdateManyWithoutApproverNestedInput
     drugInventories?: UserDrugInventoryUncheckedUpdateManyWithoutEmployeeNestedInput
     giftInventories?: UserGiftInventoryUncheckedUpdateManyWithoutEmployeeNestedInput
-    doctorDistributions?: DoctorDistributionUncheckedUpdateManyWithoutEmployeeNestedInput
+    sampleDistributions?: SampleDistributionUncheckedUpdateManyWithoutEmployeeNestedInput
     taskPlans?: TaskPlannerUncheckedUpdateManyWithoutEmployeeNestedInput
     doctorTasks?: DoctorTaskUncheckedUpdateManyWithoutEmployeeNestedInput
     chemistTasks?: ChemistTaskUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -81944,37 +81817,6 @@ export namespace Prisma {
   export type UserGiftInventoryUpdateManyWithWhereWithoutGiftInput = {
     where: UserGiftInventoryScalarWhereInput
     data: XOR<UserGiftInventoryUpdateManyMutationInput, UserGiftInventoryUncheckedUpdateManyWithoutGiftInput>
-  }
-
-  export type DoctorDistributionGiftItemUpsertWithWhereUniqueWithoutGiftInput = {
-    where: DoctorDistributionGiftItemWhereUniqueInput
-    update: XOR<DoctorDistributionGiftItemUpdateWithoutGiftInput, DoctorDistributionGiftItemUncheckedUpdateWithoutGiftInput>
-    create: XOR<DoctorDistributionGiftItemCreateWithoutGiftInput, DoctorDistributionGiftItemUncheckedCreateWithoutGiftInput>
-  }
-
-  export type DoctorDistributionGiftItemUpdateWithWhereUniqueWithoutGiftInput = {
-    where: DoctorDistributionGiftItemWhereUniqueInput
-    data: XOR<DoctorDistributionGiftItemUpdateWithoutGiftInput, DoctorDistributionGiftItemUncheckedUpdateWithoutGiftInput>
-  }
-
-  export type DoctorDistributionGiftItemUpdateManyWithWhereWithoutGiftInput = {
-    where: DoctorDistributionGiftItemScalarWhereInput
-    data: XOR<DoctorDistributionGiftItemUpdateManyMutationInput, DoctorDistributionGiftItemUncheckedUpdateManyWithoutGiftInput>
-  }
-
-  export type DoctorDistributionGiftItemScalarWhereInput = {
-    AND?: DoctorDistributionGiftItemScalarWhereInput | DoctorDistributionGiftItemScalarWhereInput[]
-    OR?: DoctorDistributionGiftItemScalarWhereInput[]
-    NOT?: DoctorDistributionGiftItemScalarWhereInput | DoctorDistributionGiftItemScalarWhereInput[]
-    id?: StringFilter<"DoctorDistributionGiftItem"> | string
-    doctorDistributionId?: StringFilter<"DoctorDistributionGiftItem"> | string
-    giftId?: StringFilter<"DoctorDistributionGiftItem"> | string
-    fromInventoryId?: StringFilter<"DoctorDistributionGiftItem"> | string
-    quantity?: IntFilter<"DoctorDistributionGiftItem"> | number
-    unitCost?: DecimalFilter<"DoctorDistributionGiftItem"> | Decimal | DecimalJsLike | number | string
-    totalCost?: DecimalFilter<"DoctorDistributionGiftItem"> | Decimal | DecimalJsLike | number | string
-    createdAt?: DateTimeFilter<"DoctorDistributionGiftItem"> | Date | string
-    updatedAt?: DateTimeFilter<"DoctorDistributionGiftItem"> | Date | string
   }
 
   export type EmployeeCreateWithoutDrugInventoriesInput = {
@@ -82019,7 +81861,7 @@ export namespace Prisma {
     approvedClaims?: ExpenseClaimCreateNestedManyWithoutApproverInput
     giftInventories?: UserGiftInventoryCreateNestedManyWithoutEmployeeInput
     giftsCreated?: GiftCreateNestedManyWithoutCreatedByInput
-    doctorDistributions?: DoctorDistributionCreateNestedManyWithoutEmployeeInput
+    sampleDistributions?: SampleDistributionCreateNestedManyWithoutEmployeeInput
     taskPlans?: TaskPlannerCreateNestedManyWithoutEmployeeInput
     doctorTasks?: DoctorTaskCreateNestedManyWithoutEmployeeInput
     chemistTasks?: ChemistTaskCreateNestedManyWithoutEmployeeInput
@@ -82068,7 +81910,7 @@ export namespace Prisma {
     approvedClaims?: ExpenseClaimUncheckedCreateNestedManyWithoutApproverInput
     giftInventories?: UserGiftInventoryUncheckedCreateNestedManyWithoutEmployeeInput
     giftsCreated?: GiftUncheckedCreateNestedManyWithoutCreatedByInput
-    doctorDistributions?: DoctorDistributionUncheckedCreateNestedManyWithoutEmployeeInput
+    sampleDistributions?: SampleDistributionUncheckedCreateNestedManyWithoutEmployeeInput
     taskPlans?: TaskPlannerUncheckedCreateNestedManyWithoutEmployeeInput
     doctorTasks?: DoctorTaskUncheckedCreateNestedManyWithoutEmployeeInput
     chemistTasks?: ChemistTaskUncheckedCreateNestedManyWithoutEmployeeInput
@@ -82103,7 +81945,6 @@ export namespace Prisma {
     createdBy: EmployeeCreateNestedOneWithoutDrugsCreatedInput
     orderItems?: OrderItemCreateNestedManyWithoutDrugInput
     rcpaData?: RcpaDrugDataCreateNestedManyWithoutDrugInput
-    DoctorDistributionDrugItem?: DoctorDistributionDrugItemCreateNestedManyWithoutDrugInput
   }
 
   export type DrugUncheckedCreateWithoutUserDrugInventoryInput = {
@@ -82129,7 +81970,6 @@ export namespace Prisma {
     isActive?: boolean
     orderItems?: OrderItemUncheckedCreateNestedManyWithoutDrugInput
     rcpaData?: RcpaDrugDataUncheckedCreateNestedManyWithoutDrugInput
-    DoctorDistributionDrugItem?: DoctorDistributionDrugItemUncheckedCreateNestedManyWithoutDrugInput
   }
 
   export type DrugCreateOrConnectWithoutUserDrugInventoryInput = {
@@ -82137,21 +81977,19 @@ export namespace Prisma {
     create: XOR<DrugCreateWithoutUserDrugInventoryInput, DrugUncheckedCreateWithoutUserDrugInventoryInput>
   }
 
-  export type DoctorDistributionDrugItemCreateWithoutFromInventoryInput = {
+  export type SampleDistributionDrugItemCreateWithoutFromInventoryInput = {
     id?: string
     quantity: number
     unitCost: Decimal | DecimalJsLike | number | string
     totalCost: Decimal | DecimalJsLike | number | string
     createdAt?: Date | string
     updatedAt?: Date | string
-    doctorDistribution: DoctorDistributionCreateNestedOneWithoutDrugItemsInput
-    drug: DrugCreateNestedOneWithoutDoctorDistributionDrugItemInput
+    sampleDistribution: SampleDistributionCreateNestedOneWithoutDrugItemsInput
   }
 
-  export type DoctorDistributionDrugItemUncheckedCreateWithoutFromInventoryInput = {
+  export type SampleDistributionDrugItemUncheckedCreateWithoutFromInventoryInput = {
     id?: string
-    doctorDistributionId: string
-    drugId: string
+    sampleDistributionId: string
     quantity: number
     unitCost: Decimal | DecimalJsLike | number | string
     totalCost: Decimal | DecimalJsLike | number | string
@@ -82159,13 +81997,13 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type DoctorDistributionDrugItemCreateOrConnectWithoutFromInventoryInput = {
-    where: DoctorDistributionDrugItemWhereUniqueInput
-    create: XOR<DoctorDistributionDrugItemCreateWithoutFromInventoryInput, DoctorDistributionDrugItemUncheckedCreateWithoutFromInventoryInput>
+  export type SampleDistributionDrugItemCreateOrConnectWithoutFromInventoryInput = {
+    where: SampleDistributionDrugItemWhereUniqueInput
+    create: XOR<SampleDistributionDrugItemCreateWithoutFromInventoryInput, SampleDistributionDrugItemUncheckedCreateWithoutFromInventoryInput>
   }
 
-  export type DoctorDistributionDrugItemCreateManyFromInventoryInputEnvelope = {
-    data: DoctorDistributionDrugItemCreateManyFromInventoryInput | DoctorDistributionDrugItemCreateManyFromInventoryInput[]
+  export type SampleDistributionDrugItemCreateManyFromInventoryInputEnvelope = {
+    data: SampleDistributionDrugItemCreateManyFromInventoryInput | SampleDistributionDrugItemCreateManyFromInventoryInput[]
     skipDuplicates?: boolean
   }
 
@@ -82222,7 +82060,7 @@ export namespace Prisma {
     approvedClaims?: ExpenseClaimUpdateManyWithoutApproverNestedInput
     giftInventories?: UserGiftInventoryUpdateManyWithoutEmployeeNestedInput
     giftsCreated?: GiftUpdateManyWithoutCreatedByNestedInput
-    doctorDistributions?: DoctorDistributionUpdateManyWithoutEmployeeNestedInput
+    sampleDistributions?: SampleDistributionUpdateManyWithoutEmployeeNestedInput
     taskPlans?: TaskPlannerUpdateManyWithoutEmployeeNestedInput
     doctorTasks?: DoctorTaskUpdateManyWithoutEmployeeNestedInput
     chemistTasks?: ChemistTaskUpdateManyWithoutEmployeeNestedInput
@@ -82271,7 +82109,7 @@ export namespace Prisma {
     approvedClaims?: ExpenseClaimUncheckedUpdateManyWithoutApproverNestedInput
     giftInventories?: UserGiftInventoryUncheckedUpdateManyWithoutEmployeeNestedInput
     giftsCreated?: GiftUncheckedUpdateManyWithoutCreatedByNestedInput
-    doctorDistributions?: DoctorDistributionUncheckedUpdateManyWithoutEmployeeNestedInput
+    sampleDistributions?: SampleDistributionUncheckedUpdateManyWithoutEmployeeNestedInput
     taskPlans?: TaskPlannerUncheckedUpdateManyWithoutEmployeeNestedInput
     doctorTasks?: DoctorTaskUncheckedUpdateManyWithoutEmployeeNestedInput
     chemistTasks?: ChemistTaskUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -82312,7 +82150,6 @@ export namespace Prisma {
     createdBy?: EmployeeUpdateOneRequiredWithoutDrugsCreatedNestedInput
     orderItems?: OrderItemUpdateManyWithoutDrugNestedInput
     rcpaData?: RcpaDrugDataUpdateManyWithoutDrugNestedInput
-    DoctorDistributionDrugItem?: DoctorDistributionDrugItemUpdateManyWithoutDrugNestedInput
   }
 
   export type DrugUncheckedUpdateWithoutUserDrugInventoryInput = {
@@ -82338,23 +82175,36 @@ export namespace Prisma {
     isActive?: BoolFieldUpdateOperationsInput | boolean
     orderItems?: OrderItemUncheckedUpdateManyWithoutDrugNestedInput
     rcpaData?: RcpaDrugDataUncheckedUpdateManyWithoutDrugNestedInput
-    DoctorDistributionDrugItem?: DoctorDistributionDrugItemUncheckedUpdateManyWithoutDrugNestedInput
   }
 
-  export type DoctorDistributionDrugItemUpsertWithWhereUniqueWithoutFromInventoryInput = {
-    where: DoctorDistributionDrugItemWhereUniqueInput
-    update: XOR<DoctorDistributionDrugItemUpdateWithoutFromInventoryInput, DoctorDistributionDrugItemUncheckedUpdateWithoutFromInventoryInput>
-    create: XOR<DoctorDistributionDrugItemCreateWithoutFromInventoryInput, DoctorDistributionDrugItemUncheckedCreateWithoutFromInventoryInput>
+  export type SampleDistributionDrugItemUpsertWithWhereUniqueWithoutFromInventoryInput = {
+    where: SampleDistributionDrugItemWhereUniqueInput
+    update: XOR<SampleDistributionDrugItemUpdateWithoutFromInventoryInput, SampleDistributionDrugItemUncheckedUpdateWithoutFromInventoryInput>
+    create: XOR<SampleDistributionDrugItemCreateWithoutFromInventoryInput, SampleDistributionDrugItemUncheckedCreateWithoutFromInventoryInput>
   }
 
-  export type DoctorDistributionDrugItemUpdateWithWhereUniqueWithoutFromInventoryInput = {
-    where: DoctorDistributionDrugItemWhereUniqueInput
-    data: XOR<DoctorDistributionDrugItemUpdateWithoutFromInventoryInput, DoctorDistributionDrugItemUncheckedUpdateWithoutFromInventoryInput>
+  export type SampleDistributionDrugItemUpdateWithWhereUniqueWithoutFromInventoryInput = {
+    where: SampleDistributionDrugItemWhereUniqueInput
+    data: XOR<SampleDistributionDrugItemUpdateWithoutFromInventoryInput, SampleDistributionDrugItemUncheckedUpdateWithoutFromInventoryInput>
   }
 
-  export type DoctorDistributionDrugItemUpdateManyWithWhereWithoutFromInventoryInput = {
-    where: DoctorDistributionDrugItemScalarWhereInput
-    data: XOR<DoctorDistributionDrugItemUpdateManyMutationInput, DoctorDistributionDrugItemUncheckedUpdateManyWithoutFromInventoryInput>
+  export type SampleDistributionDrugItemUpdateManyWithWhereWithoutFromInventoryInput = {
+    where: SampleDistributionDrugItemScalarWhereInput
+    data: XOR<SampleDistributionDrugItemUpdateManyMutationInput, SampleDistributionDrugItemUncheckedUpdateManyWithoutFromInventoryInput>
+  }
+
+  export type SampleDistributionDrugItemScalarWhereInput = {
+    AND?: SampleDistributionDrugItemScalarWhereInput | SampleDistributionDrugItemScalarWhereInput[]
+    OR?: SampleDistributionDrugItemScalarWhereInput[]
+    NOT?: SampleDistributionDrugItemScalarWhereInput | SampleDistributionDrugItemScalarWhereInput[]
+    id?: StringFilter<"SampleDistributionDrugItem"> | string
+    sampleDistributionId?: StringFilter<"SampleDistributionDrugItem"> | string
+    fromInventoryId?: StringFilter<"SampleDistributionDrugItem"> | string
+    quantity?: IntFilter<"SampleDistributionDrugItem"> | number
+    unitCost?: DecimalFilter<"SampleDistributionDrugItem"> | Decimal | DecimalJsLike | number | string
+    totalCost?: DecimalFilter<"SampleDistributionDrugItem"> | Decimal | DecimalJsLike | number | string
+    createdAt?: DateTimeFilter<"SampleDistributionDrugItem"> | Date | string
+    updatedAt?: DateTimeFilter<"SampleDistributionDrugItem"> | Date | string
   }
 
   export type EmployeeCreateWithoutGiftInventoriesInput = {
@@ -82399,7 +82249,7 @@ export namespace Prisma {
     approvedClaims?: ExpenseClaimCreateNestedManyWithoutApproverInput
     drugInventories?: UserDrugInventoryCreateNestedManyWithoutEmployeeInput
     giftsCreated?: GiftCreateNestedManyWithoutCreatedByInput
-    doctorDistributions?: DoctorDistributionCreateNestedManyWithoutEmployeeInput
+    sampleDistributions?: SampleDistributionCreateNestedManyWithoutEmployeeInput
     taskPlans?: TaskPlannerCreateNestedManyWithoutEmployeeInput
     doctorTasks?: DoctorTaskCreateNestedManyWithoutEmployeeInput
     chemistTasks?: ChemistTaskCreateNestedManyWithoutEmployeeInput
@@ -82448,7 +82298,7 @@ export namespace Prisma {
     approvedClaims?: ExpenseClaimUncheckedCreateNestedManyWithoutApproverInput
     drugInventories?: UserDrugInventoryUncheckedCreateNestedManyWithoutEmployeeInput
     giftsCreated?: GiftUncheckedCreateNestedManyWithoutCreatedByInput
-    doctorDistributions?: DoctorDistributionUncheckedCreateNestedManyWithoutEmployeeInput
+    sampleDistributions?: SampleDistributionUncheckedCreateNestedManyWithoutEmployeeInput
     taskPlans?: TaskPlannerUncheckedCreateNestedManyWithoutEmployeeInput
     doctorTasks?: DoctorTaskUncheckedCreateNestedManyWithoutEmployeeInput
     chemistTasks?: ChemistTaskUncheckedCreateNestedManyWithoutEmployeeInput
@@ -82471,7 +82321,6 @@ export namespace Prisma {
     updatedAt?: Date | string
     isActive?: boolean
     createdBy: EmployeeCreateNestedOneWithoutGiftsCreatedInput
-    doctorDistributionGiftItems?: DoctorDistributionGiftItemCreateNestedManyWithoutGiftInput
   }
 
   export type GiftUncheckedCreateWithoutUserGiftInventoriesInput = {
@@ -82485,7 +82334,6 @@ export namespace Prisma {
     updatedAt?: Date | string
     createdById: string
     isActive?: boolean
-    doctorDistributionGiftItems?: DoctorDistributionGiftItemUncheckedCreateNestedManyWithoutGiftInput
   }
 
   export type GiftCreateOrConnectWithoutUserGiftInventoriesInput = {
@@ -82493,21 +82341,19 @@ export namespace Prisma {
     create: XOR<GiftCreateWithoutUserGiftInventoriesInput, GiftUncheckedCreateWithoutUserGiftInventoriesInput>
   }
 
-  export type DoctorDistributionGiftItemCreateWithoutFromInventoryInput = {
+  export type SampleDistributionGiftItemCreateWithoutFromInventoryInput = {
     id?: string
     quantity: number
     unitCost: Decimal | DecimalJsLike | number | string
     totalCost: Decimal | DecimalJsLike | number | string
     createdAt?: Date | string
     updatedAt?: Date | string
-    doctorDistribution: DoctorDistributionCreateNestedOneWithoutGiftItemsInput
-    gift: GiftCreateNestedOneWithoutDoctorDistributionGiftItemsInput
+    sampleDistribution: SampleDistributionCreateNestedOneWithoutGiftItemsInput
   }
 
-  export type DoctorDistributionGiftItemUncheckedCreateWithoutFromInventoryInput = {
+  export type SampleDistributionGiftItemUncheckedCreateWithoutFromInventoryInput = {
     id?: string
-    doctorDistributionId: string
-    giftId: string
+    sampleDistributionId: string
     quantity: number
     unitCost: Decimal | DecimalJsLike | number | string
     totalCost: Decimal | DecimalJsLike | number | string
@@ -82515,13 +82361,13 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type DoctorDistributionGiftItemCreateOrConnectWithoutFromInventoryInput = {
-    where: DoctorDistributionGiftItemWhereUniqueInput
-    create: XOR<DoctorDistributionGiftItemCreateWithoutFromInventoryInput, DoctorDistributionGiftItemUncheckedCreateWithoutFromInventoryInput>
+  export type SampleDistributionGiftItemCreateOrConnectWithoutFromInventoryInput = {
+    where: SampleDistributionGiftItemWhereUniqueInput
+    create: XOR<SampleDistributionGiftItemCreateWithoutFromInventoryInput, SampleDistributionGiftItemUncheckedCreateWithoutFromInventoryInput>
   }
 
-  export type DoctorDistributionGiftItemCreateManyFromInventoryInputEnvelope = {
-    data: DoctorDistributionGiftItemCreateManyFromInventoryInput | DoctorDistributionGiftItemCreateManyFromInventoryInput[]
+  export type SampleDistributionGiftItemCreateManyFromInventoryInputEnvelope = {
+    data: SampleDistributionGiftItemCreateManyFromInventoryInput | SampleDistributionGiftItemCreateManyFromInventoryInput[]
     skipDuplicates?: boolean
   }
 
@@ -82578,7 +82424,7 @@ export namespace Prisma {
     approvedClaims?: ExpenseClaimUpdateManyWithoutApproverNestedInput
     drugInventories?: UserDrugInventoryUpdateManyWithoutEmployeeNestedInput
     giftsCreated?: GiftUpdateManyWithoutCreatedByNestedInput
-    doctorDistributions?: DoctorDistributionUpdateManyWithoutEmployeeNestedInput
+    sampleDistributions?: SampleDistributionUpdateManyWithoutEmployeeNestedInput
     taskPlans?: TaskPlannerUpdateManyWithoutEmployeeNestedInput
     doctorTasks?: DoctorTaskUpdateManyWithoutEmployeeNestedInput
     chemistTasks?: ChemistTaskUpdateManyWithoutEmployeeNestedInput
@@ -82627,7 +82473,7 @@ export namespace Prisma {
     approvedClaims?: ExpenseClaimUncheckedUpdateManyWithoutApproverNestedInput
     drugInventories?: UserDrugInventoryUncheckedUpdateManyWithoutEmployeeNestedInput
     giftsCreated?: GiftUncheckedUpdateManyWithoutCreatedByNestedInput
-    doctorDistributions?: DoctorDistributionUncheckedUpdateManyWithoutEmployeeNestedInput
+    sampleDistributions?: SampleDistributionUncheckedUpdateManyWithoutEmployeeNestedInput
     taskPlans?: TaskPlannerUncheckedUpdateManyWithoutEmployeeNestedInput
     doctorTasks?: DoctorTaskUncheckedUpdateManyWithoutEmployeeNestedInput
     chemistTasks?: ChemistTaskUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -82656,7 +82502,6 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdBy?: EmployeeUpdateOneRequiredWithoutGiftsCreatedNestedInput
-    doctorDistributionGiftItems?: DoctorDistributionGiftItemUpdateManyWithoutGiftNestedInput
   }
 
   export type GiftUncheckedUpdateWithoutUserGiftInventoriesInput = {
@@ -82670,63 +82515,157 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdById?: StringFieldUpdateOperationsInput | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
-    doctorDistributionGiftItems?: DoctorDistributionGiftItemUncheckedUpdateManyWithoutGiftNestedInput
   }
 
-  export type DoctorDistributionGiftItemUpsertWithWhereUniqueWithoutFromInventoryInput = {
-    where: DoctorDistributionGiftItemWhereUniqueInput
-    update: XOR<DoctorDistributionGiftItemUpdateWithoutFromInventoryInput, DoctorDistributionGiftItemUncheckedUpdateWithoutFromInventoryInput>
-    create: XOR<DoctorDistributionGiftItemCreateWithoutFromInventoryInput, DoctorDistributionGiftItemUncheckedCreateWithoutFromInventoryInput>
+  export type SampleDistributionGiftItemUpsertWithWhereUniqueWithoutFromInventoryInput = {
+    where: SampleDistributionGiftItemWhereUniqueInput
+    update: XOR<SampleDistributionGiftItemUpdateWithoutFromInventoryInput, SampleDistributionGiftItemUncheckedUpdateWithoutFromInventoryInput>
+    create: XOR<SampleDistributionGiftItemCreateWithoutFromInventoryInput, SampleDistributionGiftItemUncheckedCreateWithoutFromInventoryInput>
   }
 
-  export type DoctorDistributionGiftItemUpdateWithWhereUniqueWithoutFromInventoryInput = {
-    where: DoctorDistributionGiftItemWhereUniqueInput
-    data: XOR<DoctorDistributionGiftItemUpdateWithoutFromInventoryInput, DoctorDistributionGiftItemUncheckedUpdateWithoutFromInventoryInput>
+  export type SampleDistributionGiftItemUpdateWithWhereUniqueWithoutFromInventoryInput = {
+    where: SampleDistributionGiftItemWhereUniqueInput
+    data: XOR<SampleDistributionGiftItemUpdateWithoutFromInventoryInput, SampleDistributionGiftItemUncheckedUpdateWithoutFromInventoryInput>
   }
 
-  export type DoctorDistributionGiftItemUpdateManyWithWhereWithoutFromInventoryInput = {
-    where: DoctorDistributionGiftItemScalarWhereInput
-    data: XOR<DoctorDistributionGiftItemUpdateManyMutationInput, DoctorDistributionGiftItemUncheckedUpdateManyWithoutFromInventoryInput>
+  export type SampleDistributionGiftItemUpdateManyWithWhereWithoutFromInventoryInput = {
+    where: SampleDistributionGiftItemScalarWhereInput
+    data: XOR<SampleDistributionGiftItemUpdateManyMutationInput, SampleDistributionGiftItemUncheckedUpdateManyWithoutFromInventoryInput>
   }
 
-  export type DoctorInteractionCreateWithoutDoctorDistributionInput = {
+  export type SampleDistributionGiftItemScalarWhereInput = {
+    AND?: SampleDistributionGiftItemScalarWhereInput | SampleDistributionGiftItemScalarWhereInput[]
+    OR?: SampleDistributionGiftItemScalarWhereInput[]
+    NOT?: SampleDistributionGiftItemScalarWhereInput | SampleDistributionGiftItemScalarWhereInput[]
+    id?: StringFilter<"SampleDistributionGiftItem"> | string
+    sampleDistributionId?: StringFilter<"SampleDistributionGiftItem"> | string
+    fromInventoryId?: StringFilter<"SampleDistributionGiftItem"> | string
+    quantity?: IntFilter<"SampleDistributionGiftItem"> | number
+    unitCost?: DecimalFilter<"SampleDistributionGiftItem"> | Decimal | DecimalJsLike | number | string
+    totalCost?: DecimalFilter<"SampleDistributionGiftItem"> | Decimal | DecimalJsLike | number | string
+    createdAt?: DateTimeFilter<"SampleDistributionGiftItem"> | Date | string
+    updatedAt?: DateTimeFilter<"SampleDistributionGiftItem"> | Date | string
+  }
+
+  export type DoctorCreateWithoutSampleDistributionsInput = {
     id?: string
-    interactionType: $Enums.InteractionType
-    startTime: Date | string
-    endTime?: Date | string | null
-    purpose?: string | null
-    outcome?: string | null
-    comments?: string | null
-    rating?: number | null
+    organizationId: string
+    name: string
+    designation?: string | null
+    specialization?: string | null
+    email?: string | null
+    phone?: string | null
+    description?: string | null
+    profilePictureUrl?: string | null
+    qualification?: string | null
+    experienceYears?: number | null
     createdAt?: Date | string
-    doctor: DoctorCreateNestedOneWithoutInteractionsInput
-    employee: EmployeeCreateNestedOneWithoutDoctorInteractionsInput
-    hospital?: HospitalCreateNestedOneWithoutDoctorInteractionsInput
-    DoctorTask?: DoctorTaskCreateNestedOneWithoutDoctorInteractionsInput
+    updatedAt?: Date | string
+    isActive?: boolean
+    createdBy: EmployeeCreateNestedOneWithoutDoctorsCreatedInput
+    hospitalAssociations?: DoctorHospitalAssociationCreateNestedManyWithoutDoctorInput
+    consultationSchedules?: DoctorConsultationScheduleCreateNestedManyWithoutDoctorInput
+    interactions?: DoctorInteractionCreateNestedManyWithoutDoctorInput
+    notes?: DoctorNoteCreateNestedManyWithoutDoctorInput
+    chemistRelations?: DoctorChemistRelationCreateNestedManyWithoutDoctorInput
+    DoctorTask?: DoctorTaskCreateNestedManyWithoutDoctorInput
   }
 
-  export type DoctorInteractionUncheckedCreateWithoutDoctorDistributionInput = {
+  export type DoctorUncheckedCreateWithoutSampleDistributionsInput = {
     id?: string
-    doctorId: string
-    employeeId: string
-    hospitalId?: string | null
-    interactionType: $Enums.InteractionType
-    startTime: Date | string
-    endTime?: Date | string | null
-    purpose?: string | null
-    outcome?: string | null
-    comments?: string | null
-    rating?: number | null
+    organizationId: string
+    name: string
+    designation?: string | null
+    specialization?: string | null
+    email?: string | null
+    phone?: string | null
+    description?: string | null
+    profilePictureUrl?: string | null
+    qualification?: string | null
+    experienceYears?: number | null
     createdAt?: Date | string
-    doctorTaskId?: string | null
+    updatedAt?: Date | string
+    createdById: string
+    isActive?: boolean
+    hospitalAssociations?: DoctorHospitalAssociationUncheckedCreateNestedManyWithoutDoctorInput
+    consultationSchedules?: DoctorConsultationScheduleUncheckedCreateNestedManyWithoutDoctorInput
+    interactions?: DoctorInteractionUncheckedCreateNestedManyWithoutDoctorInput
+    notes?: DoctorNoteUncheckedCreateNestedManyWithoutDoctorInput
+    chemistRelations?: DoctorChemistRelationUncheckedCreateNestedManyWithoutDoctorInput
+    DoctorTask?: DoctorTaskUncheckedCreateNestedManyWithoutDoctorInput
   }
 
-  export type DoctorInteractionCreateOrConnectWithoutDoctorDistributionInput = {
-    where: DoctorInteractionWhereUniqueInput
-    create: XOR<DoctorInteractionCreateWithoutDoctorDistributionInput, DoctorInteractionUncheckedCreateWithoutDoctorDistributionInput>
+  export type DoctorCreateOrConnectWithoutSampleDistributionsInput = {
+    where: DoctorWhereUniqueInput
+    create: XOR<DoctorCreateWithoutSampleDistributionsInput, DoctorUncheckedCreateWithoutSampleDistributionsInput>
   }
 
-  export type EmployeeCreateWithoutDoctorDistributionsInput = {
+  export type ChemistCreateWithoutSampleDistributionsInput = {
+    id?: string
+    organizationId: string
+    name: string
+    type: $Enums.ChemistType
+    email?: string | null
+    phone?: string | null
+    address?: string | null
+    city?: string | null
+    state?: string | null
+    pincode?: string | null
+    latitude?: Decimal | DecimalJsLike | number | string | null
+    longitude?: Decimal | DecimalJsLike | number | string | null
+    description?: string | null
+    profilePictureUrl?: string | null
+    visitingHours?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    isActive?: boolean
+    chemistChain?: ChemistChainCreateNestedOneWithoutChemistsInput
+    territory: TerritoryCreateNestedOneWithoutChemistsInput
+    createdBy: EmployeeCreateNestedOneWithoutChemistsCreatedInput
+    notes?: ChemistNoteCreateNestedManyWithoutChemistInput
+    interactions?: ChemistInteractionCreateNestedManyWithoutChemistInput
+    doctorRelations?: DoctorChemistRelationCreateNestedManyWithoutChemistInput
+    orders?: OrderCreateNestedManyWithoutChemistInput
+    rcpaReports?: RcpaReportCreateNestedManyWithoutChemistInput
+    chemistTasks?: ChemistTaskCreateNestedManyWithoutChemistInput
+  }
+
+  export type ChemistUncheckedCreateWithoutSampleDistributionsInput = {
+    id?: string
+    organizationId: string
+    chemistChainId?: string | null
+    territoryId: string
+    name: string
+    type: $Enums.ChemistType
+    email?: string | null
+    phone?: string | null
+    address?: string | null
+    city?: string | null
+    state?: string | null
+    pincode?: string | null
+    latitude?: Decimal | DecimalJsLike | number | string | null
+    longitude?: Decimal | DecimalJsLike | number | string | null
+    description?: string | null
+    profilePictureUrl?: string | null
+    visitingHours?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    createdById: string
+    isActive?: boolean
+    notes?: ChemistNoteUncheckedCreateNestedManyWithoutChemistInput
+    interactions?: ChemistInteractionUncheckedCreateNestedManyWithoutChemistInput
+    doctorRelations?: DoctorChemistRelationUncheckedCreateNestedManyWithoutChemistInput
+    orders?: OrderUncheckedCreateNestedManyWithoutChemistInput
+    rcpaReports?: RcpaReportUncheckedCreateNestedManyWithoutChemistInput
+    chemistTasks?: ChemistTaskUncheckedCreateNestedManyWithoutChemistInput
+  }
+
+  export type ChemistCreateOrConnectWithoutSampleDistributionsInput = {
+    where: ChemistWhereUniqueInput
+    create: XOR<ChemistCreateWithoutSampleDistributionsInput, ChemistUncheckedCreateWithoutSampleDistributionsInput>
+  }
+
+  export type EmployeeCreateWithoutSampleDistributionsInput = {
     id?: string
     organizationId: string
     email: string
@@ -82775,7 +82714,7 @@ export namespace Prisma {
     tourPlanTasks?: TourPlanTaskCreateNestedManyWithoutEmployeeInput
   }
 
-  export type EmployeeUncheckedCreateWithoutDoctorDistributionsInput = {
+  export type EmployeeUncheckedCreateWithoutSampleDistributionsInput = {
     id?: string
     organizationId: string
     email: string
@@ -82824,25 +82763,23 @@ export namespace Prisma {
     tourPlanTasks?: TourPlanTaskUncheckedCreateNestedManyWithoutEmployeeInput
   }
 
-  export type EmployeeCreateOrConnectWithoutDoctorDistributionsInput = {
+  export type EmployeeCreateOrConnectWithoutSampleDistributionsInput = {
     where: EmployeeWhereUniqueInput
-    create: XOR<EmployeeCreateWithoutDoctorDistributionsInput, EmployeeUncheckedCreateWithoutDoctorDistributionsInput>
+    create: XOR<EmployeeCreateWithoutSampleDistributionsInput, EmployeeUncheckedCreateWithoutSampleDistributionsInput>
   }
 
-  export type DoctorDistributionDrugItemCreateWithoutDoctorDistributionInput = {
+  export type SampleDistributionDrugItemCreateWithoutSampleDistributionInput = {
     id?: string
     quantity: number
     unitCost: Decimal | DecimalJsLike | number | string
     totalCost: Decimal | DecimalJsLike | number | string
     createdAt?: Date | string
     updatedAt?: Date | string
-    drug: DrugCreateNestedOneWithoutDoctorDistributionDrugItemInput
-    fromInventory: UserDrugInventoryCreateNestedOneWithoutDoctorDistributionDrugItemsInput
+    fromInventory: UserDrugInventoryCreateNestedOneWithoutSampleDistributionDrugItemsInput
   }
 
-  export type DoctorDistributionDrugItemUncheckedCreateWithoutDoctorDistributionInput = {
+  export type SampleDistributionDrugItemUncheckedCreateWithoutSampleDistributionInput = {
     id?: string
-    drugId: string
     fromInventoryId: string
     quantity: number
     unitCost: Decimal | DecimalJsLike | number | string
@@ -82851,30 +82788,28 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type DoctorDistributionDrugItemCreateOrConnectWithoutDoctorDistributionInput = {
-    where: DoctorDistributionDrugItemWhereUniqueInput
-    create: XOR<DoctorDistributionDrugItemCreateWithoutDoctorDistributionInput, DoctorDistributionDrugItemUncheckedCreateWithoutDoctorDistributionInput>
+  export type SampleDistributionDrugItemCreateOrConnectWithoutSampleDistributionInput = {
+    where: SampleDistributionDrugItemWhereUniqueInput
+    create: XOR<SampleDistributionDrugItemCreateWithoutSampleDistributionInput, SampleDistributionDrugItemUncheckedCreateWithoutSampleDistributionInput>
   }
 
-  export type DoctorDistributionDrugItemCreateManyDoctorDistributionInputEnvelope = {
-    data: DoctorDistributionDrugItemCreateManyDoctorDistributionInput | DoctorDistributionDrugItemCreateManyDoctorDistributionInput[]
+  export type SampleDistributionDrugItemCreateManySampleDistributionInputEnvelope = {
+    data: SampleDistributionDrugItemCreateManySampleDistributionInput | SampleDistributionDrugItemCreateManySampleDistributionInput[]
     skipDuplicates?: boolean
   }
 
-  export type DoctorDistributionGiftItemCreateWithoutDoctorDistributionInput = {
+  export type SampleDistributionGiftItemCreateWithoutSampleDistributionInput = {
     id?: string
     quantity: number
     unitCost: Decimal | DecimalJsLike | number | string
     totalCost: Decimal | DecimalJsLike | number | string
     createdAt?: Date | string
     updatedAt?: Date | string
-    gift: GiftCreateNestedOneWithoutDoctorDistributionGiftItemsInput
-    fromInventory: UserGiftInventoryCreateNestedOneWithoutDoctorDistributionGiftItemsInput
+    fromInventory: UserGiftInventoryCreateNestedOneWithoutSampleDistributionGiftItemsInput
   }
 
-  export type DoctorDistributionGiftItemUncheckedCreateWithoutDoctorDistributionInput = {
+  export type SampleDistributionGiftItemUncheckedCreateWithoutSampleDistributionInput = {
     id?: string
-    giftId: string
     fromInventoryId: string
     quantity: number
     unitCost: Decimal | DecimalJsLike | number | string
@@ -82883,71 +82818,158 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type DoctorDistributionGiftItemCreateOrConnectWithoutDoctorDistributionInput = {
-    where: DoctorDistributionGiftItemWhereUniqueInput
-    create: XOR<DoctorDistributionGiftItemCreateWithoutDoctorDistributionInput, DoctorDistributionGiftItemUncheckedCreateWithoutDoctorDistributionInput>
+  export type SampleDistributionGiftItemCreateOrConnectWithoutSampleDistributionInput = {
+    where: SampleDistributionGiftItemWhereUniqueInput
+    create: XOR<SampleDistributionGiftItemCreateWithoutSampleDistributionInput, SampleDistributionGiftItemUncheckedCreateWithoutSampleDistributionInput>
   }
 
-  export type DoctorDistributionGiftItemCreateManyDoctorDistributionInputEnvelope = {
-    data: DoctorDistributionGiftItemCreateManyDoctorDistributionInput | DoctorDistributionGiftItemCreateManyDoctorDistributionInput[]
+  export type SampleDistributionGiftItemCreateManySampleDistributionInputEnvelope = {
+    data: SampleDistributionGiftItemCreateManySampleDistributionInput | SampleDistributionGiftItemCreateManySampleDistributionInput[]
     skipDuplicates?: boolean
   }
 
-  export type DoctorInteractionUpsertWithoutDoctorDistributionInput = {
-    update: XOR<DoctorInteractionUpdateWithoutDoctorDistributionInput, DoctorInteractionUncheckedUpdateWithoutDoctorDistributionInput>
-    create: XOR<DoctorInteractionCreateWithoutDoctorDistributionInput, DoctorInteractionUncheckedCreateWithoutDoctorDistributionInput>
-    where?: DoctorInteractionWhereInput
+  export type DoctorUpsertWithoutSampleDistributionsInput = {
+    update: XOR<DoctorUpdateWithoutSampleDistributionsInput, DoctorUncheckedUpdateWithoutSampleDistributionsInput>
+    create: XOR<DoctorCreateWithoutSampleDistributionsInput, DoctorUncheckedCreateWithoutSampleDistributionsInput>
+    where?: DoctorWhereInput
   }
 
-  export type DoctorInteractionUpdateToOneWithWhereWithoutDoctorDistributionInput = {
-    where?: DoctorInteractionWhereInput
-    data: XOR<DoctorInteractionUpdateWithoutDoctorDistributionInput, DoctorInteractionUncheckedUpdateWithoutDoctorDistributionInput>
+  export type DoctorUpdateToOneWithWhereWithoutSampleDistributionsInput = {
+    where?: DoctorWhereInput
+    data: XOR<DoctorUpdateWithoutSampleDistributionsInput, DoctorUncheckedUpdateWithoutSampleDistributionsInput>
   }
 
-  export type DoctorInteractionUpdateWithoutDoctorDistributionInput = {
+  export type DoctorUpdateWithoutSampleDistributionsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    interactionType?: EnumInteractionTypeFieldUpdateOperationsInput | $Enums.InteractionType
-    startTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    endTime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    purpose?: NullableStringFieldUpdateOperationsInput | string | null
-    outcome?: NullableStringFieldUpdateOperationsInput | string | null
-    comments?: NullableStringFieldUpdateOperationsInput | string | null
-    rating?: NullableIntFieldUpdateOperationsInput | number | null
+    organizationId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    designation?: NullableStringFieldUpdateOperationsInput | string | null
+    specialization?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    profilePictureUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    qualification?: NullableStringFieldUpdateOperationsInput | string | null
+    experienceYears?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    doctor?: DoctorUpdateOneRequiredWithoutInteractionsNestedInput
-    employee?: EmployeeUpdateOneRequiredWithoutDoctorInteractionsNestedInput
-    hospital?: HospitalUpdateOneWithoutDoctorInteractionsNestedInput
-    DoctorTask?: DoctorTaskUpdateOneWithoutDoctorInteractionsNestedInput
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdBy?: EmployeeUpdateOneRequiredWithoutDoctorsCreatedNestedInput
+    hospitalAssociations?: DoctorHospitalAssociationUpdateManyWithoutDoctorNestedInput
+    consultationSchedules?: DoctorConsultationScheduleUpdateManyWithoutDoctorNestedInput
+    interactions?: DoctorInteractionUpdateManyWithoutDoctorNestedInput
+    notes?: DoctorNoteUpdateManyWithoutDoctorNestedInput
+    chemistRelations?: DoctorChemistRelationUpdateManyWithoutDoctorNestedInput
+    DoctorTask?: DoctorTaskUpdateManyWithoutDoctorNestedInput
   }
 
-  export type DoctorInteractionUncheckedUpdateWithoutDoctorDistributionInput = {
+  export type DoctorUncheckedUpdateWithoutSampleDistributionsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    doctorId?: StringFieldUpdateOperationsInput | string
-    employeeId?: StringFieldUpdateOperationsInput | string
-    hospitalId?: NullableStringFieldUpdateOperationsInput | string | null
-    interactionType?: EnumInteractionTypeFieldUpdateOperationsInput | $Enums.InteractionType
-    startTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    endTime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    purpose?: NullableStringFieldUpdateOperationsInput | string | null
-    outcome?: NullableStringFieldUpdateOperationsInput | string | null
-    comments?: NullableStringFieldUpdateOperationsInput | string | null
-    rating?: NullableIntFieldUpdateOperationsInput | number | null
+    organizationId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    designation?: NullableStringFieldUpdateOperationsInput | string | null
+    specialization?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    profilePictureUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    qualification?: NullableStringFieldUpdateOperationsInput | string | null
+    experienceYears?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    doctorTaskId?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdById?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    hospitalAssociations?: DoctorHospitalAssociationUncheckedUpdateManyWithoutDoctorNestedInput
+    consultationSchedules?: DoctorConsultationScheduleUncheckedUpdateManyWithoutDoctorNestedInput
+    interactions?: DoctorInteractionUncheckedUpdateManyWithoutDoctorNestedInput
+    notes?: DoctorNoteUncheckedUpdateManyWithoutDoctorNestedInput
+    chemistRelations?: DoctorChemistRelationUncheckedUpdateManyWithoutDoctorNestedInput
+    DoctorTask?: DoctorTaskUncheckedUpdateManyWithoutDoctorNestedInput
   }
 
-  export type EmployeeUpsertWithoutDoctorDistributionsInput = {
-    update: XOR<EmployeeUpdateWithoutDoctorDistributionsInput, EmployeeUncheckedUpdateWithoutDoctorDistributionsInput>
-    create: XOR<EmployeeCreateWithoutDoctorDistributionsInput, EmployeeUncheckedCreateWithoutDoctorDistributionsInput>
+  export type ChemistUpsertWithoutSampleDistributionsInput = {
+    update: XOR<ChemistUpdateWithoutSampleDistributionsInput, ChemistUncheckedUpdateWithoutSampleDistributionsInput>
+    create: XOR<ChemistCreateWithoutSampleDistributionsInput, ChemistUncheckedCreateWithoutSampleDistributionsInput>
+    where?: ChemistWhereInput
+  }
+
+  export type ChemistUpdateToOneWithWhereWithoutSampleDistributionsInput = {
+    where?: ChemistWhereInput
+    data: XOR<ChemistUpdateWithoutSampleDistributionsInput, ChemistUncheckedUpdateWithoutSampleDistributionsInput>
+  }
+
+  export type ChemistUpdateWithoutSampleDistributionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    organizationId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    type?: EnumChemistTypeFieldUpdateOperationsInput | $Enums.ChemistType
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    latitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    longitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    profilePictureUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    visitingHours?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    chemistChain?: ChemistChainUpdateOneWithoutChemistsNestedInput
+    territory?: TerritoryUpdateOneRequiredWithoutChemistsNestedInput
+    createdBy?: EmployeeUpdateOneRequiredWithoutChemistsCreatedNestedInput
+    notes?: ChemistNoteUpdateManyWithoutChemistNestedInput
+    interactions?: ChemistInteractionUpdateManyWithoutChemistNestedInput
+    doctorRelations?: DoctorChemistRelationUpdateManyWithoutChemistNestedInput
+    orders?: OrderUpdateManyWithoutChemistNestedInput
+    rcpaReports?: RcpaReportUpdateManyWithoutChemistNestedInput
+    chemistTasks?: ChemistTaskUpdateManyWithoutChemistNestedInput
+  }
+
+  export type ChemistUncheckedUpdateWithoutSampleDistributionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    organizationId?: StringFieldUpdateOperationsInput | string
+    chemistChainId?: NullableStringFieldUpdateOperationsInput | string | null
+    territoryId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    type?: EnumChemistTypeFieldUpdateOperationsInput | $Enums.ChemistType
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    pincode?: NullableStringFieldUpdateOperationsInput | string | null
+    latitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    longitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    profilePictureUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    visitingHours?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdById?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    notes?: ChemistNoteUncheckedUpdateManyWithoutChemistNestedInput
+    interactions?: ChemistInteractionUncheckedUpdateManyWithoutChemistNestedInput
+    doctorRelations?: DoctorChemistRelationUncheckedUpdateManyWithoutChemistNestedInput
+    orders?: OrderUncheckedUpdateManyWithoutChemistNestedInput
+    rcpaReports?: RcpaReportUncheckedUpdateManyWithoutChemistNestedInput
+    chemistTasks?: ChemistTaskUncheckedUpdateManyWithoutChemistNestedInput
+  }
+
+  export type EmployeeUpsertWithoutSampleDistributionsInput = {
+    update: XOR<EmployeeUpdateWithoutSampleDistributionsInput, EmployeeUncheckedUpdateWithoutSampleDistributionsInput>
+    create: XOR<EmployeeCreateWithoutSampleDistributionsInput, EmployeeUncheckedCreateWithoutSampleDistributionsInput>
     where?: EmployeeWhereInput
   }
 
-  export type EmployeeUpdateToOneWithWhereWithoutDoctorDistributionsInput = {
+  export type EmployeeUpdateToOneWithWhereWithoutSampleDistributionsInput = {
     where?: EmployeeWhereInput
-    data: XOR<EmployeeUpdateWithoutDoctorDistributionsInput, EmployeeUncheckedUpdateWithoutDoctorDistributionsInput>
+    data: XOR<EmployeeUpdateWithoutSampleDistributionsInput, EmployeeUncheckedUpdateWithoutSampleDistributionsInput>
   }
 
-  export type EmployeeUpdateWithoutDoctorDistributionsInput = {
+  export type EmployeeUpdateWithoutSampleDistributionsInput = {
     id?: StringFieldUpdateOperationsInput | string
     organizationId?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
@@ -82996,7 +83018,7 @@ export namespace Prisma {
     tourPlanTasks?: TourPlanTaskUpdateManyWithoutEmployeeNestedInput
   }
 
-  export type EmployeeUncheckedUpdateWithoutDoctorDistributionsInput = {
+  export type EmployeeUncheckedUpdateWithoutSampleDistributionsInput = {
     id?: StringFieldUpdateOperationsInput | string
     organizationId?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
@@ -83045,121 +83067,66 @@ export namespace Prisma {
     tourPlanTasks?: TourPlanTaskUncheckedUpdateManyWithoutEmployeeNestedInput
   }
 
-  export type DoctorDistributionDrugItemUpsertWithWhereUniqueWithoutDoctorDistributionInput = {
-    where: DoctorDistributionDrugItemWhereUniqueInput
-    update: XOR<DoctorDistributionDrugItemUpdateWithoutDoctorDistributionInput, DoctorDistributionDrugItemUncheckedUpdateWithoutDoctorDistributionInput>
-    create: XOR<DoctorDistributionDrugItemCreateWithoutDoctorDistributionInput, DoctorDistributionDrugItemUncheckedCreateWithoutDoctorDistributionInput>
+  export type SampleDistributionDrugItemUpsertWithWhereUniqueWithoutSampleDistributionInput = {
+    where: SampleDistributionDrugItemWhereUniqueInput
+    update: XOR<SampleDistributionDrugItemUpdateWithoutSampleDistributionInput, SampleDistributionDrugItemUncheckedUpdateWithoutSampleDistributionInput>
+    create: XOR<SampleDistributionDrugItemCreateWithoutSampleDistributionInput, SampleDistributionDrugItemUncheckedCreateWithoutSampleDistributionInput>
   }
 
-  export type DoctorDistributionDrugItemUpdateWithWhereUniqueWithoutDoctorDistributionInput = {
-    where: DoctorDistributionDrugItemWhereUniqueInput
-    data: XOR<DoctorDistributionDrugItemUpdateWithoutDoctorDistributionInput, DoctorDistributionDrugItemUncheckedUpdateWithoutDoctorDistributionInput>
+  export type SampleDistributionDrugItemUpdateWithWhereUniqueWithoutSampleDistributionInput = {
+    where: SampleDistributionDrugItemWhereUniqueInput
+    data: XOR<SampleDistributionDrugItemUpdateWithoutSampleDistributionInput, SampleDistributionDrugItemUncheckedUpdateWithoutSampleDistributionInput>
   }
 
-  export type DoctorDistributionDrugItemUpdateManyWithWhereWithoutDoctorDistributionInput = {
-    where: DoctorDistributionDrugItemScalarWhereInput
-    data: XOR<DoctorDistributionDrugItemUpdateManyMutationInput, DoctorDistributionDrugItemUncheckedUpdateManyWithoutDoctorDistributionInput>
+  export type SampleDistributionDrugItemUpdateManyWithWhereWithoutSampleDistributionInput = {
+    where: SampleDistributionDrugItemScalarWhereInput
+    data: XOR<SampleDistributionDrugItemUpdateManyMutationInput, SampleDistributionDrugItemUncheckedUpdateManyWithoutSampleDistributionInput>
   }
 
-  export type DoctorDistributionGiftItemUpsertWithWhereUniqueWithoutDoctorDistributionInput = {
-    where: DoctorDistributionGiftItemWhereUniqueInput
-    update: XOR<DoctorDistributionGiftItemUpdateWithoutDoctorDistributionInput, DoctorDistributionGiftItemUncheckedUpdateWithoutDoctorDistributionInput>
-    create: XOR<DoctorDistributionGiftItemCreateWithoutDoctorDistributionInput, DoctorDistributionGiftItemUncheckedCreateWithoutDoctorDistributionInput>
+  export type SampleDistributionGiftItemUpsertWithWhereUniqueWithoutSampleDistributionInput = {
+    where: SampleDistributionGiftItemWhereUniqueInput
+    update: XOR<SampleDistributionGiftItemUpdateWithoutSampleDistributionInput, SampleDistributionGiftItemUncheckedUpdateWithoutSampleDistributionInput>
+    create: XOR<SampleDistributionGiftItemCreateWithoutSampleDistributionInput, SampleDistributionGiftItemUncheckedCreateWithoutSampleDistributionInput>
   }
 
-  export type DoctorDistributionGiftItemUpdateWithWhereUniqueWithoutDoctorDistributionInput = {
-    where: DoctorDistributionGiftItemWhereUniqueInput
-    data: XOR<DoctorDistributionGiftItemUpdateWithoutDoctorDistributionInput, DoctorDistributionGiftItemUncheckedUpdateWithoutDoctorDistributionInput>
+  export type SampleDistributionGiftItemUpdateWithWhereUniqueWithoutSampleDistributionInput = {
+    where: SampleDistributionGiftItemWhereUniqueInput
+    data: XOR<SampleDistributionGiftItemUpdateWithoutSampleDistributionInput, SampleDistributionGiftItemUncheckedUpdateWithoutSampleDistributionInput>
   }
 
-  export type DoctorDistributionGiftItemUpdateManyWithWhereWithoutDoctorDistributionInput = {
-    where: DoctorDistributionGiftItemScalarWhereInput
-    data: XOR<DoctorDistributionGiftItemUpdateManyMutationInput, DoctorDistributionGiftItemUncheckedUpdateManyWithoutDoctorDistributionInput>
+  export type SampleDistributionGiftItemUpdateManyWithWhereWithoutSampleDistributionInput = {
+    where: SampleDistributionGiftItemScalarWhereInput
+    data: XOR<SampleDistributionGiftItemUpdateManyMutationInput, SampleDistributionGiftItemUncheckedUpdateManyWithoutSampleDistributionInput>
   }
 
-  export type DoctorDistributionCreateWithoutDrugItemsInput = {
+  export type SampleDistributionCreateWithoutDrugItemsInput = {
     id?: string
     distributedAt: Date | string
     createdAt?: Date | string
     updatedAt?: Date | string
-    doctorInteraction: DoctorInteractionCreateNestedOneWithoutDoctorDistributionInput
-    employee: EmployeeCreateNestedOneWithoutDoctorDistributionsInput
-    giftItems?: DoctorDistributionGiftItemCreateNestedManyWithoutDoctorDistributionInput
+    doctor?: DoctorCreateNestedOneWithoutSampleDistributionsInput
+    chemist?: ChemistCreateNestedOneWithoutSampleDistributionsInput
+    employee: EmployeeCreateNestedOneWithoutSampleDistributionsInput
+    giftItems?: SampleDistributionGiftItemCreateNestedManyWithoutSampleDistributionInput
   }
 
-  export type DoctorDistributionUncheckedCreateWithoutDrugItemsInput = {
+  export type SampleDistributionUncheckedCreateWithoutDrugItemsInput = {
     id?: string
-    doctorInteractionId: string
+    doctorId?: string | null
+    chemistId?: string | null
     employeeId: string
     distributedAt: Date | string
     createdAt?: Date | string
     updatedAt?: Date | string
-    giftItems?: DoctorDistributionGiftItemUncheckedCreateNestedManyWithoutDoctorDistributionInput
+    giftItems?: SampleDistributionGiftItemUncheckedCreateNestedManyWithoutSampleDistributionInput
   }
 
-  export type DoctorDistributionCreateOrConnectWithoutDrugItemsInput = {
-    where: DoctorDistributionWhereUniqueInput
-    create: XOR<DoctorDistributionCreateWithoutDrugItemsInput, DoctorDistributionUncheckedCreateWithoutDrugItemsInput>
+  export type SampleDistributionCreateOrConnectWithoutDrugItemsInput = {
+    where: SampleDistributionWhereUniqueInput
+    create: XOR<SampleDistributionCreateWithoutDrugItemsInput, SampleDistributionUncheckedCreateWithoutDrugItemsInput>
   }
 
-  export type DrugCreateWithoutDoctorDistributionDrugItemInput = {
-    id?: string
-    organizationId: string
-    name: string
-    composition?: string | null
-    manufacturer?: string | null
-    indications?: string | null
-    sideEffects?: string | null
-    safetyAdvice?: string | null
-    dosageForms?: NullableJsonNullValueInput | InputJsonValue
-    price?: Decimal | DecimalJsLike | number | string | null
-    schedule?: string | null
-    regulatoryApprovals?: string | null
-    category?: string | null
-    isAvailable?: boolean
-    images?: NullableJsonNullValueInput | InputJsonValue
-    marketingMaterials?: NullableJsonNullValueInput | InputJsonValue
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    isActive?: boolean
-    createdBy: EmployeeCreateNestedOneWithoutDrugsCreatedInput
-    orderItems?: OrderItemCreateNestedManyWithoutDrugInput
-    rcpaData?: RcpaDrugDataCreateNestedManyWithoutDrugInput
-    UserDrugInventory?: UserDrugInventoryCreateNestedManyWithoutDrugInput
-  }
-
-  export type DrugUncheckedCreateWithoutDoctorDistributionDrugItemInput = {
-    id?: string
-    organizationId: string
-    name: string
-    composition?: string | null
-    manufacturer?: string | null
-    indications?: string | null
-    sideEffects?: string | null
-    safetyAdvice?: string | null
-    dosageForms?: NullableJsonNullValueInput | InputJsonValue
-    price?: Decimal | DecimalJsLike | number | string | null
-    schedule?: string | null
-    regulatoryApprovals?: string | null
-    category?: string | null
-    isAvailable?: boolean
-    images?: NullableJsonNullValueInput | InputJsonValue
-    marketingMaterials?: NullableJsonNullValueInput | InputJsonValue
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    createdById: string
-    isActive?: boolean
-    orderItems?: OrderItemUncheckedCreateNestedManyWithoutDrugInput
-    rcpaData?: RcpaDrugDataUncheckedCreateNestedManyWithoutDrugInput
-    UserDrugInventory?: UserDrugInventoryUncheckedCreateNestedManyWithoutDrugInput
-  }
-
-  export type DrugCreateOrConnectWithoutDoctorDistributionDrugItemInput = {
-    where: DrugWhereUniqueInput
-    create: XOR<DrugCreateWithoutDoctorDistributionDrugItemInput, DrugUncheckedCreateWithoutDoctorDistributionDrugItemInput>
-  }
-
-  export type UserDrugInventoryCreateWithoutDoctorDistributionDrugItemsInput = {
+  export type UserDrugInventoryCreateWithoutSampleDistributionDrugItemsInput = {
     id?: string
     quantity: number
     lastRestockedAt?: Date | string | null
@@ -83169,7 +83136,7 @@ export namespace Prisma {
     drug: DrugCreateNestedOneWithoutUserDrugInventoryInput
   }
 
-  export type UserDrugInventoryUncheckedCreateWithoutDoctorDistributionDrugItemsInput = {
+  export type UserDrugInventoryUncheckedCreateWithoutSampleDistributionDrugItemsInput = {
     id?: string
     employeeId: string
     drugId: string
@@ -83179,117 +83146,56 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type UserDrugInventoryCreateOrConnectWithoutDoctorDistributionDrugItemsInput = {
+  export type UserDrugInventoryCreateOrConnectWithoutSampleDistributionDrugItemsInput = {
     where: UserDrugInventoryWhereUniqueInput
-    create: XOR<UserDrugInventoryCreateWithoutDoctorDistributionDrugItemsInput, UserDrugInventoryUncheckedCreateWithoutDoctorDistributionDrugItemsInput>
+    create: XOR<UserDrugInventoryCreateWithoutSampleDistributionDrugItemsInput, UserDrugInventoryUncheckedCreateWithoutSampleDistributionDrugItemsInput>
   }
 
-  export type DoctorDistributionUpsertWithoutDrugItemsInput = {
-    update: XOR<DoctorDistributionUpdateWithoutDrugItemsInput, DoctorDistributionUncheckedUpdateWithoutDrugItemsInput>
-    create: XOR<DoctorDistributionCreateWithoutDrugItemsInput, DoctorDistributionUncheckedCreateWithoutDrugItemsInput>
-    where?: DoctorDistributionWhereInput
+  export type SampleDistributionUpsertWithoutDrugItemsInput = {
+    update: XOR<SampleDistributionUpdateWithoutDrugItemsInput, SampleDistributionUncheckedUpdateWithoutDrugItemsInput>
+    create: XOR<SampleDistributionCreateWithoutDrugItemsInput, SampleDistributionUncheckedCreateWithoutDrugItemsInput>
+    where?: SampleDistributionWhereInput
   }
 
-  export type DoctorDistributionUpdateToOneWithWhereWithoutDrugItemsInput = {
-    where?: DoctorDistributionWhereInput
-    data: XOR<DoctorDistributionUpdateWithoutDrugItemsInput, DoctorDistributionUncheckedUpdateWithoutDrugItemsInput>
+  export type SampleDistributionUpdateToOneWithWhereWithoutDrugItemsInput = {
+    where?: SampleDistributionWhereInput
+    data: XOR<SampleDistributionUpdateWithoutDrugItemsInput, SampleDistributionUncheckedUpdateWithoutDrugItemsInput>
   }
 
-  export type DoctorDistributionUpdateWithoutDrugItemsInput = {
+  export type SampleDistributionUpdateWithoutDrugItemsInput = {
     id?: StringFieldUpdateOperationsInput | string
     distributedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    doctorInteraction?: DoctorInteractionUpdateOneRequiredWithoutDoctorDistributionNestedInput
-    employee?: EmployeeUpdateOneRequiredWithoutDoctorDistributionsNestedInput
-    giftItems?: DoctorDistributionGiftItemUpdateManyWithoutDoctorDistributionNestedInput
+    doctor?: DoctorUpdateOneWithoutSampleDistributionsNestedInput
+    chemist?: ChemistUpdateOneWithoutSampleDistributionsNestedInput
+    employee?: EmployeeUpdateOneRequiredWithoutSampleDistributionsNestedInput
+    giftItems?: SampleDistributionGiftItemUpdateManyWithoutSampleDistributionNestedInput
   }
 
-  export type DoctorDistributionUncheckedUpdateWithoutDrugItemsInput = {
+  export type SampleDistributionUncheckedUpdateWithoutDrugItemsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    doctorInteractionId?: StringFieldUpdateOperationsInput | string
+    doctorId?: NullableStringFieldUpdateOperationsInput | string | null
+    chemistId?: NullableStringFieldUpdateOperationsInput | string | null
     employeeId?: StringFieldUpdateOperationsInput | string
     distributedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    giftItems?: DoctorDistributionGiftItemUncheckedUpdateManyWithoutDoctorDistributionNestedInput
+    giftItems?: SampleDistributionGiftItemUncheckedUpdateManyWithoutSampleDistributionNestedInput
   }
 
-  export type DrugUpsertWithoutDoctorDistributionDrugItemInput = {
-    update: XOR<DrugUpdateWithoutDoctorDistributionDrugItemInput, DrugUncheckedUpdateWithoutDoctorDistributionDrugItemInput>
-    create: XOR<DrugCreateWithoutDoctorDistributionDrugItemInput, DrugUncheckedCreateWithoutDoctorDistributionDrugItemInput>
-    where?: DrugWhereInput
-  }
-
-  export type DrugUpdateToOneWithWhereWithoutDoctorDistributionDrugItemInput = {
-    where?: DrugWhereInput
-    data: XOR<DrugUpdateWithoutDoctorDistributionDrugItemInput, DrugUncheckedUpdateWithoutDoctorDistributionDrugItemInput>
-  }
-
-  export type DrugUpdateWithoutDoctorDistributionDrugItemInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    organizationId?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    composition?: NullableStringFieldUpdateOperationsInput | string | null
-    manufacturer?: NullableStringFieldUpdateOperationsInput | string | null
-    indications?: NullableStringFieldUpdateOperationsInput | string | null
-    sideEffects?: NullableStringFieldUpdateOperationsInput | string | null
-    safetyAdvice?: NullableStringFieldUpdateOperationsInput | string | null
-    dosageForms?: NullableJsonNullValueInput | InputJsonValue
-    price?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    schedule?: NullableStringFieldUpdateOperationsInput | string | null
-    regulatoryApprovals?: NullableStringFieldUpdateOperationsInput | string | null
-    category?: NullableStringFieldUpdateOperationsInput | string | null
-    isAvailable?: BoolFieldUpdateOperationsInput | boolean
-    images?: NullableJsonNullValueInput | InputJsonValue
-    marketingMaterials?: NullableJsonNullValueInput | InputJsonValue
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    isActive?: BoolFieldUpdateOperationsInput | boolean
-    createdBy?: EmployeeUpdateOneRequiredWithoutDrugsCreatedNestedInput
-    orderItems?: OrderItemUpdateManyWithoutDrugNestedInput
-    rcpaData?: RcpaDrugDataUpdateManyWithoutDrugNestedInput
-    UserDrugInventory?: UserDrugInventoryUpdateManyWithoutDrugNestedInput
-  }
-
-  export type DrugUncheckedUpdateWithoutDoctorDistributionDrugItemInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    organizationId?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    composition?: NullableStringFieldUpdateOperationsInput | string | null
-    manufacturer?: NullableStringFieldUpdateOperationsInput | string | null
-    indications?: NullableStringFieldUpdateOperationsInput | string | null
-    sideEffects?: NullableStringFieldUpdateOperationsInput | string | null
-    safetyAdvice?: NullableStringFieldUpdateOperationsInput | string | null
-    dosageForms?: NullableJsonNullValueInput | InputJsonValue
-    price?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    schedule?: NullableStringFieldUpdateOperationsInput | string | null
-    regulatoryApprovals?: NullableStringFieldUpdateOperationsInput | string | null
-    category?: NullableStringFieldUpdateOperationsInput | string | null
-    isAvailable?: BoolFieldUpdateOperationsInput | boolean
-    images?: NullableJsonNullValueInput | InputJsonValue
-    marketingMaterials?: NullableJsonNullValueInput | InputJsonValue
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    createdById?: StringFieldUpdateOperationsInput | string
-    isActive?: BoolFieldUpdateOperationsInput | boolean
-    orderItems?: OrderItemUncheckedUpdateManyWithoutDrugNestedInput
-    rcpaData?: RcpaDrugDataUncheckedUpdateManyWithoutDrugNestedInput
-    UserDrugInventory?: UserDrugInventoryUncheckedUpdateManyWithoutDrugNestedInput
-  }
-
-  export type UserDrugInventoryUpsertWithoutDoctorDistributionDrugItemsInput = {
-    update: XOR<UserDrugInventoryUpdateWithoutDoctorDistributionDrugItemsInput, UserDrugInventoryUncheckedUpdateWithoutDoctorDistributionDrugItemsInput>
-    create: XOR<UserDrugInventoryCreateWithoutDoctorDistributionDrugItemsInput, UserDrugInventoryUncheckedCreateWithoutDoctorDistributionDrugItemsInput>
+  export type UserDrugInventoryUpsertWithoutSampleDistributionDrugItemsInput = {
+    update: XOR<UserDrugInventoryUpdateWithoutSampleDistributionDrugItemsInput, UserDrugInventoryUncheckedUpdateWithoutSampleDistributionDrugItemsInput>
+    create: XOR<UserDrugInventoryCreateWithoutSampleDistributionDrugItemsInput, UserDrugInventoryUncheckedCreateWithoutSampleDistributionDrugItemsInput>
     where?: UserDrugInventoryWhereInput
   }
 
-  export type UserDrugInventoryUpdateToOneWithWhereWithoutDoctorDistributionDrugItemsInput = {
+  export type UserDrugInventoryUpdateToOneWithWhereWithoutSampleDistributionDrugItemsInput = {
     where?: UserDrugInventoryWhereInput
-    data: XOR<UserDrugInventoryUpdateWithoutDoctorDistributionDrugItemsInput, UserDrugInventoryUncheckedUpdateWithoutDoctorDistributionDrugItemsInput>
+    data: XOR<UserDrugInventoryUpdateWithoutSampleDistributionDrugItemsInput, UserDrugInventoryUncheckedUpdateWithoutSampleDistributionDrugItemsInput>
   }
 
-  export type UserDrugInventoryUpdateWithoutDoctorDistributionDrugItemsInput = {
+  export type UserDrugInventoryUpdateWithoutSampleDistributionDrugItemsInput = {
     id?: StringFieldUpdateOperationsInput | string
     quantity?: IntFieldUpdateOperationsInput | number
     lastRestockedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -83299,7 +83205,7 @@ export namespace Prisma {
     drug?: DrugUpdateOneRequiredWithoutUserDrugInventoryNestedInput
   }
 
-  export type UserDrugInventoryUncheckedUpdateWithoutDoctorDistributionDrugItemsInput = {
+  export type UserDrugInventoryUncheckedUpdateWithoutSampleDistributionDrugItemsInput = {
     id?: StringFieldUpdateOperationsInput | string
     employeeId?: StringFieldUpdateOperationsInput | string
     drugId?: StringFieldUpdateOperationsInput | string
@@ -83309,65 +83215,34 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type DoctorDistributionCreateWithoutGiftItemsInput = {
+  export type SampleDistributionCreateWithoutGiftItemsInput = {
     id?: string
     distributedAt: Date | string
     createdAt?: Date | string
     updatedAt?: Date | string
-    doctorInteraction: DoctorInteractionCreateNestedOneWithoutDoctorDistributionInput
-    employee: EmployeeCreateNestedOneWithoutDoctorDistributionsInput
-    drugItems?: DoctorDistributionDrugItemCreateNestedManyWithoutDoctorDistributionInput
+    doctor?: DoctorCreateNestedOneWithoutSampleDistributionsInput
+    chemist?: ChemistCreateNestedOneWithoutSampleDistributionsInput
+    employee: EmployeeCreateNestedOneWithoutSampleDistributionsInput
+    drugItems?: SampleDistributionDrugItemCreateNestedManyWithoutSampleDistributionInput
   }
 
-  export type DoctorDistributionUncheckedCreateWithoutGiftItemsInput = {
+  export type SampleDistributionUncheckedCreateWithoutGiftItemsInput = {
     id?: string
-    doctorInteractionId: string
+    doctorId?: string | null
+    chemistId?: string | null
     employeeId: string
     distributedAt: Date | string
     createdAt?: Date | string
     updatedAt?: Date | string
-    drugItems?: DoctorDistributionDrugItemUncheckedCreateNestedManyWithoutDoctorDistributionInput
+    drugItems?: SampleDistributionDrugItemUncheckedCreateNestedManyWithoutSampleDistributionInput
   }
 
-  export type DoctorDistributionCreateOrConnectWithoutGiftItemsInput = {
-    where: DoctorDistributionWhereUniqueInput
-    create: XOR<DoctorDistributionCreateWithoutGiftItemsInput, DoctorDistributionUncheckedCreateWithoutGiftItemsInput>
+  export type SampleDistributionCreateOrConnectWithoutGiftItemsInput = {
+    where: SampleDistributionWhereUniqueInput
+    create: XOR<SampleDistributionCreateWithoutGiftItemsInput, SampleDistributionUncheckedCreateWithoutGiftItemsInput>
   }
 
-  export type GiftCreateWithoutDoctorDistributionGiftItemsInput = {
-    id?: string
-    name: string
-    description?: string | null
-    unitCost: Decimal | DecimalJsLike | number | string
-    specifications?: NullableJsonNullValueInput | InputJsonValue
-    giftImages?: NullableJsonNullValueInput | InputJsonValue
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    isActive?: boolean
-    createdBy: EmployeeCreateNestedOneWithoutGiftsCreatedInput
-    userGiftInventories?: UserGiftInventoryCreateNestedManyWithoutGiftInput
-  }
-
-  export type GiftUncheckedCreateWithoutDoctorDistributionGiftItemsInput = {
-    id?: string
-    name: string
-    description?: string | null
-    unitCost: Decimal | DecimalJsLike | number | string
-    specifications?: NullableJsonNullValueInput | InputJsonValue
-    giftImages?: NullableJsonNullValueInput | InputJsonValue
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    createdById: string
-    isActive?: boolean
-    userGiftInventories?: UserGiftInventoryUncheckedCreateNestedManyWithoutGiftInput
-  }
-
-  export type GiftCreateOrConnectWithoutDoctorDistributionGiftItemsInput = {
-    where: GiftWhereUniqueInput
-    create: XOR<GiftCreateWithoutDoctorDistributionGiftItemsInput, GiftUncheckedCreateWithoutDoctorDistributionGiftItemsInput>
-  }
-
-  export type UserGiftInventoryCreateWithoutDoctorDistributionGiftItemsInput = {
+  export type UserGiftInventoryCreateWithoutSampleDistributionGiftItemsInput = {
     id?: string
     quantity: number
     lastRestockedAt?: Date | string | null
@@ -83377,7 +83252,7 @@ export namespace Prisma {
     gift: GiftCreateNestedOneWithoutUserGiftInventoriesInput
   }
 
-  export type UserGiftInventoryUncheckedCreateWithoutDoctorDistributionGiftItemsInput = {
+  export type UserGiftInventoryUncheckedCreateWithoutSampleDistributionGiftItemsInput = {
     id?: string
     employeeId: string
     giftId: string
@@ -83387,93 +83262,56 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type UserGiftInventoryCreateOrConnectWithoutDoctorDistributionGiftItemsInput = {
+  export type UserGiftInventoryCreateOrConnectWithoutSampleDistributionGiftItemsInput = {
     where: UserGiftInventoryWhereUniqueInput
-    create: XOR<UserGiftInventoryCreateWithoutDoctorDistributionGiftItemsInput, UserGiftInventoryUncheckedCreateWithoutDoctorDistributionGiftItemsInput>
+    create: XOR<UserGiftInventoryCreateWithoutSampleDistributionGiftItemsInput, UserGiftInventoryUncheckedCreateWithoutSampleDistributionGiftItemsInput>
   }
 
-  export type DoctorDistributionUpsertWithoutGiftItemsInput = {
-    update: XOR<DoctorDistributionUpdateWithoutGiftItemsInput, DoctorDistributionUncheckedUpdateWithoutGiftItemsInput>
-    create: XOR<DoctorDistributionCreateWithoutGiftItemsInput, DoctorDistributionUncheckedCreateWithoutGiftItemsInput>
-    where?: DoctorDistributionWhereInput
+  export type SampleDistributionUpsertWithoutGiftItemsInput = {
+    update: XOR<SampleDistributionUpdateWithoutGiftItemsInput, SampleDistributionUncheckedUpdateWithoutGiftItemsInput>
+    create: XOR<SampleDistributionCreateWithoutGiftItemsInput, SampleDistributionUncheckedCreateWithoutGiftItemsInput>
+    where?: SampleDistributionWhereInput
   }
 
-  export type DoctorDistributionUpdateToOneWithWhereWithoutGiftItemsInput = {
-    where?: DoctorDistributionWhereInput
-    data: XOR<DoctorDistributionUpdateWithoutGiftItemsInput, DoctorDistributionUncheckedUpdateWithoutGiftItemsInput>
+  export type SampleDistributionUpdateToOneWithWhereWithoutGiftItemsInput = {
+    where?: SampleDistributionWhereInput
+    data: XOR<SampleDistributionUpdateWithoutGiftItemsInput, SampleDistributionUncheckedUpdateWithoutGiftItemsInput>
   }
 
-  export type DoctorDistributionUpdateWithoutGiftItemsInput = {
+  export type SampleDistributionUpdateWithoutGiftItemsInput = {
     id?: StringFieldUpdateOperationsInput | string
     distributedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    doctorInteraction?: DoctorInteractionUpdateOneRequiredWithoutDoctorDistributionNestedInput
-    employee?: EmployeeUpdateOneRequiredWithoutDoctorDistributionsNestedInput
-    drugItems?: DoctorDistributionDrugItemUpdateManyWithoutDoctorDistributionNestedInput
+    doctor?: DoctorUpdateOneWithoutSampleDistributionsNestedInput
+    chemist?: ChemistUpdateOneWithoutSampleDistributionsNestedInput
+    employee?: EmployeeUpdateOneRequiredWithoutSampleDistributionsNestedInput
+    drugItems?: SampleDistributionDrugItemUpdateManyWithoutSampleDistributionNestedInput
   }
 
-  export type DoctorDistributionUncheckedUpdateWithoutGiftItemsInput = {
+  export type SampleDistributionUncheckedUpdateWithoutGiftItemsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    doctorInteractionId?: StringFieldUpdateOperationsInput | string
+    doctorId?: NullableStringFieldUpdateOperationsInput | string | null
+    chemistId?: NullableStringFieldUpdateOperationsInput | string | null
     employeeId?: StringFieldUpdateOperationsInput | string
     distributedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    drugItems?: DoctorDistributionDrugItemUncheckedUpdateManyWithoutDoctorDistributionNestedInput
+    drugItems?: SampleDistributionDrugItemUncheckedUpdateManyWithoutSampleDistributionNestedInput
   }
 
-  export type GiftUpsertWithoutDoctorDistributionGiftItemsInput = {
-    update: XOR<GiftUpdateWithoutDoctorDistributionGiftItemsInput, GiftUncheckedUpdateWithoutDoctorDistributionGiftItemsInput>
-    create: XOR<GiftCreateWithoutDoctorDistributionGiftItemsInput, GiftUncheckedCreateWithoutDoctorDistributionGiftItemsInput>
-    where?: GiftWhereInput
-  }
-
-  export type GiftUpdateToOneWithWhereWithoutDoctorDistributionGiftItemsInput = {
-    where?: GiftWhereInput
-    data: XOR<GiftUpdateWithoutDoctorDistributionGiftItemsInput, GiftUncheckedUpdateWithoutDoctorDistributionGiftItemsInput>
-  }
-
-  export type GiftUpdateWithoutDoctorDistributionGiftItemsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    unitCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    specifications?: NullableJsonNullValueInput | InputJsonValue
-    giftImages?: NullableJsonNullValueInput | InputJsonValue
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    isActive?: BoolFieldUpdateOperationsInput | boolean
-    createdBy?: EmployeeUpdateOneRequiredWithoutGiftsCreatedNestedInput
-    userGiftInventories?: UserGiftInventoryUpdateManyWithoutGiftNestedInput
-  }
-
-  export type GiftUncheckedUpdateWithoutDoctorDistributionGiftItemsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    unitCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    specifications?: NullableJsonNullValueInput | InputJsonValue
-    giftImages?: NullableJsonNullValueInput | InputJsonValue
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    createdById?: StringFieldUpdateOperationsInput | string
-    isActive?: BoolFieldUpdateOperationsInput | boolean
-    userGiftInventories?: UserGiftInventoryUncheckedUpdateManyWithoutGiftNestedInput
-  }
-
-  export type UserGiftInventoryUpsertWithoutDoctorDistributionGiftItemsInput = {
-    update: XOR<UserGiftInventoryUpdateWithoutDoctorDistributionGiftItemsInput, UserGiftInventoryUncheckedUpdateWithoutDoctorDistributionGiftItemsInput>
-    create: XOR<UserGiftInventoryCreateWithoutDoctorDistributionGiftItemsInput, UserGiftInventoryUncheckedCreateWithoutDoctorDistributionGiftItemsInput>
+  export type UserGiftInventoryUpsertWithoutSampleDistributionGiftItemsInput = {
+    update: XOR<UserGiftInventoryUpdateWithoutSampleDistributionGiftItemsInput, UserGiftInventoryUncheckedUpdateWithoutSampleDistributionGiftItemsInput>
+    create: XOR<UserGiftInventoryCreateWithoutSampleDistributionGiftItemsInput, UserGiftInventoryUncheckedCreateWithoutSampleDistributionGiftItemsInput>
     where?: UserGiftInventoryWhereInput
   }
 
-  export type UserGiftInventoryUpdateToOneWithWhereWithoutDoctorDistributionGiftItemsInput = {
+  export type UserGiftInventoryUpdateToOneWithWhereWithoutSampleDistributionGiftItemsInput = {
     where?: UserGiftInventoryWhereInput
-    data: XOR<UserGiftInventoryUpdateWithoutDoctorDistributionGiftItemsInput, UserGiftInventoryUncheckedUpdateWithoutDoctorDistributionGiftItemsInput>
+    data: XOR<UserGiftInventoryUpdateWithoutSampleDistributionGiftItemsInput, UserGiftInventoryUncheckedUpdateWithoutSampleDistributionGiftItemsInput>
   }
 
-  export type UserGiftInventoryUpdateWithoutDoctorDistributionGiftItemsInput = {
+  export type UserGiftInventoryUpdateWithoutSampleDistributionGiftItemsInput = {
     id?: StringFieldUpdateOperationsInput | string
     quantity?: IntFieldUpdateOperationsInput | number
     lastRestockedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -83483,7 +83321,7 @@ export namespace Prisma {
     gift?: GiftUpdateOneRequiredWithoutUserGiftInventoriesNestedInput
   }
 
-  export type UserGiftInventoryUncheckedUpdateWithoutDoctorDistributionGiftItemsInput = {
+  export type UserGiftInventoryUncheckedUpdateWithoutSampleDistributionGiftItemsInput = {
     id?: StringFieldUpdateOperationsInput | string
     employeeId?: StringFieldUpdateOperationsInput | string
     giftId?: StringFieldUpdateOperationsInput | string
@@ -83535,7 +83373,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryCreateNestedManyWithoutEmployeeInput
     giftInventories?: UserGiftInventoryCreateNestedManyWithoutEmployeeInput
     giftsCreated?: GiftCreateNestedManyWithoutCreatedByInput
-    doctorDistributions?: DoctorDistributionCreateNestedManyWithoutEmployeeInput
+    sampleDistributions?: SampleDistributionCreateNestedManyWithoutEmployeeInput
     taskPlans?: TaskPlannerCreateNestedManyWithoutEmployeeInput
     doctorTasks?: DoctorTaskCreateNestedManyWithoutEmployeeInput
     chemistTasks?: ChemistTaskCreateNestedManyWithoutEmployeeInput
@@ -83584,7 +83422,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryUncheckedCreateNestedManyWithoutEmployeeInput
     giftInventories?: UserGiftInventoryUncheckedCreateNestedManyWithoutEmployeeInput
     giftsCreated?: GiftUncheckedCreateNestedManyWithoutCreatedByInput
-    doctorDistributions?: DoctorDistributionUncheckedCreateNestedManyWithoutEmployeeInput
+    sampleDistributions?: SampleDistributionUncheckedCreateNestedManyWithoutEmployeeInput
     taskPlans?: TaskPlannerUncheckedCreateNestedManyWithoutEmployeeInput
     doctorTasks?: DoctorTaskUncheckedCreateNestedManyWithoutEmployeeInput
     chemistTasks?: ChemistTaskUncheckedCreateNestedManyWithoutEmployeeInput
@@ -83649,7 +83487,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryUpdateManyWithoutEmployeeNestedInput
     giftInventories?: UserGiftInventoryUpdateManyWithoutEmployeeNestedInput
     giftsCreated?: GiftUpdateManyWithoutCreatedByNestedInput
-    doctorDistributions?: DoctorDistributionUpdateManyWithoutEmployeeNestedInput
+    sampleDistributions?: SampleDistributionUpdateManyWithoutEmployeeNestedInput
     taskPlans?: TaskPlannerUpdateManyWithoutEmployeeNestedInput
     doctorTasks?: DoctorTaskUpdateManyWithoutEmployeeNestedInput
     chemistTasks?: ChemistTaskUpdateManyWithoutEmployeeNestedInput
@@ -83698,7 +83536,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryUncheckedUpdateManyWithoutEmployeeNestedInput
     giftInventories?: UserGiftInventoryUncheckedUpdateManyWithoutEmployeeNestedInput
     giftsCreated?: GiftUncheckedUpdateManyWithoutCreatedByNestedInput
-    doctorDistributions?: DoctorDistributionUncheckedUpdateManyWithoutEmployeeNestedInput
+    sampleDistributions?: SampleDistributionUncheckedUpdateManyWithoutEmployeeNestedInput
     taskPlans?: TaskPlannerUncheckedUpdateManyWithoutEmployeeNestedInput
     doctorTasks?: DoctorTaskUncheckedUpdateManyWithoutEmployeeNestedInput
     chemistTasks?: ChemistTaskUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -83982,9 +83820,10 @@ export namespace Prisma {
     isActive?: boolean
   }
 
-  export type DoctorDistributionCreateManyEmployeeInput = {
+  export type SampleDistributionCreateManyEmployeeInput = {
     id?: string
-    doctorInteractionId: string
+    doctorId?: string | null
+    chemistId?: string | null
     distributedAt: Date | string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -84078,7 +83917,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryUpdateManyWithoutEmployeeNestedInput
     giftInventories?: UserGiftInventoryUpdateManyWithoutEmployeeNestedInput
     giftsCreated?: GiftUpdateManyWithoutCreatedByNestedInput
-    doctorDistributions?: DoctorDistributionUpdateManyWithoutEmployeeNestedInput
+    sampleDistributions?: SampleDistributionUpdateManyWithoutEmployeeNestedInput
     taskPlans?: TaskPlannerUpdateManyWithoutEmployeeNestedInput
     doctorTasks?: DoctorTaskUpdateManyWithoutEmployeeNestedInput
     chemistTasks?: ChemistTaskUpdateManyWithoutEmployeeNestedInput
@@ -84127,7 +83966,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryUncheckedUpdateManyWithoutEmployeeNestedInput
     giftInventories?: UserGiftInventoryUncheckedUpdateManyWithoutEmployeeNestedInput
     giftsCreated?: GiftUncheckedUpdateManyWithoutCreatedByNestedInput
-    doctorDistributions?: DoctorDistributionUncheckedUpdateManyWithoutEmployeeNestedInput
+    sampleDistributions?: SampleDistributionUncheckedUpdateManyWithoutEmployeeNestedInput
     taskPlans?: TaskPlannerUncheckedUpdateManyWithoutEmployeeNestedInput
     doctorTasks?: DoctorTaskUncheckedUpdateManyWithoutEmployeeNestedInput
     chemistTasks?: ChemistTaskUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -84264,7 +84103,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     doctor?: DoctorUpdateOneRequiredWithoutInteractionsNestedInput
     hospital?: HospitalUpdateOneWithoutDoctorInteractionsNestedInput
-    DoctorDistribution?: DoctorDistributionUpdateManyWithoutDoctorInteractionNestedInput
     DoctorTask?: DoctorTaskUpdateOneWithoutDoctorInteractionsNestedInput
   }
 
@@ -84281,7 +84119,6 @@ export namespace Prisma {
     rating?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     doctorTaskId?: NullableStringFieldUpdateOperationsInput | string | null
-    DoctorDistribution?: DoctorDistributionUncheckedUpdateManyWithoutDoctorInteractionNestedInput
   }
 
   export type DoctorInteractionUncheckedUpdateManyWithoutEmployeeInput = {
@@ -84555,6 +84392,7 @@ export namespace Prisma {
     notes?: DoctorNoteUpdateManyWithoutDoctorNestedInput
     chemistRelations?: DoctorChemistRelationUpdateManyWithoutDoctorNestedInput
     DoctorTask?: DoctorTaskUpdateManyWithoutDoctorNestedInput
+    sampleDistributions?: SampleDistributionUpdateManyWithoutDoctorNestedInput
   }
 
   export type DoctorUncheckedUpdateWithoutCreatedByInput = {
@@ -84578,6 +84416,7 @@ export namespace Prisma {
     notes?: DoctorNoteUncheckedUpdateManyWithoutDoctorNestedInput
     chemistRelations?: DoctorChemistRelationUncheckedUpdateManyWithoutDoctorNestedInput
     DoctorTask?: DoctorTaskUncheckedUpdateManyWithoutDoctorNestedInput
+    sampleDistributions?: SampleDistributionUncheckedUpdateManyWithoutDoctorNestedInput
   }
 
   export type DoctorUncheckedUpdateManyWithoutCreatedByInput = {
@@ -84620,7 +84459,6 @@ export namespace Prisma {
     orderItems?: OrderItemUpdateManyWithoutDrugNestedInput
     rcpaData?: RcpaDrugDataUpdateManyWithoutDrugNestedInput
     UserDrugInventory?: UserDrugInventoryUpdateManyWithoutDrugNestedInput
-    DoctorDistributionDrugItem?: DoctorDistributionDrugItemUpdateManyWithoutDrugNestedInput
   }
 
   export type DrugUncheckedUpdateWithoutCreatedByInput = {
@@ -84646,7 +84484,6 @@ export namespace Prisma {
     orderItems?: OrderItemUncheckedUpdateManyWithoutDrugNestedInput
     rcpaData?: RcpaDrugDataUncheckedUpdateManyWithoutDrugNestedInput
     UserDrugInventory?: UserDrugInventoryUncheckedUpdateManyWithoutDrugNestedInput
-    DoctorDistributionDrugItem?: DoctorDistributionDrugItemUncheckedUpdateManyWithoutDrugNestedInput
   }
 
   export type DrugUncheckedUpdateManyWithoutCreatedByInput = {
@@ -84698,6 +84535,7 @@ export namespace Prisma {
     orders?: OrderUpdateManyWithoutChemistNestedInput
     rcpaReports?: RcpaReportUpdateManyWithoutChemistNestedInput
     chemistTasks?: ChemistTaskUpdateManyWithoutChemistNestedInput
+    sampleDistributions?: SampleDistributionUpdateManyWithoutChemistNestedInput
   }
 
   export type ChemistUncheckedUpdateWithoutCreatedByInput = {
@@ -84727,6 +84565,7 @@ export namespace Prisma {
     orders?: OrderUncheckedUpdateManyWithoutChemistNestedInput
     rcpaReports?: RcpaReportUncheckedUpdateManyWithoutChemistNestedInput
     chemistTasks?: ChemistTaskUncheckedUpdateManyWithoutChemistNestedInput
+    sampleDistributions?: SampleDistributionUncheckedUpdateManyWithoutChemistNestedInput
   }
 
   export type ChemistUncheckedUpdateManyWithoutCreatedByInput = {
@@ -84876,7 +84715,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     drug?: DrugUpdateOneRequiredWithoutUserDrugInventoryNestedInput
-    doctorDistributionDrugItems?: DoctorDistributionDrugItemUpdateManyWithoutFromInventoryNestedInput
+    sampleDistributionDrugItems?: SampleDistributionDrugItemUpdateManyWithoutFromInventoryNestedInput
   }
 
   export type UserDrugInventoryUncheckedUpdateWithoutEmployeeInput = {
@@ -84886,7 +84725,7 @@ export namespace Prisma {
     lastRestockedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    doctorDistributionDrugItems?: DoctorDistributionDrugItemUncheckedUpdateManyWithoutFromInventoryNestedInput
+    sampleDistributionDrugItems?: SampleDistributionDrugItemUncheckedUpdateManyWithoutFromInventoryNestedInput
   }
 
   export type UserDrugInventoryUncheckedUpdateManyWithoutEmployeeInput = {
@@ -84905,7 +84744,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     gift?: GiftUpdateOneRequiredWithoutUserGiftInventoriesNestedInput
-    doctorDistributionGiftItems?: DoctorDistributionGiftItemUpdateManyWithoutFromInventoryNestedInput
+    sampleDistributionGiftItems?: SampleDistributionGiftItemUpdateManyWithoutFromInventoryNestedInput
   }
 
   export type UserGiftInventoryUncheckedUpdateWithoutEmployeeInput = {
@@ -84915,7 +84754,7 @@ export namespace Prisma {
     lastRestockedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    doctorDistributionGiftItems?: DoctorDistributionGiftItemUncheckedUpdateManyWithoutFromInventoryNestedInput
+    sampleDistributionGiftItems?: SampleDistributionGiftItemUncheckedUpdateManyWithoutFromInventoryNestedInput
   }
 
   export type UserGiftInventoryUncheckedUpdateManyWithoutEmployeeInput = {
@@ -84938,7 +84777,6 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
     userGiftInventories?: UserGiftInventoryUpdateManyWithoutGiftNestedInput
-    doctorDistributionGiftItems?: DoctorDistributionGiftItemUpdateManyWithoutGiftNestedInput
   }
 
   export type GiftUncheckedUpdateWithoutCreatedByInput = {
@@ -84952,7 +84790,6 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
     userGiftInventories?: UserGiftInventoryUncheckedUpdateManyWithoutGiftNestedInput
-    doctorDistributionGiftItems?: DoctorDistributionGiftItemUncheckedUpdateManyWithoutGiftNestedInput
   }
 
   export type GiftUncheckedUpdateManyWithoutCreatedByInput = {
@@ -84967,29 +84804,32 @@ export namespace Prisma {
     isActive?: BoolFieldUpdateOperationsInput | boolean
   }
 
-  export type DoctorDistributionUpdateWithoutEmployeeInput = {
+  export type SampleDistributionUpdateWithoutEmployeeInput = {
     id?: StringFieldUpdateOperationsInput | string
     distributedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    doctorInteraction?: DoctorInteractionUpdateOneRequiredWithoutDoctorDistributionNestedInput
-    drugItems?: DoctorDistributionDrugItemUpdateManyWithoutDoctorDistributionNestedInput
-    giftItems?: DoctorDistributionGiftItemUpdateManyWithoutDoctorDistributionNestedInput
+    doctor?: DoctorUpdateOneWithoutSampleDistributionsNestedInput
+    chemist?: ChemistUpdateOneWithoutSampleDistributionsNestedInput
+    drugItems?: SampleDistributionDrugItemUpdateManyWithoutSampleDistributionNestedInput
+    giftItems?: SampleDistributionGiftItemUpdateManyWithoutSampleDistributionNestedInput
   }
 
-  export type DoctorDistributionUncheckedUpdateWithoutEmployeeInput = {
+  export type SampleDistributionUncheckedUpdateWithoutEmployeeInput = {
     id?: StringFieldUpdateOperationsInput | string
-    doctorInteractionId?: StringFieldUpdateOperationsInput | string
+    doctorId?: NullableStringFieldUpdateOperationsInput | string | null
+    chemistId?: NullableStringFieldUpdateOperationsInput | string | null
     distributedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    drugItems?: DoctorDistributionDrugItemUncheckedUpdateManyWithoutDoctorDistributionNestedInput
-    giftItems?: DoctorDistributionGiftItemUncheckedUpdateManyWithoutDoctorDistributionNestedInput
+    drugItems?: SampleDistributionDrugItemUncheckedUpdateManyWithoutSampleDistributionNestedInput
+    giftItems?: SampleDistributionGiftItemUncheckedUpdateManyWithoutSampleDistributionNestedInput
   }
 
-  export type DoctorDistributionUncheckedUpdateManyWithoutEmployeeInput = {
+  export type SampleDistributionUncheckedUpdateManyWithoutEmployeeInput = {
     id?: StringFieldUpdateOperationsInput | string
-    doctorInteractionId?: StringFieldUpdateOperationsInput | string
+    doctorId?: NullableStringFieldUpdateOperationsInput | string | null
+    chemistId?: NullableStringFieldUpdateOperationsInput | string | null
     distributedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -85209,7 +85049,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryUpdateManyWithoutEmployeeNestedInput
     giftInventories?: UserGiftInventoryUpdateManyWithoutEmployeeNestedInput
     giftsCreated?: GiftUpdateManyWithoutCreatedByNestedInput
-    doctorDistributions?: DoctorDistributionUpdateManyWithoutEmployeeNestedInput
+    sampleDistributions?: SampleDistributionUpdateManyWithoutEmployeeNestedInput
     taskPlans?: TaskPlannerUpdateManyWithoutEmployeeNestedInput
     doctorTasks?: DoctorTaskUpdateManyWithoutEmployeeNestedInput
     chemistTasks?: ChemistTaskUpdateManyWithoutEmployeeNestedInput
@@ -85258,7 +85098,7 @@ export namespace Prisma {
     drugInventories?: UserDrugInventoryUncheckedUpdateManyWithoutEmployeeNestedInput
     giftInventories?: UserGiftInventoryUncheckedUpdateManyWithoutEmployeeNestedInput
     giftsCreated?: GiftUncheckedUpdateManyWithoutCreatedByNestedInput
-    doctorDistributions?: DoctorDistributionUncheckedUpdateManyWithoutEmployeeNestedInput
+    sampleDistributions?: SampleDistributionUncheckedUpdateManyWithoutEmployeeNestedInput
     taskPlans?: TaskPlannerUncheckedUpdateManyWithoutEmployeeNestedInput
     doctorTasks?: DoctorTaskUncheckedUpdateManyWithoutEmployeeNestedInput
     chemistTasks?: ChemistTaskUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -85507,6 +85347,7 @@ export namespace Prisma {
     orders?: OrderUpdateManyWithoutChemistNestedInput
     rcpaReports?: RcpaReportUpdateManyWithoutChemistNestedInput
     chemistTasks?: ChemistTaskUpdateManyWithoutChemistNestedInput
+    sampleDistributions?: SampleDistributionUpdateManyWithoutChemistNestedInput
   }
 
   export type ChemistUncheckedUpdateWithoutTerritoryInput = {
@@ -85536,6 +85377,7 @@ export namespace Prisma {
     orders?: OrderUncheckedUpdateManyWithoutChemistNestedInput
     rcpaReports?: RcpaReportUncheckedUpdateManyWithoutChemistNestedInput
     chemistTasks?: ChemistTaskUncheckedUpdateManyWithoutChemistNestedInput
+    sampleDistributions?: SampleDistributionUncheckedUpdateManyWithoutChemistNestedInput
   }
 
   export type ChemistUncheckedUpdateManyWithoutTerritoryInput = {
@@ -85701,6 +85543,7 @@ export namespace Prisma {
     orders?: OrderUpdateManyWithoutChemistNestedInput
     rcpaReports?: RcpaReportUpdateManyWithoutChemistNestedInput
     chemistTasks?: ChemistTaskUpdateManyWithoutChemistNestedInput
+    sampleDistributions?: SampleDistributionUpdateManyWithoutChemistNestedInput
   }
 
   export type ChemistUncheckedUpdateWithoutChemistChainInput = {
@@ -85730,6 +85573,7 @@ export namespace Prisma {
     orders?: OrderUncheckedUpdateManyWithoutChemistNestedInput
     rcpaReports?: RcpaReportUncheckedUpdateManyWithoutChemistNestedInput
     chemistTasks?: ChemistTaskUncheckedUpdateManyWithoutChemistNestedInput
+    sampleDistributions?: SampleDistributionUncheckedUpdateManyWithoutChemistNestedInput
   }
 
   export type ChemistUncheckedUpdateManyWithoutChemistChainInput = {
@@ -85886,7 +85730,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     doctor?: DoctorUpdateOneRequiredWithoutInteractionsNestedInput
     employee?: EmployeeUpdateOneRequiredWithoutDoctorInteractionsNestedInput
-    DoctorDistribution?: DoctorDistributionUpdateManyWithoutDoctorInteractionNestedInput
     DoctorTask?: DoctorTaskUpdateOneWithoutDoctorInteractionsNestedInput
   }
 
@@ -85903,7 +85746,6 @@ export namespace Prisma {
     rating?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     doctorTaskId?: NullableStringFieldUpdateOperationsInput | string | null
-    DoctorDistribution?: DoctorDistributionUncheckedUpdateManyWithoutDoctorInteractionNestedInput
   }
 
   export type DoctorInteractionUncheckedUpdateManyWithoutHospitalInput = {
@@ -85985,6 +85827,15 @@ export namespace Prisma {
     startTime: Date | string
     endTime: Date | string
     taskStatus?: $Enums.TaskStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SampleDistributionCreateManyDoctorInput = {
+    id?: string
+    chemistId?: string | null
+    employeeId: string
+    distributedAt: Date | string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -86079,7 +85930,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     employee?: EmployeeUpdateOneRequiredWithoutDoctorInteractionsNestedInput
     hospital?: HospitalUpdateOneWithoutDoctorInteractionsNestedInput
-    DoctorDistribution?: DoctorDistributionUpdateManyWithoutDoctorInteractionNestedInput
     DoctorTask?: DoctorTaskUpdateOneWithoutDoctorInteractionsNestedInput
   }
 
@@ -86096,7 +85946,6 @@ export namespace Prisma {
     rating?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     doctorTaskId?: NullableStringFieldUpdateOperationsInput | string | null
-    DoctorDistribution?: DoctorDistributionUncheckedUpdateManyWithoutDoctorInteractionNestedInput
   }
 
   export type DoctorInteractionUncheckedUpdateManyWithoutDoctorInput = {
@@ -86197,36 +86046,31 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type DoctorDistributionCreateManyDoctorInteractionInput = {
-    id?: string
-    employeeId: string
-    distributedAt: Date | string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type DoctorDistributionUpdateWithoutDoctorInteractionInput = {
+  export type SampleDistributionUpdateWithoutDoctorInput = {
     id?: StringFieldUpdateOperationsInput | string
     distributedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    employee?: EmployeeUpdateOneRequiredWithoutDoctorDistributionsNestedInput
-    drugItems?: DoctorDistributionDrugItemUpdateManyWithoutDoctorDistributionNestedInput
-    giftItems?: DoctorDistributionGiftItemUpdateManyWithoutDoctorDistributionNestedInput
+    chemist?: ChemistUpdateOneWithoutSampleDistributionsNestedInput
+    employee?: EmployeeUpdateOneRequiredWithoutSampleDistributionsNestedInput
+    drugItems?: SampleDistributionDrugItemUpdateManyWithoutSampleDistributionNestedInput
+    giftItems?: SampleDistributionGiftItemUpdateManyWithoutSampleDistributionNestedInput
   }
 
-  export type DoctorDistributionUncheckedUpdateWithoutDoctorInteractionInput = {
+  export type SampleDistributionUncheckedUpdateWithoutDoctorInput = {
     id?: StringFieldUpdateOperationsInput | string
+    chemistId?: NullableStringFieldUpdateOperationsInput | string | null
     employeeId?: StringFieldUpdateOperationsInput | string
     distributedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    drugItems?: DoctorDistributionDrugItemUncheckedUpdateManyWithoutDoctorDistributionNestedInput
-    giftItems?: DoctorDistributionGiftItemUncheckedUpdateManyWithoutDoctorDistributionNestedInput
+    drugItems?: SampleDistributionDrugItemUncheckedUpdateManyWithoutSampleDistributionNestedInput
+    giftItems?: SampleDistributionGiftItemUncheckedUpdateManyWithoutSampleDistributionNestedInput
   }
 
-  export type DoctorDistributionUncheckedUpdateManyWithoutDoctorInteractionInput = {
+  export type SampleDistributionUncheckedUpdateManyWithoutDoctorInput = {
     id?: StringFieldUpdateOperationsInput | string
+    chemistId?: NullableStringFieldUpdateOperationsInput | string | null
     employeeId?: StringFieldUpdateOperationsInput | string
     distributedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -86257,17 +86101,6 @@ export namespace Prisma {
     employeeId: string
     quantity: number
     lastRestockedAt?: Date | string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type DoctorDistributionDrugItemCreateManyDrugInput = {
-    id?: string
-    doctorDistributionId: string
-    fromInventoryId: string
-    quantity: number
-    unitCost: Decimal | DecimalJsLike | number | string
-    totalCost: Decimal | DecimalJsLike | number | string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -86336,7 +86169,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     employee?: EmployeeUpdateOneRequiredWithoutDrugInventoriesNestedInput
-    doctorDistributionDrugItems?: DoctorDistributionDrugItemUpdateManyWithoutFromInventoryNestedInput
+    sampleDistributionDrugItems?: SampleDistributionDrugItemUpdateManyWithoutFromInventoryNestedInput
   }
 
   export type UserDrugInventoryUncheckedUpdateWithoutDrugInput = {
@@ -86346,7 +86179,7 @@ export namespace Prisma {
     lastRestockedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    doctorDistributionDrugItems?: DoctorDistributionDrugItemUncheckedUpdateManyWithoutFromInventoryNestedInput
+    sampleDistributionDrugItems?: SampleDistributionDrugItemUncheckedUpdateManyWithoutFromInventoryNestedInput
   }
 
   export type UserDrugInventoryUncheckedUpdateManyWithoutDrugInput = {
@@ -86354,39 +86187,6 @@ export namespace Prisma {
     employeeId?: StringFieldUpdateOperationsInput | string
     quantity?: IntFieldUpdateOperationsInput | number
     lastRestockedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type DoctorDistributionDrugItemUpdateWithoutDrugInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    quantity?: IntFieldUpdateOperationsInput | number
-    unitCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    totalCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    doctorDistribution?: DoctorDistributionUpdateOneRequiredWithoutDrugItemsNestedInput
-    fromInventory?: UserDrugInventoryUpdateOneRequiredWithoutDoctorDistributionDrugItemsNestedInput
-  }
-
-  export type DoctorDistributionDrugItemUncheckedUpdateWithoutDrugInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    doctorDistributionId?: StringFieldUpdateOperationsInput | string
-    fromInventoryId?: StringFieldUpdateOperationsInput | string
-    quantity?: IntFieldUpdateOperationsInput | number
-    unitCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    totalCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type DoctorDistributionDrugItemUncheckedUpdateManyWithoutDrugInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    doctorDistributionId?: StringFieldUpdateOperationsInput | string
-    fromInventoryId?: StringFieldUpdateOperationsInput | string
-    quantity?: IntFieldUpdateOperationsInput | number
-    unitCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    totalCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -86454,6 +86254,15 @@ export namespace Prisma {
     startTime: Date | string
     endTime: Date | string
     taskStatus?: $Enums.TaskStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SampleDistributionCreateManyChemistInput = {
+    id?: string
+    doctorId?: string | null
+    employeeId: string
+    distributedAt: Date | string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -86661,6 +86470,37 @@ export namespace Prisma {
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
     taskStatus?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SampleDistributionUpdateWithoutChemistInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    distributedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    doctor?: DoctorUpdateOneWithoutSampleDistributionsNestedInput
+    employee?: EmployeeUpdateOneRequiredWithoutSampleDistributionsNestedInput
+    drugItems?: SampleDistributionDrugItemUpdateManyWithoutSampleDistributionNestedInput
+    giftItems?: SampleDistributionGiftItemUpdateManyWithoutSampleDistributionNestedInput
+  }
+
+  export type SampleDistributionUncheckedUpdateWithoutChemistInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    doctorId?: NullableStringFieldUpdateOperationsInput | string | null
+    employeeId?: StringFieldUpdateOperationsInput | string
+    distributedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    drugItems?: SampleDistributionDrugItemUncheckedUpdateManyWithoutSampleDistributionNestedInput
+    giftItems?: SampleDistributionGiftItemUncheckedUpdateManyWithoutSampleDistributionNestedInput
+  }
+
+  export type SampleDistributionUncheckedUpdateManyWithoutChemistInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    doctorId?: NullableStringFieldUpdateOperationsInput | string | null
+    employeeId?: StringFieldUpdateOperationsInput | string
+    distributedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -86923,7 +86763,6 @@ export namespace Prisma {
     doctor?: DoctorUpdateOneRequiredWithoutInteractionsNestedInput
     employee?: EmployeeUpdateOneRequiredWithoutDoctorInteractionsNestedInput
     hospital?: HospitalUpdateOneWithoutDoctorInteractionsNestedInput
-    DoctorDistribution?: DoctorDistributionUpdateManyWithoutDoctorInteractionNestedInput
   }
 
   export type DoctorInteractionUncheckedUpdateWithoutDoctorTaskInput = {
@@ -86939,7 +86778,6 @@ export namespace Prisma {
     comments?: NullableStringFieldUpdateOperationsInput | string | null
     rating?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    DoctorDistribution?: DoctorDistributionUncheckedUpdateManyWithoutDoctorInteractionNestedInput
   }
 
   export type DoctorInteractionUncheckedUpdateManyWithoutDoctorTaskInput = {
@@ -87290,17 +87128,6 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type DoctorDistributionGiftItemCreateManyGiftInput = {
-    id?: string
-    doctorDistributionId: string
-    fromInventoryId: string
-    quantity: number
-    unitCost: Decimal | DecimalJsLike | number | string
-    totalCost: Decimal | DecimalJsLike | number | string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
   export type UserGiftInventoryUpdateWithoutGiftInput = {
     id?: StringFieldUpdateOperationsInput | string
     quantity?: IntFieldUpdateOperationsInput | number
@@ -87308,7 +87135,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     employee?: EmployeeUpdateOneRequiredWithoutGiftInventoriesNestedInput
-    doctorDistributionGiftItems?: DoctorDistributionGiftItemUpdateManyWithoutFromInventoryNestedInput
+    sampleDistributionGiftItems?: SampleDistributionGiftItemUpdateManyWithoutFromInventoryNestedInput
   }
 
   export type UserGiftInventoryUncheckedUpdateWithoutGiftInput = {
@@ -87318,7 +87145,7 @@ export namespace Prisma {
     lastRestockedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    doctorDistributionGiftItems?: DoctorDistributionGiftItemUncheckedUpdateManyWithoutFromInventoryNestedInput
+    sampleDistributionGiftItems?: SampleDistributionGiftItemUncheckedUpdateManyWithoutFromInventoryNestedInput
   }
 
   export type UserGiftInventoryUncheckedUpdateManyWithoutGiftInput = {
@@ -87330,43 +87157,9 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type DoctorDistributionGiftItemUpdateWithoutGiftInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    quantity?: IntFieldUpdateOperationsInput | number
-    unitCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    totalCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    doctorDistribution?: DoctorDistributionUpdateOneRequiredWithoutGiftItemsNestedInput
-    fromInventory?: UserGiftInventoryUpdateOneRequiredWithoutDoctorDistributionGiftItemsNestedInput
-  }
-
-  export type DoctorDistributionGiftItemUncheckedUpdateWithoutGiftInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    doctorDistributionId?: StringFieldUpdateOperationsInput | string
-    fromInventoryId?: StringFieldUpdateOperationsInput | string
-    quantity?: IntFieldUpdateOperationsInput | number
-    unitCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    totalCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type DoctorDistributionGiftItemUncheckedUpdateManyWithoutGiftInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    doctorDistributionId?: StringFieldUpdateOperationsInput | string
-    fromInventoryId?: StringFieldUpdateOperationsInput | string
-    quantity?: IntFieldUpdateOperationsInput | number
-    unitCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    totalCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type DoctorDistributionDrugItemCreateManyFromInventoryInput = {
+  export type SampleDistributionDrugItemCreateManyFromInventoryInput = {
     id?: string
-    doctorDistributionId: string
-    drugId: string
+    sampleDistributionId: string
     quantity: number
     unitCost: Decimal | DecimalJsLike | number | string
     totalCost: Decimal | DecimalJsLike | number | string
@@ -87374,32 +87167,19 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type DoctorDistributionDrugItemUpdateWithoutFromInventoryInput = {
+  export type SampleDistributionDrugItemUpdateWithoutFromInventoryInput = {
     id?: StringFieldUpdateOperationsInput | string
     quantity?: IntFieldUpdateOperationsInput | number
     unitCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     totalCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    doctorDistribution?: DoctorDistributionUpdateOneRequiredWithoutDrugItemsNestedInput
-    drug?: DrugUpdateOneRequiredWithoutDoctorDistributionDrugItemNestedInput
+    sampleDistribution?: SampleDistributionUpdateOneRequiredWithoutDrugItemsNestedInput
   }
 
-  export type DoctorDistributionDrugItemUncheckedUpdateWithoutFromInventoryInput = {
+  export type SampleDistributionDrugItemUncheckedUpdateWithoutFromInventoryInput = {
     id?: StringFieldUpdateOperationsInput | string
-    doctorDistributionId?: StringFieldUpdateOperationsInput | string
-    drugId?: StringFieldUpdateOperationsInput | string
-    quantity?: IntFieldUpdateOperationsInput | number
-    unitCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    totalCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type DoctorDistributionDrugItemUncheckedUpdateManyWithoutFromInventoryInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    doctorDistributionId?: StringFieldUpdateOperationsInput | string
-    drugId?: StringFieldUpdateOperationsInput | string
+    sampleDistributionId?: StringFieldUpdateOperationsInput | string
     quantity?: IntFieldUpdateOperationsInput | number
     unitCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     totalCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
@@ -87407,10 +87187,19 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type DoctorDistributionGiftItemCreateManyFromInventoryInput = {
+  export type SampleDistributionDrugItemUncheckedUpdateManyWithoutFromInventoryInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    sampleDistributionId?: StringFieldUpdateOperationsInput | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    unitCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    totalCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SampleDistributionGiftItemCreateManyFromInventoryInput = {
     id?: string
-    doctorDistributionId: string
-    giftId: string
+    sampleDistributionId: string
     quantity: number
     unitCost: Decimal | DecimalJsLike | number | string
     totalCost: Decimal | DecimalJsLike | number | string
@@ -87418,32 +87207,19 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type DoctorDistributionGiftItemUpdateWithoutFromInventoryInput = {
+  export type SampleDistributionGiftItemUpdateWithoutFromInventoryInput = {
     id?: StringFieldUpdateOperationsInput | string
     quantity?: IntFieldUpdateOperationsInput | number
     unitCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     totalCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    doctorDistribution?: DoctorDistributionUpdateOneRequiredWithoutGiftItemsNestedInput
-    gift?: GiftUpdateOneRequiredWithoutDoctorDistributionGiftItemsNestedInput
+    sampleDistribution?: SampleDistributionUpdateOneRequiredWithoutGiftItemsNestedInput
   }
 
-  export type DoctorDistributionGiftItemUncheckedUpdateWithoutFromInventoryInput = {
+  export type SampleDistributionGiftItemUncheckedUpdateWithoutFromInventoryInput = {
     id?: StringFieldUpdateOperationsInput | string
-    doctorDistributionId?: StringFieldUpdateOperationsInput | string
-    giftId?: StringFieldUpdateOperationsInput | string
-    quantity?: IntFieldUpdateOperationsInput | number
-    unitCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    totalCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type DoctorDistributionGiftItemUncheckedUpdateManyWithoutFromInventoryInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    doctorDistributionId?: StringFieldUpdateOperationsInput | string
-    giftId?: StringFieldUpdateOperationsInput | string
+    sampleDistributionId?: StringFieldUpdateOperationsInput | string
     quantity?: IntFieldUpdateOperationsInput | number
     unitCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     totalCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
@@ -87451,9 +87227,18 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type DoctorDistributionDrugItemCreateManyDoctorDistributionInput = {
+  export type SampleDistributionGiftItemUncheckedUpdateManyWithoutFromInventoryInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    sampleDistributionId?: StringFieldUpdateOperationsInput | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    unitCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    totalCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SampleDistributionDrugItemCreateManySampleDistributionInput = {
     id?: string
-    drugId: string
     fromInventoryId: string
     quantity: number
     unitCost: Decimal | DecimalJsLike | number | string
@@ -87462,9 +87247,8 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type DoctorDistributionGiftItemCreateManyDoctorDistributionInput = {
+  export type SampleDistributionGiftItemCreateManySampleDistributionInput = {
     id?: string
-    giftId: string
     fromInventoryId: string
     quantity: number
     unitCost: Decimal | DecimalJsLike | number | string
@@ -87473,20 +87257,18 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type DoctorDistributionDrugItemUpdateWithoutDoctorDistributionInput = {
+  export type SampleDistributionDrugItemUpdateWithoutSampleDistributionInput = {
     id?: StringFieldUpdateOperationsInput | string
     quantity?: IntFieldUpdateOperationsInput | number
     unitCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     totalCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    drug?: DrugUpdateOneRequiredWithoutDoctorDistributionDrugItemNestedInput
-    fromInventory?: UserDrugInventoryUpdateOneRequiredWithoutDoctorDistributionDrugItemsNestedInput
+    fromInventory?: UserDrugInventoryUpdateOneRequiredWithoutSampleDistributionDrugItemsNestedInput
   }
 
-  export type DoctorDistributionDrugItemUncheckedUpdateWithoutDoctorDistributionInput = {
+  export type SampleDistributionDrugItemUncheckedUpdateWithoutSampleDistributionInput = {
     id?: StringFieldUpdateOperationsInput | string
-    drugId?: StringFieldUpdateOperationsInput | string
     fromInventoryId?: StringFieldUpdateOperationsInput | string
     quantity?: IntFieldUpdateOperationsInput | number
     unitCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
@@ -87495,9 +87277,8 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type DoctorDistributionDrugItemUncheckedUpdateManyWithoutDoctorDistributionInput = {
+  export type SampleDistributionDrugItemUncheckedUpdateManyWithoutSampleDistributionInput = {
     id?: StringFieldUpdateOperationsInput | string
-    drugId?: StringFieldUpdateOperationsInput | string
     fromInventoryId?: StringFieldUpdateOperationsInput | string
     quantity?: IntFieldUpdateOperationsInput | number
     unitCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
@@ -87506,20 +87287,18 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type DoctorDistributionGiftItemUpdateWithoutDoctorDistributionInput = {
+  export type SampleDistributionGiftItemUpdateWithoutSampleDistributionInput = {
     id?: StringFieldUpdateOperationsInput | string
     quantity?: IntFieldUpdateOperationsInput | number
     unitCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     totalCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    gift?: GiftUpdateOneRequiredWithoutDoctorDistributionGiftItemsNestedInput
-    fromInventory?: UserGiftInventoryUpdateOneRequiredWithoutDoctorDistributionGiftItemsNestedInput
+    fromInventory?: UserGiftInventoryUpdateOneRequiredWithoutSampleDistributionGiftItemsNestedInput
   }
 
-  export type DoctorDistributionGiftItemUncheckedUpdateWithoutDoctorDistributionInput = {
+  export type SampleDistributionGiftItemUncheckedUpdateWithoutSampleDistributionInput = {
     id?: StringFieldUpdateOperationsInput | string
-    giftId?: StringFieldUpdateOperationsInput | string
     fromInventoryId?: StringFieldUpdateOperationsInput | string
     quantity?: IntFieldUpdateOperationsInput | number
     unitCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
@@ -87528,9 +87307,8 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type DoctorDistributionGiftItemUncheckedUpdateManyWithoutDoctorDistributionInput = {
+  export type SampleDistributionGiftItemUncheckedUpdateManyWithoutSampleDistributionInput = {
     id?: StringFieldUpdateOperationsInput | string
-    giftId?: StringFieldUpdateOperationsInput | string
     fromInventoryId?: StringFieldUpdateOperationsInput | string
     quantity?: IntFieldUpdateOperationsInput | number
     unitCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
