@@ -1,57 +1,75 @@
-import React, { useState } from 'react';
-import { Users, Shield, Key, Database, Settings, BarChart3, Building, LogOut, ChevronDown, ChevronRight, Home, Stethoscope, Pill, Guitar as Hospital, Map } from 'lucide-react';
-import { useAuth } from '../../hooks/useAuth';
+import React, { useState } from "react";
+import { NavLink, useNavigate, useLocation } from "react-router-dom";
+import {
+  Users,
+  Shield,
+  Key,
+  Settings,
+  Building,
+  ChevronDown,
+  ChevronRight,
+  Home,
+  Stethoscope,
+  Pill,
+  Guitar as Hospital,
+  Map
+} from "lucide-react";
+import { useAuth } from "../../hooks/useAuth";
 
 interface SidebarProps {
-  activeTab: string;
-  onTabChange: (tab: string) => void;
+  activeTab?: string; // now optional
+  onTabChange?: (tab: string) => void; // optional
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange }) => {
+const Sidebar: React.FC<SidebarProps> = () => {
   const { organization } = useAuth();
-  const [expandedSections, setExpandedSections] = useState<string[]>(['main', 'data']);
+  const [expandedSections, setExpandedSections] = useState<string[]>([
+    "main",
+    "data"
+  ]);
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const menuSections = [
     {
-      id: 'main',
-      label: 'Main',
+      id: "main",
+      label: "Main",
+      items: [{ id: "dashboard", label: "Home", icon: Home, path: "/" }]
+    },
+    {
+      id: "data",
+      label: "Data Management",
       items: [
-        { id: 'dashboard', label: 'Home', icon: Home },
+        { id: "doctors", label: "Doctors", icon: Stethoscope, path: "/doctors" },
+        { id: "chemists", label: "Chemists", icon: Pill, path: "/chemists" },
+        { id: "hospitals", label: "Hospitals", icon: Hospital, path: "/hospitals" },
+        { id: "territories", label: "Territories", icon: Map, path: "/territories" },
+        { id: "drugs", label: "Drugs", icon: Pill, path: "/drugs" }
       ]
     },
     {
-      id: 'data',
-      label: 'Data Management',
+      id: "admin",
+      label: "Administration",
       items: [
-        { id: 'doctors', label: 'Doctors', icon: Stethoscope },
-        { id: 'chemists', label: 'Chemists', icon: Pill },
-        { id: 'hospitals', label: 'Hospitals', icon: Hospital },
-        { id: 'territories', label: 'Territories', icon: Map },
+        { id: "users", label: "Users", icon: Users, path: "/users" },
+        { id: "roles", label: "Roles", icon: Shield, path: "/roles" },
+        { id: "permissions", label: "Permissions", icon: Key, path: "/permissions" }
       ]
     },
     {
-      id: 'admin',
-      label: 'Administration',
+      id: "setup",
+      label: "Setup",
       items: [
-        { id: 'users', label: 'Users', icon: Users },
-        { id: 'roles', label: 'Roles', icon: Shield },
-        { id: 'permissions', label: 'Permissions', icon: Key },
-      ]
-    },
-    {
-      id: 'setup',
-      label: 'Setup',
-      items: [
-        { id: 'organization', label: 'Organization', icon: Building },
-        { id: 'settings', label: 'Settings', icon: Settings },
+        { id: "organization", label: "Organization", icon: Building, path: "/organization" },
+        { id: "settings", label: "Settings", icon: Settings, path: "/settings" }
       ]
     }
   ];
 
   const toggleSection = (sectionId: string) => {
-    setExpandedSections(prev => 
-      prev.includes(sectionId) 
-        ? prev.filter(id => id !== sectionId)
+    setExpandedSections((prev) =>
+      prev.includes(sectionId)
+        ? prev.filter((id) => id !== sectionId)
         : [...prev, sectionId]
     );
   };
@@ -67,7 +85,9 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange }) => {
           <div>
             <h1 className="text-sm font-semibold text-text-primary">Admin Console</h1>
             {organization && (
-              <p className="text-xs text-text-secondary truncate max-w-32">{organization.name}</p>
+              <p className="text-xs text-text-secondary truncate max-w-32">
+                {organization.name}
+              </p>
             )}
           </div>
         </div>
@@ -88,23 +108,22 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange }) => {
                 <ChevronRight className="w-4 h-4 flex-shrink-0" />
               )}
             </button>
-            
+
             {expandedSections.includes(section.id) && (
               <div className="mt-2 space-y-1">
                 {section.items.map((item) => {
                   const Icon = item.icon;
-                  const isActive = activeTab === item.id;
-                  
+                  const isActive = location.pathname === item.path;
+
                   return (
                     <button
                       key={item.id}
-                      onClick={() => onTabChange(item.id)}
-                      className={`
-                        w-full flex items-center space-x-3 px-3 py-2 text-sm rounded-md text-left
-                        transition-colors duration-150
-                        ${isActive 
-                          ? 'bg-primary-500 text-white shadow-sm' 
-                          : 'text-text-secondary hover:bg-background-tertiary hover:text-text-primary'
+                      onClick={() => navigate(item.path)}
+                      className={`w-full flex items-center space-x-3 px-3 py-2 text-sm rounded-md text-left transition-colors duration-150
+                        ${
+                          isActive
+                            ? "bg-primary-500 text-white shadow-sm"
+                            : "text-text-secondary hover:bg-background-tertiary hover:text-text-primary"
                         }
                       `}
                     >

@@ -5,6 +5,8 @@ import { OAuth2Client } from 'google-auth-library';
 import nodemailer from 'nodemailer';
 import { EmailHelper } from '../utils/emailHelper';
 import SchemaManagementService from '../services/SchemaManagementService';
+import juice from 'juice';
+
 
 const googleClient = new OAuth2Client(process.env.GOOGLE_WEB_CLIENT_ID);
 
@@ -41,13 +43,20 @@ export const createUserController = async (req: Request, res: Response) => {
       state
     } = req.body;
 
+    console.log("Create user request received");
+    console.log("Request body:", req.body);
+
+    const imagePath = req.file ? `/uploads/${req.file.filename}` : null;
+
+    console.log("Image path:", imagePath);
+
     // Validate required fields
-    if (!organizationName || !email || !password || !role || !firstName) {
-      return res.status(400).json({
-        success: false,
-        message: "organizationName, email, password, role, firstName are required"
-      });
-    }
+    // if (!organizationName || !email || !password || !role || !firstName) {
+    //   return res.status(400).json({
+    //     success: false,
+    //     message: "organizationName, email, password, role, firstName are required"
+    //   });
+    // }
 
     // Find organization
     const org = await schemaService.sharedDb.organization.findUnique({
@@ -68,58 +77,59 @@ export const createUserController = async (req: Request, res: Response) => {
       });
     }
 
-    // Check if user already exists in shared database
-    const existingUser = await schemaService.sharedDb.user.findUnique({
-      where: { email }
-    });
+    // // Check if user already exists in shared database
+    // const existingUser = await schemaService.sharedDb.user.findUnique({
+    //   where: { email }
+    // });
 
-    if (existingUser) {
-      return res.status(400).json({
-        success: false,
-        message: "User with this email already exists"
-      });
-    }
+    // if (existingUser) {
+    //   return res.status(400).json({
+    //     success: false,
+    //     message: "User with this email already exists"
+    //   });
+    // }
 
-    // Get tenant database
-    const schemaName = org.schemaName;
-    if (!schemaName) {
-      return res.status(400).json({
-        success: false,
-        message: "create schema for this organization"
-      });
-    }
-    const tenantDb = await schemaService.getTenantClient(schemaName);
+    // // Get tenant database
+    // const schemaName = org.schemaName;
+    // if (!schemaName) {
+    //   return res.status(400).json({
+    //     success: false,
+    //     message: "create schema for this organization"
+    //   });
+    // }
+    // const tenantDb = await schemaService.getTenantClient(schemaName);
 
-    // Hash password
-    const hashedPassword = await bcrypt.hash(password, 10);
+    // // Hash password
+    // const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Create user in shared database (inactive by default)
-    const newUser = await schemaService.sharedDb.user.create({
-      data: {
-        organizationId: org.id,
-        email,
-        password: hashedPassword,
-        role,
-        isActive: false,
-      }
-    });
+    // // Create user in shared database (inactive by default)
+    // const newUser = await schemaService.sharedDb.user.create({
+    //   data: {
+    //     organizationId: org.id,
+    //     email,
+    //     password: hashedPassword,
+    //     role,
+    //     isActive: false,
+    //   }
+    // });
 
-    // Create employee in tenant database
-    const newEmployee = await tenantDb.employee.create({
-      data: {
-        organizationId: org.id,
-        email,
-        passwordHash: hashedPassword,
-        firstName,
-        lastName,
-        phone,
-        role,
-        employeeCode,
-        city,
-        state,
-        isActive: false
-      }
-    });
+    // // Create employee in tenant database
+    // const newEmployee = await tenantDb.employee.create({
+    //   data: {
+    //     organizationId: org.id,
+    //     email,
+    //     passwordHash: hashedPassword,
+    //     firstName,
+    //     lastName,
+    //     phone,
+    //     role,
+    //     employeeCode,
+    //     city,
+    //     state,
+    //     isActive: false,
+    //     profilePic: imagePath,
+    //   }
+    // });
 
     // Generate activation link (simple link with email parameter)
     const activationLink = `${process.env.FRONTEND_URL}/activate-account?email=${encodeURIComponent(email)}`;
@@ -133,28 +143,41 @@ export const createUserController = async (req: Request, res: Response) => {
       companyName: process.env.APP_NAME || 'ForPharma'
     });
 
-    // Email template
+    const inlinedHtmlContent = juice(htmlContent, {
+      applyStyleTags: true,
+      removeStyleTags: false,
+      preserveFontFaces: true,
+      inlinePseudoElements: true,
+      webResources: {
+        images: false, // Don't inline images
+        svgs: false,
+        links: false,
+        scripts: false
+      }
+    });
+
+    // // Email template
     const mailOptions = {
       from: `"${process.env.APP_NAME || 'ForPharma'}" <${process.env.EMAIL_USER}>`,
       to: email,
       subject: 'Welcome! Set Your Password',
-      html: htmlContent,
+      html: inlinedHtmlContent,
       text: `[Plain text version for fallback]`
     };
 
 
-    // Send email
+    // // Send email
     await transporter.sendMail(mailOptions);
 
     return res.status(201).json({
       success: true,
       message: "User created successfully. Please check your email to activate your account.",
-      user: {
-        id: newUser.id,
-        email: newUser.email,
-        role: newUser.role,
-        isActive: newUser.isActive
-      }
+      // user: {
+      //   id: newUser.id,
+      //   email: newUser.email,
+      //   role: newUser.role,
+      //   isActive: newUser.isActive
+      // }
     });
 
   } catch (error) {
@@ -172,12 +195,13 @@ export const createUserController = async (req: Request, res: Response) => {
 // Simple activation controller
 export const activateAccountController = async (req: Request, res: Response) => {
   try {
-    const { email, oldPassword, password } = req.body;
-
-    if (!email || !password || !oldPassword) {
+    const { email, password } = req.body;
+    console.log("Activate account request received");
+    console.log("Request body:", email, password);
+    if (!email || !password) {
       return res.status(400).json({
         success: false,
-        message: "Email, oldPassword , password are required"
+        message: "Email, password are required"
       });
     }
 
@@ -188,6 +212,8 @@ export const activateAccountController = async (req: Request, res: Response) => 
         organization: true
       }
     });
+
+    console.log("User found:", user);
 
     if (!user) {
       return res.status(404).json({
@@ -200,16 +226,6 @@ export const activateAccountController = async (req: Request, res: Response) => 
       return res.status(400).json({
         success: false,
         message: "Account is already activated"
-      });
-    }
-
-    // Verify password
-    const isValidPassword = await bcrypt.compare(oldPassword, user.password);
-
-    if (!isValidPassword) {
-      return res.status(401).json({
-        success: false,
-        message: "Invalid old password"
       });
     }
 
@@ -282,13 +298,11 @@ export const loginController = async (req: Request, res: Response) => {
       return res.status(403).json({ error: 'Account is not activated. Please check your email.' });
     }
 
-    // Verify password with bcrypt
     const isValidPassword = password === employee.password;
-    // console.log("password validates");
-
+    console.log("password validates", isValidPassword);
     if (!isValidPassword) {
-      console.log("invalid password")
-      return res.status(401).json({ error: 'Invalid credential' });
+      console.log("invalid credentials");
+      return res.status(401).json({ error: 'Invalid credentials' });
     }
 
     if (!employee.organization?.isActive) {
@@ -416,3 +430,48 @@ export const googleLoginController = async (req: Request, res: Response) => {
     await schemaService.sharedDb.$disconnect();
   }
 };
+
+export const fetchUsersController = async (req: Request, res: Response) => {
+  try {
+    const { organizationId } = req.query;
+    console.log("Fetch users request received for organizationId:", organizationId);
+
+    if (!organizationId) {
+      return res.status(400).json({ error: 'organizationId is required' });
+    }
+
+    // First, fetch the organization to get the schema name
+    const organization = await schemaService.sharedDb.organization.findUnique({
+      where: { id: String(organizationId) },
+      select: { schemaName: true }
+    });
+
+    if (!organization || !organization.schemaName) {
+      return res.status(404).json({ error: 'Organization not found or schema not set' });
+    }
+
+    // Get tenant DB client
+    const tenantDb = await schemaService.getTenantClient(organization.schemaName);
+
+    // Fetch users from tenant schema
+    const employees = await tenantDb.employee.findMany();
+
+    // Map to required format
+    const users = employees.map(emp => ({
+      id: emp.id,
+      email: emp.email,
+      firstName: emp.firstName,
+      lastName: emp.lastName,
+      roles: emp.role,
+      createdAt: emp.createdAt,
+      isActive: emp.isActive
+    }));
+
+    res.json(users);
+  } catch (error) {
+    console.error('Fetch users details error:', error);
+    res.status(500).json({ error: 'Failed to fetch users details' });
+  } finally {
+    await schemaService.sharedDb.$disconnect();
+  }
+}

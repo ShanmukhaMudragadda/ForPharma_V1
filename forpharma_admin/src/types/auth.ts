@@ -3,7 +3,7 @@ export interface User {
   email: string;
   firstName: string;
   lastName: string;
-  roles: Role[];
+  roles: string;
   createdAt: string;
   isActive: boolean;
 }

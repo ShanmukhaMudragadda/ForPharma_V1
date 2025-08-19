@@ -64,6 +64,7 @@ app.use('/api/orders', orderRoutes);
 
 // Drug Routes
 app.use('/api/drugs', drugRoutes);
+app.use('/uploads', express.static('uploads'));
 
 
 

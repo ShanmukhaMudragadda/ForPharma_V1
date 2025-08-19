@@ -3,6 +3,7 @@ import { User, Organization, GoogleUser, SignupData } from '../types/auth';
 import { AdminService } from '../services/admin.services';
 
 interface AuthContextType {
+  token: string | null;
   user: User | null;
   organization: Organization | null;
   isAuthenticated: boolean;
@@ -30,13 +31,15 @@ export const useAuthProvider = () => {
   const [organization, setOrganization] = useState<Organization | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [authMode, setAuthMode] = useState<'login' | 'signup' | 'setup' | 'authenticated'>('login');
+  const [token, setToken] = useState<string | null>(null);
 
   useEffect(() => {
     // Check authentication state
     const userData = localStorage.getItem('user_data');
     const orgData = localStorage.getItem('org_data');
+    const storedToken = localStorage.getItem('token');
 
-    if (!userData || !orgData) {
+    if (!userData || !orgData || !storedToken) {
       setAuthMode('login');
       setIsLoading(false);
       return;
@@ -71,6 +74,8 @@ export const useAuthProvider = () => {
         throw new Error('Invalid login response');
       }
       const orgDetails = response.user.organization;
+      const token = response.token;
+      console.log('Token received:', token);
       console.log('Organization details:', orgDetails);
       const organization: Organization = {
         id: orgDetails.id,
@@ -96,9 +101,11 @@ export const useAuthProvider = () => {
         isActive: response.user.isActive !== undefined ? response.user.isActive : true
       };
       setUser(user);
+      setToken(token);
       setOrganization(organization);
       localStorage.setItem('user_data', JSON.stringify(user));
       localStorage.setItem('org_data', JSON.stringify(organization));
+      localStorage.setItem('token', token);
       setAuthMode('authenticated');
     } catch (error) {
       console.error('Login error:', error);
@@ -139,13 +146,7 @@ export const useAuthProvider = () => {
         email: googleUser.email,
         firstName: googleUser.given_name,
         lastName: googleUser.family_name,
-        roles: [{
-          id: '1',
-          name: 'Employee',
-          description: 'Basic access',
-          permissions: [],
-          createdAt: new Date().toISOString()
-        }],
+        roles: 'User',
         createdAt: new Date().toISOString(),
         isActive: true
       };
@@ -203,13 +204,7 @@ export const useAuthProvider = () => {
       email: orgPayload.adminEmail,
       firstName: orgPayload.adminFirstName,
       lastName: orgPayload.adminLastName,
-      roles: [{
-        id: '1',
-        name: 'System Administrator',
-        description: 'Full access to all features',
-        permissions: [],
-        createdAt: new Date().toISOString()
-      }],
+      roles: 'Admin',
       createdAt: new Date().toISOString(),
       isActive: true
     };
@@ -233,6 +228,7 @@ export const useAuthProvider = () => {
   };
 
   return {
+    token,
     user,
     organization,
     isAuthenticated: !!user,
