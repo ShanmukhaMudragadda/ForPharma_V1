@@ -298,8 +298,10 @@ export const loginController = async (req: Request, res: Response) => {
       return res.status(403).json({ error: 'Account is not activated. Please check your email.' });
     }
 
-    const isValidPassword = password === employee.password;
-    console.log("password validates", isValidPassword);
+    // Verify password with bcrypt
+    const isValidPassword = await bcrypt.compare(password, employee.password);
+    // console.log("password validates");
+
     if (!isValidPassword) {
       console.log("invalid credentials");
       return res.status(401).json({ error: 'Invalid credentials' });

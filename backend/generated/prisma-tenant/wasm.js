@@ -458,7 +458,7 @@ exports.Prisma.TaskPlannerScalarFieldEnum = {
   employeeId: 'employeeId',
   startDate: 'startDate',
   endDate: 'endDate',
-  status: 'status',
+  approvalStatus: 'approvalStatus',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -471,7 +471,8 @@ exports.Prisma.DoctorTaskScalarFieldEnum = {
   taskDate: 'taskDate',
   startTime: 'startTime',
   endTime: 'endTime',
-  taskStatus: 'taskStatus',
+  completionStatus: 'completionStatus',
+  approvalStatus: 'approvalStatus',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -484,7 +485,8 @@ exports.Prisma.ChemistTaskScalarFieldEnum = {
   taskDate: 'taskDate',
   startTime: 'startTime',
   endTime: 'endTime',
-  taskStatus: 'taskStatus',
+  completionStatus: 'completionStatus',
+  approvalStatus: 'approvalStatus',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -498,7 +500,8 @@ exports.Prisma.TourPlanTaskScalarFieldEnum = {
   taskDate: 'taskDate',
   startTime: 'startTime',
   endTime: 'endTime',
-  taskStatus: 'taskStatus',
+  completionStatus: 'completionStatus',
+  approvalStatus: 'approvalStatus',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -721,14 +724,14 @@ exports.ReportingPeriod = exports.$Enums.ReportingPeriod = {
   MONTHLY: 'MONTHLY'
 };
 
-exports.TaskPlannerStatus = exports.$Enums.TaskPlannerStatus = {
+exports.ApprovalStatus = exports.$Enums.ApprovalStatus = {
   DRAFT: 'DRAFT',
   PENDING_APPROVAL: 'PENDING_APPROVAL',
   APPROVED: 'APPROVED',
   REJECTED: 'REJECTED'
 };
 
-exports.TaskStatus = exports.$Enums.TaskStatus = {
+exports.CompletionStatus = exports.$Enums.CompletionStatus = {
   PENDING: 'PENDING',
   COMPLETED: 'COMPLETED',
   RESCHEDULED: 'RESCHEDULED'

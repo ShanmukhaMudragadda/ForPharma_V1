@@ -1,6 +1,12 @@
-// services/drugService.ts
 import axiosInstance from '../api/axiosConfig';
 import { DrugItem, DrugResponse, DrugListResponse } from '../types/drug';
+
+// Interface for search response
+export interface DrugSearchResponse {
+    success: boolean;
+    message: string;
+    drugs: DrugItem[];
+}
 
 class DrugService {
     // Get all drugs
@@ -32,6 +38,63 @@ class DrugService {
         } catch (error: any) {
             console.error('Error fetching drug details:', error);
             throw error;
+        }
+    }
+
+    // Search drugs by name, composition, or manufacturer
+    async searchDrugs(query: string): Promise<DrugSearchResponse> {
+        try {
+            const response = await axiosInstance.get<DrugSearchResponse>('/drugs/search', {
+                params: { query }
+            });
+
+            if (response.data.success) {
+                return response.data;
+            } else {
+                // If search endpoint doesn't exist, fallback to filtering from full list
+                const allDrugs = await this.getDrugList();
+                const filteredDrugs = allDrugs.filter(drug => {
+                    const searchLower = query.toLowerCase();
+                    return (
+                        drug.name?.toLowerCase().includes(searchLower) ||
+                        drug.composition?.toLowerCase().includes(searchLower) ||
+                        drug.manufacturer?.toLowerCase().includes(searchLower)
+                    );
+                });
+
+                return {
+                    success: true,
+                    message: 'Search results',
+                    drugs: filteredDrugs.slice(0, 10) // Limit to 10 results
+                };
+            }
+        } catch (error: any) {
+            console.error('Error searching drugs:', error);
+
+            // Fallback to client-side filtering if search endpoint fails
+            try {
+                const allDrugs = await this.getDrugList();
+                const filteredDrugs = allDrugs.filter(drug => {
+                    const searchLower = query.toLowerCase();
+                    return (
+                        drug.name?.toLowerCase().includes(searchLower) ||
+                        drug.composition?.toLowerCase().includes(searchLower) ||
+                        drug.manufacturer?.toLowerCase().includes(searchLower)
+                    );
+                });
+
+                return {
+                    success: true,
+                    message: 'Search results',
+                    drugs: filteredDrugs.slice(0, 10)
+                };
+            } catch (fallbackError) {
+                return {
+                    success: false,
+                    message: 'Failed to search drugs',
+                    drugs: []
+                };
+            }
         }
     }
 

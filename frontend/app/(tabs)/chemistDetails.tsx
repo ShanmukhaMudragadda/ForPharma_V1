@@ -125,7 +125,9 @@ export default function ChemistDetails() {
     };
 
     const handleStartMeeting = () => {
-        Alert.alert('Start Meeting', 'Meeting functionality will be implemented');
+        // Create interaction when starting meeting
+        console.log("chemist meet pressed");
+        router.push(`/chemistMeet?chemistId=${chemistId}`);
     };
 
     const handleSaveNote = async () => {

@@ -69,7 +69,7 @@ const Login = () => {
         await AsyncStorage.setItem('user', JSON.stringify(data.user));
       }
 
-      // console.log('Token saved successfully!');
+      console.log('Token saved successfully!');
 
       router.replace('/(tabs)/'); // ✅ Keep only this one
     } catch (error: any) {
