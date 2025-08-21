@@ -21,7 +21,12 @@ enum TaskType {
   TOUR_PLANNER
 }
 
-enum TaskStatus {
+// enum TaskStatus {
+//     PENDING
+//     COMPLETED
+//     RESCHEDULED
+// }
+enum CompletionStatus {
   PENDING
   COMPLETED
   RESCHEDULED
@@ -81,7 +86,14 @@ enum ExpenseClaimStatus {
   REJECTED
 }
 
-enum TaskPlannerStatus {
+// enum TaskPlannerStatus {
+//     DRAFT
+//     PENDING_APPROVAL
+//     APPROVED
+//     REJECTED
+// }
+
+enum ApprovalStatus {
   DRAFT
   PENDING_APPROVAL
   APPROVED
@@ -728,12 +740,13 @@ model CheckIn {
 
 // TASK PLANNER MODULE
 model TaskPlanner {
-  id         String            @id @default(uuid())
-  employeeId String            @map("employee_id")
-  employee   Employee          @relation(fields: [employeeId], references: [id])
-  startDate  DateTime          @map("start_date") @db.Date
-  endDate    DateTime          @map("end_date") @db.Date
-  status     TaskPlannerStatus @default(DRAFT)
+  id             String         @id @default(uuid())
+  employeeId     String         @map("employee_id")
+  employee       Employee       @relation(fields: [employeeId], references: [id])
+  startDate      DateTime       @map("start_date") @db.Date
+  endDate        DateTime       @map("end_date") @db.Date
+  // status     TaskPlannerStatus @default(DRAFT)
+  approvalStatus ApprovalStatus @default(DRAFT)
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
@@ -754,10 +767,12 @@ model DoctorTask {
   doctorId   String      @map("doctor_id")
   doctor     Doctor      @relation(fields: [doctorId], references: [id])
 
-  taskDate   DateTime   @db.Date
-  startTime  DateTime   @map("start_time") @db.Time
-  endTime    DateTime   @map("end_time") @db.Time
-  taskStatus TaskStatus @default(PENDING)
+  taskDate         DateTime         @db.Date
+  startTime        DateTime         @map("start_time") @db.Time
+  endTime          DateTime         @map("end_time") @db.Time
+  // taskStatus TaskStatus @default(PENDING)
+  completionStatus CompletionStatus @default(PENDING)
+  approvalStatus   ApprovalStatus   @default(DRAFT)
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
@@ -776,10 +791,12 @@ model ChemistTask {
   chemistId  String      @map("chemist_id")
   chemist    Chemist     @relation(fields: [chemistId], references: [id])
 
-  taskDate   DateTime   @db.Date
-  startTime  DateTime   @map("start_time") @db.Time
-  endTime    DateTime   @map("end_time") @db.Time
-  taskStatus TaskStatus @default(PENDING)
+  taskDate         DateTime         @db.Date
+  startTime        DateTime         @map("start_time") @db.Time
+  endTime          DateTime         @map("end_time") @db.Time
+  // taskStatus TaskStatus @default(PENDING)
+  completionStatus CompletionStatus @default(PENDING)
+  approvalStatus   ApprovalStatus   @default(DRAFT)
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
@@ -798,11 +815,13 @@ model TourPlanTask {
   tourPlanId String      @map("tour_plan_id")
   tourPlan   TourPlan    @relation(fields: [tourPlanId], references: [id])
 
-  location   String     @db.VarChar(255)
-  taskDate   DateTime   @db.Date
-  startTime  DateTime   @map("start_time") @db.Time
-  endTime    DateTime   @map("end_time") @db.Time
-  taskStatus TaskStatus @default(PENDING)
+  location         String           @db.VarChar(255)
+  taskDate         DateTime         @db.Date
+  startTime        DateTime         @map("start_time") @db.Time
+  endTime          DateTime         @map("end_time") @db.Time
+  // taskStatus TaskStatus @default(PENDING)
+  completionStatus CompletionStatus @default(PENDING)
+  approvalStatus   ApprovalStatus   @default(DRAFT)
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")

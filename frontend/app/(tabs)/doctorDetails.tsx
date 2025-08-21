@@ -132,7 +132,8 @@ export default function DoctorDetails() {
 
     const handleStartMeeting = () => {
         // Create interaction when starting meeting
-        Alert.alert('Start Meeting', 'Meeting functionality will be implemented');
+        console.log("start mneeting pressed")
+        router.push(`/doctorMeet?doctorId=${doctorData.id}&doctorName=${doctorData.name}`);
     };
 
     const handleSaveNote = async () => {

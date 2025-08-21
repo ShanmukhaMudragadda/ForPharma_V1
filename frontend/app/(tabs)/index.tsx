@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 // import React, { useState } from 'react';
 // import { View, Text, ScrollView, TouchableOpacity, Alert } from 'react-native';
 // import { styled } from 'nativewind';
@@ -183,7 +181,6 @@
 
 // app/(tabs)/index.tsx
 // app/(tabs)/index.tsx
->>>>>>> origin/rcpa/dcr_frontend
 import React, { useState } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, Alert } from 'react-native';
 import { styled } from 'nativewind';

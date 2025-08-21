@@ -36,16 +36,30 @@ export interface TaskDetail {
 
 export interface CreateDCRRequest {
     taskId: string;
-    taskType: string;
+    taskType?: string;
     productsDiscussed?: string;
+    productsPromoted?: string; // Added for meeting flow
     comments?: string;
-    isDraft: boolean;
+    isDraft?: boolean;
+    rating?: number; // Added for meeting rating
+    meetingData?: MeetingData; // Added for complete meeting data
+}
+
+export interface MeetingData {
+    startTime: string;
+    endTime: string;
+    duration: string;
+    purpose: string;
+    outcome: string;
+    selectedDrugId?: string;
 }
 
 export interface UpdateDCRRequest {
     productsDiscussed?: string;
+    productsPromoted?: string;
     comments?: string;
     isDraft: boolean;
+    rating?: number;
 }
 
 export interface CreateDCRResponse {
@@ -163,6 +177,16 @@ class DCRService {
     // Create a new DCR report
     async createDCR(dcrData: CreateDCRRequest): Promise<CreateDCRResponse['data']> {
         try {
+            // Ensure taskType is set for chemist meetings
+            if (!dcrData.taskType) {
+                dcrData.taskType = 'chemist';
+            }
+
+            // Map productsPromoted to productsDiscussed if needed
+            if (dcrData.productsPromoted && !dcrData.productsDiscussed) {
+                dcrData.productsDiscussed = dcrData.productsPromoted;
+            }
+
             const response = await axiosInstance.post<CreateDCRResponse>('/dcr', dcrData);
 
             if (response.data.success) {
@@ -172,6 +196,43 @@ class DCRService {
             }
         } catch (error: any) {
             console.error('Error creating DCR:', error);
+            throw error;
+        }
+    }
+
+    // Create DCR from meeting flow
+    async createMeetingDCR(
+        chemistId: string,
+        meetingData: MeetingData & {
+            purpose: string;
+            outcome: string;
+            productsPromoted: string;
+            comments: string;
+            rating?: number;
+        }
+    ): Promise<CreateDCRResponse['data']> {
+        try {
+            const dcrData: CreateDCRRequest = {
+                taskId: chemistId,
+                taskType: 'chemist',
+                productsPromoted: meetingData.productsPromoted,
+                productsDiscussed: meetingData.productsPromoted, // Map to existing field
+                comments: `Purpose: ${meetingData.purpose}\n\nOutcome: ${meetingData.outcome}\n\nAdditional Comments: ${meetingData.comments}\n\nMeeting Duration: ${meetingData.duration}`,
+                isDraft: false,
+                rating: meetingData.rating,
+                meetingData: {
+                    startTime: meetingData.startTime,
+                    endTime: meetingData.endTime,
+                    duration: meetingData.duration,
+                    purpose: meetingData.purpose,
+                    outcome: meetingData.outcome,
+                    selectedDrugId: meetingData.selectedDrugId
+                }
+            };
+
+            return await this.createDCR(dcrData);
+        } catch (error: any) {
+            console.error('Error creating meeting DCR:', error);
             throw error;
         }
     }

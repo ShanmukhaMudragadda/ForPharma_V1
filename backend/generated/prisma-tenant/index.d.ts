@@ -236,13 +236,13 @@ export const TaskType: {
 export type TaskType = (typeof TaskType)[keyof typeof TaskType]
 
 
-export const TaskStatus: {
+export const CompletionStatus: {
   PENDING: 'PENDING',
   COMPLETED: 'COMPLETED',
   RESCHEDULED: 'RESCHEDULED'
 };
 
-export type TaskStatus = (typeof TaskStatus)[keyof typeof TaskStatus]
+export type CompletionStatus = (typeof CompletionStatus)[keyof typeof CompletionStatus]
 
 
 export const AssociationType: {
@@ -323,14 +323,14 @@ export const ExpenseClaimStatus: {
 export type ExpenseClaimStatus = (typeof ExpenseClaimStatus)[keyof typeof ExpenseClaimStatus]
 
 
-export const TaskPlannerStatus: {
+export const ApprovalStatus: {
   DRAFT: 'DRAFT',
   PENDING_APPROVAL: 'PENDING_APPROVAL',
   APPROVED: 'APPROVED',
   REJECTED: 'REJECTED'
 };
 
-export type TaskPlannerStatus = (typeof TaskPlannerStatus)[keyof typeof TaskPlannerStatus]
+export type ApprovalStatus = (typeof ApprovalStatus)[keyof typeof ApprovalStatus]
 
 
 export const TaskTypeReference: {
@@ -367,9 +367,9 @@ export type TaskType = $Enums.TaskType
 
 export const TaskType: typeof $Enums.TaskType
 
-export type TaskStatus = $Enums.TaskStatus
+export type CompletionStatus = $Enums.CompletionStatus
 
-export const TaskStatus: typeof $Enums.TaskStatus
+export const CompletionStatus: typeof $Enums.CompletionStatus
 
 export type AssociationType = $Enums.AssociationType
 
@@ -403,9 +403,9 @@ export type ExpenseClaimStatus = $Enums.ExpenseClaimStatus
 
 export const ExpenseClaimStatus: typeof $Enums.ExpenseClaimStatus
 
-export type TaskPlannerStatus = $Enums.TaskPlannerStatus
+export type ApprovalStatus = $Enums.ApprovalStatus
 
-export const TaskPlannerStatus: typeof $Enums.TaskPlannerStatus
+export const ApprovalStatus: typeof $Enums.ApprovalStatus
 
 export type TaskTypeReference = $Enums.TaskTypeReference
 
@@ -35336,7 +35336,7 @@ export namespace Prisma {
     employeeId: string | null
     startDate: Date | null
     endDate: Date | null
-    status: $Enums.TaskPlannerStatus | null
+    approvalStatus: $Enums.ApprovalStatus | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -35346,7 +35346,7 @@ export namespace Prisma {
     employeeId: string | null
     startDate: Date | null
     endDate: Date | null
-    status: $Enums.TaskPlannerStatus | null
+    approvalStatus: $Enums.ApprovalStatus | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -35356,7 +35356,7 @@ export namespace Prisma {
     employeeId: number
     startDate: number
     endDate: number
-    status: number
+    approvalStatus: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -35368,7 +35368,7 @@ export namespace Prisma {
     employeeId?: true
     startDate?: true
     endDate?: true
-    status?: true
+    approvalStatus?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -35378,7 +35378,7 @@ export namespace Prisma {
     employeeId?: true
     startDate?: true
     endDate?: true
-    status?: true
+    approvalStatus?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -35388,7 +35388,7 @@ export namespace Prisma {
     employeeId?: true
     startDate?: true
     endDate?: true
-    status?: true
+    approvalStatus?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -35471,7 +35471,7 @@ export namespace Prisma {
     employeeId: string
     startDate: Date
     endDate: Date
-    status: $Enums.TaskPlannerStatus
+    approvalStatus: $Enums.ApprovalStatus
     createdAt: Date
     updatedAt: Date
     _count: TaskPlannerCountAggregateOutputType | null
@@ -35498,7 +35498,7 @@ export namespace Prisma {
     employeeId?: boolean
     startDate?: boolean
     endDate?: boolean
-    status?: boolean
+    approvalStatus?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     employee?: boolean | EmployeeDefaultArgs<ExtArgs>
@@ -35513,7 +35513,7 @@ export namespace Prisma {
     employeeId?: boolean
     startDate?: boolean
     endDate?: boolean
-    status?: boolean
+    approvalStatus?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     employee?: boolean | EmployeeDefaultArgs<ExtArgs>
@@ -35524,7 +35524,7 @@ export namespace Prisma {
     employeeId?: boolean
     startDate?: boolean
     endDate?: boolean
-    status?: boolean
+    approvalStatus?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     employee?: boolean | EmployeeDefaultArgs<ExtArgs>
@@ -35535,12 +35535,12 @@ export namespace Prisma {
     employeeId?: boolean
     startDate?: boolean
     endDate?: boolean
-    status?: boolean
+    approvalStatus?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type TaskPlannerOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "employeeId" | "startDate" | "endDate" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["taskPlanner"]>
+  export type TaskPlannerOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "employeeId" | "startDate" | "endDate" | "approvalStatus" | "createdAt" | "updatedAt", ExtArgs["result"]["taskPlanner"]>
   export type TaskPlannerInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     employee?: boolean | EmployeeDefaultArgs<ExtArgs>
     doctorTasks?: boolean | TaskPlanner$doctorTasksArgs<ExtArgs>
@@ -35568,7 +35568,7 @@ export namespace Prisma {
       employeeId: string
       startDate: Date
       endDate: Date
-      status: $Enums.TaskPlannerStatus
+      approvalStatus: $Enums.ApprovalStatus
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["taskPlanner"]>
@@ -36002,7 +36002,7 @@ export namespace Prisma {
     readonly employeeId: FieldRef<"TaskPlanner", 'String'>
     readonly startDate: FieldRef<"TaskPlanner", 'DateTime'>
     readonly endDate: FieldRef<"TaskPlanner", 'DateTime'>
-    readonly status: FieldRef<"TaskPlanner", 'TaskPlannerStatus'>
+    readonly approvalStatus: FieldRef<"TaskPlanner", 'ApprovalStatus'>
     readonly createdAt: FieldRef<"TaskPlanner", 'DateTime'>
     readonly updatedAt: FieldRef<"TaskPlanner", 'DateTime'>
   }
@@ -36509,7 +36509,8 @@ export namespace Prisma {
     taskDate: Date | null
     startTime: Date | null
     endTime: Date | null
-    taskStatus: $Enums.TaskStatus | null
+    completionStatus: $Enums.CompletionStatus | null
+    approvalStatus: $Enums.ApprovalStatus | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -36522,7 +36523,8 @@ export namespace Prisma {
     taskDate: Date | null
     startTime: Date | null
     endTime: Date | null
-    taskStatus: $Enums.TaskStatus | null
+    completionStatus: $Enums.CompletionStatus | null
+    approvalStatus: $Enums.ApprovalStatus | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -36535,7 +36537,8 @@ export namespace Prisma {
     taskDate: number
     startTime: number
     endTime: number
-    taskStatus: number
+    completionStatus: number
+    approvalStatus: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -36550,7 +36553,8 @@ export namespace Prisma {
     taskDate?: true
     startTime?: true
     endTime?: true
-    taskStatus?: true
+    completionStatus?: true
+    approvalStatus?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -36563,7 +36567,8 @@ export namespace Prisma {
     taskDate?: true
     startTime?: true
     endTime?: true
-    taskStatus?: true
+    completionStatus?: true
+    approvalStatus?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -36576,7 +36581,8 @@ export namespace Prisma {
     taskDate?: true
     startTime?: true
     endTime?: true
-    taskStatus?: true
+    completionStatus?: true
+    approvalStatus?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -36662,7 +36668,8 @@ export namespace Prisma {
     taskDate: Date
     startTime: Date
     endTime: Date
-    taskStatus: $Enums.TaskStatus
+    completionStatus: $Enums.CompletionStatus
+    approvalStatus: $Enums.ApprovalStatus
     createdAt: Date
     updatedAt: Date
     _count: DoctorTaskCountAggregateOutputType | null
@@ -36692,7 +36699,8 @@ export namespace Prisma {
     taskDate?: boolean
     startTime?: boolean
     endTime?: boolean
-    taskStatus?: boolean
+    completionStatus?: boolean
+    approvalStatus?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     planner?: boolean | TaskPlannerDefaultArgs<ExtArgs>
@@ -36710,7 +36718,8 @@ export namespace Prisma {
     taskDate?: boolean
     startTime?: boolean
     endTime?: boolean
-    taskStatus?: boolean
+    completionStatus?: boolean
+    approvalStatus?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     planner?: boolean | TaskPlannerDefaultArgs<ExtArgs>
@@ -36726,7 +36735,8 @@ export namespace Prisma {
     taskDate?: boolean
     startTime?: boolean
     endTime?: boolean
-    taskStatus?: boolean
+    completionStatus?: boolean
+    approvalStatus?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     planner?: boolean | TaskPlannerDefaultArgs<ExtArgs>
@@ -36742,12 +36752,13 @@ export namespace Prisma {
     taskDate?: boolean
     startTime?: boolean
     endTime?: boolean
-    taskStatus?: boolean
+    completionStatus?: boolean
+    approvalStatus?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type DoctorTaskOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "plannerId" | "employeeId" | "doctorId" | "taskDate" | "startTime" | "endTime" | "taskStatus" | "createdAt" | "updatedAt", ExtArgs["result"]["doctorTask"]>
+  export type DoctorTaskOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "plannerId" | "employeeId" | "doctorId" | "taskDate" | "startTime" | "endTime" | "completionStatus" | "approvalStatus" | "createdAt" | "updatedAt", ExtArgs["result"]["doctorTask"]>
   export type DoctorTaskInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     planner?: boolean | TaskPlannerDefaultArgs<ExtArgs>
     employee?: boolean | EmployeeDefaultArgs<ExtArgs>
@@ -36782,7 +36793,8 @@ export namespace Prisma {
       taskDate: Date
       startTime: Date
       endTime: Date
-      taskStatus: $Enums.TaskStatus
+      completionStatus: $Enums.CompletionStatus
+      approvalStatus: $Enums.ApprovalStatus
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["doctorTask"]>
@@ -37219,7 +37231,8 @@ export namespace Prisma {
     readonly taskDate: FieldRef<"DoctorTask", 'DateTime'>
     readonly startTime: FieldRef<"DoctorTask", 'DateTime'>
     readonly endTime: FieldRef<"DoctorTask", 'DateTime'>
-    readonly taskStatus: FieldRef<"DoctorTask", 'TaskStatus'>
+    readonly completionStatus: FieldRef<"DoctorTask", 'CompletionStatus'>
+    readonly approvalStatus: FieldRef<"DoctorTask", 'ApprovalStatus'>
     readonly createdAt: FieldRef<"DoctorTask", 'DateTime'>
     readonly updatedAt: FieldRef<"DoctorTask", 'DateTime'>
   }
@@ -37678,7 +37691,8 @@ export namespace Prisma {
     taskDate: Date | null
     startTime: Date | null
     endTime: Date | null
-    taskStatus: $Enums.TaskStatus | null
+    completionStatus: $Enums.CompletionStatus | null
+    approvalStatus: $Enums.ApprovalStatus | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -37691,7 +37705,8 @@ export namespace Prisma {
     taskDate: Date | null
     startTime: Date | null
     endTime: Date | null
-    taskStatus: $Enums.TaskStatus | null
+    completionStatus: $Enums.CompletionStatus | null
+    approvalStatus: $Enums.ApprovalStatus | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -37704,7 +37719,8 @@ export namespace Prisma {
     taskDate: number
     startTime: number
     endTime: number
-    taskStatus: number
+    completionStatus: number
+    approvalStatus: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -37719,7 +37735,8 @@ export namespace Prisma {
     taskDate?: true
     startTime?: true
     endTime?: true
-    taskStatus?: true
+    completionStatus?: true
+    approvalStatus?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -37732,7 +37749,8 @@ export namespace Prisma {
     taskDate?: true
     startTime?: true
     endTime?: true
-    taskStatus?: true
+    completionStatus?: true
+    approvalStatus?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -37745,7 +37763,8 @@ export namespace Prisma {
     taskDate?: true
     startTime?: true
     endTime?: true
-    taskStatus?: true
+    completionStatus?: true
+    approvalStatus?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -37831,7 +37850,8 @@ export namespace Prisma {
     taskDate: Date
     startTime: Date
     endTime: Date
-    taskStatus: $Enums.TaskStatus
+    completionStatus: $Enums.CompletionStatus
+    approvalStatus: $Enums.ApprovalStatus
     createdAt: Date
     updatedAt: Date
     _count: ChemistTaskCountAggregateOutputType | null
@@ -37861,7 +37881,8 @@ export namespace Prisma {
     taskDate?: boolean
     startTime?: boolean
     endTime?: boolean
-    taskStatus?: boolean
+    completionStatus?: boolean
+    approvalStatus?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     planner?: boolean | TaskPlannerDefaultArgs<ExtArgs>
@@ -37879,7 +37900,8 @@ export namespace Prisma {
     taskDate?: boolean
     startTime?: boolean
     endTime?: boolean
-    taskStatus?: boolean
+    completionStatus?: boolean
+    approvalStatus?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     planner?: boolean | TaskPlannerDefaultArgs<ExtArgs>
@@ -37895,7 +37917,8 @@ export namespace Prisma {
     taskDate?: boolean
     startTime?: boolean
     endTime?: boolean
-    taskStatus?: boolean
+    completionStatus?: boolean
+    approvalStatus?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     planner?: boolean | TaskPlannerDefaultArgs<ExtArgs>
@@ -37911,12 +37934,13 @@ export namespace Prisma {
     taskDate?: boolean
     startTime?: boolean
     endTime?: boolean
-    taskStatus?: boolean
+    completionStatus?: boolean
+    approvalStatus?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type ChemistTaskOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "plannerId" | "employeeId" | "chemistId" | "taskDate" | "startTime" | "endTime" | "taskStatus" | "createdAt" | "updatedAt", ExtArgs["result"]["chemistTask"]>
+  export type ChemistTaskOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "plannerId" | "employeeId" | "chemistId" | "taskDate" | "startTime" | "endTime" | "completionStatus" | "approvalStatus" | "createdAt" | "updatedAt", ExtArgs["result"]["chemistTask"]>
   export type ChemistTaskInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     planner?: boolean | TaskPlannerDefaultArgs<ExtArgs>
     employee?: boolean | EmployeeDefaultArgs<ExtArgs>
@@ -37951,7 +37975,8 @@ export namespace Prisma {
       taskDate: Date
       startTime: Date
       endTime: Date
-      taskStatus: $Enums.TaskStatus
+      completionStatus: $Enums.CompletionStatus
+      approvalStatus: $Enums.ApprovalStatus
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["chemistTask"]>
@@ -38388,7 +38413,8 @@ export namespace Prisma {
     readonly taskDate: FieldRef<"ChemistTask", 'DateTime'>
     readonly startTime: FieldRef<"ChemistTask", 'DateTime'>
     readonly endTime: FieldRef<"ChemistTask", 'DateTime'>
-    readonly taskStatus: FieldRef<"ChemistTask", 'TaskStatus'>
+    readonly completionStatus: FieldRef<"ChemistTask", 'CompletionStatus'>
+    readonly approvalStatus: FieldRef<"ChemistTask", 'ApprovalStatus'>
     readonly createdAt: FieldRef<"ChemistTask", 'DateTime'>
     readonly updatedAt: FieldRef<"ChemistTask", 'DateTime'>
   }
@@ -38848,7 +38874,8 @@ export namespace Prisma {
     taskDate: Date | null
     startTime: Date | null
     endTime: Date | null
-    taskStatus: $Enums.TaskStatus | null
+    completionStatus: $Enums.CompletionStatus | null
+    approvalStatus: $Enums.ApprovalStatus | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -38862,7 +38889,8 @@ export namespace Prisma {
     taskDate: Date | null
     startTime: Date | null
     endTime: Date | null
-    taskStatus: $Enums.TaskStatus | null
+    completionStatus: $Enums.CompletionStatus | null
+    approvalStatus: $Enums.ApprovalStatus | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -38876,7 +38904,8 @@ export namespace Prisma {
     taskDate: number
     startTime: number
     endTime: number
-    taskStatus: number
+    completionStatus: number
+    approvalStatus: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -38892,7 +38921,8 @@ export namespace Prisma {
     taskDate?: true
     startTime?: true
     endTime?: true
-    taskStatus?: true
+    completionStatus?: true
+    approvalStatus?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -38906,7 +38936,8 @@ export namespace Prisma {
     taskDate?: true
     startTime?: true
     endTime?: true
-    taskStatus?: true
+    completionStatus?: true
+    approvalStatus?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -38920,7 +38951,8 @@ export namespace Prisma {
     taskDate?: true
     startTime?: true
     endTime?: true
-    taskStatus?: true
+    completionStatus?: true
+    approvalStatus?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -39007,7 +39039,8 @@ export namespace Prisma {
     taskDate: Date
     startTime: Date
     endTime: Date
-    taskStatus: $Enums.TaskStatus
+    completionStatus: $Enums.CompletionStatus
+    approvalStatus: $Enums.ApprovalStatus
     createdAt: Date
     updatedAt: Date
     _count: TourPlanTaskCountAggregateOutputType | null
@@ -39038,7 +39071,8 @@ export namespace Prisma {
     taskDate?: boolean
     startTime?: boolean
     endTime?: boolean
-    taskStatus?: boolean
+    completionStatus?: boolean
+    approvalStatus?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     planner?: boolean | TaskPlannerDefaultArgs<ExtArgs>
@@ -39057,7 +39091,8 @@ export namespace Prisma {
     taskDate?: boolean
     startTime?: boolean
     endTime?: boolean
-    taskStatus?: boolean
+    completionStatus?: boolean
+    approvalStatus?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     planner?: boolean | TaskPlannerDefaultArgs<ExtArgs>
@@ -39074,7 +39109,8 @@ export namespace Prisma {
     taskDate?: boolean
     startTime?: boolean
     endTime?: boolean
-    taskStatus?: boolean
+    completionStatus?: boolean
+    approvalStatus?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     planner?: boolean | TaskPlannerDefaultArgs<ExtArgs>
@@ -39091,12 +39127,13 @@ export namespace Prisma {
     taskDate?: boolean
     startTime?: boolean
     endTime?: boolean
-    taskStatus?: boolean
+    completionStatus?: boolean
+    approvalStatus?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type TourPlanTaskOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "plannerId" | "employeeId" | "tourPlanId" | "location" | "taskDate" | "startTime" | "endTime" | "taskStatus" | "createdAt" | "updatedAt", ExtArgs["result"]["tourPlanTask"]>
+  export type TourPlanTaskOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "plannerId" | "employeeId" | "tourPlanId" | "location" | "taskDate" | "startTime" | "endTime" | "completionStatus" | "approvalStatus" | "createdAt" | "updatedAt", ExtArgs["result"]["tourPlanTask"]>
   export type TourPlanTaskInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     planner?: boolean | TaskPlannerDefaultArgs<ExtArgs>
     employee?: boolean | EmployeeDefaultArgs<ExtArgs>
@@ -39132,7 +39169,8 @@ export namespace Prisma {
       taskDate: Date
       startTime: Date
       endTime: Date
-      taskStatus: $Enums.TaskStatus
+      completionStatus: $Enums.CompletionStatus
+      approvalStatus: $Enums.ApprovalStatus
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["tourPlanTask"]>
@@ -39570,7 +39608,8 @@ export namespace Prisma {
     readonly taskDate: FieldRef<"TourPlanTask", 'DateTime'>
     readonly startTime: FieldRef<"TourPlanTask", 'DateTime'>
     readonly endTime: FieldRef<"TourPlanTask", 'DateTime'>
-    readonly taskStatus: FieldRef<"TourPlanTask", 'TaskStatus'>
+    readonly completionStatus: FieldRef<"TourPlanTask", 'CompletionStatus'>
+    readonly approvalStatus: FieldRef<"TourPlanTask", 'ApprovalStatus'>
     readonly createdAt: FieldRef<"TourPlanTask", 'DateTime'>
     readonly updatedAt: FieldRef<"TourPlanTask", 'DateTime'>
   }
@@ -54203,7 +54242,7 @@ export namespace Prisma {
     employeeId: 'employeeId',
     startDate: 'startDate',
     endDate: 'endDate',
-    status: 'status',
+    approvalStatus: 'approvalStatus',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -54219,7 +54258,8 @@ export namespace Prisma {
     taskDate: 'taskDate',
     startTime: 'startTime',
     endTime: 'endTime',
-    taskStatus: 'taskStatus',
+    completionStatus: 'completionStatus',
+    approvalStatus: 'approvalStatus',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -54235,7 +54275,8 @@ export namespace Prisma {
     taskDate: 'taskDate',
     startTime: 'startTime',
     endTime: 'endTime',
-    taskStatus: 'taskStatus',
+    completionStatus: 'completionStatus',
+    approvalStatus: 'approvalStatus',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -54252,7 +54293,8 @@ export namespace Prisma {
     taskDate: 'taskDate',
     startTime: 'startTime',
     endTime: 'endTime',
-    taskStatus: 'taskStatus',
+    completionStatus: 'completionStatus',
+    approvalStatus: 'approvalStatus',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -54677,30 +54719,30 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'TaskPlannerStatus'
+   * Reference to a field of type 'ApprovalStatus'
    */
-  export type EnumTaskPlannerStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TaskPlannerStatus'>
+  export type EnumApprovalStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ApprovalStatus'>
     
 
 
   /**
-   * Reference to a field of type 'TaskPlannerStatus[]'
+   * Reference to a field of type 'ApprovalStatus[]'
    */
-  export type ListEnumTaskPlannerStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TaskPlannerStatus[]'>
+  export type ListEnumApprovalStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ApprovalStatus[]'>
     
 
 
   /**
-   * Reference to a field of type 'TaskStatus'
+   * Reference to a field of type 'CompletionStatus'
    */
-  export type EnumTaskStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TaskStatus'>
+  export type EnumCompletionStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CompletionStatus'>
     
 
 
   /**
-   * Reference to a field of type 'TaskStatus[]'
+   * Reference to a field of type 'CompletionStatus[]'
    */
-  export type ListEnumTaskStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TaskStatus[]'>
+  export type ListEnumCompletionStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CompletionStatus[]'>
     
 
 
@@ -57016,7 +57058,7 @@ export namespace Prisma {
     employeeId?: StringFilter<"TaskPlanner"> | string
     startDate?: DateTimeFilter<"TaskPlanner"> | Date | string
     endDate?: DateTimeFilter<"TaskPlanner"> | Date | string
-    status?: EnumTaskPlannerStatusFilter<"TaskPlanner"> | $Enums.TaskPlannerStatus
+    approvalStatus?: EnumApprovalStatusFilter<"TaskPlanner"> | $Enums.ApprovalStatus
     createdAt?: DateTimeFilter<"TaskPlanner"> | Date | string
     updatedAt?: DateTimeFilter<"TaskPlanner"> | Date | string
     employee?: XOR<EmployeeScalarRelationFilter, EmployeeWhereInput>
@@ -57030,7 +57072,7 @@ export namespace Prisma {
     employeeId?: SortOrder
     startDate?: SortOrder
     endDate?: SortOrder
-    status?: SortOrder
+    approvalStatus?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     employee?: EmployeeOrderByWithRelationInput
@@ -57047,7 +57089,7 @@ export namespace Prisma {
     employeeId?: StringFilter<"TaskPlanner"> | string
     startDate?: DateTimeFilter<"TaskPlanner"> | Date | string
     endDate?: DateTimeFilter<"TaskPlanner"> | Date | string
-    status?: EnumTaskPlannerStatusFilter<"TaskPlanner"> | $Enums.TaskPlannerStatus
+    approvalStatus?: EnumApprovalStatusFilter<"TaskPlanner"> | $Enums.ApprovalStatus
     createdAt?: DateTimeFilter<"TaskPlanner"> | Date | string
     updatedAt?: DateTimeFilter<"TaskPlanner"> | Date | string
     employee?: XOR<EmployeeScalarRelationFilter, EmployeeWhereInput>
@@ -57061,7 +57103,7 @@ export namespace Prisma {
     employeeId?: SortOrder
     startDate?: SortOrder
     endDate?: SortOrder
-    status?: SortOrder
+    approvalStatus?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: TaskPlannerCountOrderByAggregateInput
@@ -57077,7 +57119,7 @@ export namespace Prisma {
     employeeId?: StringWithAggregatesFilter<"TaskPlanner"> | string
     startDate?: DateTimeWithAggregatesFilter<"TaskPlanner"> | Date | string
     endDate?: DateTimeWithAggregatesFilter<"TaskPlanner"> | Date | string
-    status?: EnumTaskPlannerStatusWithAggregatesFilter<"TaskPlanner"> | $Enums.TaskPlannerStatus
+    approvalStatus?: EnumApprovalStatusWithAggregatesFilter<"TaskPlanner"> | $Enums.ApprovalStatus
     createdAt?: DateTimeWithAggregatesFilter<"TaskPlanner"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"TaskPlanner"> | Date | string
   }
@@ -57093,7 +57135,8 @@ export namespace Prisma {
     taskDate?: DateTimeFilter<"DoctorTask"> | Date | string
     startTime?: DateTimeFilter<"DoctorTask"> | Date | string
     endTime?: DateTimeFilter<"DoctorTask"> | Date | string
-    taskStatus?: EnumTaskStatusFilter<"DoctorTask"> | $Enums.TaskStatus
+    completionStatus?: EnumCompletionStatusFilter<"DoctorTask"> | $Enums.CompletionStatus
+    approvalStatus?: EnumApprovalStatusFilter<"DoctorTask"> | $Enums.ApprovalStatus
     createdAt?: DateTimeFilter<"DoctorTask"> | Date | string
     updatedAt?: DateTimeFilter<"DoctorTask"> | Date | string
     planner?: XOR<TaskPlannerScalarRelationFilter, TaskPlannerWhereInput>
@@ -57110,7 +57153,8 @@ export namespace Prisma {
     taskDate?: SortOrder
     startTime?: SortOrder
     endTime?: SortOrder
-    taskStatus?: SortOrder
+    completionStatus?: SortOrder
+    approvalStatus?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     planner?: TaskPlannerOrderByWithRelationInput
@@ -57130,7 +57174,8 @@ export namespace Prisma {
     taskDate?: DateTimeFilter<"DoctorTask"> | Date | string
     startTime?: DateTimeFilter<"DoctorTask"> | Date | string
     endTime?: DateTimeFilter<"DoctorTask"> | Date | string
-    taskStatus?: EnumTaskStatusFilter<"DoctorTask"> | $Enums.TaskStatus
+    completionStatus?: EnumCompletionStatusFilter<"DoctorTask"> | $Enums.CompletionStatus
+    approvalStatus?: EnumApprovalStatusFilter<"DoctorTask"> | $Enums.ApprovalStatus
     createdAt?: DateTimeFilter<"DoctorTask"> | Date | string
     updatedAt?: DateTimeFilter<"DoctorTask"> | Date | string
     planner?: XOR<TaskPlannerScalarRelationFilter, TaskPlannerWhereInput>
@@ -57147,7 +57192,8 @@ export namespace Prisma {
     taskDate?: SortOrder
     startTime?: SortOrder
     endTime?: SortOrder
-    taskStatus?: SortOrder
+    completionStatus?: SortOrder
+    approvalStatus?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: DoctorTaskCountOrderByAggregateInput
@@ -57166,7 +57212,8 @@ export namespace Prisma {
     taskDate?: DateTimeWithAggregatesFilter<"DoctorTask"> | Date | string
     startTime?: DateTimeWithAggregatesFilter<"DoctorTask"> | Date | string
     endTime?: DateTimeWithAggregatesFilter<"DoctorTask"> | Date | string
-    taskStatus?: EnumTaskStatusWithAggregatesFilter<"DoctorTask"> | $Enums.TaskStatus
+    completionStatus?: EnumCompletionStatusWithAggregatesFilter<"DoctorTask"> | $Enums.CompletionStatus
+    approvalStatus?: EnumApprovalStatusWithAggregatesFilter<"DoctorTask"> | $Enums.ApprovalStatus
     createdAt?: DateTimeWithAggregatesFilter<"DoctorTask"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"DoctorTask"> | Date | string
   }
@@ -57182,7 +57229,8 @@ export namespace Prisma {
     taskDate?: DateTimeFilter<"ChemistTask"> | Date | string
     startTime?: DateTimeFilter<"ChemistTask"> | Date | string
     endTime?: DateTimeFilter<"ChemistTask"> | Date | string
-    taskStatus?: EnumTaskStatusFilter<"ChemistTask"> | $Enums.TaskStatus
+    completionStatus?: EnumCompletionStatusFilter<"ChemistTask"> | $Enums.CompletionStatus
+    approvalStatus?: EnumApprovalStatusFilter<"ChemistTask"> | $Enums.ApprovalStatus
     createdAt?: DateTimeFilter<"ChemistTask"> | Date | string
     updatedAt?: DateTimeFilter<"ChemistTask"> | Date | string
     planner?: XOR<TaskPlannerScalarRelationFilter, TaskPlannerWhereInput>
@@ -57199,7 +57247,8 @@ export namespace Prisma {
     taskDate?: SortOrder
     startTime?: SortOrder
     endTime?: SortOrder
-    taskStatus?: SortOrder
+    completionStatus?: SortOrder
+    approvalStatus?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     planner?: TaskPlannerOrderByWithRelationInput
@@ -57219,7 +57268,8 @@ export namespace Prisma {
     taskDate?: DateTimeFilter<"ChemistTask"> | Date | string
     startTime?: DateTimeFilter<"ChemistTask"> | Date | string
     endTime?: DateTimeFilter<"ChemistTask"> | Date | string
-    taskStatus?: EnumTaskStatusFilter<"ChemistTask"> | $Enums.TaskStatus
+    completionStatus?: EnumCompletionStatusFilter<"ChemistTask"> | $Enums.CompletionStatus
+    approvalStatus?: EnumApprovalStatusFilter<"ChemistTask"> | $Enums.ApprovalStatus
     createdAt?: DateTimeFilter<"ChemistTask"> | Date | string
     updatedAt?: DateTimeFilter<"ChemistTask"> | Date | string
     planner?: XOR<TaskPlannerScalarRelationFilter, TaskPlannerWhereInput>
@@ -57236,7 +57286,8 @@ export namespace Prisma {
     taskDate?: SortOrder
     startTime?: SortOrder
     endTime?: SortOrder
-    taskStatus?: SortOrder
+    completionStatus?: SortOrder
+    approvalStatus?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: ChemistTaskCountOrderByAggregateInput
@@ -57255,7 +57306,8 @@ export namespace Prisma {
     taskDate?: DateTimeWithAggregatesFilter<"ChemistTask"> | Date | string
     startTime?: DateTimeWithAggregatesFilter<"ChemistTask"> | Date | string
     endTime?: DateTimeWithAggregatesFilter<"ChemistTask"> | Date | string
-    taskStatus?: EnumTaskStatusWithAggregatesFilter<"ChemistTask"> | $Enums.TaskStatus
+    completionStatus?: EnumCompletionStatusWithAggregatesFilter<"ChemistTask"> | $Enums.CompletionStatus
+    approvalStatus?: EnumApprovalStatusWithAggregatesFilter<"ChemistTask"> | $Enums.ApprovalStatus
     createdAt?: DateTimeWithAggregatesFilter<"ChemistTask"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"ChemistTask"> | Date | string
   }
@@ -57272,7 +57324,8 @@ export namespace Prisma {
     taskDate?: DateTimeFilter<"TourPlanTask"> | Date | string
     startTime?: DateTimeFilter<"TourPlanTask"> | Date | string
     endTime?: DateTimeFilter<"TourPlanTask"> | Date | string
-    taskStatus?: EnumTaskStatusFilter<"TourPlanTask"> | $Enums.TaskStatus
+    completionStatus?: EnumCompletionStatusFilter<"TourPlanTask"> | $Enums.CompletionStatus
+    approvalStatus?: EnumApprovalStatusFilter<"TourPlanTask"> | $Enums.ApprovalStatus
     createdAt?: DateTimeFilter<"TourPlanTask"> | Date | string
     updatedAt?: DateTimeFilter<"TourPlanTask"> | Date | string
     planner?: XOR<TaskPlannerScalarRelationFilter, TaskPlannerWhereInput>
@@ -57290,7 +57343,8 @@ export namespace Prisma {
     taskDate?: SortOrder
     startTime?: SortOrder
     endTime?: SortOrder
-    taskStatus?: SortOrder
+    completionStatus?: SortOrder
+    approvalStatus?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     planner?: TaskPlannerOrderByWithRelationInput
@@ -57311,7 +57365,8 @@ export namespace Prisma {
     taskDate?: DateTimeFilter<"TourPlanTask"> | Date | string
     startTime?: DateTimeFilter<"TourPlanTask"> | Date | string
     endTime?: DateTimeFilter<"TourPlanTask"> | Date | string
-    taskStatus?: EnumTaskStatusFilter<"TourPlanTask"> | $Enums.TaskStatus
+    completionStatus?: EnumCompletionStatusFilter<"TourPlanTask"> | $Enums.CompletionStatus
+    approvalStatus?: EnumApprovalStatusFilter<"TourPlanTask"> | $Enums.ApprovalStatus
     createdAt?: DateTimeFilter<"TourPlanTask"> | Date | string
     updatedAt?: DateTimeFilter<"TourPlanTask"> | Date | string
     planner?: XOR<TaskPlannerScalarRelationFilter, TaskPlannerWhereInput>
@@ -57329,7 +57384,8 @@ export namespace Prisma {
     taskDate?: SortOrder
     startTime?: SortOrder
     endTime?: SortOrder
-    taskStatus?: SortOrder
+    completionStatus?: SortOrder
+    approvalStatus?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: TourPlanTaskCountOrderByAggregateInput
@@ -57349,7 +57405,8 @@ export namespace Prisma {
     taskDate?: DateTimeWithAggregatesFilter<"TourPlanTask"> | Date | string
     startTime?: DateTimeWithAggregatesFilter<"TourPlanTask"> | Date | string
     endTime?: DateTimeWithAggregatesFilter<"TourPlanTask"> | Date | string
-    taskStatus?: EnumTaskStatusWithAggregatesFilter<"TourPlanTask"> | $Enums.TaskStatus
+    completionStatus?: EnumCompletionStatusWithAggregatesFilter<"TourPlanTask"> | $Enums.CompletionStatus
+    approvalStatus?: EnumApprovalStatusWithAggregatesFilter<"TourPlanTask"> | $Enums.ApprovalStatus
     createdAt?: DateTimeWithAggregatesFilter<"TourPlanTask"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"TourPlanTask"> | Date | string
   }
@@ -60806,7 +60863,7 @@ export namespace Prisma {
     id?: string
     startDate: Date | string
     endDate: Date | string
-    status?: $Enums.TaskPlannerStatus
+    approvalStatus?: $Enums.ApprovalStatus
     createdAt?: Date | string
     updatedAt?: Date | string
     employee: EmployeeCreateNestedOneWithoutTaskPlansInput
@@ -60820,7 +60877,7 @@ export namespace Prisma {
     employeeId: string
     startDate: Date | string
     endDate: Date | string
-    status?: $Enums.TaskPlannerStatus
+    approvalStatus?: $Enums.ApprovalStatus
     createdAt?: Date | string
     updatedAt?: Date | string
     doctorTasks?: DoctorTaskUncheckedCreateNestedManyWithoutPlannerInput
@@ -60832,7 +60889,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    status?: EnumTaskPlannerStatusFieldUpdateOperationsInput | $Enums.TaskPlannerStatus
+    approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     employee?: EmployeeUpdateOneRequiredWithoutTaskPlansNestedInput
@@ -60846,7 +60903,7 @@ export namespace Prisma {
     employeeId?: StringFieldUpdateOperationsInput | string
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    status?: EnumTaskPlannerStatusFieldUpdateOperationsInput | $Enums.TaskPlannerStatus
+    approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     doctorTasks?: DoctorTaskUncheckedUpdateManyWithoutPlannerNestedInput
@@ -60859,7 +60916,7 @@ export namespace Prisma {
     employeeId: string
     startDate: Date | string
     endDate: Date | string
-    status?: $Enums.TaskPlannerStatus
+    approvalStatus?: $Enums.ApprovalStatus
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -60868,7 +60925,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    status?: EnumTaskPlannerStatusFieldUpdateOperationsInput | $Enums.TaskPlannerStatus
+    approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -60878,7 +60935,7 @@ export namespace Prisma {
     employeeId?: StringFieldUpdateOperationsInput | string
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    status?: EnumTaskPlannerStatusFieldUpdateOperationsInput | $Enums.TaskPlannerStatus
+    approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -60888,7 +60945,8 @@ export namespace Prisma {
     taskDate: Date | string
     startTime: Date | string
     endTime: Date | string
-    taskStatus?: $Enums.TaskStatus
+    completionStatus?: $Enums.CompletionStatus
+    approvalStatus?: $Enums.ApprovalStatus
     createdAt?: Date | string
     updatedAt?: Date | string
     planner: TaskPlannerCreateNestedOneWithoutDoctorTasksInput
@@ -60905,7 +60963,8 @@ export namespace Prisma {
     taskDate: Date | string
     startTime: Date | string
     endTime: Date | string
-    taskStatus?: $Enums.TaskStatus
+    completionStatus?: $Enums.CompletionStatus
+    approvalStatus?: $Enums.ApprovalStatus
     createdAt?: Date | string
     updatedAt?: Date | string
     doctorInteractions?: DoctorInteractionUncheckedCreateNestedManyWithoutDoctorTaskInput
@@ -60916,7 +60975,8 @@ export namespace Prisma {
     taskDate?: DateTimeFieldUpdateOperationsInput | Date | string
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    taskStatus?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
+    completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
+    approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     planner?: TaskPlannerUpdateOneRequiredWithoutDoctorTasksNestedInput
@@ -60933,7 +60993,8 @@ export namespace Prisma {
     taskDate?: DateTimeFieldUpdateOperationsInput | Date | string
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    taskStatus?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
+    completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
+    approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     doctorInteractions?: DoctorInteractionUncheckedUpdateManyWithoutDoctorTaskNestedInput
@@ -60947,7 +61008,8 @@ export namespace Prisma {
     taskDate: Date | string
     startTime: Date | string
     endTime: Date | string
-    taskStatus?: $Enums.TaskStatus
+    completionStatus?: $Enums.CompletionStatus
+    approvalStatus?: $Enums.ApprovalStatus
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -60957,7 +61019,8 @@ export namespace Prisma {
     taskDate?: DateTimeFieldUpdateOperationsInput | Date | string
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    taskStatus?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
+    completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
+    approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -60970,7 +61033,8 @@ export namespace Prisma {
     taskDate?: DateTimeFieldUpdateOperationsInput | Date | string
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    taskStatus?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
+    completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
+    approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -60980,7 +61044,8 @@ export namespace Prisma {
     taskDate: Date | string
     startTime: Date | string
     endTime: Date | string
-    taskStatus?: $Enums.TaskStatus
+    completionStatus?: $Enums.CompletionStatus
+    approvalStatus?: $Enums.ApprovalStatus
     createdAt?: Date | string
     updatedAt?: Date | string
     planner: TaskPlannerCreateNestedOneWithoutChemistTasksInput
@@ -60997,7 +61062,8 @@ export namespace Prisma {
     taskDate: Date | string
     startTime: Date | string
     endTime: Date | string
-    taskStatus?: $Enums.TaskStatus
+    completionStatus?: $Enums.CompletionStatus
+    approvalStatus?: $Enums.ApprovalStatus
     createdAt?: Date | string
     updatedAt?: Date | string
     chemistInteractions?: ChemistInteractionUncheckedCreateNestedManyWithoutChemistTaskInput
@@ -61008,7 +61074,8 @@ export namespace Prisma {
     taskDate?: DateTimeFieldUpdateOperationsInput | Date | string
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    taskStatus?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
+    completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
+    approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     planner?: TaskPlannerUpdateOneRequiredWithoutChemistTasksNestedInput
@@ -61025,7 +61092,8 @@ export namespace Prisma {
     taskDate?: DateTimeFieldUpdateOperationsInput | Date | string
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    taskStatus?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
+    completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
+    approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     chemistInteractions?: ChemistInteractionUncheckedUpdateManyWithoutChemistTaskNestedInput
@@ -61039,7 +61107,8 @@ export namespace Prisma {
     taskDate: Date | string
     startTime: Date | string
     endTime: Date | string
-    taskStatus?: $Enums.TaskStatus
+    completionStatus?: $Enums.CompletionStatus
+    approvalStatus?: $Enums.ApprovalStatus
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -61049,7 +61118,8 @@ export namespace Prisma {
     taskDate?: DateTimeFieldUpdateOperationsInput | Date | string
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    taskStatus?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
+    completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
+    approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -61062,7 +61132,8 @@ export namespace Prisma {
     taskDate?: DateTimeFieldUpdateOperationsInput | Date | string
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    taskStatus?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
+    completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
+    approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -61073,7 +61144,8 @@ export namespace Prisma {
     taskDate: Date | string
     startTime: Date | string
     endTime: Date | string
-    taskStatus?: $Enums.TaskStatus
+    completionStatus?: $Enums.CompletionStatus
+    approvalStatus?: $Enums.ApprovalStatus
     createdAt?: Date | string
     updatedAt?: Date | string
     planner: TaskPlannerCreateNestedOneWithoutTourPlanTasksInput
@@ -61091,7 +61163,8 @@ export namespace Prisma {
     taskDate: Date | string
     startTime: Date | string
     endTime: Date | string
-    taskStatus?: $Enums.TaskStatus
+    completionStatus?: $Enums.CompletionStatus
+    approvalStatus?: $Enums.ApprovalStatus
     createdAt?: Date | string
     updatedAt?: Date | string
     tourPlanReports?: TourPlanReportUncheckedCreateNestedManyWithoutTourTaskInput
@@ -61103,7 +61176,8 @@ export namespace Prisma {
     taskDate?: DateTimeFieldUpdateOperationsInput | Date | string
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    taskStatus?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
+    completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
+    approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     planner?: TaskPlannerUpdateOneRequiredWithoutTourPlanTasksNestedInput
@@ -61121,7 +61195,8 @@ export namespace Prisma {
     taskDate?: DateTimeFieldUpdateOperationsInput | Date | string
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    taskStatus?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
+    completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
+    approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tourPlanReports?: TourPlanReportUncheckedUpdateManyWithoutTourTaskNestedInput
@@ -61136,7 +61211,8 @@ export namespace Prisma {
     taskDate: Date | string
     startTime: Date | string
     endTime: Date | string
-    taskStatus?: $Enums.TaskStatus
+    completionStatus?: $Enums.CompletionStatus
+    approvalStatus?: $Enums.ApprovalStatus
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -61147,7 +61223,8 @@ export namespace Prisma {
     taskDate?: DateTimeFieldUpdateOperationsInput | Date | string
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    taskStatus?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
+    completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
+    approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -61161,7 +61238,8 @@ export namespace Prisma {
     taskDate?: DateTimeFieldUpdateOperationsInput | Date | string
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    taskStatus?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
+    completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
+    approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -64104,11 +64182,11 @@ export namespace Prisma {
     checkOutLongitude?: SortOrder
   }
 
-  export type EnumTaskPlannerStatusFilter<$PrismaModel = never> = {
-    equals?: $Enums.TaskPlannerStatus | EnumTaskPlannerStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.TaskPlannerStatus[] | ListEnumTaskPlannerStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.TaskPlannerStatus[] | ListEnumTaskPlannerStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumTaskPlannerStatusFilter<$PrismaModel> | $Enums.TaskPlannerStatus
+  export type EnumApprovalStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.ApprovalStatus | EnumApprovalStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.ApprovalStatus[] | ListEnumApprovalStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ApprovalStatus[] | ListEnumApprovalStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumApprovalStatusFilter<$PrismaModel> | $Enums.ApprovalStatus
   }
 
   export type TaskPlannerCountOrderByAggregateInput = {
@@ -64116,7 +64194,7 @@ export namespace Prisma {
     employeeId?: SortOrder
     startDate?: SortOrder
     endDate?: SortOrder
-    status?: SortOrder
+    approvalStatus?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -64126,7 +64204,7 @@ export namespace Prisma {
     employeeId?: SortOrder
     startDate?: SortOrder
     endDate?: SortOrder
-    status?: SortOrder
+    approvalStatus?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -64136,26 +64214,26 @@ export namespace Prisma {
     employeeId?: SortOrder
     startDate?: SortOrder
     endDate?: SortOrder
-    status?: SortOrder
+    approvalStatus?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
-  export type EnumTaskPlannerStatusWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.TaskPlannerStatus | EnumTaskPlannerStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.TaskPlannerStatus[] | ListEnumTaskPlannerStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.TaskPlannerStatus[] | ListEnumTaskPlannerStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumTaskPlannerStatusWithAggregatesFilter<$PrismaModel> | $Enums.TaskPlannerStatus
+  export type EnumApprovalStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ApprovalStatus | EnumApprovalStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.ApprovalStatus[] | ListEnumApprovalStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ApprovalStatus[] | ListEnumApprovalStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumApprovalStatusWithAggregatesFilter<$PrismaModel> | $Enums.ApprovalStatus
     _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumTaskPlannerStatusFilter<$PrismaModel>
-    _max?: NestedEnumTaskPlannerStatusFilter<$PrismaModel>
+    _min?: NestedEnumApprovalStatusFilter<$PrismaModel>
+    _max?: NestedEnumApprovalStatusFilter<$PrismaModel>
   }
 
-  export type EnumTaskStatusFilter<$PrismaModel = never> = {
-    equals?: $Enums.TaskStatus | EnumTaskStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.TaskStatus[] | ListEnumTaskStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.TaskStatus[] | ListEnumTaskStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumTaskStatusFilter<$PrismaModel> | $Enums.TaskStatus
+  export type EnumCompletionStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.CompletionStatus | EnumCompletionStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.CompletionStatus[] | ListEnumCompletionStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.CompletionStatus[] | ListEnumCompletionStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumCompletionStatusFilter<$PrismaModel> | $Enums.CompletionStatus
   }
 
   export type TaskPlannerScalarRelationFilter = {
@@ -64171,7 +64249,8 @@ export namespace Prisma {
     taskDate?: SortOrder
     startTime?: SortOrder
     endTime?: SortOrder
-    taskStatus?: SortOrder
+    completionStatus?: SortOrder
+    approvalStatus?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -64184,7 +64263,8 @@ export namespace Prisma {
     taskDate?: SortOrder
     startTime?: SortOrder
     endTime?: SortOrder
-    taskStatus?: SortOrder
+    completionStatus?: SortOrder
+    approvalStatus?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -64197,19 +64277,20 @@ export namespace Prisma {
     taskDate?: SortOrder
     startTime?: SortOrder
     endTime?: SortOrder
-    taskStatus?: SortOrder
+    completionStatus?: SortOrder
+    approvalStatus?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
-  export type EnumTaskStatusWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.TaskStatus | EnumTaskStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.TaskStatus[] | ListEnumTaskStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.TaskStatus[] | ListEnumTaskStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumTaskStatusWithAggregatesFilter<$PrismaModel> | $Enums.TaskStatus
+  export type EnumCompletionStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.CompletionStatus | EnumCompletionStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.CompletionStatus[] | ListEnumCompletionStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.CompletionStatus[] | ListEnumCompletionStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumCompletionStatusWithAggregatesFilter<$PrismaModel> | $Enums.CompletionStatus
     _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumTaskStatusFilter<$PrismaModel>
-    _max?: NestedEnumTaskStatusFilter<$PrismaModel>
+    _min?: NestedEnumCompletionStatusFilter<$PrismaModel>
+    _max?: NestedEnumCompletionStatusFilter<$PrismaModel>
   }
 
   export type ChemistTaskCountOrderByAggregateInput = {
@@ -64220,7 +64301,8 @@ export namespace Prisma {
     taskDate?: SortOrder
     startTime?: SortOrder
     endTime?: SortOrder
-    taskStatus?: SortOrder
+    completionStatus?: SortOrder
+    approvalStatus?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -64233,7 +64315,8 @@ export namespace Prisma {
     taskDate?: SortOrder
     startTime?: SortOrder
     endTime?: SortOrder
-    taskStatus?: SortOrder
+    completionStatus?: SortOrder
+    approvalStatus?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -64246,7 +64329,8 @@ export namespace Prisma {
     taskDate?: SortOrder
     startTime?: SortOrder
     endTime?: SortOrder
-    taskStatus?: SortOrder
+    completionStatus?: SortOrder
+    approvalStatus?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -64275,7 +64359,8 @@ export namespace Prisma {
     taskDate?: SortOrder
     startTime?: SortOrder
     endTime?: SortOrder
-    taskStatus?: SortOrder
+    completionStatus?: SortOrder
+    approvalStatus?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -64289,7 +64374,8 @@ export namespace Prisma {
     taskDate?: SortOrder
     startTime?: SortOrder
     endTime?: SortOrder
-    taskStatus?: SortOrder
+    completionStatus?: SortOrder
+    approvalStatus?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -64303,7 +64389,8 @@ export namespace Prisma {
     taskDate?: SortOrder
     startTime?: SortOrder
     endTime?: SortOrder
-    taskStatus?: SortOrder
+    completionStatus?: SortOrder
+    approvalStatus?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -67965,8 +68052,8 @@ export namespace Prisma {
     connect?: TourPlanTaskWhereUniqueInput | TourPlanTaskWhereUniqueInput[]
   }
 
-  export type EnumTaskPlannerStatusFieldUpdateOperationsInput = {
-    set?: $Enums.TaskPlannerStatus
+  export type EnumApprovalStatusFieldUpdateOperationsInput = {
+    set?: $Enums.ApprovalStatus
   }
 
   export type EmployeeUpdateOneRequiredWithoutTaskPlansNestedInput = {
@@ -68093,8 +68180,8 @@ export namespace Prisma {
     connect?: DoctorInteractionWhereUniqueInput | DoctorInteractionWhereUniqueInput[]
   }
 
-  export type EnumTaskStatusFieldUpdateOperationsInput = {
-    set?: $Enums.TaskStatus
+  export type EnumCompletionStatusFieldUpdateOperationsInput = {
+    set?: $Enums.CompletionStatus
   }
 
   export type TaskPlannerUpdateOneRequiredWithoutDoctorTasksNestedInput = {
@@ -69439,38 +69526,38 @@ export namespace Prisma {
     _max?: NestedEnumReportingPeriodFilter<$PrismaModel>
   }
 
-  export type NestedEnumTaskPlannerStatusFilter<$PrismaModel = never> = {
-    equals?: $Enums.TaskPlannerStatus | EnumTaskPlannerStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.TaskPlannerStatus[] | ListEnumTaskPlannerStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.TaskPlannerStatus[] | ListEnumTaskPlannerStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumTaskPlannerStatusFilter<$PrismaModel> | $Enums.TaskPlannerStatus
+  export type NestedEnumApprovalStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.ApprovalStatus | EnumApprovalStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.ApprovalStatus[] | ListEnumApprovalStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ApprovalStatus[] | ListEnumApprovalStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumApprovalStatusFilter<$PrismaModel> | $Enums.ApprovalStatus
   }
 
-  export type NestedEnumTaskPlannerStatusWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.TaskPlannerStatus | EnumTaskPlannerStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.TaskPlannerStatus[] | ListEnumTaskPlannerStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.TaskPlannerStatus[] | ListEnumTaskPlannerStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumTaskPlannerStatusWithAggregatesFilter<$PrismaModel> | $Enums.TaskPlannerStatus
+  export type NestedEnumApprovalStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ApprovalStatus | EnumApprovalStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.ApprovalStatus[] | ListEnumApprovalStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ApprovalStatus[] | ListEnumApprovalStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumApprovalStatusWithAggregatesFilter<$PrismaModel> | $Enums.ApprovalStatus
     _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumTaskPlannerStatusFilter<$PrismaModel>
-    _max?: NestedEnumTaskPlannerStatusFilter<$PrismaModel>
+    _min?: NestedEnumApprovalStatusFilter<$PrismaModel>
+    _max?: NestedEnumApprovalStatusFilter<$PrismaModel>
   }
 
-  export type NestedEnumTaskStatusFilter<$PrismaModel = never> = {
-    equals?: $Enums.TaskStatus | EnumTaskStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.TaskStatus[] | ListEnumTaskStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.TaskStatus[] | ListEnumTaskStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumTaskStatusFilter<$PrismaModel> | $Enums.TaskStatus
+  export type NestedEnumCompletionStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.CompletionStatus | EnumCompletionStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.CompletionStatus[] | ListEnumCompletionStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.CompletionStatus[] | ListEnumCompletionStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumCompletionStatusFilter<$PrismaModel> | $Enums.CompletionStatus
   }
 
-  export type NestedEnumTaskStatusWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.TaskStatus | EnumTaskStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.TaskStatus[] | ListEnumTaskStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.TaskStatus[] | ListEnumTaskStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumTaskStatusWithAggregatesFilter<$PrismaModel> | $Enums.TaskStatus
+  export type NestedEnumCompletionStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.CompletionStatus | EnumCompletionStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.CompletionStatus[] | ListEnumCompletionStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.CompletionStatus[] | ListEnumCompletionStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumCompletionStatusWithAggregatesFilter<$PrismaModel> | $Enums.CompletionStatus
     _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumTaskStatusFilter<$PrismaModel>
-    _max?: NestedEnumTaskStatusFilter<$PrismaModel>
+    _min?: NestedEnumCompletionStatusFilter<$PrismaModel>
+    _max?: NestedEnumCompletionStatusFilter<$PrismaModel>
   }
   export type NestedJsonFilter<$PrismaModel = never> =
     | PatchUndefined<
@@ -70560,7 +70647,7 @@ export namespace Prisma {
     id?: string
     startDate: Date | string
     endDate: Date | string
-    status?: $Enums.TaskPlannerStatus
+    approvalStatus?: $Enums.ApprovalStatus
     createdAt?: Date | string
     updatedAt?: Date | string
     doctorTasks?: DoctorTaskCreateNestedManyWithoutPlannerInput
@@ -70572,7 +70659,7 @@ export namespace Prisma {
     id?: string
     startDate: Date | string
     endDate: Date | string
-    status?: $Enums.TaskPlannerStatus
+    approvalStatus?: $Enums.ApprovalStatus
     createdAt?: Date | string
     updatedAt?: Date | string
     doctorTasks?: DoctorTaskUncheckedCreateNestedManyWithoutPlannerInput
@@ -70595,7 +70682,8 @@ export namespace Prisma {
     taskDate: Date | string
     startTime: Date | string
     endTime: Date | string
-    taskStatus?: $Enums.TaskStatus
+    completionStatus?: $Enums.CompletionStatus
+    approvalStatus?: $Enums.ApprovalStatus
     createdAt?: Date | string
     updatedAt?: Date | string
     planner: TaskPlannerCreateNestedOneWithoutDoctorTasksInput
@@ -70610,7 +70698,8 @@ export namespace Prisma {
     taskDate: Date | string
     startTime: Date | string
     endTime: Date | string
-    taskStatus?: $Enums.TaskStatus
+    completionStatus?: $Enums.CompletionStatus
+    approvalStatus?: $Enums.ApprovalStatus
     createdAt?: Date | string
     updatedAt?: Date | string
     doctorInteractions?: DoctorInteractionUncheckedCreateNestedManyWithoutDoctorTaskInput
@@ -70631,7 +70720,8 @@ export namespace Prisma {
     taskDate: Date | string
     startTime: Date | string
     endTime: Date | string
-    taskStatus?: $Enums.TaskStatus
+    completionStatus?: $Enums.CompletionStatus
+    approvalStatus?: $Enums.ApprovalStatus
     createdAt?: Date | string
     updatedAt?: Date | string
     planner: TaskPlannerCreateNestedOneWithoutChemistTasksInput
@@ -70646,7 +70736,8 @@ export namespace Prisma {
     taskDate: Date | string
     startTime: Date | string
     endTime: Date | string
-    taskStatus?: $Enums.TaskStatus
+    completionStatus?: $Enums.CompletionStatus
+    approvalStatus?: $Enums.ApprovalStatus
     createdAt?: Date | string
     updatedAt?: Date | string
     chemistInteractions?: ChemistInteractionUncheckedCreateNestedManyWithoutChemistTaskInput
@@ -70668,7 +70759,8 @@ export namespace Prisma {
     taskDate: Date | string
     startTime: Date | string
     endTime: Date | string
-    taskStatus?: $Enums.TaskStatus
+    completionStatus?: $Enums.CompletionStatus
+    approvalStatus?: $Enums.ApprovalStatus
     createdAt?: Date | string
     updatedAt?: Date | string
     planner: TaskPlannerCreateNestedOneWithoutTourPlanTasksInput
@@ -70684,7 +70776,8 @@ export namespace Prisma {
     taskDate: Date | string
     startTime: Date | string
     endTime: Date | string
-    taskStatus?: $Enums.TaskStatus
+    completionStatus?: $Enums.CompletionStatus
+    approvalStatus?: $Enums.ApprovalStatus
     createdAt?: Date | string
     updatedAt?: Date | string
     tourPlanReports?: TourPlanReportUncheckedCreateNestedManyWithoutTourTaskInput
@@ -71596,7 +71689,7 @@ export namespace Prisma {
     employeeId?: StringFilter<"TaskPlanner"> | string
     startDate?: DateTimeFilter<"TaskPlanner"> | Date | string
     endDate?: DateTimeFilter<"TaskPlanner"> | Date | string
-    status?: EnumTaskPlannerStatusFilter<"TaskPlanner"> | $Enums.TaskPlannerStatus
+    approvalStatus?: EnumApprovalStatusFilter<"TaskPlanner"> | $Enums.ApprovalStatus
     createdAt?: DateTimeFilter<"TaskPlanner"> | Date | string
     updatedAt?: DateTimeFilter<"TaskPlanner"> | Date | string
   }
@@ -71628,7 +71721,8 @@ export namespace Prisma {
     taskDate?: DateTimeFilter<"DoctorTask"> | Date | string
     startTime?: DateTimeFilter<"DoctorTask"> | Date | string
     endTime?: DateTimeFilter<"DoctorTask"> | Date | string
-    taskStatus?: EnumTaskStatusFilter<"DoctorTask"> | $Enums.TaskStatus
+    completionStatus?: EnumCompletionStatusFilter<"DoctorTask"> | $Enums.CompletionStatus
+    approvalStatus?: EnumApprovalStatusFilter<"DoctorTask"> | $Enums.ApprovalStatus
     createdAt?: DateTimeFilter<"DoctorTask"> | Date | string
     updatedAt?: DateTimeFilter<"DoctorTask"> | Date | string
   }
@@ -71660,7 +71754,8 @@ export namespace Prisma {
     taskDate?: DateTimeFilter<"ChemistTask"> | Date | string
     startTime?: DateTimeFilter<"ChemistTask"> | Date | string
     endTime?: DateTimeFilter<"ChemistTask"> | Date | string
-    taskStatus?: EnumTaskStatusFilter<"ChemistTask"> | $Enums.TaskStatus
+    completionStatus?: EnumCompletionStatusFilter<"ChemistTask"> | $Enums.CompletionStatus
+    approvalStatus?: EnumApprovalStatusFilter<"ChemistTask"> | $Enums.ApprovalStatus
     createdAt?: DateTimeFilter<"ChemistTask"> | Date | string
     updatedAt?: DateTimeFilter<"ChemistTask"> | Date | string
   }
@@ -71693,7 +71788,8 @@ export namespace Prisma {
     taskDate?: DateTimeFilter<"TourPlanTask"> | Date | string
     startTime?: DateTimeFilter<"TourPlanTask"> | Date | string
     endTime?: DateTimeFilter<"TourPlanTask"> | Date | string
-    taskStatus?: EnumTaskStatusFilter<"TourPlanTask"> | $Enums.TaskStatus
+    completionStatus?: EnumCompletionStatusFilter<"TourPlanTask"> | $Enums.CompletionStatus
+    approvalStatus?: EnumApprovalStatusFilter<"TourPlanTask"> | $Enums.ApprovalStatus
     createdAt?: DateTimeFilter<"TourPlanTask"> | Date | string
     updatedAt?: DateTimeFilter<"TourPlanTask"> | Date | string
   }
@@ -73657,7 +73753,8 @@ export namespace Prisma {
     taskDate: Date | string
     startTime: Date | string
     endTime: Date | string
-    taskStatus?: $Enums.TaskStatus
+    completionStatus?: $Enums.CompletionStatus
+    approvalStatus?: $Enums.ApprovalStatus
     createdAt?: Date | string
     updatedAt?: Date | string
     planner: TaskPlannerCreateNestedOneWithoutDoctorTasksInput
@@ -73672,7 +73769,8 @@ export namespace Prisma {
     taskDate: Date | string
     startTime: Date | string
     endTime: Date | string
-    taskStatus?: $Enums.TaskStatus
+    completionStatus?: $Enums.CompletionStatus
+    approvalStatus?: $Enums.ApprovalStatus
     createdAt?: Date | string
     updatedAt?: Date | string
     doctorInteractions?: DoctorInteractionUncheckedCreateNestedManyWithoutDoctorTaskInput
@@ -74895,7 +74993,8 @@ export namespace Prisma {
     taskDate: Date | string
     startTime: Date | string
     endTime: Date | string
-    taskStatus?: $Enums.TaskStatus
+    completionStatus?: $Enums.CompletionStatus
+    approvalStatus?: $Enums.ApprovalStatus
     createdAt?: Date | string
     updatedAt?: Date | string
     planner: TaskPlannerCreateNestedOneWithoutDoctorTasksInput
@@ -74911,7 +75010,8 @@ export namespace Prisma {
     taskDate: Date | string
     startTime: Date | string
     endTime: Date | string
-    taskStatus?: $Enums.TaskStatus
+    completionStatus?: $Enums.CompletionStatus
+    approvalStatus?: $Enums.ApprovalStatus
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -75178,7 +75278,8 @@ export namespace Prisma {
     taskDate?: DateTimeFieldUpdateOperationsInput | Date | string
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    taskStatus?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
+    completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
+    approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     planner?: TaskPlannerUpdateOneRequiredWithoutDoctorTasksNestedInput
@@ -75194,7 +75295,8 @@ export namespace Prisma {
     taskDate?: DateTimeFieldUpdateOperationsInput | Date | string
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    taskStatus?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
+    completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
+    approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -75971,7 +76073,8 @@ export namespace Prisma {
     taskDate: Date | string
     startTime: Date | string
     endTime: Date | string
-    taskStatus?: $Enums.TaskStatus
+    completionStatus?: $Enums.CompletionStatus
+    approvalStatus?: $Enums.ApprovalStatus
     createdAt?: Date | string
     updatedAt?: Date | string
     planner: TaskPlannerCreateNestedOneWithoutChemistTasksInput
@@ -75986,7 +76089,8 @@ export namespace Prisma {
     taskDate: Date | string
     startTime: Date | string
     endTime: Date | string
-    taskStatus?: $Enums.TaskStatus
+    completionStatus?: $Enums.CompletionStatus
+    approvalStatus?: $Enums.ApprovalStatus
     createdAt?: Date | string
     updatedAt?: Date | string
     chemistInteractions?: ChemistInteractionUncheckedCreateNestedManyWithoutChemistTaskInput
@@ -76796,7 +76900,8 @@ export namespace Prisma {
     taskDate: Date | string
     startTime: Date | string
     endTime: Date | string
-    taskStatus?: $Enums.TaskStatus
+    completionStatus?: $Enums.CompletionStatus
+    approvalStatus?: $Enums.ApprovalStatus
     createdAt?: Date | string
     updatedAt?: Date | string
     planner: TaskPlannerCreateNestedOneWithoutChemistTasksInput
@@ -76812,7 +76917,8 @@ export namespace Prisma {
     taskDate: Date | string
     startTime: Date | string
     endTime: Date | string
-    taskStatus?: $Enums.TaskStatus
+    completionStatus?: $Enums.CompletionStatus
+    approvalStatus?: $Enums.ApprovalStatus
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -77016,7 +77122,8 @@ export namespace Prisma {
     taskDate?: DateTimeFieldUpdateOperationsInput | Date | string
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    taskStatus?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
+    completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
+    approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     planner?: TaskPlannerUpdateOneRequiredWithoutChemistTasksNestedInput
@@ -77032,7 +77139,8 @@ export namespace Prisma {
     taskDate?: DateTimeFieldUpdateOperationsInput | Date | string
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    taskStatus?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
+    completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
+    approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -79183,7 +79291,8 @@ export namespace Prisma {
     taskDate: Date | string
     startTime: Date | string
     endTime: Date | string
-    taskStatus?: $Enums.TaskStatus
+    completionStatus?: $Enums.CompletionStatus
+    approvalStatus?: $Enums.ApprovalStatus
     createdAt?: Date | string
     updatedAt?: Date | string
     employee: EmployeeCreateNestedOneWithoutDoctorTasksInput
@@ -79198,7 +79307,8 @@ export namespace Prisma {
     taskDate: Date | string
     startTime: Date | string
     endTime: Date | string
-    taskStatus?: $Enums.TaskStatus
+    completionStatus?: $Enums.CompletionStatus
+    approvalStatus?: $Enums.ApprovalStatus
     createdAt?: Date | string
     updatedAt?: Date | string
     doctorInteractions?: DoctorInteractionUncheckedCreateNestedManyWithoutDoctorTaskInput
@@ -79219,7 +79329,8 @@ export namespace Prisma {
     taskDate: Date | string
     startTime: Date | string
     endTime: Date | string
-    taskStatus?: $Enums.TaskStatus
+    completionStatus?: $Enums.CompletionStatus
+    approvalStatus?: $Enums.ApprovalStatus
     createdAt?: Date | string
     updatedAt?: Date | string
     employee: EmployeeCreateNestedOneWithoutChemistTasksInput
@@ -79234,7 +79345,8 @@ export namespace Prisma {
     taskDate: Date | string
     startTime: Date | string
     endTime: Date | string
-    taskStatus?: $Enums.TaskStatus
+    completionStatus?: $Enums.CompletionStatus
+    approvalStatus?: $Enums.ApprovalStatus
     createdAt?: Date | string
     updatedAt?: Date | string
     chemistInteractions?: ChemistInteractionUncheckedCreateNestedManyWithoutChemistTaskInput
@@ -79256,7 +79368,8 @@ export namespace Prisma {
     taskDate: Date | string
     startTime: Date | string
     endTime: Date | string
-    taskStatus?: $Enums.TaskStatus
+    completionStatus?: $Enums.CompletionStatus
+    approvalStatus?: $Enums.ApprovalStatus
     createdAt?: Date | string
     updatedAt?: Date | string
     employee: EmployeeCreateNestedOneWithoutTourPlanTasksInput
@@ -79272,7 +79385,8 @@ export namespace Prisma {
     taskDate: Date | string
     startTime: Date | string
     endTime: Date | string
-    taskStatus?: $Enums.TaskStatus
+    completionStatus?: $Enums.CompletionStatus
+    approvalStatus?: $Enums.ApprovalStatus
     createdAt?: Date | string
     updatedAt?: Date | string
     tourPlanReports?: TourPlanReportUncheckedCreateNestedManyWithoutTourTaskInput
@@ -79449,7 +79563,7 @@ export namespace Prisma {
     id?: string
     startDate: Date | string
     endDate: Date | string
-    status?: $Enums.TaskPlannerStatus
+    approvalStatus?: $Enums.ApprovalStatus
     createdAt?: Date | string
     updatedAt?: Date | string
     employee: EmployeeCreateNestedOneWithoutTaskPlansInput
@@ -79462,7 +79576,7 @@ export namespace Prisma {
     employeeId: string
     startDate: Date | string
     endDate: Date | string
-    status?: $Enums.TaskPlannerStatus
+    approvalStatus?: $Enums.ApprovalStatus
     createdAt?: Date | string
     updatedAt?: Date | string
     chemistTasks?: ChemistTaskUncheckedCreateNestedManyWithoutPlannerInput
@@ -79685,7 +79799,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    status?: EnumTaskPlannerStatusFieldUpdateOperationsInput | $Enums.TaskPlannerStatus
+    approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     employee?: EmployeeUpdateOneRequiredWithoutTaskPlansNestedInput
@@ -79698,7 +79812,7 @@ export namespace Prisma {
     employeeId?: StringFieldUpdateOperationsInput | string
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    status?: EnumTaskPlannerStatusFieldUpdateOperationsInput | $Enums.TaskPlannerStatus
+    approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     chemistTasks?: ChemistTaskUncheckedUpdateManyWithoutPlannerNestedInput
@@ -79891,7 +80005,7 @@ export namespace Prisma {
     id?: string
     startDate: Date | string
     endDate: Date | string
-    status?: $Enums.TaskPlannerStatus
+    approvalStatus?: $Enums.ApprovalStatus
     createdAt?: Date | string
     updatedAt?: Date | string
     employee: EmployeeCreateNestedOneWithoutTaskPlansInput
@@ -79904,7 +80018,7 @@ export namespace Prisma {
     employeeId: string
     startDate: Date | string
     endDate: Date | string
-    status?: $Enums.TaskPlannerStatus
+    approvalStatus?: $Enums.ApprovalStatus
     createdAt?: Date | string
     updatedAt?: Date | string
     doctorTasks?: DoctorTaskUncheckedCreateNestedManyWithoutPlannerInput
@@ -80135,7 +80249,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    status?: EnumTaskPlannerStatusFieldUpdateOperationsInput | $Enums.TaskPlannerStatus
+    approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     employee?: EmployeeUpdateOneRequiredWithoutTaskPlansNestedInput
@@ -80148,7 +80262,7 @@ export namespace Prisma {
     employeeId?: StringFieldUpdateOperationsInput | string
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    status?: EnumTaskPlannerStatusFieldUpdateOperationsInput | $Enums.TaskPlannerStatus
+    approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     doctorTasks?: DoctorTaskUncheckedUpdateManyWithoutPlannerNestedInput
@@ -80353,7 +80467,7 @@ export namespace Prisma {
     id?: string
     startDate: Date | string
     endDate: Date | string
-    status?: $Enums.TaskPlannerStatus
+    approvalStatus?: $Enums.ApprovalStatus
     createdAt?: Date | string
     updatedAt?: Date | string
     employee: EmployeeCreateNestedOneWithoutTaskPlansInput
@@ -80366,7 +80480,7 @@ export namespace Prisma {
     employeeId: string
     startDate: Date | string
     endDate: Date | string
-    status?: $Enums.TaskPlannerStatus
+    approvalStatus?: $Enums.ApprovalStatus
     createdAt?: Date | string
     updatedAt?: Date | string
     doctorTasks?: DoctorTaskUncheckedCreateNestedManyWithoutPlannerInput
@@ -80547,7 +80661,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    status?: EnumTaskPlannerStatusFieldUpdateOperationsInput | $Enums.TaskPlannerStatus
+    approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     employee?: EmployeeUpdateOneRequiredWithoutTaskPlansNestedInput
@@ -80560,7 +80674,7 @@ export namespace Prisma {
     employeeId?: StringFieldUpdateOperationsInput | string
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    status?: EnumTaskPlannerStatusFieldUpdateOperationsInput | $Enums.TaskPlannerStatus
+    approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     doctorTasks?: DoctorTaskUncheckedUpdateManyWithoutPlannerNestedInput
@@ -80739,7 +80853,8 @@ export namespace Prisma {
     taskDate: Date | string
     startTime: Date | string
     endTime: Date | string
-    taskStatus?: $Enums.TaskStatus
+    completionStatus?: $Enums.CompletionStatus
+    approvalStatus?: $Enums.ApprovalStatus
     createdAt?: Date | string
     updatedAt?: Date | string
     planner: TaskPlannerCreateNestedOneWithoutTourPlanTasksInput
@@ -80755,7 +80870,8 @@ export namespace Prisma {
     taskDate: Date | string
     startTime: Date | string
     endTime: Date | string
-    taskStatus?: $Enums.TaskStatus
+    completionStatus?: $Enums.CompletionStatus
+    approvalStatus?: $Enums.ApprovalStatus
     createdAt?: Date | string
     updatedAt?: Date | string
     tourPlanReports?: TourPlanReportUncheckedCreateNestedManyWithoutTourTaskInput
@@ -80793,7 +80909,8 @@ export namespace Prisma {
     taskDate: Date | string
     startTime: Date | string
     endTime: Date | string
-    taskStatus?: $Enums.TaskStatus
+    completionStatus?: $Enums.CompletionStatus
+    approvalStatus?: $Enums.ApprovalStatus
     createdAt?: Date | string
     updatedAt?: Date | string
     planner: TaskPlannerCreateNestedOneWithoutTourPlanTasksInput
@@ -80810,7 +80927,8 @@ export namespace Prisma {
     taskDate: Date | string
     startTime: Date | string
     endTime: Date | string
-    taskStatus?: $Enums.TaskStatus
+    completionStatus?: $Enums.CompletionStatus
+    approvalStatus?: $Enums.ApprovalStatus
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -80837,7 +80955,8 @@ export namespace Prisma {
     taskDate?: DateTimeFieldUpdateOperationsInput | Date | string
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    taskStatus?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
+    completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
+    approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     planner?: TaskPlannerUpdateOneRequiredWithoutTourPlanTasksNestedInput
@@ -80854,7 +80973,8 @@ export namespace Prisma {
     taskDate?: DateTimeFieldUpdateOperationsInput | Date | string
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    taskStatus?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
+    completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
+    approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -83994,7 +84114,7 @@ export namespace Prisma {
     id?: string
     startDate: Date | string
     endDate: Date | string
-    status?: $Enums.TaskPlannerStatus
+    approvalStatus?: $Enums.ApprovalStatus
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -84006,7 +84126,8 @@ export namespace Prisma {
     taskDate: Date | string
     startTime: Date | string
     endTime: Date | string
-    taskStatus?: $Enums.TaskStatus
+    completionStatus?: $Enums.CompletionStatus
+    approvalStatus?: $Enums.ApprovalStatus
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -84018,7 +84139,8 @@ export namespace Prisma {
     taskDate: Date | string
     startTime: Date | string
     endTime: Date | string
-    taskStatus?: $Enums.TaskStatus
+    completionStatus?: $Enums.CompletionStatus
+    approvalStatus?: $Enums.ApprovalStatus
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -84031,7 +84153,8 @@ export namespace Prisma {
     taskDate: Date | string
     startTime: Date | string
     endTime: Date | string
-    taskStatus?: $Enums.TaskStatus
+    completionStatus?: $Enums.CompletionStatus
+    approvalStatus?: $Enums.ApprovalStatus
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -84999,7 +85122,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    status?: EnumTaskPlannerStatusFieldUpdateOperationsInput | $Enums.TaskPlannerStatus
+    approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     doctorTasks?: DoctorTaskUpdateManyWithoutPlannerNestedInput
@@ -85011,7 +85134,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    status?: EnumTaskPlannerStatusFieldUpdateOperationsInput | $Enums.TaskPlannerStatus
+    approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     doctorTasks?: DoctorTaskUncheckedUpdateManyWithoutPlannerNestedInput
@@ -85023,7 +85146,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    status?: EnumTaskPlannerStatusFieldUpdateOperationsInput | $Enums.TaskPlannerStatus
+    approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -85033,7 +85156,8 @@ export namespace Prisma {
     taskDate?: DateTimeFieldUpdateOperationsInput | Date | string
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    taskStatus?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
+    completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
+    approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     planner?: TaskPlannerUpdateOneRequiredWithoutDoctorTasksNestedInput
@@ -85048,7 +85172,8 @@ export namespace Prisma {
     taskDate?: DateTimeFieldUpdateOperationsInput | Date | string
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    taskStatus?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
+    completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
+    approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     doctorInteractions?: DoctorInteractionUncheckedUpdateManyWithoutDoctorTaskNestedInput
@@ -85061,7 +85186,8 @@ export namespace Prisma {
     taskDate?: DateTimeFieldUpdateOperationsInput | Date | string
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    taskStatus?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
+    completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
+    approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -85071,7 +85197,8 @@ export namespace Prisma {
     taskDate?: DateTimeFieldUpdateOperationsInput | Date | string
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    taskStatus?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
+    completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
+    approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     planner?: TaskPlannerUpdateOneRequiredWithoutChemistTasksNestedInput
@@ -85086,7 +85213,8 @@ export namespace Prisma {
     taskDate?: DateTimeFieldUpdateOperationsInput | Date | string
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    taskStatus?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
+    completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
+    approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     chemistInteractions?: ChemistInteractionUncheckedUpdateManyWithoutChemistTaskNestedInput
@@ -85099,7 +85227,8 @@ export namespace Prisma {
     taskDate?: DateTimeFieldUpdateOperationsInput | Date | string
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    taskStatus?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
+    completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
+    approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -85110,7 +85239,8 @@ export namespace Prisma {
     taskDate?: DateTimeFieldUpdateOperationsInput | Date | string
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    taskStatus?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
+    completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
+    approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     planner?: TaskPlannerUpdateOneRequiredWithoutTourPlanTasksNestedInput
@@ -85126,7 +85256,8 @@ export namespace Prisma {
     taskDate?: DateTimeFieldUpdateOperationsInput | Date | string
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    taskStatus?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
+    completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
+    approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tourPlanReports?: TourPlanReportUncheckedUpdateManyWithoutTourTaskNestedInput
@@ -85140,7 +85271,8 @@ export namespace Prisma {
     taskDate?: DateTimeFieldUpdateOperationsInput | Date | string
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    taskStatus?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
+    completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
+    approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -85984,7 +86116,8 @@ export namespace Prisma {
     taskDate: Date | string
     startTime: Date | string
     endTime: Date | string
-    taskStatus?: $Enums.TaskStatus
+    completionStatus?: $Enums.CompletionStatus
+    approvalStatus?: $Enums.ApprovalStatus
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -86164,7 +86297,8 @@ export namespace Prisma {
     taskDate?: DateTimeFieldUpdateOperationsInput | Date | string
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    taskStatus?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
+    completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
+    approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     planner?: TaskPlannerUpdateOneRequiredWithoutDoctorTasksNestedInput
@@ -86179,7 +86313,8 @@ export namespace Prisma {
     taskDate?: DateTimeFieldUpdateOperationsInput | Date | string
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    taskStatus?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
+    completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
+    approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     doctorInteractions?: DoctorInteractionUncheckedUpdateManyWithoutDoctorTaskNestedInput
@@ -86192,7 +86327,8 @@ export namespace Prisma {
     taskDate?: DateTimeFieldUpdateOperationsInput | Date | string
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    taskStatus?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
+    completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
+    approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -86453,7 +86589,8 @@ export namespace Prisma {
     taskDate: Date | string
     startTime: Date | string
     endTime: Date | string
-    taskStatus?: $Enums.TaskStatus
+    completionStatus?: $Enums.CompletionStatus
+    approvalStatus?: $Enums.ApprovalStatus
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -86632,7 +86769,8 @@ export namespace Prisma {
     taskDate?: DateTimeFieldUpdateOperationsInput | Date | string
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    taskStatus?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
+    completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
+    approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     planner?: TaskPlannerUpdateOneRequiredWithoutChemistTasksNestedInput
@@ -86647,7 +86785,8 @@ export namespace Prisma {
     taskDate?: DateTimeFieldUpdateOperationsInput | Date | string
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    taskStatus?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
+    completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
+    approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     chemistInteractions?: ChemistInteractionUncheckedUpdateManyWithoutChemistTaskNestedInput
@@ -86660,7 +86799,8 @@ export namespace Prisma {
     taskDate?: DateTimeFieldUpdateOperationsInput | Date | string
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    taskStatus?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
+    completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
+    approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -86748,7 +86888,8 @@ export namespace Prisma {
     taskDate: Date | string
     startTime: Date | string
     endTime: Date | string
-    taskStatus?: $Enums.TaskStatus
+    completionStatus?: $Enums.CompletionStatus
+    approvalStatus?: $Enums.ApprovalStatus
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -86760,7 +86901,8 @@ export namespace Prisma {
     taskDate: Date | string
     startTime: Date | string
     endTime: Date | string
-    taskStatus?: $Enums.TaskStatus
+    completionStatus?: $Enums.CompletionStatus
+    approvalStatus?: $Enums.ApprovalStatus
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -86773,7 +86915,8 @@ export namespace Prisma {
     taskDate: Date | string
     startTime: Date | string
     endTime: Date | string
-    taskStatus?: $Enums.TaskStatus
+    completionStatus?: $Enums.CompletionStatus
+    approvalStatus?: $Enums.ApprovalStatus
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -86783,7 +86926,8 @@ export namespace Prisma {
     taskDate?: DateTimeFieldUpdateOperationsInput | Date | string
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    taskStatus?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
+    completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
+    approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     employee?: EmployeeUpdateOneRequiredWithoutDoctorTasksNestedInput
@@ -86798,7 +86942,8 @@ export namespace Prisma {
     taskDate?: DateTimeFieldUpdateOperationsInput | Date | string
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    taskStatus?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
+    completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
+    approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     doctorInteractions?: DoctorInteractionUncheckedUpdateManyWithoutDoctorTaskNestedInput
@@ -86811,7 +86956,8 @@ export namespace Prisma {
     taskDate?: DateTimeFieldUpdateOperationsInput | Date | string
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    taskStatus?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
+    completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
+    approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -86821,7 +86967,8 @@ export namespace Prisma {
     taskDate?: DateTimeFieldUpdateOperationsInput | Date | string
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    taskStatus?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
+    completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
+    approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     employee?: EmployeeUpdateOneRequiredWithoutChemistTasksNestedInput
@@ -86836,7 +86983,8 @@ export namespace Prisma {
     taskDate?: DateTimeFieldUpdateOperationsInput | Date | string
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    taskStatus?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
+    completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
+    approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     chemistInteractions?: ChemistInteractionUncheckedUpdateManyWithoutChemistTaskNestedInput
@@ -86849,7 +86997,8 @@ export namespace Prisma {
     taskDate?: DateTimeFieldUpdateOperationsInput | Date | string
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    taskStatus?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
+    completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
+    approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -86860,7 +87009,8 @@ export namespace Prisma {
     taskDate?: DateTimeFieldUpdateOperationsInput | Date | string
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    taskStatus?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
+    completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
+    approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     employee?: EmployeeUpdateOneRequiredWithoutTourPlanTasksNestedInput
@@ -86876,7 +87026,8 @@ export namespace Prisma {
     taskDate?: DateTimeFieldUpdateOperationsInput | Date | string
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    taskStatus?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
+    completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
+    approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tourPlanReports?: TourPlanReportUncheckedUpdateManyWithoutTourTaskNestedInput
@@ -86890,7 +87041,8 @@ export namespace Prisma {
     taskDate?: DateTimeFieldUpdateOperationsInput | Date | string
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    taskStatus?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
+    completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
+    approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -87061,7 +87213,8 @@ export namespace Prisma {
     taskDate: Date | string
     startTime: Date | string
     endTime: Date | string
-    taskStatus?: $Enums.TaskStatus
+    completionStatus?: $Enums.CompletionStatus
+    approvalStatus?: $Enums.ApprovalStatus
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -87072,7 +87225,8 @@ export namespace Prisma {
     taskDate?: DateTimeFieldUpdateOperationsInput | Date | string
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    taskStatus?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
+    completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
+    approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     planner?: TaskPlannerUpdateOneRequiredWithoutTourPlanTasksNestedInput
@@ -87088,7 +87242,8 @@ export namespace Prisma {
     taskDate?: DateTimeFieldUpdateOperationsInput | Date | string
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    taskStatus?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
+    completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
+    approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tourPlanReports?: TourPlanReportUncheckedUpdateManyWithoutTourTaskNestedInput
@@ -87102,7 +87257,8 @@ export namespace Prisma {
     taskDate?: DateTimeFieldUpdateOperationsInput | Date | string
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    taskStatus?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
+    completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
+    approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

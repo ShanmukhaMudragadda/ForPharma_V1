@@ -165,7 +165,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "C:\\Users\\prateek.nagar_forsys\\Desktop\\Company_repo_Projects\\10Aug\\forpharma_revamped\\backend\\generated\\prisma-shared",
+      "value": "C:\\Users\\ravi.meena_forsysinc\\pharma\\forpharma_revamped\\backend\\generated\\prisma-shared",
       "fromEnvVar": null
     },
     "config": {
@@ -179,11 +179,12 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "C:\\Users\\prateek.nagar_forsys\\Desktop\\Company_repo_Projects\\10Aug\\forpharma_revamped\\backend\\prisma-shared\\schema.prisma",
+    "sourceFilePath": "C:\\Users\\ravi.meena_forsysinc\\pharma\\forpharma_revamped\\backend\\prisma-shared\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": null
+    "rootEnvPath": null,
+    "schemaEnvPath": "../../.env"
   },
   "relativePath": "../../prisma-shared",
   "clientVersion": "6.12.0",
@@ -192,6 +193,7 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {

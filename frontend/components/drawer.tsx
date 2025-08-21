@@ -22,6 +22,8 @@ export default function Drawer({ isOpen, onClose }: DrawerProps) {
 
   const menuItems = [
     { icon: 'home-outline', label: 'Home', route: '/(tabs)/', color: '#0077B6' },
+    { icon: 'people-outline', label: 'Daily Planer', route: '/(tabs)/dailyPlaner/home', color: '#00B4D8' },
+    { icon: 'wallet-outline', label: 'Task Planer', route: '/(tabs)/dailyPlaner/taskPlanner', color: '#00B4D8' },
     { icon: 'people-outline', label: 'Doctors', route: '/(tabs)/doctors', color: '#00B4D8' },
     { icon: 'medical-outline', label: 'Chemists', route: '/(tabs)/chemists', color: '#28A745' },
     { icon: 'book-outline', label: 'Drugs', route: '/(tabs)/drugs', color: '#E83E8C' },
@@ -29,8 +31,6 @@ export default function Drawer({ isOpen, onClose }: DrawerProps) {
     { icon: 'analytics-outline', label: 'RCPA', route: '/(tabs)/rcpa', color: '#8E44AD' },
     { icon: 'document-text-outline', label: 'DCR', route: '/(tabs)/createDcr', color: '#FF6B35' },
     { icon: 'stats-chart-outline', label: 'Reports', route: '/(tabs)/reports', color: '#DC3545' },
-    { icon: 'calendar-outline', label: 'Tour Plan', route: '/(tabs)/tour-plan', color: '#6F42C1' },
-    { icon: 'wallet-outline', label: 'Expenses', route: '/(tabs)/expenses', color: '#17A2B8' },
   ];
 
   const handleNavigation = (route: string) => {
