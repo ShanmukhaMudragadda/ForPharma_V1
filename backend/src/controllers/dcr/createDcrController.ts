@@ -70,7 +70,7 @@ export const getTasksForDcr = async (req: AuthenticatedRequest, res: Response): 
         const doctorTasks = await req.tenantDb.doctorTask.findMany({
             where: {
                 employeeId: req.user?.employeeId,
-                taskStatus: {
+                completionStatus: {
                     in: ['COMPLETED', 'RESCHEDULED']
                 },
                 ...(existingDCRTaskIds.DOCTOR_TASK.length > 0 ? {
@@ -134,7 +134,7 @@ export const getTasksForDcr = async (req: AuthenticatedRequest, res: Response): 
         const chemistTasks = await req.tenantDb.chemistTask.findMany({
             where: {
                 employeeId: req.user?.employeeId,
-                taskStatus: {
+                completionStatus: {
                     in: ['COMPLETED', 'RESCHEDULED']
                 },
                 ...(existingDCRTaskIds.CHEMIST_TASK.length > 0 ? {
@@ -185,7 +185,7 @@ export const getTasksForDcr = async (req: AuthenticatedRequest, res: Response): 
         const tourPlanTasks = await req.tenantDb.tourPlanTask.findMany({
             where: {
                 employeeId: req.user?.employeeId,
-                taskStatus: {
+                completionStatus: {
                     in: ['COMPLETED', 'RESCHEDULED']
                 },
                 ...(existingDCRTaskIds.TOUR_PLAN_TASK.length > 0 ? {

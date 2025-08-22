@@ -411,14 +411,14 @@ async function seedTenantDatabase(organizationId: string, hashedPassword: string
                 organizationId: organizationId,
                 name: hosp.name,
                 type: getRandomElement(hospitalTypes),
-                address: faker.location.streetAddress(),
+                address: faker.location.streetAddress().substring(0, 200), // Limit to fit TEXT constraint
                 city: hosp.city,
                 state: 'Maharashtra',
                 pincode: faker.location.zipCode('######'),
                 latitude: hosp.city === 'Mumbai' ? 19.0760 : 18.5204,
                 longitude: hosp.city === 'Mumbai' ? 72.8777 : 73.8567,
-                phone: faker.phone.number('+91-##-#####'),
-                email: faker.internet.email(),
+                phone: faker.phone.number('+91-##-########').substring(0, 20), // Limit to 20 chars
+                email: faker.internet.email().substring(0, 255), // Limit to 255 chars
                 hospitalChainId: hosp.chainId,
                 territoryId: hosp.territory.id,
                 isActive: true
@@ -440,14 +440,14 @@ async function seedTenantDatabase(organizationId: string, hashedPassword: string
         const doctor = await tenantPrisma.doctor.create({
             data: {
                 organizationId: organizationId,
-                name: `Dr. ${faker.person.firstName()} ${faker.person.lastName()}`,
-                designation: faker.helpers.arrayElement(['Senior Consultant', 'Consultant', 'Junior Consultant']),
-                specialization: getRandomElement(specializations),
-                email: faker.internet.email(),
-                phone: faker.phone.number('+91-98#######'),
-                qualification: faker.helpers.arrayElement(['MBBS, MD', 'MBBS, MS', 'MBBS, DM']),
+                name: `Dr. ${faker.person.firstName()} ${faker.person.lastName()}`.substring(0, 255), // Limit to 255 chars
+                designation: faker.helpers.arrayElement(['Senior Consultant', 'Consultant', 'Junior Consultant']).substring(0, 255),
+                specialization: getRandomElement(specializations).substring(0, 255),
+                email: faker.internet.email().substring(0, 255),
+                phone: faker.phone.number('+91-98#######').substring(0, 20), // Limit to 20 chars
+                qualification: faker.helpers.arrayElement(['MBBS, MD', 'MBBS, MS', 'MBBS, DM']).substring(0, 255),
                 experienceYears: faker.number.int({ min: 2, max: 20 }),
-                description: faker.lorem.sentence(),
+                description: faker.lorem.sentence().substring(0, 500), // Limit description
                 createdById: adminEmployee.id,
                 isActive: true
             }
@@ -475,14 +475,14 @@ async function seedTenantDatabase(organizationId: string, hashedPassword: string
         const doctor = await tenantPrisma.doctor.create({
             data: {
                 organizationId: organizationId,
-                name: `Dr. ${faker.person.firstName()} ${faker.person.lastName()}`,
-                designation: faker.helpers.arrayElement(['Senior Consultant', 'Consultant', 'Junior Consultant']),
-                specialization: getRandomElement(specializations),
-                email: faker.internet.email(),
-                phone: faker.phone.number('+91-98#######'),
-                qualification: faker.helpers.arrayElement(['MBBS, MD', 'MBBS, MS', 'MBBS, DM']),
+                name: `Dr. ${faker.person.firstName()} ${faker.person.lastName()}`.substring(0, 255), // Limit to 255 chars
+                designation: faker.helpers.arrayElement(['Senior Consultant', 'Consultant', 'Junior Consultant']).substring(0, 255),
+                specialization: getRandomElement(specializations).substring(0, 255),
+                email: faker.internet.email().substring(0, 255),
+                phone: faker.phone.number('+91-98#######').substring(0, 20), // Limit to 20 chars
+                qualification: faker.helpers.arrayElement(['MBBS, MD', 'MBBS, MS', 'MBBS, DM']).substring(0, 255),
                 experienceYears: faker.number.int({ min: 2, max: 20 }),
-                description: faker.lorem.sentence(),
+                description: faker.lorem.sentence().substring(0, 500), // Limit description
                 createdById: adminEmployee.id,
                 isActive: true
             }
@@ -543,14 +543,14 @@ async function seedTenantDatabase(organizationId: string, hashedPassword: string
         const chemist = await tenantPrisma.chemist.create({
             data: {
                 organizationId: organizationId,
-                name: chem.name,
+                name: chem.name.substring(0, 255), // Limit to 255 chars
                 type: faker.helpers.arrayElement(['CHEMIST', 'STOCKIST']) as any,
-                email: faker.internet.email(),
-                phone: faker.phone.number('+91-##-#####'),
-                address: faker.location.streetAddress(),
+                email: faker.internet.email().substring(0, 255),
+                phone: faker.phone.number('+91-##-#####').substring(0, 20), // Limit to 20 chars
+                address: faker.location.streetAddress().substring(0, 200), // Limit address
                 city: chem.city,
                 state: 'Maharashtra',
-                pincode: faker.location.zipCode('######'),
+                pincode: faker.location.zipCode('######').substring(0, 10), // Limit to 10 chars
                 latitude: chem.city === 'Mumbai' ? 19.0760 : 18.5204,
                 longitude: chem.city === 'Mumbai' ? 72.8777 : 73.8567,
                 visitingHours: '9:00 AM - 9:00 PM',
@@ -576,14 +576,14 @@ async function seedTenantDatabase(organizationId: string, hashedPassword: string
         const createdDrug = await tenantPrisma.drug.create({
             data: {
                 organizationId: organizationId,
-                name: drug.name,
-                composition: drug.composition,
-                manufacturer: drug.manufacturer,
-                category: drug.category,
+                name: drug.name.substring(0, 255), // Limit to 255 chars
+                composition: drug.composition.substring(0, 500), // Limit TEXT field
+                manufacturer: drug.manufacturer.substring(0, 255),
+                category: drug.category.substring(0, 100), // Limit to 100 chars
                 price: faker.number.float({ min: 50, max: 500, multipleOf: 0.01 }),
-                indications: faker.lorem.sentence(),
-                sideEffects: faker.lorem.sentence(),
-                safetyAdvice: faker.lorem.sentence(),
+                indications: faker.lorem.sentence().substring(0, 500),
+                sideEffects: faker.lorem.sentence().substring(0, 500),
+                safetyAdvice: faker.lorem.sentence().substring(0, 500),
                 dosageForms: ['Tablet', 'Capsule', 'Syrup'],
                 schedule: faker.helpers.arrayElement(['H', 'H1', 'X', null]),
                 isAvailable: true,
@@ -602,8 +602,8 @@ async function seedTenantDatabase(organizationId: string, hashedPassword: string
     for (const giftInfo of giftData) {
         const gift = await tenantPrisma.gift.create({
             data: {
-                name: giftInfo.name,
-                description: giftInfo.description,
+                name: giftInfo.name.substring(0, 200), // Limit to 200 chars
+                description: giftInfo.description.substring(0, 500), // Limit TEXT field
                 unitCost: giftInfo.unitCost,
                 specifications: giftInfo.specifications,
                 giftImages: giftInfo.images,
@@ -783,8 +783,6 @@ async function seedTenantDatabase(organizationId: string, hashedPassword: string
 
     console.log(`✅ Created ${sampleDistributions.length} sample distributions (5 doctors, 3 chemists)`);
 
-    // Continue with rest of the existing seed logic...
-
     // Step 13: Create orders - 5 for each MR with their territory chemists
     console.log('\n📦 Creating orders...');
 
@@ -801,7 +799,7 @@ async function seedTenantDatabase(organizationId: string, hashedPassword: string
                 status: faker.helpers.arrayElement(['CONFIRMED', 'DRAFT']) as any,
                 orderDate: faker.date.recent({ days: 30 }),
                 deliveryDate: faker.date.soon({ days: 7 }),
-                specialInstructions: faker.lorem.sentence(),
+                specialInstructions: faker.lorem.sentence().substring(0, 500), // Limit TEXT field
                 createdById: mr1.id
             }
         });
@@ -848,7 +846,7 @@ async function seedTenantDatabase(organizationId: string, hashedPassword: string
                 status: faker.helpers.arrayElement(['CONFIRMED', 'DRAFT']) as any,
                 orderDate: faker.date.recent({ days: 30 }),
                 deliveryDate: faker.date.soon({ days: 7 }),
-                specialInstructions: faker.lorem.sentence(),
+                specialInstructions: faker.lorem.sentence().substring(0, 500), // Limit TEXT field
                 createdById: mr2.id
             }
         });
@@ -916,7 +914,7 @@ async function seedTenantDatabase(organizationId: string, hashedPassword: string
                 data: {
                     rcpaReportId: rcpaReport.id,
                     drugId: drug.id,
-                    competitorDrugName: faker.commerce.productName(),
+                    competitorDrugName: faker.commerce.productName().substring(0, 255), // Limit to 255 chars
                     ownQuantity: faker.number.int({ min: 10, max: 50 }),
                     competitorQuantity: faker.number.int({ min: 5, max: 40 }),
                     ownPackSize: '10 Tablets',
@@ -953,7 +951,7 @@ async function seedTenantDatabase(organizationId: string, hashedPassword: string
                 data: {
                     rcpaReportId: rcpaReport.id,
                     drugId: drug.id,
-                    competitorDrugName: faker.commerce.productName(),
+                    competitorDrugName: faker.commerce.productName().substring(0, 255), // Limit to 255 chars
                     ownQuantity: faker.number.int({ min: 10, max: 50 }),
                     competitorQuantity: faker.number.int({ min: 5, max: 40 }),
                     ownPackSize: '10 Tablets',
@@ -967,7 +965,7 @@ async function seedTenantDatabase(organizationId: string, hashedPassword: string
 
     console.log(`✅ Created ${rcpaReports.length} RCPA reports with drug data`);
 
-    // Step 15: Create Task Planners
+    // Step 15: Create Task Planners - UPDATED WITH NEW ENUMS
     console.log('\n📅 Creating task planners...');
 
     const startDate = new Date();
@@ -981,7 +979,7 @@ async function seedTenantDatabase(organizationId: string, hashedPassword: string
             employeeId: mr1.id,
             startDate: startDate,
             endDate: endDate,
-            status: 'APPROVED'
+            approvalStatus: 'APPROVED' // UPDATED: Using approvalStatus instead of status
         }
     });
 
@@ -991,7 +989,7 @@ async function seedTenantDatabase(organizationId: string, hashedPassword: string
             employeeId: mr2.id,
             startDate: startDate,
             endDate: endDate,
-            status: 'APPROVED'
+            approvalStatus: 'APPROVED' // UPDATED: Using approvalStatus instead of status
         }
     });
 
@@ -1014,7 +1012,7 @@ async function seedTenantDatabase(organizationId: string, hashedPassword: string
         }
     });
 
-    // Step 17: Create Doctor Tasks (10 for each MR with their territory doctors)
+    // Step 17: Create Doctor Tasks - UPDATED WITH NEW ENUMS
     console.log('\n👨‍⚕️ Creating doctor tasks...');
 
     const doctorTasks = [];
@@ -1032,7 +1030,8 @@ async function seedTenantDatabase(organizationId: string, hashedPassword: string
                 taskDate: taskDate,
                 startTime: new Date(`2024-01-01T10:00:00`),
                 endTime: new Date(`2024-01-01T10:30:00`),
-                taskStatus: faker.helpers.arrayElement(['PENDING', 'COMPLETED']) as any
+                completionStatus: faker.helpers.arrayElement(['PENDING', 'COMPLETED']) as any, // UPDATED
+                approvalStatus: 'APPROVED' as any // UPDATED: Added approvalStatus
             }
         });
         doctorTasks.push(doctorTask);
@@ -1051,7 +1050,8 @@ async function seedTenantDatabase(organizationId: string, hashedPassword: string
                 taskDate: taskDate,
                 startTime: new Date(`2024-01-01T11:00:00`),
                 endTime: new Date(`2024-01-01T11:30:00`),
-                taskStatus: faker.helpers.arrayElement(['PENDING', 'COMPLETED']) as any
+                completionStatus: faker.helpers.arrayElement(['PENDING', 'COMPLETED']) as any, // UPDATED
+                approvalStatus: 'APPROVED' as any // UPDATED: Added approvalStatus
             }
         });
         doctorTasks.push(doctorTask);
@@ -1059,7 +1059,7 @@ async function seedTenantDatabase(organizationId: string, hashedPassword: string
 
     console.log(`✅ Created ${doctorTasks.length} doctor tasks`);
 
-    // Step 18: Create Chemist Tasks (10 for each MR with their territory chemists)
+    // Step 18: Create Chemist Tasks - UPDATED WITH NEW ENUMS
     console.log('\n💊 Creating chemist tasks...');
 
     const chemistTasks = [];
@@ -1077,7 +1077,8 @@ async function seedTenantDatabase(organizationId: string, hashedPassword: string
                 taskDate: taskDate,
                 startTime: new Date(`2024-01-01T14:00:00`),
                 endTime: new Date(`2024-01-01T14:30:00`),
-                taskStatus: faker.helpers.arrayElement(['PENDING', 'COMPLETED']) as any
+                completionStatus: faker.helpers.arrayElement(['PENDING', 'COMPLETED']) as any, // UPDATED
+                approvalStatus: 'APPROVED' as any // UPDATED: Added approvalStatus
             }
         });
         chemistTasks.push(chemistTask);
@@ -1096,7 +1097,8 @@ async function seedTenantDatabase(organizationId: string, hashedPassword: string
                 taskDate: taskDate,
                 startTime: new Date(`2024-01-01T15:00:00`),
                 endTime: new Date(`2024-01-01T15:30:00`),
-                taskStatus: faker.helpers.arrayElement(['PENDING', 'COMPLETED']) as any
+                completionStatus: faker.helpers.arrayElement(['PENDING', 'COMPLETED']) as any, // UPDATED
+                approvalStatus: 'APPROVED' as any // UPDATED: Added approvalStatus
             }
         });
         chemistTasks.push(chemistTask);
@@ -1104,7 +1106,7 @@ async function seedTenantDatabase(organizationId: string, hashedPassword: string
 
     console.log(`✅ Created ${chemistTasks.length} chemist tasks`);
 
-    // Step 19: Create Tour Plan Tasks (10 for each MR)
+    // Step 19: Create Tour Plan Tasks - UPDATED WITH NEW ENUMS
     console.log('\n🗺️ Creating tour plan tasks...');
 
     const tourPlanTasks = [];
@@ -1122,7 +1124,8 @@ async function seedTenantDatabase(organizationId: string, hashedPassword: string
                 taskDate: taskDate,
                 startTime: new Date(`2024-01-01T09:00:00`),
                 endTime: new Date(`2024-01-01T18:00:00`),
-                taskStatus: faker.helpers.arrayElement(['PENDING', 'COMPLETED']) as any
+                completionStatus: faker.helpers.arrayElement(['PENDING', 'COMPLETED']) as any, // UPDATED
+                approvalStatus: 'APPROVED' as any // UPDATED: Added approvalStatus
             }
         });
         tourPlanTasks.push(tourTask);
@@ -1141,7 +1144,8 @@ async function seedTenantDatabase(organizationId: string, hashedPassword: string
                 taskDate: taskDate,
                 startTime: new Date(`2024-01-01T09:00:00`),
                 endTime: new Date(`2024-01-01T18:00:00`),
-                taskStatus: faker.helpers.arrayElement(['PENDING', 'COMPLETED']) as any
+                completionStatus: faker.helpers.arrayElement(['PENDING', 'COMPLETED']) as any, // UPDATED
+                approvalStatus: 'APPROVED' as any // UPDATED: Added approvalStatus
             }
         });
         tourPlanTasks.push(tourTask);
@@ -1149,13 +1153,13 @@ async function seedTenantDatabase(organizationId: string, hashedPassword: string
 
     console.log(`✅ Created ${tourPlanTasks.length} tour plan tasks`);
 
-    // Step 20: Create DCR Reports for completed tasks
+    // Step 20: Create DCR Reports for completed tasks - UPDATED FILTERING
     console.log('\n📝 Creating DCR reports...');
 
     const dcrReports = [];
 
-    // Create DCR for completed doctor tasks
-    const completedDoctorTasks = doctorTasks.filter(task => task.taskStatus === 'COMPLETED');
+    // Create DCR for completed doctor tasks - UPDATED FILTERING
+    const completedDoctorTasks = doctorTasks.filter(task => task.completionStatus === 'COMPLETED'); // UPDATED
     for (const task of completedDoctorTasks.slice(0, 5)) {
         const dcr = await tenantPrisma.dcrReport.create({
             data: {
@@ -1164,16 +1168,16 @@ async function seedTenantDatabase(organizationId: string, hashedPassword: string
                 taskId: task.id,
                 taskType: 'DOCTOR_TASK',
                 reportDate: task.taskDate,
-                productsDiscussed: drugs.slice(0, 3).map(d => d.name).join(', '),
-                comments: faker.lorem.paragraph(),
+                productsDiscussed: drugs.slice(0, 3).map(d => d.name).join(', ').substring(0, 500), // Limit TEXT
+                comments: faker.lorem.paragraph().substring(0, 500), // Limit TEXT
                 isDraft: false
             }
         });
         dcrReports.push(dcr);
     }
 
-    // Create DCR for completed chemist tasks
-    const completedChemistTasks = chemistTasks.filter(task => task.taskStatus === 'COMPLETED');
+    // Create DCR for completed chemist tasks - UPDATED FILTERING
+    const completedChemistTasks = chemistTasks.filter(task => task.completionStatus === 'COMPLETED'); // UPDATED
     for (const task of completedChemistTasks.slice(0, 5)) {
         const dcr = await tenantPrisma.dcrReport.create({
             data: {
@@ -1182,16 +1186,16 @@ async function seedTenantDatabase(organizationId: string, hashedPassword: string
                 taskId: task.id,
                 taskType: 'CHEMIST_TASK',
                 reportDate: task.taskDate,
-                productsDiscussed: drugs.slice(0, 3).map(d => d.name).join(', '),
-                comments: faker.lorem.paragraph(),
+                productsDiscussed: drugs.slice(0, 3).map(d => d.name).join(', ').substring(0, 500), // Limit TEXT
+                comments: faker.lorem.paragraph().substring(0, 500), // Limit TEXT
                 isDraft: false
             }
         });
         dcrReports.push(dcr);
     }
 
-    // Create DCR for completed tour plan tasks
-    const completedTourTasks = tourPlanTasks.filter(task => task.taskStatus === 'COMPLETED');
+    // Create DCR for completed tour plan tasks - UPDATED FILTERING
+    const completedTourTasks = tourPlanTasks.filter(task => task.completionStatus === 'COMPLETED'); // UPDATED
     for (const task of completedTourTasks.slice(0, 5)) {
         const dcr = await tenantPrisma.dcrReport.create({
             data: {
@@ -1200,8 +1204,8 @@ async function seedTenantDatabase(organizationId: string, hashedPassword: string
                 taskId: task.id,
                 taskType: 'TOUR_PLAN_TASK',
                 reportDate: task.taskDate,
-                productsDiscussed: drugs.slice(0, 3).map(d => d.name).join(', '),
-                comments: faker.lorem.paragraph(),
+                productsDiscussed: drugs.slice(0, 3).map(d => d.name).join(', ').substring(0, 500), // Limit TEXT
+                comments: faker.lorem.paragraph().substring(0, 500), // Limit TEXT
                 isDraft: false
             }
         });
@@ -1254,11 +1258,11 @@ async function seedTenantDatabase(organizationId: string, hashedPassword: string
     for (const task of completedDoctorTasks.slice(0, 5)) {
         const doctor = doctors.find(d => d.id === task.doctorId);
         const hospital = await tenantPrisma.doctorHospitalAssociation.findFirst({
-            where: { doctorId: doctor.id },
+            where: { doctorId: doctor?.id },
             include: { hospital: true }
         });
 
-        if (hospital) {
+        if (hospital && doctor) {
             await tenantPrisma.doctorInteraction.create({
                 data: {
                     doctorId: doctor.id,
@@ -1268,8 +1272,8 @@ async function seedTenantDatabase(organizationId: string, hashedPassword: string
                     interactionType: 'MEETING',
                     startTime: task.taskDate,
                     endTime: addDays(task.taskDate, 0.02), // 30 minutes later
-                    purpose: 'Product presentation',
-                    outcome: 'Positive response',
+                    purpose: 'Product presentation'.substring(0, 500), // Limit TEXT
+                    outcome: 'Positive response'.substring(0, 500), // Limit TEXT
                     rating: faker.number.int({ min: 3, max: 5 })
                 }
             });
@@ -1286,8 +1290,8 @@ async function seedTenantDatabase(organizationId: string, hashedPassword: string
                 interactionType: 'MEETING',
                 startTime: task.taskDate,
                 endTime: addDays(task.taskDate, 0.02),
-                purpose: 'Order collection',
-                outcome: 'Order placed',
+                purpose: 'Order collection'.substring(0, 500), // Limit TEXT
+                outcome: 'Order placed'.substring(0, 500), // Limit TEXT
                 rating: faker.number.int({ min: 3, max: 5 })
             }
         });
@@ -1367,14 +1371,21 @@ async function main() {
         console.log(`   - ${tenantData.sampleDistributions.length} Sample Distributions (Amit to Mumbai entities only)`);
         console.log(`   - ${tenantData.orders.length} Orders with items`);
         console.log(`   - ${tenantData.rcpaReports.length} RCPA Reports with drug data`);
-        console.log(`   - 2 Task Planners`);
-        console.log(`   - ${tenantData.tasks.doctorTasks.length} Doctor Tasks`);
-        console.log(`   - ${tenantData.tasks.chemistTasks.length} Chemist Tasks`);
-        console.log(`   - ${tenantData.tasks.tourPlanTasks.length} Tour Plan Tasks`);
+        console.log(`   - 2 Task Planners (with approvalStatus)`);
+        console.log(`   - ${tenantData.tasks.doctorTasks.length} Doctor Tasks (with completionStatus & approvalStatus)`);
+        console.log(`   - ${tenantData.tasks.chemistTasks.length} Chemist Tasks (with completionStatus & approvalStatus)`);
+        console.log(`   - ${tenantData.tasks.tourPlanTasks.length} Tour Plan Tasks (with completionStatus & approvalStatus)`);
         console.log(`   - ${tenantData.dcrReports.length} DCR Reports`);
         console.log('   - Doctor-Hospital associations');
         console.log('   - Doctor-Chemist relations');
         console.log('   - Doctor and Chemist interactions');
+
+        console.log('\n📝 SCHEMA UPDATES APPLIED');
+        console.log('========================');
+        console.log('✅ TaskPlanner: status → approvalStatus');
+        console.log('✅ DoctorTask: taskStatus → completionStatus + approvalStatus');
+        console.log('✅ ChemistTask: taskStatus → completionStatus + approvalStatus');
+        console.log('✅ TourPlanTask: taskStatus → completionStatus + approvalStatus');
 
         console.log('\n🔍 SAMPLE DISTRIBUTION DETAILS');
         console.log('===============================');
@@ -1385,7 +1396,7 @@ async function main() {
         console.log('   - Gift items: 1-2 per doctor, 1 per chemist');
         console.log('   - Inventory automatically updated after distributions');
 
-        console.log('\n🔑 TEST CREDENTIALS');
+        console.log('\n🔐 TEST CREDENTIALS');
         console.log('===================');
         console.log('Admin User:');
         console.log(`   Email: ${ADMIN_EMAIL}`);
@@ -1403,7 +1414,7 @@ async function main() {
         console.log('   Password: MR@123456');
         console.log('   Territory: Pune');
 
-        console.log('\n✅ Database seeding completed successfully!');
+        console.log('\n✅ Database seeding completed successfully with updated schema!');
 
     } catch (error) {
         console.error('❌ Error seeding database:', error);
@@ -1414,6 +1425,10 @@ async function main() {
         await tenantPrisma.$disconnect();
     }
 }
+
+// Run
+
+// Run
 
 // Run the seeding
 main()

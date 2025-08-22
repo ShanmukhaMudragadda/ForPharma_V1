@@ -26,6 +26,11 @@ export default function CreateDistribution() {
     const router = useRouter();
     const params = useLocalSearchParams();
 
+    // Extract parameters from doctor meeting
+    const fromMeeting = params.fromMeeting === 'true';
+    const doctorId = params.doctorId as string;
+    const doctorName = params.doctorName as string;
+
     // State management
     const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(null);
     const [distributionDate, setDistributionDate] = useState('');
@@ -49,7 +54,7 @@ export default function CreateDistribution() {
             setError(null);
             setLoading(true);
 
-            console.log('📦 Loading distribution creation data from backend...');
+            console.log('🔦 Loading distribution creation data from backend...');
 
             // Load all required data in parallel
             const [customersData, drugsData, giftsData] = await Promise.all([
@@ -67,6 +72,21 @@ export default function CreateDistribution() {
             setCustomers(customersData);
             setAvailableDrugs(drugsData.filter(drug => drug.quantity > 0)); // Only show available items
             setAvailableGifts(giftsData.filter(gift => gift.quantity > 0)); // Only show available items
+
+            // Auto-select doctor if coming from meeting
+            if (fromMeeting && doctorId && doctorName) {
+                const doctorCustomer = customersData.find(customer =>
+                    customer.type === 'doctor' &&
+                    (customer.id === doctorId || customer.name === doctorName)
+                );
+
+                if (doctorCustomer) {
+                    setSelectedCustomer(doctorCustomer);
+                    console.log('✅ Auto-selected doctor:', doctorCustomer.name);
+                } else {
+                    console.log('⚠️ Doctor not found in customers list');
+                }
+            }
 
         } catch (error: any) {
             console.error('❌ Error loading distribution data:', error);
@@ -122,7 +142,15 @@ export default function CreateDistribution() {
                 {
                     text: 'Cancel Distribution',
                     style: 'destructive',
-                    onPress: () => router.push('/(tabs)/')
+                    onPress: () => {
+                        if (fromMeeting) {
+                            // Go back to the doctor meeting page
+                            router.back();
+                        } else {
+                            // Go to home page
+                            router.push('/(tabs)/');
+                        }
+                    }
                 }
             ]
         );
@@ -153,7 +181,7 @@ export default function CreateDistribution() {
                     }))
             };
 
-            console.log('📦 Creating distribution:', distributionData);
+            console.log('🔦 Creating distribution:', distributionData);
 
             const result = await SampleService.createDistribution(distributionData);
 
@@ -161,7 +189,19 @@ export default function CreateDistribution() {
                 'Sample Distribution Created!',
                 'Your sample distribution has been successfully created and is ready for delivery.',
                 [
-                    { text: 'Close', style: 'cancel', onPress: () => router.push('/(tabs)/') },
+                    {
+                        text: 'Close',
+                        style: 'cancel',
+                        onPress: () => {
+                            if (fromMeeting) {
+                                // Go back to the doctor meeting page
+                                router.back();
+                            } else {
+                                // Go to home page
+                                router.push('/(tabs)/');
+                            }
+                        }
+                    },
                     {
                         text: 'View Details',
                         onPress: () => router.push({
@@ -397,7 +437,7 @@ export default function CreateDistribution() {
                                                     fontWeight: '500',
                                                     color: customer.type === 'doctor' ? '#0369A1' : '#15803D'
                                                 }}>
-                                                    {customer.type === 'doctor' ? '👨‍⚕️ Doctor' : '🏪 Chemist'}
+                                                    {customer.type === 'doctor' ? '👨‍⚕️ Doctor' : '🪀 Chemist'}
                                                 </StyledText>
                                             </StyledView>
                                         </StyledView>
