@@ -179,7 +179,7 @@ model Employee {
   drugInventories        UserDrugInventory[]
   giftInventories        UserGiftInventory[]
   giftsCreated           Gift[]                   @relation("GiftCreatedBy")
-  doctorDistributions    DoctorDistribution[]
+  sampleDistributions    SampleDistribution[]
   taskPlans              TaskPlanner[]
   doctorTasks            DoctorTask[]
   chemistTasks           ChemistTask[]
@@ -375,6 +375,7 @@ model Doctor {
   // drugPrescriptions      DrugPrescription[]
   // dcrReports            DcrReport[]
   DoctorTask            DoctorTask[]
+  sampleDistributions   SampleDistribution[]
 
   @@map("doctors")
 }
@@ -456,10 +457,10 @@ model DoctorInteraction {
   rating          Int?            @db.SmallInt
   // metadata        Json?           @db.JsonB
 
-  createdAt          DateTime             @default(now()) @map("created_at")
-  DoctorDistribution DoctorDistribution[]
-  DoctorTask         DoctorTask?          @relation(fields: [doctorTaskId], references: [id])
-  doctorTaskId       String?
+  createdAt DateTime @default(now()) @map("created_at")
+
+  DoctorTask   DoctorTask? @relation(fields: [doctorTaskId], references: [id])
+  doctorTaskId String?
 
   @@map("doctor_interactions")
 }
@@ -493,10 +494,10 @@ model Drug {
   isActive    Boolean  @default(true) @map("is_active")
 
   // Relations
-  orderItems                 OrderItem[]
-  rcpaData                   RcpaDrugData[]
-  UserDrugInventory          UserDrugInventory[]
-  DoctorDistributionDrugItem DoctorDistributionDrugItem[]
+  orderItems        OrderItem[]
+  rcpaData          RcpaDrugData[]
+  UserDrugInventory UserDrugInventory[]
+  // SampleDistributionDrugItem SampleDistributionDrugItem[]
 
   @@map("drugs")
 }
@@ -534,13 +535,14 @@ model Chemist {
   isActive    Boolean  @default(true) @map("is_active")
 
   // Relations
-  notes           ChemistNote[]
+  notes               ChemistNote[]
   // drugInventory        ChemistDrugInventory[]
-  interactions    ChemistInteraction[]
-  doctorRelations DoctorChemistRelation[]
-  orders          Order[]
-  rcpaReports     RcpaReport[]
-  chemistTasks    ChemistTask[]
+  interactions        ChemistInteraction[]
+  doctorRelations     DoctorChemistRelation[]
+  orders              Order[]
+  rcpaReports         RcpaReport[]
+  chemistTasks        ChemistTask[]
+  sampleDistributions SampleDistribution[]
 
   @@map("chemists")
 }
@@ -935,8 +937,8 @@ model Gift {
   createdBy   Employee @relation("GiftCreatedBy", fields: [createdById], references: [id])
   isActive    Boolean  @default(true) @map("is_active")
 
-  userGiftInventories         UserGiftInventory[]
-  doctorDistributionGiftItems DoctorDistributionGiftItem[]
+  userGiftInventories UserGiftInventory[]
+  //sampleDistributionGiftItems SampleDistributionGiftItem[]
 
   @@map("gifts")
 }
@@ -951,7 +953,7 @@ model UserDrugInventory {
   lastRestockedAt             DateTime?                    @map("last_restocked_date")
   createdAt                   DateTime                     @default(now()) @map("created_at")
   updatedAt                   DateTime                     @updatedAt @map("updated_at")
-  doctorDistributionDrugItems DoctorDistributionDrugItem[]
+  sampleDistributionDrugItems SampleDistributionDrugItem[]
 
   @@map("user_drug_inventory")
 }
@@ -966,34 +968,36 @@ model UserGiftInventory {
   lastRestockedAt             DateTime?                    @map("last_restocked_date")
   createdAt                   DateTime                     @default(now()) @map("created_at")
   updatedAt                   DateTime                     @updatedAt @map("updated_at")
-  doctorDistributionGiftItems DoctorDistributionGiftItem[]
+  sampleDistributionGiftItems SampleDistributionGiftItem[]
 
   @@map("user_gift_inventory")
 }
 
-model DoctorDistribution {
-  id                  String            @id @default(uuid())
-  doctorInteractionId String            @map("doctor_interaction_id")
-  doctorInteraction   DoctorInteraction @relation(fields: [doctorInteractionId], references: [id])
-  employeeId          String            @map("employee_id") // medical rep who created
-  employee            Employee          @relation(fields: [employeeId], references: [id])
-  distributedAt       DateTime          @map("distributed_at")
+model SampleDistribution {
+  id            String   @id @default(uuid())
+  doctorId      String?  @map("doctor_id")
+  doctor        Doctor?  @relation(fields: [doctorId], references: [id])
+  chemistId     String?  @map("chemist_id")
+  chemist       Chemist? @relation(fields: [chemistId], references: [id])
+  employeeId    String   @map("employee_id") // medical rep who created
+  employee      Employee @relation(fields: [employeeId], references: [id])
+  distributedAt DateTime @map("distributed_at")
   // notes               String?           @db.Text
-  createdAt           DateTime          @default(now()) @map("created_at")
-  updatedAt           DateTime          @updatedAt @map("updated_at")
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
 
-  drugItems DoctorDistributionDrugItem[]
-  giftItems DoctorDistributionGiftItem[]
+  drugItems SampleDistributionDrugItem[]
+  giftItems SampleDistributionGiftItem[]
 
-  @@map("doctor_distributions")
+  @@map("sample_distributions")
 }
 
-model DoctorDistributionDrugItem {
+model SampleDistributionDrugItem {
   id                   String             @id @default(uuid())
-  doctorDistributionId String             @map("doctor_distribution_id")
-  doctorDistribution   DoctorDistribution @relation(fields: [doctorDistributionId], references: [id])
-  drugId               String             @map("drug_id")
-  drug                 Drug               @relation(fields: [drugId], references: [id])
+  sampleDistributionId String             @map("sample_distribution_id")
+  sampleDistribution   SampleDistribution @relation(fields: [sampleDistributionId], references: [id])
+  // drugId               String             @map("drug_id")
+  // drug                 Drug               @relation(fields: [drugId], references: [id])
   fromInventoryId      String             @map("from_inventory_id")
   fromInventory        UserDrugInventory  @relation(fields: [fromInventoryId], references: [id])
   quantity             Int
@@ -1002,15 +1006,15 @@ model DoctorDistributionDrugItem {
   createdAt            DateTime           @default(now()) @map("created_at")
   updatedAt            DateTime           @updatedAt @map("updated_at")
 
-  @@map("doctor_distribution_drug_items")
+  @@map("sample_distribution_drug_items")
 }
 
-model DoctorDistributionGiftItem {
+model SampleDistributionGiftItem {
   id                   String             @id @default(uuid())
-  doctorDistributionId String             @map("doctor_distribution_id")
-  doctorDistribution   DoctorDistribution @relation(fields: [doctorDistributionId], references: [id])
-  giftId               String             @map("gift_id")
-  gift                 Gift               @relation(fields: [giftId], references: [id])
+  sampleDistributionId String             @map("sample_distribution_id")
+  sampleDistribution   SampleDistribution @relation(fields: [sampleDistributionId], references: [id])
+  // giftId               String             @map("gift_id")
+  // gift                 Gift               @relation(fields: [giftId], references: [id])
   fromInventoryId      String             @map("from_inventory_id")
   fromInventory        UserGiftInventory  @relation(fields: [fromInventoryId], references: [id])
   quantity             Int
@@ -1019,7 +1023,7 @@ model DoctorDistributionGiftItem {
   createdAt            DateTime           @default(now()) @map("created_at")
   updatedAt            DateTime           @updatedAt @map("updated_at")
 
-  @@map("doctor_distribution_gift_items")
+  @@map("sample_distribution_gift_items")
 }
 
 // AUDIT TRAIL

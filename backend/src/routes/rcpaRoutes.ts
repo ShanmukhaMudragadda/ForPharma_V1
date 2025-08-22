@@ -1,6 +1,10 @@
 import express from 'express';
 import tenantMiddleware from '../middlewares/tenantMiddleware';
-import rcpaController from '../controllers/rcpaController';
+import { createRcpa, getDrugsForRcpa } from '../controllers/rcpa/createRcpaController';
+import { getRcpaList } from '../controllers/rcpa/getRcpaListController';
+import { getRcpaDetails } from '../controllers/rcpa/getRcpaDetailsController';
+import { updateRcpa } from '../controllers/rcpa/updateRcpaController';
+import { deleteRcpa } from '../controllers/rcpa/deleteRcpaController';
 
 const router = express.Router();
 
@@ -9,11 +13,11 @@ const router = express.Router();
 router.use(tenantMiddleware);
 
 // RCPA Routes
-router.get('/', rcpaController.getRcpaReports);                    // GET /api/rcpa - List all RCPA reports
-router.get('/drugs', rcpaController.getDrugsForRcpa);             // GET /api/rcpa/drugs - Get drugs for RCPA creation
-router.get('/:rcpaId', rcpaController.getRcpaById);               // GET /api/rcpa/:rcpaId - Get single RCPA report details
-router.post('/', rcpaController.createRcpaReport);               // POST /api/rcpa - Create new RCPA report
-router.put('/:rcpaId', rcpaController.updateRcpaReport);         // PUT /api/rcpa/:rcpaId - Update RCPA report
-router.delete('/:rcpaId', rcpaController.deleteRcpaReport);      // DELETE /api/rcpa/:rcpaId - Delete RCPA report
+router.get('/', getRcpaList);                      // GET /api/rcpa - List all RCPA reports
+router.get('/drugs', getDrugsForRcpa);             // GET /api/rcpa/drugs - Get drugs for RCPA creation
+router.get('/:rcpaId', getRcpaDetails);            // GET /api/rcpa/:rcpaId - Get single RCPA report details
+router.post('/', createRcpa);                      // POST /api/rcpa - Create new RCPA report
+router.put('/:rcpaId', updateRcpa);                // PUT /api/rcpa/:rcpaId - Update RCPA report
+router.delete('/:rcpaId', deleteRcpa);             // DELETE /api/rcpa/:rcpaId - Delete RCPA report
 
 export default router;

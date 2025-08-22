@@ -570,19 +570,19 @@ exports.Prisma.UserGiftInventoryScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
-exports.Prisma.DoctorDistributionScalarFieldEnum = {
+exports.Prisma.SampleDistributionScalarFieldEnum = {
   id: 'id',
-  doctorInteractionId: 'doctorInteractionId',
+  doctorId: 'doctorId',
+  chemistId: 'chemistId',
   employeeId: 'employeeId',
   distributedAt: 'distributedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
 
-exports.Prisma.DoctorDistributionDrugItemScalarFieldEnum = {
+exports.Prisma.SampleDistributionDrugItemScalarFieldEnum = {
   id: 'id',
-  doctorDistributionId: 'doctorDistributionId',
-  drugId: 'drugId',
+  sampleDistributionId: 'sampleDistributionId',
   fromInventoryId: 'fromInventoryId',
   quantity: 'quantity',
   unitCost: 'unitCost',
@@ -591,10 +591,9 @@ exports.Prisma.DoctorDistributionDrugItemScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
-exports.Prisma.DoctorDistributionGiftItemScalarFieldEnum = {
+exports.Prisma.SampleDistributionGiftItemScalarFieldEnum = {
   id: 'id',
-  doctorDistributionId: 'doctorDistributionId',
-  giftId: 'giftId',
+  sampleDistributionId: 'sampleDistributionId',
   fromInventoryId: 'fromInventoryId',
   quantity: 'quantity',
   unitCost: 'unitCost',
@@ -777,9 +776,9 @@ exports.Prisma.ModelName = {
   Gift: 'Gift',
   UserDrugInventory: 'UserDrugInventory',
   UserGiftInventory: 'UserGiftInventory',
-  DoctorDistribution: 'DoctorDistribution',
-  DoctorDistributionDrugItem: 'DoctorDistributionDrugItem',
-  DoctorDistributionGiftItem: 'DoctorDistributionGiftItem',
+  SampleDistribution: 'SampleDistribution',
+  SampleDistributionDrugItem: 'SampleDistributionDrugItem',
+  SampleDistributionGiftItem: 'SampleDistributionGiftItem',
   AuditLog: 'AuditLog'
 };
 /**

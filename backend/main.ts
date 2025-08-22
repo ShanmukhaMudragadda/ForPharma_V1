@@ -11,7 +11,7 @@ import orderRoutes from './src/routes/orderRoutes.ts';
 import drugRoutes from './src/routes/drugRoutes.ts'
 import rcpaRoutes from './src/routes/rcpaRoutes.ts';
 import dcrRoutes from './src/routes/dcrRoutes.ts'
-
+import sampleRoutes from './src/routes/sampleRoutes.ts'; // NEW SAMPLE ROUTES
 
 dotenv.config();
 
@@ -20,7 +20,8 @@ const schemaService = SchemaManagementService.getInstance();
 app.use(cors({
   origin: '*', // In production, specify your app's URL
   credentials: true
-})); app.use(express.json());
+}));
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 const PORT = process.env.PORT || 3000;
 
@@ -39,25 +40,17 @@ app.get('/', (req, res) => {
   });
 });
 
-
 // Organization Routes
-
 app.use('/api/organizations', organizationRoutes);
-
-
 
 // Auth routes
 app.use('/api/user', authRoutes);
 
-//doctor Routes
+// Doctor Routes
 app.use('/api/doctors', doctorRoutes);
 
-
-//chemist routes
+// Chemist routes
 app.use('/api/chemists', chemistRoutes);
-app.use('/api/orders', orderRoutes);
-app.use('/api/rcpa', rcpaRoutes);
-app.use('/api/dcr', dcrRoutes);
 
 // Order Routes
 app.use('/api/orders', orderRoutes);
@@ -66,9 +59,14 @@ app.use('/api/orders', orderRoutes);
 app.use('/api/drugs', drugRoutes);
 app.use('/uploads', express.static('uploads'));
 
+// RCPA Routes
+app.use('/api/rcpa', rcpaRoutes);
 
+// DCR Routes
+app.use('/api/dcr', dcrRoutes);
 
-
+// Sample Routes (NEW)
+app.use('/api/samples', sampleRoutes);
 
 // 404 Not Found handler
 app.use((req, res) => {
@@ -102,21 +100,11 @@ app.use((err: any, req: express.Request, res: express.Response, next: express.Ne
 });
 
 // Start the HTTP server
-// const server = app.listen(PORT, () => {
-//   console.log(`
-// 🚀 ForPharma Backend Server is running!
-// 📡 API URL: http://localhost:${PORT}
-// 🌍 Environment: ${process.env.NODE_ENV || 'development'}
-// 📅 Started at: ${new Date().toISOString()}
-//       `);
-// });
-
 const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
 
 const server = app.listen(3000, '0.0.0.0', () => {
   console.log('Server running on 192.168.24.215:3000');
 });
-
 
 // Graceful shutdown procedures
 const gracefulShutdown = async (signal: string) => {
@@ -137,7 +125,3 @@ const gracefulShutdown = async (signal: string) => {
 
 process.on('SIGTERM', () => gracefulShutdown('SIGTERM'));
 process.on('SIGINT', () => gracefulShutdown('SIGINT'));
-
-
-
-
