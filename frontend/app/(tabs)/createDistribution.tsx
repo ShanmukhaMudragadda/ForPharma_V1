@@ -26,10 +26,13 @@ export default function CreateDistribution() {
     const router = useRouter();
     const params = useLocalSearchParams();
 
-    // Extract parameters from doctor meeting
+    // Extract parameters from meeting
     const fromMeeting = params.fromMeeting === 'true';
-    const doctorId = params.doctorId as string;
-    const doctorName = params.doctorName as string;
+    const customerId = params.customerId || params.doctorId as string;
+    const customerName = params.customerName || params.doctorName as string;
+    const customerType = params.customerType || (params.doctorId ? 'doctor' : 'chemist') as string;
+    const meetingStartTime = params.meetingStartTime as string;
+    const returnToStep = params.returnToStep as string;
 
     // State management
     const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(null);
@@ -54,7 +57,7 @@ export default function CreateDistribution() {
             setError(null);
             setLoading(true);
 
-            console.log('🔦 Loading distribution creation data from backend...');
+            console.log('📦 Loading distribution creation data from backend...');
 
             // Load all required data in parallel
             const [customersData, drugsData, giftsData] = await Promise.all([
@@ -73,18 +76,33 @@ export default function CreateDistribution() {
             setAvailableDrugs(drugsData.filter(drug => drug.quantity > 0)); // Only show available items
             setAvailableGifts(giftsData.filter(gift => gift.quantity > 0)); // Only show available items
 
-            // Auto-select doctor if coming from meeting
-            if (fromMeeting && doctorId && doctorName) {
-                const doctorCustomer = customersData.find(customer =>
-                    customer.type === 'doctor' &&
-                    (customer.id === doctorId || customer.name === doctorName)
+            // Auto-select customer if coming from meeting
+            if (fromMeeting && customerId && customerName) {
+                const selectedCustomer = customersData.find(customer =>
+                    ((customer.type === 'chemist' && customerType === 'chemist') ||
+                        (customer.type === 'doctor' && customerType === 'doctor')) &&
+                    (customer.id === customerId || customer.name === customerName)
                 );
 
-                if (doctorCustomer) {
-                    setSelectedCustomer(doctorCustomer);
-                    console.log('✅ Auto-selected doctor:', doctorCustomer.name);
+                if (selectedCustomer) {
+                    setSelectedCustomer(selectedCustomer);
+                    console.log('✅ Auto-selected customer from meeting:', selectedCustomer.name);
                 } else {
-                    console.log('⚠️ Doctor not found in customers list');
+                    console.log('⚠️ Customer not found in customers list');
+                    // If customer not found but we have the name from meeting, create a temporary customer object
+                    if (customerName) {
+                        const tempCustomer = {
+                            id: customerId || 'temp-' + Date.now(),
+                            name: customerName,
+                            type: customerType as 'doctor' | 'chemist',
+                            address: {
+                                name: 'Meeting Location',
+                                full: 'From Meeting'
+                            }
+                        };
+                        setSelectedCustomer(tempCustomer);
+                        console.log('✅ Created temporary customer from meeting:', customerName);
+                    }
                 }
             }
 
@@ -143,11 +161,9 @@ export default function CreateDistribution() {
                     text: 'Cancel Distribution',
                     style: 'destructive',
                     onPress: () => {
-                        if (fromMeeting) {
-                            // Go back to the doctor meeting page
-                            router.back();
+                        if (fromMeeting && returnToStep) {
+                            router.back(); // This will return to the meeting at the correct step
                         } else {
-                            // Go to home page
                             router.push('/(tabs)/');
                         }
                     }
@@ -181,23 +197,23 @@ export default function CreateDistribution() {
                     }))
             };
 
-            console.log('🔦 Creating distribution:', distributionData);
+            console.log('📦 Creating distribution:', distributionData);
 
             const result = await SampleService.createDistribution(distributionData);
 
+            const creationTime = meetingStartTime ? new Date(meetingStartTime).toLocaleTimeString() : new Date().toLocaleTimeString();
+
             Alert.alert(
                 'Sample Distribution Created!',
-                'Your sample distribution has been successfully created and is ready for delivery.',
+                `Your sample distribution has been successfully created at ${creationTime} and is ready for delivery.`,
                 [
                     {
                         text: 'Close',
                         style: 'cancel',
                         onPress: () => {
-                            if (fromMeeting) {
-                                // Go back to the doctor meeting page
-                                router.back();
+                            if (fromMeeting && returnToStep) {
+                                router.back(); // Return to meeting
                             } else {
-                                // Go to home page
                                 router.push('/(tabs)/');
                             }
                         }
@@ -350,120 +366,181 @@ export default function CreateDistribution() {
                 <StyledView style={{ marginBottom: 20 }}>
                     <StyledText style={{ marginBottom: 6, fontWeight: '500', fontSize: 16, color: '#111827' }}>
                         Choose Customer <StyledText style={{ color: '#EF4444' }}>*</StyledText>
+                        {fromMeeting && (
+                            <StyledText style={{ color: '#0077B6', fontSize: 14, fontWeight: '400' }}>
+                                {' '}(From Meeting)
+                            </StyledText>
+                        )}
                     </StyledText>
-                    <StyledTouchableOpacity
-                        onPress={() => setIsCustomerListOpen(!isCustomerListOpen)}
-                        style={{
+
+                    {/* Show selected customer in meeting mode or dropdown in normal mode */}
+                    {fromMeeting && selectedCustomer ? (
+                        // Meeting mode - show selected customer (non-editable)
+                        <StyledView style={{
                             borderWidth: 1,
-                            borderColor: isCustomerListOpen || selectedCustomer ? "#0077B6" : "#E5E7EB",
+                            borderColor: '#0077B6',
                             borderRadius: 8,
                             padding: 14,
-                            backgroundColor: '#fff',
+                            backgroundColor: '#F0F8FF',
                             flexDirection: "row",
                             alignItems: "center",
                             justifyContent: 'space-between',
                             minHeight: 50,
-                            borderBottomLeftRadius: isCustomerListOpen ? 0 : 8,
-                            borderBottomRightRadius: isCustomerListOpen ? 0 : 8,
-                        }}
-                    >
-                        <StyledView style={{ flex: 1 }}>
-                            <StyledText style={{
-                                color: selectedCustomer ? '#111827' : '#9CA3AF',
-                                fontSize: 16,
-                                fontWeight: selectedCustomer ? '600' : '400'
-                            }}>
-                                {selectedCustomer ? selectedCustomer.name : "Select a customer..."}
-                            </StyledText>
-                            {selectedCustomer && (
-                                <StyledText style={{ color: '#6B7280', fontSize: 14, marginTop: 2 }}>
-                                    {selectedCustomer.type === 'doctor'
-                                        ? `${selectedCustomer.designation || 'Doctor'} • ${selectedCustomer.address.name}`
-                                        : `${selectedCustomer.chemistType || 'Chemist'} • ${selectedCustomer.address.name}`
-                                    }
-                                </StyledText>
-                            )}
-                        </StyledView>
-                        <Ionicons
-                            name={isCustomerListOpen ? "chevron-up-outline" : "chevron-down-outline"}
-                            size={20}
-                            color="#6B7280"
-                        />
-                    </StyledTouchableOpacity>
-
-                    {isCustomerListOpen && (
-                        <StyledView style={{
-                            backgroundColor: '#fff',
-                            borderWidth: 1,
-                            borderColor: '#0077B6',
-                            borderTopWidth: 0,
-                            borderBottomLeftRadius: 8,
-                            borderBottomRightRadius: 8,
-                            maxHeight: 300,
-                            elevation: 5,
-                            shadowColor: '#000',
-                            shadowOffset: { width: 0, height: 2 },
-                            shadowOpacity: 0.1,
-                            shadowRadius: 4,
-                            zIndex: 10,
                         }}>
-                            <ScrollView nestedScrollEnabled={true}>
-                                {customers.map((customer, index) => (
-                                    <StyledTouchableOpacity
-                                        key={customer.id}
-                                        onPress={() => {
-                                            setSelectedCustomer(customer);
-                                            setIsCustomerListOpen(false);
-                                        }}
-                                        style={{
-                                            paddingVertical: 14,
-                                            paddingHorizontal: 16,
-                                            borderBottomWidth: index < customers.length - 1 ? 1 : 0,
-                                            borderBottomColor: '#F3F4F6'
-                                        }}
-                                    >
-                                        <StyledView className="flex-row items-center mb-1">
-                                            <StyledText style={{ fontSize: 16, fontWeight: '500', color: '#111827', flex: 1 }}>
-                                                {customer.name}
-                                            </StyledText>
-                                            <StyledView style={{
-                                                backgroundColor: customer.type === 'doctor' ? '#E0F2FE' : '#F0FDF4',
-                                                paddingHorizontal: 8,
-                                                paddingVertical: 2,
-                                                borderRadius: 12
-                                            }}>
-                                                <StyledText style={{
-                                                    fontSize: 12,
-                                                    fontWeight: '500',
-                                                    color: customer.type === 'doctor' ? '#0369A1' : '#15803D'
-                                                }}>
-                                                    {customer.type === 'doctor' ? '👨‍⚕️ Doctor' : '🪀 Chemist'}
+                            <StyledView style={{ flex: 1 }}>
+                                <StyledText style={{
+                                    color: '#111827',
+                                    fontSize: 16,
+                                    fontWeight: '600'
+                                }}>
+                                    {selectedCustomer.name}
+                                </StyledText>
+                                {selectedCustomer && (
+                                    <StyledText style={{ color: '#6B7280', fontSize: 14, marginTop: 2 }}>
+                                        {selectedCustomer.type === 'doctor'
+                                            ? `${selectedCustomer.designation || 'Doctor'} • ${selectedCustomer.address.name}`
+                                            : `${selectedCustomer.chemistType || 'Chemist'} • ${selectedCustomer.address.name}`
+                                        }
+                                    </StyledText>
+                                )}
+                            </StyledView>
+                            <StyledView style={{
+                                backgroundColor: '#0077B6',
+                                paddingHorizontal: 8,
+                                paddingVertical: 4,
+                                borderRadius: 12,
+                                flexDirection: 'row',
+                                alignItems: 'center'
+                            }}>
+                                <Ionicons name="people-outline" size={14} color="#FFFFFF" />
+                                <StyledText style={{
+                                    color: '#FFFFFF',
+                                    fontSize: 12,
+                                    fontWeight: '500',
+                                    marginLeft: 4
+                                }}>
+                                    Meeting
+                                </StyledText>
+                            </StyledView>
+                        </StyledView>
+                    ) : (
+                        // Normal mode - show dropdown
+                        <>
+                            <StyledTouchableOpacity
+                                onPress={() => setIsCustomerListOpen(!isCustomerListOpen)}
+                                style={{
+                                    borderWidth: 1,
+                                    borderColor: isCustomerListOpen || selectedCustomer ? "#0077B6" : "#E5E7EB",
+                                    borderRadius: 8,
+                                    padding: 14,
+                                    backgroundColor: '#fff',
+                                    flexDirection: "row",
+                                    alignItems: "center",
+                                    justifyContent: 'space-between',
+                                    minHeight: 50,
+                                    borderBottomLeftRadius: isCustomerListOpen ? 0 : 8,
+                                    borderBottomRightRadius: isCustomerListOpen ? 0 : 8,
+                                }}
+                            >
+                                <StyledView style={{ flex: 1 }}>
+                                    <StyledText style={{
+                                        color: selectedCustomer ? '#111827' : '#9CA3AF',
+                                        fontSize: 16,
+                                        fontWeight: selectedCustomer ? '600' : '400'
+                                    }}>
+                                        {selectedCustomer ? selectedCustomer.name : "Select a customer..."}
+                                    </StyledText>
+                                    {selectedCustomer && (
+                                        <StyledText style={{ color: '#6B7280', fontSize: 14, marginTop: 2 }}>
+                                            {selectedCustomer.type === 'doctor'
+                                                ? `${selectedCustomer.designation || 'Doctor'} • ${selectedCustomer.address.name}`
+                                                : `${selectedCustomer.chemistType || 'Chemist'} • ${selectedCustomer.address.name}`
+                                            }
+                                        </StyledText>
+                                    )}
+                                </StyledView>
+                                <Ionicons
+                                    name={isCustomerListOpen ? "chevron-up-outline" : "chevron-down-outline"}
+                                    size={20}
+                                    color="#6B7280"
+                                />
+                            </StyledTouchableOpacity>
+
+                            {isCustomerListOpen && (
+                                <StyledView style={{
+                                    backgroundColor: '#fff',
+                                    borderWidth: 1,
+                                    borderColor: '#0077B6',
+                                    borderTopWidth: 0,
+                                    borderBottomLeftRadius: 8,
+                                    borderBottomRightRadius: 8,
+                                    maxHeight: 300,
+                                    elevation: 5,
+                                    shadowColor: '#000',
+                                    shadowOffset: { width: 0, height: 2 },
+                                    shadowOpacity: 0.1,
+                                    shadowRadius: 4,
+                                    zIndex: 10,
+                                }}>
+                                    <ScrollView nestedScrollEnabled={true}>
+                                        {customers.map((customer, index) => (
+                                            <StyledTouchableOpacity
+                                                key={customer.id}
+                                                onPress={() => {
+                                                    setSelectedCustomer(customer);
+                                                    setIsCustomerListOpen(false);
+                                                }}
+                                                style={{
+                                                    paddingVertical: 14,
+                                                    paddingHorizontal: 16,
+                                                    borderBottomWidth: index < customers.length - 1 ? 1 : 0,
+                                                    borderBottomColor: '#F3F4F6'
+                                                }}
+                                            >
+                                                <StyledView className="flex-row items-center mb-1">
+                                                    <StyledText style={{ fontSize: 16, fontWeight: '500', color: '#111827', flex: 1 }}>
+                                                        {customer.name}
+                                                    </StyledText>
+                                                    <StyledView style={{
+                                                        backgroundColor: customer.type === 'doctor' ? '#E0F2FE' : '#F0FDF4',
+                                                        paddingHorizontal: 8,
+                                                        paddingVertical: 2,
+                                                        borderRadius: 12
+                                                    }}>
+                                                        <StyledText style={{
+                                                            fontSize: 12,
+                                                            fontWeight: '500',
+                                                            color: customer.type === 'doctor' ? '#0369A1' : '#15803D'
+                                                        }}>
+                                                            {customer.type === 'doctor' ? '👨‍⚕️ Doctor' : '🏪 Chemist'}
+                                                        </StyledText>
+                                                    </StyledView>
+                                                </StyledView>
+
+                                                {customer.designation && (
+                                                    <StyledText style={{ fontSize: 14, color: '#0077B6', marginBottom: 2 }}>
+                                                        {customer.designation}
+                                                        {customer.specialization && ` • ${customer.specialization}`}
+                                                    </StyledText>
+                                                )}
+
+                                                <StyledText style={{ fontSize: 13, color: '#6B7280' }}>
+                                                    📍 {customer.address.full}
+                                                </StyledText>
+                                            </StyledTouchableOpacity>
+                                        ))}
+
+                                        {customers.length === 0 && (
+                                            <StyledView style={{ padding: 20, alignItems: 'center' }}>
+                                                <StyledText style={{ color: '#9CA3AF', fontSize: 14 }}>
+                                                    No customers available in your territory
                                                 </StyledText>
                                             </StyledView>
-                                        </StyledView>
-
-                                        {customer.designation && (
-                                            <StyledText style={{ fontSize: 14, color: '#0077B6', marginBottom: 2 }}>
-                                                {customer.designation}
-                                                {customer.specialization && ` • ${customer.specialization}`}
-                                            </StyledText>
                                         )}
-
-                                        <StyledText style={{ fontSize: 13, color: '#6B7280' }}>
-                                            📍 {customer.address.full}
-                                        </StyledText>
-                                    </StyledTouchableOpacity>
-                                ))}
-
-                                {customers.length === 0 && (
-                                    <StyledView style={{ padding: 20, alignItems: 'center' }}>
-                                        <StyledText style={{ color: '#9CA3AF', fontSize: 14 }}>
-                                            No customers available in your territory
-                                        </StyledText>
-                                    </StyledView>
-                                )}
-                            </ScrollView>
-                        </StyledView>
+                                    </ScrollView>
+                                </StyledView>
+                            )}
+                        </>
                     )}
                 </StyledView>
 
