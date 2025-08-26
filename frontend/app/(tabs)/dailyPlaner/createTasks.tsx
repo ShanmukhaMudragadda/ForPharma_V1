@@ -12,14 +12,18 @@ import {
     KeyboardAvoidingView,
     Platform,
     Dimensions,
-    FlatList,
+    ActivityIndicator,
 } from 'react-native';
 import { styled } from 'nativewind';
 import { Ionicons } from '@expo/vector-icons';
-import { useRouter } from 'expo-router';
+import { useRouter, useLocalSearchParams } from 'expo-router';
 import { Calendar } from 'react-native-calendars';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { format } from 'date-fns';
+import taskPlannerService from '../../../services/taskPlannerService';
+import taskService from '../../../services/taskService';
+import doctorService from '../../../services/doctorService';
+import chemistService from '../../../services/chemistService';
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -59,7 +63,17 @@ interface TaskData {
 
 export default function CreateTask() {
     const router = useRouter();
+    const params = useLocalSearchParams();
+
+    // Get params
+    const initialPlannerId = params.taskPlannerId as string;
+    const returnTo = params.returnTo as string;
+
+    // State
     const [currentStep, setCurrentStep] = useState(1);
+    const [loading, setLoading] = useState(false);
+    const [currentPlannerId, setCurrentPlannerId] = useState<string | null>(initialPlannerId || null);
+
     const [taskData, setTaskData] = useState<TaskData>({
         type: null,
         entity: null,
@@ -70,35 +84,24 @@ export default function CreateTask() {
         hasConflict: false,
     });
 
+    // Planner details
+    const [plannerStartDate, setPlannerStartDate] = useState<string | null>(null);
+    const [plannerEndDate, setPlannerEndDate] = useState<string | null>(null);
+    const [availableDates, setAvailableDates] = useState<string[]>([]);
+    const [allPlanners, setAllPlanners] = useState<any[]>([]);
+
     // UI States
     const [searchQuery, setSearchQuery] = useState('');
     const [showEntityDropdown, setShowEntityDropdown] = useState(false);
     const [showLocationDropdown, setShowLocationDropdown] = useState(false);
-    const [showTaskPlanModal, setShowTaskPlanModal] = useState(false);
-    const [showConflictModal, setShowConflictModal] = useState(false);
     const [showStartTimePicker, setShowStartTimePicker] = useState(false);
     const [showEndTimePicker, setShowEndTimePicker] = useState(false);
     const [markedDates, setMarkedDates] = useState({});
 
-    // Sample data
-    const doctorsList: Entity[] = [
-        { id: 'dr1', name: 'Dr. Rajesh Sharma', subtitle: 'Cardiologist • Apollo Hospital' },
-        { id: 'dr2', name: 'Dr. Priya Patel', subtitle: 'Neurologist • Fortis Hospital' },
-        { id: 'dr3', name: 'Dr. Amit Kumar', subtitle: 'Orthopedic • Max Hospital' },
-        { id: 'dr4', name: 'Dr. Neha Gupta', subtitle: 'Pediatrician • AIIMS' },
-    ];
-
-    const chemistsList: Entity[] = [
-        { id: 'ch1', name: 'Apollo Pharmacy', subtitle: 'Connaught Place • Delhi' },
-        { id: 'ch2', name: 'MedPlus', subtitle: 'Karol Bagh • Delhi' },
-        { id: 'ch3', name: 'Guardian Pharmacy', subtitle: 'Lajpat Nagar • Delhi' },
-    ];
-
-    const tourPlansList: Entity[] = [
-        { id: 'tp1', name: 'North Delhi Tour', subtitle: 'Hospital Coverage Plan' },
-        { id: 'tp2', name: 'South Delhi Route', subtitle: 'Pharmacy Visit Plan' },
-        { id: 'tp3', name: 'Central Delhi Circuit', subtitle: 'Mixed Visit Plan' },
-    ];
+    // Data lists
+    const [doctorsList, setDoctorsList] = useState<Entity[]>([]);
+    const [chemistsList, setChemistsList] = useState<Entity[]>([]);
+    const [tourPlansList, setTourPlansList] = useState<Entity[]>([]);
 
     const locationSuggestions = [
         'Connaught Place, Delhi',
@@ -108,46 +111,154 @@ export default function CreateTask() {
         'Lajpat Nagar, Delhi',
     ];
 
-    const existingTaskPlanDates = [
-        '2025-08-15', '2025-08-16', '2025-08-17',
-        '2025-08-25', '2025-08-26', '2025-08-27'
-    ];
-
     const repSchedule: TimeSlot[] = [
         { time: '09:00' },
-        {
-            time: '10:00',
-            task: {
-                type: 'meeting',
-                title: 'Team Meeting',
-                subtitle: '10:00 AM - 11:00 AM',
-            }
-        },
+        { time: '10:00', task: { type: 'meeting', title: 'Team Meeting', subtitle: '10:00 AM - 11:00 AM' } },
         { time: '11:00' },
         { time: '12:00' },
         { time: '13:00' },
-        {
-            time: '14:00',
-            task: {
-                type: 'chemist',
-                title: 'Apollo Pharmacy Visit',
-                subtitle: '2:00 PM - 3:00 PM',
-            }
-        },
+        { time: '14:00', task: { type: 'chemist', title: 'Apollo Pharmacy Visit', subtitle: '2:00 PM - 3:00 PM' } },
         { time: '15:00' },
         { time: '16:00' },
         { time: '17:00' },
         { time: '18:00' },
     ];
 
+    // Load initial data
     useEffect(() => {
-        // Initialize marked dates for calendar
+        loadInitialData();
+    }, []);
+
+    const loadInitialData = async () => {
+        setLoading(true);
+        try {
+            // Load entities
+            await loadEntitiesData();
+
+            // Load planner details
+            if (currentPlannerId) {
+                await loadPlannerDetails(currentPlannerId);
+            } else {
+                await loadAvailablePlanners();
+            }
+        } catch (error) {
+            console.error('Error loading initial data:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const loadEntitiesData = async () => {
+        try {
+            // Load doctors
+            const doctors = await doctorService.getDoctorList();
+            const transformedDoctors = doctors.map(doc => ({
+                id: doc.doctorId,
+                name: doc.doctorName,
+                subtitle: `${doc.specialization} • ${doc.hospitals?.[0]?.hospitalName || 'No hospital'}`,
+            }));
+            setDoctorsList(transformedDoctors);
+
+            // Load chemists
+            const chemists = await chemistService.getChemistList();
+            const transformedChemists = chemists.map(chem => ({
+                id: chem.chemistId,
+                name: chem.chemistName,
+                subtitle: `${chem.type || 'Retail'} • ${chem.address || 'No address'}`,
+            }));
+            setChemistsList(transformedChemists);
+
+            // Load tour plans - using dummy data for now
+            setTourPlansList([
+                { id: 'tp1', name: 'North Delhi Tour', subtitle: 'Hospital Coverage Plan' },
+                { id: 'tp2', name: 'South Delhi Route', subtitle: 'Pharmacy Visit Plan' },
+                { id: 'tp3', name: 'Central Delhi Circuit', subtitle: 'Mixed Visit Plan' },
+            ]);
+        } catch (error) {
+            console.error('Error loading entities:', error);
+            // Use fallback data
+            setDoctorsList([
+                { id: 'dr1', name: 'Dr. Rajesh Sharma', subtitle: 'Cardiologist • Apollo Hospital' },
+                { id: 'dr2', name: 'Dr. Priya Patel', subtitle: 'Neurologist • Fortis Hospital' },
+            ]);
+            setChemistsList([
+                { id: 'ch1', name: 'Apollo Pharmacy', subtitle: 'Connaught Place • Delhi' },
+                { id: 'ch2', name: 'MedPlus', subtitle: 'Karol Bagh • Delhi' },
+            ]);
+        }
+    };
+
+    const loadPlannerDetails = async (plannerId: string) => {
+        try {
+            const planners = await taskPlannerService.getTaskPlanners();
+            const planner = planners.find(p => p.id === plannerId);
+
+            if (planner) {
+                setPlannerStartDate(planner.startDate);
+                setPlannerEndDate(planner.endDate);
+
+                // Generate available dates
+                const dates = [];
+                const start = new Date(planner.startDate);
+                const end = new Date(planner.endDate);
+
+                while (start <= end) {
+                    dates.push(format(start, 'yyyy-MM-dd'));
+                    start.setDate(start.getDate() + 1);
+                }
+
+                setAvailableDates(dates);
+                updateMarkedDates(dates);
+            }
+        } catch (error) {
+            console.error('Error loading planner details:', error);
+        }
+    };
+
+    const loadAvailablePlanners = async () => {
+        try {
+            const planners = await taskPlannerService.getTaskPlanners();
+            setAllPlanners(planners);
+
+            const dates = [];
+            planners.forEach(planner => {
+                const start = new Date(planner.startDate);
+                const end = new Date(planner.endDate);
+
+                while (start <= end) {
+                    const dateStr = format(start, 'yyyy-MM-dd');
+                    if (!dates.includes(dateStr)) {
+                        dates.push(dateStr);
+                    }
+                    start.setDate(start.getDate() + 1);
+                }
+            });
+
+            setAvailableDates(dates);
+            updateMarkedDates(dates);
+        } catch (error) {
+            console.error('Error loading available planners:', error);
+        }
+    };
+
+    const updateMarkedDates = (dates: string[]) => {
         const marked = {};
-        existingTaskPlanDates.forEach(date => {
+        dates.forEach(date => {
             marked[date] = { marked: true, dotColor: '#28A745' };
         });
         setMarkedDates(marked);
-    }, []);
+    };
+
+    const findPlannerForDate = (date: string): string | null => {
+        const planner = allPlanners.find(p => {
+            const start = new Date(p.startDate);
+            const end = new Date(p.endDate);
+            const selected = new Date(date);
+            return selected >= start && selected <= end;
+        });
+
+        return planner ? planner.id : null;
+    };
 
     // Get entities based on task type
     const getEntitiesList = () => {
@@ -165,12 +276,12 @@ export default function CreateTask() {
         entity.subtitle.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
-    // Filter locations based on search
+    // Filter locations
     const filteredLocations = locationSuggestions.filter(location =>
         location.toLowerCase().includes(taskData.location?.toLowerCase() || '')
     );
 
-    // Navigation functions
+    // Navigation
     const goToNextStep = () => {
         if (currentStep < 4) {
             setCurrentStep(currentStep + 1);
@@ -198,15 +309,30 @@ export default function CreateTask() {
     };
 
     // Date selection
-    const selectDate = (date: string) => {
+    const selectDate = (dateObj: any) => {
+        const date = dateObj.dateString;
+
+        if (!availableDates.includes(date)) {
+            Alert.alert(
+                'No Task Planner',
+                'No task planner exists for this date. Please select a date with an existing task planner.',
+                [{ text: 'OK' }]
+            );
+            return;
+        }
+
         setTaskData({ ...taskData, date });
 
-        // Check if task plan exists
-        if (existingTaskPlanDates.includes(date)) {
-            setTimeout(() => goToNextStep(), 300);
-        } else {
-            setShowTaskPlanModal(true);
+        // Find planner for date if not already set
+        if (!currentPlannerId) {
+            const plannerId = findPlannerForDate(date);
+            if (plannerId) {
+                setCurrentPlannerId(plannerId);
+                loadPlannerDetails(plannerId);
+            }
         }
+
+        setTimeout(() => goToNextStep(), 300);
     };
 
     // Time selection
@@ -230,7 +356,6 @@ export default function CreateTask() {
 
     const checkTimeConflict = (start: string | null, end: string | null) => {
         if (start && end) {
-            // Simple conflict check - in real app would check against actual schedule
             const conflictTimes = ['10:00', '10:30', '11:00', '14:00', '14:30'];
             const hasConflict = conflictTimes.includes(start);
             setTaskData(prev => ({ ...prev, hasConflict }));
@@ -244,16 +369,57 @@ export default function CreateTask() {
     };
 
     // Submit functions
-    const saveDraft = () => {
+    const saveDraft = async () => {
+        if (!currentPlannerId) {
+            Alert.alert('Error', 'No task planner selected');
+            return;
+        }
+
         Alert.alert('Success', 'Task saved as draft successfully!', [
-            { text: 'OK', onPress: () => router.back() }
+            {
+                text: 'OK',
+                onPress: () => navigateBack()
+            }
         ]);
     };
 
-    const submitTask = () => {
-        Alert.alert('Success', 'Task submitted successfully!', [
-            { text: 'OK', onPress: () => router.back() }
-        ]);
+    const submitTask = async () => {
+        if (!currentPlannerId) {
+            Alert.alert('Error', 'No task planner selected');
+            return;
+        }
+
+        setLoading(true);
+        try {
+            await taskService.createTask({
+                taskPlannerId: currentPlannerId,
+                type: taskData.type === 'tour' ? 'tourplan' : taskData.type!,
+                type_id: taskData.entity!.id,
+                date: taskData.date!,
+                startTime: taskData.startTime! + ':00',
+                endTime: taskData.endTime! + ':00',
+                location: taskData.location || '',
+            });
+
+            Alert.alert('Success', 'Task created successfully!', [
+                {
+                    text: 'OK',
+                    onPress: () => navigateBack()
+                }
+            ]);
+        } catch (error: any) {
+            Alert.alert('Error', error.message || 'Failed to create task');
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const navigateBack = () => {
+        if (returnTo === 'createTaskPlanner') {
+            router.back();
+        } else {
+            router.replace('/dailyPlaner/home');
+        }
     };
 
     const cancelTask = () => {
@@ -285,9 +451,7 @@ export default function CreateTask() {
     const renderProgressIndicator = () => (
         <StyledView className="bg-white px-5 py-4 border-b border-gray-200">
             <StyledView className="flex-row justify-between items-center relative">
-                {/* Progress line */}
                 <StyledView className="absolute left-0 right-0 h-0.5 bg-gray-300 top-4" />
-
                 {[1, 2, 3, 4].map((step) => (
                     <StyledView
                         key={step}
@@ -423,8 +587,16 @@ export default function CreateTask() {
                 Select Date
             </StyledText>
 
+            {currentPlannerId && plannerStartDate && plannerEndDate && (
+                <StyledView className="bg-blue-50 border border-blue-200 rounded-lg p-3 mb-4">
+                    <StyledText className="text-xs font-medium text-blue-700">
+                        Task Planner Range: {format(new Date(plannerStartDate), 'MMM d')} - {format(new Date(plannerEndDate), 'MMM d, yyyy')}
+                    </StyledText>
+                </StyledView>
+            )}
+
             <Calendar
-                onDayPress={(day) => selectDate(day.dateString)}
+                onDayPress={selectDate}
                 markedDates={{
                     ...markedDates,
                     [taskData.date || '']: {
@@ -439,6 +611,14 @@ export default function CreateTask() {
                     arrowColor: '#0077B6',
                 }}
             />
+
+            {availableDates.length === 0 && (
+                <StyledView className="mt-4 bg-yellow-50 border border-yellow-200 rounded-lg p-3">
+                    <StyledText className="text-xs text-yellow-700">
+                        No task planners found. Please create a task planner first.
+                    </StyledText>
+                </StyledView>
+            )}
         </StyledView>
     );
 
@@ -585,6 +765,18 @@ export default function CreateTask() {
         }
     };
 
+    if (loading) {
+        return (
+            <StyledSafeAreaView className="flex-1 bg-gray-50">
+                <StatusBar backgroundColor="#0077B6" barStyle="light-content" />
+                <StyledView className="flex-1 justify-center items-center">
+                    <ActivityIndicator size="large" color="#0077B6" />
+                    <StyledText className="text-gray-600 mt-3">Loading...</StyledText>
+                </StyledView>
+            </StyledSafeAreaView>
+        );
+    }
+
     return (
         <StyledSafeAreaView className="flex-1 bg-gray-50">
             <StatusBar backgroundColor="#0077B6" barStyle="light-content" />
@@ -638,13 +830,17 @@ export default function CreateTask() {
 
                     <StyledTouchableOpacity
                         onPress={submitTask}
-                        disabled={currentStep !== 4 || !isStepValid()}
+                        disabled={currentStep !== 4 || !isStepValid() || loading}
                         className={`flex-1 py-3 rounded-lg items-center ${currentStep === 4 && isStepValid()
                             ? 'bg-green-500'
                             : 'bg-gray-300'
                             }`}
                     >
-                        <StyledText className="text-sm font-semibold text-white">Submit</StyledText>
+                        {loading ? (
+                            <ActivityIndicator size="small" color="#FFFFFF" />
+                        ) : (
+                            <StyledText className="text-sm font-semibold text-white">Submit</StyledText>
+                        )}
                     </StyledTouchableOpacity>
                 </StyledView>
             </StyledView>
@@ -669,91 +865,6 @@ export default function CreateTask() {
                     onChange={handleEndTimeChange}
                 />
             )}
-
-            {/* Task Plan Modal */}
-            <Modal
-                visible={showTaskPlanModal}
-                transparent
-                animationType="fade"
-                onRequestClose={() => setShowTaskPlanModal(false)}
-            >
-                <StyledView className="flex-1 bg-black/50 justify-center items-center">
-                    <StyledView className="bg-white rounded-xl p-6 mx-5 max-w-xs">
-                        <StyledText className="text-lg font-semibold text-gray-900 mb-3">
-                            Task Plan Not Found
-                        </StyledText>
-                        <StyledText className="text-sm text-gray-600 mb-5">
-                            No task plan exists for the selected date. You need to create a task plan first before adding tasks.
-                        </StyledText>
-                        <StyledView className="flex-row gap-3">
-                            <StyledTouchableOpacity
-                                onPress={() => {
-                                    setShowTaskPlanModal(false);
-                                    setTaskData({ ...taskData, date: null });
-                                }}
-                                className="flex-1 bg-gray-100 py-2 rounded-lg items-center"
-                            >
-                                <StyledText className="text-sm font-semibold text-gray-600">
-                                    Choose Different
-                                </StyledText>
-                            </StyledTouchableOpacity>
-                            <StyledTouchableOpacity
-                                onPress={() => {
-                                    setShowTaskPlanModal(false);
-                                    Alert.alert('Navigate', 'Navigate to Create Task Plan');
-                                }}
-                                className="flex-1 bg-[#0077B6] py-2 rounded-lg items-center"
-                            >
-                                <StyledText className="text-sm font-semibold text-white">
-                                    Create Plan
-                                </StyledText>
-                            </StyledTouchableOpacity>
-                        </StyledView>
-                    </StyledView>
-                </StyledView>
-            </Modal>
-
-            {/* Conflict Modal */}
-            <Modal
-                visible={showConflictModal}
-                transparent
-                animationType="fade"
-                onRequestClose={() => setShowConflictModal(false)}
-            >
-                <StyledView className="flex-1 bg-black/50 justify-center items-center">
-                    <StyledView className="bg-white rounded-xl p-6 mx-5 max-w-xs">
-                        <StyledText className="text-lg font-semibold text-gray-900 mb-3">
-                            Scheduling Conflict
-                        </StyledText>
-                        <StyledText className="text-sm text-gray-600 mb-5">
-                            The selected time conflicts with:{'\n\n'}
-                            <StyledText className="font-semibold">Team Meeting</StyledText>{'\n'}
-                            11:00 AM - 12:00 PM
-                        </StyledText>
-                        <StyledView className="flex-row gap-3">
-                            <StyledTouchableOpacity
-                                onPress={() => setShowConflictModal(false)}
-                                className="flex-1 bg-gray-100 py-2 rounded-lg items-center"
-                            >
-                                <StyledText className="text-sm font-semibold text-gray-600">
-                                    Different Time
-                                </StyledText>
-                            </StyledTouchableOpacity>
-                            <StyledTouchableOpacity
-                                onPress={() => {
-                                    setShowConflictModal(false);
-                                    setTaskData({ ...taskData, hasConflict: true });
-                                }}
-                                className="flex-1 bg-[#0077B6] py-2 rounded-lg items-center"
-                            >
-                                <StyledText className="text-sm font-semibold text-white">
-                                    Create Anyway
-                                </StyledText>
-                            </StyledTouchableOpacity>
-                        </StyledView>
-                    </StyledView>
-                </StyledView>
-            </Modal>
         </StyledSafeAreaView>
     );
 }

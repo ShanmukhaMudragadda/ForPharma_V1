@@ -459,6 +459,7 @@ exports.Prisma.TaskPlannerScalarFieldEnum = {
   startDate: 'startDate',
   endDate: 'endDate',
   approvalStatus: 'approvalStatus',
+  isActive: 'isActive',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -473,6 +474,7 @@ exports.Prisma.DoctorTaskScalarFieldEnum = {
   endTime: 'endTime',
   completionStatus: 'completionStatus',
   approvalStatus: 'approvalStatus',
+  isActive: 'isActive',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -487,6 +489,7 @@ exports.Prisma.ChemistTaskScalarFieldEnum = {
   endTime: 'endTime',
   completionStatus: 'completionStatus',
   approvalStatus: 'approvalStatus',
+  isActive: 'isActive',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -502,6 +505,7 @@ exports.Prisma.TourPlanTaskScalarFieldEnum = {
   endTime: 'endTime',
   completionStatus: 'completionStatus',
   approvalStatus: 'approvalStatus',
+  isActive: 'isActive',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };

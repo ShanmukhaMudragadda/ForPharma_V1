@@ -161,7 +161,7 @@
 
 // export default DoctorVisitCard;
 
-// components/DoctorVisitCard.tsx
+
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { styled } from 'nativewind';
@@ -173,10 +173,11 @@ const StyledTouchableOpacity = styled(TouchableOpacity);
 
 interface DoctorVisitCardProps {
     id: string;
-    name: string;
-    specialty: string;
+    doctorName: string;  // Changed from 'name'
+    doctorSpecialization: string;  // Changed from 'specialty'
     time: string;
-    location: string;
+    hospitalAddress: string;  // Changed from 'location'
+    hospitalName?: string;  // Added
     completionStatus: 'pending' | 'completed' | 'rescheduled';
     approvalStatus: 'draft' | 'pending' | 'approved' | 'rejected';
     hasConflict?: boolean;
@@ -186,64 +187,24 @@ interface DoctorVisitCardProps {
     };
     onPress?: () => void;
     onConflictPress?: () => void;
+    onDelete?: () => void;
+    onComplete?: () => void;
 }
-
-// Dummy data for doctor visits
-export const dummyDoctorVisits: DoctorVisitCardProps[] = [
-    {
-        id: 'doc-1',
-        name: 'Dr. Rajesh Sharma',
-        specialty: 'Cardiologist',
-        time: '09:00 AM',
-        location: 'Apollo Hospital, Mathura Road',
-        completionStatus: 'completed',
-        approvalStatus: 'approved',
-        coordinates: { latitude: 28.5355, longitude: 77.3910 },
-    },
-    {
-        id: 'doc-2',
-        name: 'Dr. Priya Mehta',
-        specialty: 'Pediatrician',
-        time: '11:30 AM',
-        location: 'Max Hospital, Sector 19, Noida',
-        completionStatus: 'completed',
-        approvalStatus: 'pending',
-        hasConflict: true,
-        coordinates: { latitude: 28.5747, longitude: 77.3240 },
-    },
-    {
-        id: 'doc-3',
-        name: 'Dr. Anish Kumar',
-        specialty: 'Orthopedic Surgeon',
-        time: '03:00 PM',
-        location: 'Fortis Hospital, Vasant Kunj',
-        completionStatus: 'pending',
-        approvalStatus: 'approved',
-        coordinates: { latitude: 28.5273, longitude: 77.1516 },
-    },
-    {
-        id: 'doc-4',
-        name: 'Dr. Neha Gupta',
-        specialty: 'Dermatologist',
-        time: '05:00 PM',
-        location: 'AIIMS, Ansari Nagar',
-        completionStatus: 'pending',
-        approvalStatus: 'draft',
-        coordinates: { latitude: 28.5672, longitude: 77.2100 },
-    },
-];
 
 const DoctorVisitCard: React.FC<DoctorVisitCardProps> = ({
     id,
-    name,
-    specialty,
+    doctorName,
+    doctorSpecialization,
     time,
-    location,
+    hospitalAddress,
+    hospitalName,
     completionStatus,
     approvalStatus,
     hasConflict,
     onPress,
     onConflictPress,
+    onDelete,
+    onComplete,
 }) => {
     const getStatusClasses = (status: string) => {
         switch (status) {
@@ -257,16 +218,28 @@ const DoctorVisitCard: React.FC<DoctorVisitCardProps> = ({
         }
     };
 
-    const timeParts = time.split(' ');
-    const timeValue = timeParts[0];
-    const timePeriod = timeParts[1];
+    // Handle time display - check if it includes AM/PM
+    const formatTime = (timeStr: string) => {
+        if (timeStr.includes('-')) {
+            // It's already formatted as "09:00 - 10:00"
+            const times = timeStr.split(' - ');
+            return { timeValue: times[0], timePeriod: '' };
+        }
+        const timeParts = timeStr.split(' ');
+        return {
+            timeValue: timeParts[0] || timeStr,
+            timePeriod: timeParts[1] || ''
+        };
+    };
+
+    const { timeValue, timePeriod } = formatTime(time);
 
     return (
         <StyledView className="flex-row border-b border-gray-100">
             {/* Time Section */}
             <StyledView className="w-20 py-4 px-2 border-r border-gray-100 bg-gray-50 items-center justify-center">
                 <StyledText className="text-sm font-semibold text-[#0077B6]">{timeValue}</StyledText>
-                <StyledText className="text-xs text-gray-500">{timePeriod}</StyledText>
+                {timePeriod && <StyledText className="text-xs text-gray-500">{timePeriod}</StyledText>}
             </StyledView>
 
             {/* Card Content */}
@@ -274,10 +247,9 @@ const DoctorVisitCard: React.FC<DoctorVisitCardProps> = ({
                 <StyledTouchableOpacity
                     onPress={onPress}
                     activeOpacity={0.3}
-                    className="bg-white rounded-lg border-l-4  shadow-sm p-3"
+                    className="bg-white rounded-lg border-l-4 shadow-sm p-3"
                     style={{ borderLeftColor: '#2563EB' }}
                 >
-
                     <StyledView className="flex-row justify-between">
                         <StyledView className="flex-1">
                             {/* Header with icon and type */}
@@ -294,19 +266,19 @@ const DoctorVisitCard: React.FC<DoctorVisitCardProps> = ({
 
                             {/* Doctor Name */}
                             <StyledText className="text-sm font-semibold text-gray-900 mb-1">
-                                {name}
+                                {doctorName || 'Unknown Doctor'}
                             </StyledText>
 
-                            {/* Specialty */}
+                            {/* Specialization */}
                             <StyledText className="text-xs text-gray-500 mb-2">
-                                {specialty}
+                                {doctorSpecialization || 'General Physician'}
                             </StyledText>
 
                             {/* Location */}
                             <StyledView className="flex-row items-center">
                                 <Ionicons name="location-outline" size={12} color="#6C757D" />
                                 <StyledText className="text-xs text-gray-500 ml-1">
-                                    {location}
+                                    {hospitalName || hospitalAddress || 'No location specified'}
                                 </StyledText>
                             </StyledView>
                         </StyledView>
@@ -334,5 +306,8 @@ const DoctorVisitCard: React.FC<DoctorVisitCardProps> = ({
         </StyledView>
     );
 };
+
+// Export dummy data for backward compatibility
+export const dummyDoctorVisits = [];
 
 export default DoctorVisitCard;

@@ -8,8 +8,8 @@ import { Platform } from 'react-native';
 const router = useRouter();
 // Create axios instance
 const axiosInstance = axios.create({
-    // $env:REACT_NATIVE_PACKAGER_HOSTNAME = "192.168.24.215"
-    // $env:EXPO_DEVTOOLS_LISTEN_ADDRESS = "192.168.24.215"
+    // $env:REACT_NATIVE_PACKAGER_HOSTNAME = "192.168.9.215"
+    // $env:EXPO_DEVTOOLS_LISTEN_ADDRESS = "192.168.9.215"
 
 
     baseURL: 'http://192.168.9.215:3000/api',

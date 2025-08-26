@@ -176,8 +176,6 @@
 // };
 
 // export default ChemistVisitCard;
-
-// components/ChemistVisitCard.tsx
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { styled } from 'nativewind';
@@ -189,10 +187,10 @@ const StyledTouchableOpacity = styled(TouchableOpacity);
 
 interface ChemistVisitCardProps {
     id: string;
-    pharmacyName: string;
-    contactPerson: string;
+    chemistName: string;  // Changed from 'pharmacyName'
+    type?: string;  // Changed from 'contactPerson' to type
     time: string;
-    location: string;
+    address: string;  // Changed from 'location'
     completionStatus: 'pending' | 'completed' | 'rescheduled';
     approvalStatus: 'draft' | 'pending' | 'approved' | 'rejected';
     hasConflict?: boolean;
@@ -202,74 +200,23 @@ interface ChemistVisitCardProps {
     };
     onPress?: () => void;
     onConflictPress?: () => void;
+    onDelete?: () => void;
+    onComplete?: () => void;
 }
-
-// Dummy data for chemist visits
-export const dummyChemistVisits: ChemistVisitCardProps[] = [
-    {
-        id: 'chem-1',
-        pharmacyName: 'Apollo Pharmacy',
-        contactPerson: 'Mr. Suresh Kumar',
-        time: '02:00 PM',
-        location: 'Connaught Place, Central Delhi',
-        completionStatus: 'completed',
-        approvalStatus: 'approved',
-        coordinates: { latitude: 28.6315, longitude: 77.2167 },
-    },
-    {
-        id: 'chem-2',
-        pharmacyName: 'MedPlus Pharmacy',
-        contactPerson: 'Ms. Priya Sharma',
-        time: '05:30 PM',
-        location: 'Lajpat Nagar, South Delhi',
-        completionStatus: 'pending',
-        approvalStatus: 'draft',
-        coordinates: { latitude: 28.5677, longitude: 77.2433 },
-    },
-    {
-        id: 'chem-3',
-        pharmacyName: 'Wellness Forever',
-        contactPerson: 'Mr. Amit Verma',
-        time: '10:00 AM',
-        location: 'Saket, South Delhi',
-        completionStatus: 'completed',
-        approvalStatus: 'approved',
-        coordinates: { latitude: 28.5245, longitude: 77.2066 },
-    },
-    {
-        id: 'chem-4',
-        pharmacyName: 'Netmeds Store',
-        contactPerson: 'Mrs. Kavita Singh',
-        time: '04:00 PM',
-        location: 'Dwarka Sector 12, West Delhi',
-        completionStatus: 'pending',
-        approvalStatus: 'pending',
-        hasConflict: true,
-        coordinates: { latitude: 28.5921, longitude: 77.0460 },
-    },
-    {
-        id: 'chem-5',
-        pharmacyName: 'Frank Ross Pharmacy',
-        contactPerson: 'Mr. Rohit Malhotra',
-        time: '11:00 AM',
-        location: 'Green Park, South Delhi',
-        completionStatus: 'rescheduled',
-        approvalStatus: 'approved',
-        coordinates: { latitude: 28.5494, longitude: 77.2001 },
-    },
-];
 
 const ChemistVisitCard: React.FC<ChemistVisitCardProps> = ({
     id,
-    pharmacyName,
-    contactPerson,
+    chemistName,
+    type,
     time,
-    location,
+    address,
     completionStatus,
     approvalStatus,
     hasConflict,
     onPress,
     onConflictPress,
+    onDelete,
+    onComplete,
 }) => {
     const getStatusClasses = (status: string) => {
         switch (status) {
@@ -283,16 +230,27 @@ const ChemistVisitCard: React.FC<ChemistVisitCardProps> = ({
         }
     };
 
-    const timeParts = time.split(' ');
-    const timeValue = timeParts[0];
-    const timePeriod = timeParts[1];
+    // Handle time display
+    const formatTime = (timeStr: string) => {
+        if (timeStr.includes('-')) {
+            const times = timeStr.split(' - ');
+            return { timeValue: times[0], timePeriod: '' };
+        }
+        const timeParts = timeStr.split(' ');
+        return {
+            timeValue: timeParts[0] || timeStr,
+            timePeriod: timeParts[1] || ''
+        };
+    };
+
+    const { timeValue, timePeriod } = formatTime(time);
 
     return (
         <StyledView className="flex-row border-b border-gray-100">
             {/* Time Section */}
             <StyledView className="w-20 py-4 px-2 border-r border-gray-100 bg-gray-50 items-center justify-center">
                 <StyledText className="text-sm font-semibold text-[#0077B6]">{timeValue}</StyledText>
-                <StyledText className="text-xs text-gray-500">{timePeriod}</StyledText>
+                {timePeriod && <StyledText className="text-xs text-gray-500">{timePeriod}</StyledText>}
             </StyledView>
 
             {/* Card Content */}
@@ -300,10 +258,9 @@ const ChemistVisitCard: React.FC<ChemistVisitCardProps> = ({
                 <StyledTouchableOpacity
                     onPress={onPress}
                     activeOpacity={0.3}
-                    className="bg-white rounded-lg border-l-4  shadow-sm p-3"
+                    className="bg-white rounded-lg border-l-4 shadow-sm p-3"
                     style={{ borderLeftColor: "#9333ea" }}
                 >
-
                     <StyledView className="flex-row justify-between">
                         <StyledView className="flex-1">
                             {/* Header with icon and type */}
@@ -318,21 +275,21 @@ const ChemistVisitCard: React.FC<ChemistVisitCardProps> = ({
                                 </StyledText>
                             </StyledView>
 
-                            {/* Pharmacy Name */}
+                            {/* Chemist Name */}
                             <StyledText className="text-sm font-semibold text-gray-900 mb-1">
-                                {pharmacyName}
+                                {chemistName || 'Unknown Chemist'}
                             </StyledText>
 
-                            {/* Contact Person */}
+                            {/* Type */}
                             <StyledText className="text-xs text-gray-500 mb-2">
-                                {contactPerson}
+                                {type || 'Retail'}
                             </StyledText>
 
                             {/* Location */}
                             <StyledView className="flex-row items-center">
                                 <Ionicons name="location-outline" size={12} color="#6C757D" />
                                 <StyledText className="text-xs text-gray-500 ml-1">
-                                    {location}
+                                    {address || 'No location specified'}
                                 </StyledText>
                             </StyledView>
                         </StyledView>
@@ -360,5 +317,8 @@ const ChemistVisitCard: React.FC<ChemistVisitCardProps> = ({
         </StyledView>
     );
 };
+
+// Export dummy data for backward compatibility
+export const dummyChemistVisits = [];
 
 export default ChemistVisitCard;

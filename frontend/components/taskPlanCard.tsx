@@ -25,10 +25,12 @@ export interface TaskPlanData {
 
 interface TaskPlanCardProps {
     plan: TaskPlanData;
+    onDelete?: () => void;
 }
 
 const TaskPlanCard: React.FC<TaskPlanCardProps> = ({
     plan,
+    onDelete
 }) => {
     const router = useRouter();
 
@@ -48,6 +50,12 @@ const TaskPlanCard: React.FC<TaskPlanCardProps> = ({
     const handleCardPress = () => {
         console.log("pressed on task plane page")
     };
+
+    const handleDelete = () => {
+        if (onDelete) {
+            onDelete();
+        }
+    }
 
 
 

@@ -12,6 +12,9 @@ import drugRoutes from './src/routes/drugRoutes.ts'
 import rcpaRoutes from './src/routes/rcpaRoutes.ts';
 import dcrRoutes from './src/routes/dcrRoutes.ts'
 import sampleRoutes from './src/routes/sampleRoutes.ts'; // NEW SAMPLE ROUTES
+import taskPlannerRoutes from './src/routes/taskPlannerRoutes.ts'
+import taskRoutes from './src/routes/taskRoutes.ts'
+import tourPlanRoutes from './src/routes/tourPlanRoutes.ts'
 
 dotenv.config();
 
@@ -67,6 +70,15 @@ app.use('/api/dcr', dcrRoutes);
 
 // Sample Routes (NEW)
 app.use('/api/samples', sampleRoutes);
+
+// Task Planner Routes
+app.use('/api/taskPlanners', taskPlannerRoutes);
+
+// Tasks Routes
+app.use('/api/tasks', taskRoutes);
+
+// Tour Plan Routes
+app.use('/api/tourPlan', tourPlanRoutes)
 
 // 404 Not Found handler
 app.use((req, res) => {

@@ -176,8 +176,6 @@
 // };
 
 // export default TourPlanCard;
-
-// components/TourPlanCard.tsx
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { styled } from 'nativewind';
@@ -189,10 +187,11 @@ const StyledTouchableOpacity = styled(TouchableOpacity);
 
 interface TourPlanCardProps {
     id: string;
-    title: string;
-    purpose: string;
+    tourName: string;  // Changed from 'title'
+    description?: string;  // Changed from 'purpose'
     time: string;
-    location: string;
+    distance?: string;  // Added
+    locations?: number;  // Added
     completionStatus: 'pending' | 'completed' | 'rescheduled';
     approvalStatus: 'draft' | 'pending' | 'approved' | 'rejected';
     hasConflict?: boolean;
@@ -202,74 +201,24 @@ interface TourPlanCardProps {
     };
     onPress?: () => void;
     onConflictPress?: () => void;
+    onDelete?: () => void;
+    onComplete?: () => void;
 }
-
-// Dummy data for tour plans
-export const dummyTourPlans: TourPlanCardProps[] = [
-    {
-        id: 'tour-1',
-        title: 'Central Delhi Market Survey',
-        purpose: 'Market Research',
-        time: '04:00 PM',
-        location: 'Karol Bagh, Central Delhi',
-        completionStatus: 'pending',
-        approvalStatus: 'approved',
-        coordinates: { latitude: 28.6514, longitude: 77.1902 },
-    },
-    {
-        id: 'tour-2',
-        title: 'Hospital Network Analysis',
-        purpose: 'Competition Study',
-        time: '09:30 AM',
-        location: 'Rohini Sector 5, North Delhi',
-        completionStatus: 'completed',
-        approvalStatus: 'approved',
-        coordinates: { latitude: 28.7495, longitude: 77.1198 },
-    },
-    {
-        id: 'tour-3',
-        title: 'Pharmacy Chain Assessment',
-        purpose: 'Partnership Opportunity',
-        time: '02:30 PM',
-        location: 'Nehru Place, South Delhi',
-        completionStatus: 'pending',
-        approvalStatus: 'pending',
-        hasConflict: true,
-        coordinates: { latitude: 28.5488, longitude: 77.2513 },
-    },
-    {
-        id: 'tour-4',
-        title: 'Medical Conference Prep',
-        purpose: 'Event Planning',
-        time: '06:00 PM',
-        location: 'India Habitat Centre, Lodhi Road',
-        completionStatus: 'pending',
-        approvalStatus: 'draft',
-        coordinates: { latitude: 28.5933, longitude: 77.2265 },
-    },
-    {
-        id: 'tour-5',
-        title: 'Territory Expansion Survey',
-        purpose: 'New Area Exploration',
-        time: '11:00 AM',
-        location: 'Gurgaon Sector 48',
-        completionStatus: 'rescheduled',
-        approvalStatus: 'rejected',
-        coordinates: { latitude: 28.4089, longitude: 77.0382 },
-    },
-];
 
 const TourPlanCard: React.FC<TourPlanCardProps> = ({
     id,
-    title,
-    purpose,
+    tourName,
+    description,
     time,
-    location,
+    distance,
+    locations,
     completionStatus,
     approvalStatus,
     hasConflict,
     onPress,
     onConflictPress,
+    onDelete,
+    onComplete,
 }) => {
     const getStatusClasses = (status: string) => {
         switch (status) {
@@ -283,16 +232,27 @@ const TourPlanCard: React.FC<TourPlanCardProps> = ({
         }
     };
 
-    const timeParts = time.split(' ');
-    const timeValue = timeParts[0];
-    const timePeriod = timeParts[1];
+    // Handle time display
+    const formatTime = (timeStr: string) => {
+        if (timeStr.includes('-')) {
+            const times = timeStr.split(' - ');
+            return { timeValue: times[0], timePeriod: '' };
+        }
+        const timeParts = timeStr.split(' ');
+        return {
+            timeValue: timeParts[0] || timeStr,
+            timePeriod: timeParts[1] || ''
+        };
+    };
+
+    const { timeValue, timePeriod } = formatTime(time);
 
     return (
         <StyledView className="flex-row border-b border-gray-100">
             {/* Time Section */}
             <StyledView className="w-20 py-4 px-2 border-r border-gray-100 bg-gray-50 items-center justify-center">
                 <StyledText className="text-sm font-semibold text-[#0077B6]">{timeValue}</StyledText>
-                <StyledText className="text-xs text-gray-500">{timePeriod}</StyledText>
+                {timePeriod && <StyledText className="text-xs text-gray-500">{timePeriod}</StyledText>}
             </StyledView>
 
             {/* Card Content */}
@@ -300,10 +260,9 @@ const TourPlanCard: React.FC<TourPlanCardProps> = ({
                 <StyledTouchableOpacity
                     onPress={onPress}
                     activeOpacity={0.3}
-                    className="bg-white rounded-lg border-l-4  shadow-sm p-3"
+                    className="bg-white rounded-lg border-l-4 shadow-sm p-3"
                     style={{ borderLeftColor: "#16a34a" }}
                 >
-
                     <StyledView className="flex-row justify-between">
                         <StyledView className="flex-1">
                             {/* Header with icon and type */}
@@ -318,21 +277,23 @@ const TourPlanCard: React.FC<TourPlanCardProps> = ({
                                 </StyledText>
                             </StyledView>
 
-                            {/* Title */}
+                            {/* Tour Name */}
                             <StyledText className="text-sm font-semibold text-gray-900 mb-1">
-                                {title}
+                                {tourName || 'Tour Plan'}
                             </StyledText>
 
-                            {/* Purpose */}
-                            <StyledText className="text-xs text-gray-500 mb-2">
-                                {purpose}
-                            </StyledText>
+                            {/* Description */}
+                            {description && (
+                                <StyledText className="text-xs text-gray-500 mb-2">
+                                    {description}
+                                </StyledText>
+                            )}
 
-                            {/* Location */}
+                            {/* Distance and Locations */}
                             <StyledView className="flex-row items-center">
                                 <Ionicons name="location-outline" size={12} color="#6C757D" />
                                 <StyledText className="text-xs text-gray-500 ml-1">
-                                    {location}
+                                    {locations ? `${locations} locations` : ''}
                                 </StyledText>
                             </StyledView>
                         </StyledView>
@@ -360,5 +321,8 @@ const TourPlanCard: React.FC<TourPlanCardProps> = ({
         </StyledView>
     );
 };
+
+// Export dummy data for backward compatibility
+export const dummyTourPlans = [];
 
 export default TourPlanCard;

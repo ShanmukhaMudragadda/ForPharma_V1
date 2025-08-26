@@ -35304,6 +35304,7 @@ export namespace Prisma {
     startDate: Date | null
     endDate: Date | null
     approvalStatus: $Enums.ApprovalStatus | null
+    isActive: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -35314,6 +35315,7 @@ export namespace Prisma {
     startDate: Date | null
     endDate: Date | null
     approvalStatus: $Enums.ApprovalStatus | null
+    isActive: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -35324,6 +35326,7 @@ export namespace Prisma {
     startDate: number
     endDate: number
     approvalStatus: number
+    isActive: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -35336,6 +35339,7 @@ export namespace Prisma {
     startDate?: true
     endDate?: true
     approvalStatus?: true
+    isActive?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -35346,6 +35350,7 @@ export namespace Prisma {
     startDate?: true
     endDate?: true
     approvalStatus?: true
+    isActive?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -35356,6 +35361,7 @@ export namespace Prisma {
     startDate?: true
     endDate?: true
     approvalStatus?: true
+    isActive?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -35439,6 +35445,7 @@ export namespace Prisma {
     startDate: Date
     endDate: Date
     approvalStatus: $Enums.ApprovalStatus
+    isActive: boolean
     createdAt: Date
     updatedAt: Date
     _count: TaskPlannerCountAggregateOutputType | null
@@ -35466,6 +35473,7 @@ export namespace Prisma {
     startDate?: boolean
     endDate?: boolean
     approvalStatus?: boolean
+    isActive?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     employee?: boolean | EmployeeDefaultArgs<ExtArgs>
@@ -35481,6 +35489,7 @@ export namespace Prisma {
     startDate?: boolean
     endDate?: boolean
     approvalStatus?: boolean
+    isActive?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     employee?: boolean | EmployeeDefaultArgs<ExtArgs>
@@ -35492,6 +35501,7 @@ export namespace Prisma {
     startDate?: boolean
     endDate?: boolean
     approvalStatus?: boolean
+    isActive?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     employee?: boolean | EmployeeDefaultArgs<ExtArgs>
@@ -35503,11 +35513,12 @@ export namespace Prisma {
     startDate?: boolean
     endDate?: boolean
     approvalStatus?: boolean
+    isActive?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type TaskPlannerOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "employeeId" | "startDate" | "endDate" | "approvalStatus" | "createdAt" | "updatedAt", ExtArgs["result"]["taskPlanner"]>
+  export type TaskPlannerOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "employeeId" | "startDate" | "endDate" | "approvalStatus" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["taskPlanner"]>
   export type TaskPlannerInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     employee?: boolean | EmployeeDefaultArgs<ExtArgs>
     doctorTasks?: boolean | TaskPlanner$doctorTasksArgs<ExtArgs>
@@ -35536,6 +35547,7 @@ export namespace Prisma {
       startDate: Date
       endDate: Date
       approvalStatus: $Enums.ApprovalStatus
+      isActive: boolean
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["taskPlanner"]>
@@ -35970,6 +35982,7 @@ export namespace Prisma {
     readonly startDate: FieldRef<"TaskPlanner", 'DateTime'>
     readonly endDate: FieldRef<"TaskPlanner", 'DateTime'>
     readonly approvalStatus: FieldRef<"TaskPlanner", 'ApprovalStatus'>
+    readonly isActive: FieldRef<"TaskPlanner", 'Boolean'>
     readonly createdAt: FieldRef<"TaskPlanner", 'DateTime'>
     readonly updatedAt: FieldRef<"TaskPlanner", 'DateTime'>
   }
@@ -36478,6 +36491,7 @@ export namespace Prisma {
     endTime: Date | null
     completionStatus: $Enums.CompletionStatus | null
     approvalStatus: $Enums.ApprovalStatus | null
+    isActive: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -36492,6 +36506,7 @@ export namespace Prisma {
     endTime: Date | null
     completionStatus: $Enums.CompletionStatus | null
     approvalStatus: $Enums.ApprovalStatus | null
+    isActive: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -36506,6 +36521,7 @@ export namespace Prisma {
     endTime: number
     completionStatus: number
     approvalStatus: number
+    isActive: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -36522,6 +36538,7 @@ export namespace Prisma {
     endTime?: true
     completionStatus?: true
     approvalStatus?: true
+    isActive?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -36536,6 +36553,7 @@ export namespace Prisma {
     endTime?: true
     completionStatus?: true
     approvalStatus?: true
+    isActive?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -36550,6 +36568,7 @@ export namespace Prisma {
     endTime?: true
     completionStatus?: true
     approvalStatus?: true
+    isActive?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -36637,6 +36656,7 @@ export namespace Prisma {
     endTime: Date
     completionStatus: $Enums.CompletionStatus
     approvalStatus: $Enums.ApprovalStatus
+    isActive: boolean
     createdAt: Date
     updatedAt: Date
     _count: DoctorTaskCountAggregateOutputType | null
@@ -36668,6 +36688,7 @@ export namespace Prisma {
     endTime?: boolean
     completionStatus?: boolean
     approvalStatus?: boolean
+    isActive?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     planner?: boolean | TaskPlannerDefaultArgs<ExtArgs>
@@ -36687,6 +36708,7 @@ export namespace Prisma {
     endTime?: boolean
     completionStatus?: boolean
     approvalStatus?: boolean
+    isActive?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     planner?: boolean | TaskPlannerDefaultArgs<ExtArgs>
@@ -36704,6 +36726,7 @@ export namespace Prisma {
     endTime?: boolean
     completionStatus?: boolean
     approvalStatus?: boolean
+    isActive?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     planner?: boolean | TaskPlannerDefaultArgs<ExtArgs>
@@ -36721,11 +36744,12 @@ export namespace Prisma {
     endTime?: boolean
     completionStatus?: boolean
     approvalStatus?: boolean
+    isActive?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type DoctorTaskOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "plannerId" | "employeeId" | "doctorId" | "taskDate" | "startTime" | "endTime" | "completionStatus" | "approvalStatus" | "createdAt" | "updatedAt", ExtArgs["result"]["doctorTask"]>
+  export type DoctorTaskOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "plannerId" | "employeeId" | "doctorId" | "taskDate" | "startTime" | "endTime" | "completionStatus" | "approvalStatus" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["doctorTask"]>
   export type DoctorTaskInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     planner?: boolean | TaskPlannerDefaultArgs<ExtArgs>
     employee?: boolean | EmployeeDefaultArgs<ExtArgs>
@@ -36762,6 +36786,7 @@ export namespace Prisma {
       endTime: Date
       completionStatus: $Enums.CompletionStatus
       approvalStatus: $Enums.ApprovalStatus
+      isActive: boolean
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["doctorTask"]>
@@ -37200,6 +37225,7 @@ export namespace Prisma {
     readonly endTime: FieldRef<"DoctorTask", 'DateTime'>
     readonly completionStatus: FieldRef<"DoctorTask", 'CompletionStatus'>
     readonly approvalStatus: FieldRef<"DoctorTask", 'ApprovalStatus'>
+    readonly isActive: FieldRef<"DoctorTask", 'Boolean'>
     readonly createdAt: FieldRef<"DoctorTask", 'DateTime'>
     readonly updatedAt: FieldRef<"DoctorTask", 'DateTime'>
   }
@@ -37660,6 +37686,7 @@ export namespace Prisma {
     endTime: Date | null
     completionStatus: $Enums.CompletionStatus | null
     approvalStatus: $Enums.ApprovalStatus | null
+    isActive: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -37674,6 +37701,7 @@ export namespace Prisma {
     endTime: Date | null
     completionStatus: $Enums.CompletionStatus | null
     approvalStatus: $Enums.ApprovalStatus | null
+    isActive: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -37688,6 +37716,7 @@ export namespace Prisma {
     endTime: number
     completionStatus: number
     approvalStatus: number
+    isActive: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -37704,6 +37733,7 @@ export namespace Prisma {
     endTime?: true
     completionStatus?: true
     approvalStatus?: true
+    isActive?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -37718,6 +37748,7 @@ export namespace Prisma {
     endTime?: true
     completionStatus?: true
     approvalStatus?: true
+    isActive?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -37732,6 +37763,7 @@ export namespace Prisma {
     endTime?: true
     completionStatus?: true
     approvalStatus?: true
+    isActive?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -37819,6 +37851,7 @@ export namespace Prisma {
     endTime: Date
     completionStatus: $Enums.CompletionStatus
     approvalStatus: $Enums.ApprovalStatus
+    isActive: boolean
     createdAt: Date
     updatedAt: Date
     _count: ChemistTaskCountAggregateOutputType | null
@@ -37850,6 +37883,7 @@ export namespace Prisma {
     endTime?: boolean
     completionStatus?: boolean
     approvalStatus?: boolean
+    isActive?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     planner?: boolean | TaskPlannerDefaultArgs<ExtArgs>
@@ -37869,6 +37903,7 @@ export namespace Prisma {
     endTime?: boolean
     completionStatus?: boolean
     approvalStatus?: boolean
+    isActive?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     planner?: boolean | TaskPlannerDefaultArgs<ExtArgs>
@@ -37886,6 +37921,7 @@ export namespace Prisma {
     endTime?: boolean
     completionStatus?: boolean
     approvalStatus?: boolean
+    isActive?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     planner?: boolean | TaskPlannerDefaultArgs<ExtArgs>
@@ -37903,11 +37939,12 @@ export namespace Prisma {
     endTime?: boolean
     completionStatus?: boolean
     approvalStatus?: boolean
+    isActive?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type ChemistTaskOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "plannerId" | "employeeId" | "chemistId" | "taskDate" | "startTime" | "endTime" | "completionStatus" | "approvalStatus" | "createdAt" | "updatedAt", ExtArgs["result"]["chemistTask"]>
+  export type ChemistTaskOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "plannerId" | "employeeId" | "chemistId" | "taskDate" | "startTime" | "endTime" | "completionStatus" | "approvalStatus" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["chemistTask"]>
   export type ChemistTaskInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     planner?: boolean | TaskPlannerDefaultArgs<ExtArgs>
     employee?: boolean | EmployeeDefaultArgs<ExtArgs>
@@ -37944,6 +37981,7 @@ export namespace Prisma {
       endTime: Date
       completionStatus: $Enums.CompletionStatus
       approvalStatus: $Enums.ApprovalStatus
+      isActive: boolean
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["chemistTask"]>
@@ -38382,6 +38420,7 @@ export namespace Prisma {
     readonly endTime: FieldRef<"ChemistTask", 'DateTime'>
     readonly completionStatus: FieldRef<"ChemistTask", 'CompletionStatus'>
     readonly approvalStatus: FieldRef<"ChemistTask", 'ApprovalStatus'>
+    readonly isActive: FieldRef<"ChemistTask", 'Boolean'>
     readonly createdAt: FieldRef<"ChemistTask", 'DateTime'>
     readonly updatedAt: FieldRef<"ChemistTask", 'DateTime'>
   }
@@ -38843,6 +38882,7 @@ export namespace Prisma {
     endTime: Date | null
     completionStatus: $Enums.CompletionStatus | null
     approvalStatus: $Enums.ApprovalStatus | null
+    isActive: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -38858,6 +38898,7 @@ export namespace Prisma {
     endTime: Date | null
     completionStatus: $Enums.CompletionStatus | null
     approvalStatus: $Enums.ApprovalStatus | null
+    isActive: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -38873,6 +38914,7 @@ export namespace Prisma {
     endTime: number
     completionStatus: number
     approvalStatus: number
+    isActive: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -38890,6 +38932,7 @@ export namespace Prisma {
     endTime?: true
     completionStatus?: true
     approvalStatus?: true
+    isActive?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -38905,6 +38948,7 @@ export namespace Prisma {
     endTime?: true
     completionStatus?: true
     approvalStatus?: true
+    isActive?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -38920,6 +38964,7 @@ export namespace Prisma {
     endTime?: true
     completionStatus?: true
     approvalStatus?: true
+    isActive?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -39008,6 +39053,7 @@ export namespace Prisma {
     endTime: Date
     completionStatus: $Enums.CompletionStatus
     approvalStatus: $Enums.ApprovalStatus
+    isActive: boolean
     createdAt: Date
     updatedAt: Date
     _count: TourPlanTaskCountAggregateOutputType | null
@@ -39040,6 +39086,7 @@ export namespace Prisma {
     endTime?: boolean
     completionStatus?: boolean
     approvalStatus?: boolean
+    isActive?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     planner?: boolean | TaskPlannerDefaultArgs<ExtArgs>
@@ -39060,6 +39107,7 @@ export namespace Prisma {
     endTime?: boolean
     completionStatus?: boolean
     approvalStatus?: boolean
+    isActive?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     planner?: boolean | TaskPlannerDefaultArgs<ExtArgs>
@@ -39078,6 +39126,7 @@ export namespace Prisma {
     endTime?: boolean
     completionStatus?: boolean
     approvalStatus?: boolean
+    isActive?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     planner?: boolean | TaskPlannerDefaultArgs<ExtArgs>
@@ -39096,11 +39145,12 @@ export namespace Prisma {
     endTime?: boolean
     completionStatus?: boolean
     approvalStatus?: boolean
+    isActive?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type TourPlanTaskOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "plannerId" | "employeeId" | "tourPlanId" | "location" | "taskDate" | "startTime" | "endTime" | "completionStatus" | "approvalStatus" | "createdAt" | "updatedAt", ExtArgs["result"]["tourPlanTask"]>
+  export type TourPlanTaskOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "plannerId" | "employeeId" | "tourPlanId" | "location" | "taskDate" | "startTime" | "endTime" | "completionStatus" | "approvalStatus" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["tourPlanTask"]>
   export type TourPlanTaskInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     planner?: boolean | TaskPlannerDefaultArgs<ExtArgs>
     employee?: boolean | EmployeeDefaultArgs<ExtArgs>
@@ -39138,6 +39188,7 @@ export namespace Prisma {
       endTime: Date
       completionStatus: $Enums.CompletionStatus
       approvalStatus: $Enums.ApprovalStatus
+      isActive: boolean
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["tourPlanTask"]>
@@ -39577,6 +39628,7 @@ export namespace Prisma {
     readonly endTime: FieldRef<"TourPlanTask", 'DateTime'>
     readonly completionStatus: FieldRef<"TourPlanTask", 'CompletionStatus'>
     readonly approvalStatus: FieldRef<"TourPlanTask", 'ApprovalStatus'>
+    readonly isActive: FieldRef<"TourPlanTask", 'Boolean'>
     readonly createdAt: FieldRef<"TourPlanTask", 'DateTime'>
     readonly updatedAt: FieldRef<"TourPlanTask", 'DateTime'>
   }
@@ -54199,6 +54251,7 @@ export namespace Prisma {
     startDate: 'startDate',
     endDate: 'endDate',
     approvalStatus: 'approvalStatus',
+    isActive: 'isActive',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -54216,6 +54269,7 @@ export namespace Prisma {
     endTime: 'endTime',
     completionStatus: 'completionStatus',
     approvalStatus: 'approvalStatus',
+    isActive: 'isActive',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -54233,6 +54287,7 @@ export namespace Prisma {
     endTime: 'endTime',
     completionStatus: 'completionStatus',
     approvalStatus: 'approvalStatus',
+    isActive: 'isActive',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -54251,6 +54306,7 @@ export namespace Prisma {
     endTime: 'endTime',
     completionStatus: 'completionStatus',
     approvalStatus: 'approvalStatus',
+    isActive: 'isActive',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -57014,6 +57070,7 @@ export namespace Prisma {
     startDate?: DateTimeFilter<"TaskPlanner"> | Date | string
     endDate?: DateTimeFilter<"TaskPlanner"> | Date | string
     approvalStatus?: EnumApprovalStatusFilter<"TaskPlanner"> | $Enums.ApprovalStatus
+    isActive?: BoolFilter<"TaskPlanner"> | boolean
     createdAt?: DateTimeFilter<"TaskPlanner"> | Date | string
     updatedAt?: DateTimeFilter<"TaskPlanner"> | Date | string
     employee?: XOR<EmployeeScalarRelationFilter, EmployeeWhereInput>
@@ -57028,6 +57085,7 @@ export namespace Prisma {
     startDate?: SortOrder
     endDate?: SortOrder
     approvalStatus?: SortOrder
+    isActive?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     employee?: EmployeeOrderByWithRelationInput
@@ -57045,6 +57103,7 @@ export namespace Prisma {
     startDate?: DateTimeFilter<"TaskPlanner"> | Date | string
     endDate?: DateTimeFilter<"TaskPlanner"> | Date | string
     approvalStatus?: EnumApprovalStatusFilter<"TaskPlanner"> | $Enums.ApprovalStatus
+    isActive?: BoolFilter<"TaskPlanner"> | boolean
     createdAt?: DateTimeFilter<"TaskPlanner"> | Date | string
     updatedAt?: DateTimeFilter<"TaskPlanner"> | Date | string
     employee?: XOR<EmployeeScalarRelationFilter, EmployeeWhereInput>
@@ -57059,6 +57118,7 @@ export namespace Prisma {
     startDate?: SortOrder
     endDate?: SortOrder
     approvalStatus?: SortOrder
+    isActive?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: TaskPlannerCountOrderByAggregateInput
@@ -57075,6 +57135,7 @@ export namespace Prisma {
     startDate?: DateTimeWithAggregatesFilter<"TaskPlanner"> | Date | string
     endDate?: DateTimeWithAggregatesFilter<"TaskPlanner"> | Date | string
     approvalStatus?: EnumApprovalStatusWithAggregatesFilter<"TaskPlanner"> | $Enums.ApprovalStatus
+    isActive?: BoolWithAggregatesFilter<"TaskPlanner"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"TaskPlanner"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"TaskPlanner"> | Date | string
   }
@@ -57092,6 +57153,7 @@ export namespace Prisma {
     endTime?: DateTimeFilter<"DoctorTask"> | Date | string
     completionStatus?: EnumCompletionStatusFilter<"DoctorTask"> | $Enums.CompletionStatus
     approvalStatus?: EnumApprovalStatusFilter<"DoctorTask"> | $Enums.ApprovalStatus
+    isActive?: BoolFilter<"DoctorTask"> | boolean
     createdAt?: DateTimeFilter<"DoctorTask"> | Date | string
     updatedAt?: DateTimeFilter<"DoctorTask"> | Date | string
     planner?: XOR<TaskPlannerScalarRelationFilter, TaskPlannerWhereInput>
@@ -57110,6 +57172,7 @@ export namespace Prisma {
     endTime?: SortOrder
     completionStatus?: SortOrder
     approvalStatus?: SortOrder
+    isActive?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     planner?: TaskPlannerOrderByWithRelationInput
@@ -57131,6 +57194,7 @@ export namespace Prisma {
     endTime?: DateTimeFilter<"DoctorTask"> | Date | string
     completionStatus?: EnumCompletionStatusFilter<"DoctorTask"> | $Enums.CompletionStatus
     approvalStatus?: EnumApprovalStatusFilter<"DoctorTask"> | $Enums.ApprovalStatus
+    isActive?: BoolFilter<"DoctorTask"> | boolean
     createdAt?: DateTimeFilter<"DoctorTask"> | Date | string
     updatedAt?: DateTimeFilter<"DoctorTask"> | Date | string
     planner?: XOR<TaskPlannerScalarRelationFilter, TaskPlannerWhereInput>
@@ -57149,6 +57213,7 @@ export namespace Prisma {
     endTime?: SortOrder
     completionStatus?: SortOrder
     approvalStatus?: SortOrder
+    isActive?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: DoctorTaskCountOrderByAggregateInput
@@ -57169,6 +57234,7 @@ export namespace Prisma {
     endTime?: DateTimeWithAggregatesFilter<"DoctorTask"> | Date | string
     completionStatus?: EnumCompletionStatusWithAggregatesFilter<"DoctorTask"> | $Enums.CompletionStatus
     approvalStatus?: EnumApprovalStatusWithAggregatesFilter<"DoctorTask"> | $Enums.ApprovalStatus
+    isActive?: BoolWithAggregatesFilter<"DoctorTask"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"DoctorTask"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"DoctorTask"> | Date | string
   }
@@ -57186,6 +57252,7 @@ export namespace Prisma {
     endTime?: DateTimeFilter<"ChemistTask"> | Date | string
     completionStatus?: EnumCompletionStatusFilter<"ChemistTask"> | $Enums.CompletionStatus
     approvalStatus?: EnumApprovalStatusFilter<"ChemistTask"> | $Enums.ApprovalStatus
+    isActive?: BoolFilter<"ChemistTask"> | boolean
     createdAt?: DateTimeFilter<"ChemistTask"> | Date | string
     updatedAt?: DateTimeFilter<"ChemistTask"> | Date | string
     planner?: XOR<TaskPlannerScalarRelationFilter, TaskPlannerWhereInput>
@@ -57204,6 +57271,7 @@ export namespace Prisma {
     endTime?: SortOrder
     completionStatus?: SortOrder
     approvalStatus?: SortOrder
+    isActive?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     planner?: TaskPlannerOrderByWithRelationInput
@@ -57225,6 +57293,7 @@ export namespace Prisma {
     endTime?: DateTimeFilter<"ChemistTask"> | Date | string
     completionStatus?: EnumCompletionStatusFilter<"ChemistTask"> | $Enums.CompletionStatus
     approvalStatus?: EnumApprovalStatusFilter<"ChemistTask"> | $Enums.ApprovalStatus
+    isActive?: BoolFilter<"ChemistTask"> | boolean
     createdAt?: DateTimeFilter<"ChemistTask"> | Date | string
     updatedAt?: DateTimeFilter<"ChemistTask"> | Date | string
     planner?: XOR<TaskPlannerScalarRelationFilter, TaskPlannerWhereInput>
@@ -57243,6 +57312,7 @@ export namespace Prisma {
     endTime?: SortOrder
     completionStatus?: SortOrder
     approvalStatus?: SortOrder
+    isActive?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: ChemistTaskCountOrderByAggregateInput
@@ -57263,6 +57333,7 @@ export namespace Prisma {
     endTime?: DateTimeWithAggregatesFilter<"ChemistTask"> | Date | string
     completionStatus?: EnumCompletionStatusWithAggregatesFilter<"ChemistTask"> | $Enums.CompletionStatus
     approvalStatus?: EnumApprovalStatusWithAggregatesFilter<"ChemistTask"> | $Enums.ApprovalStatus
+    isActive?: BoolWithAggregatesFilter<"ChemistTask"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"ChemistTask"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"ChemistTask"> | Date | string
   }
@@ -57281,6 +57352,7 @@ export namespace Prisma {
     endTime?: DateTimeFilter<"TourPlanTask"> | Date | string
     completionStatus?: EnumCompletionStatusFilter<"TourPlanTask"> | $Enums.CompletionStatus
     approvalStatus?: EnumApprovalStatusFilter<"TourPlanTask"> | $Enums.ApprovalStatus
+    isActive?: BoolFilter<"TourPlanTask"> | boolean
     createdAt?: DateTimeFilter<"TourPlanTask"> | Date | string
     updatedAt?: DateTimeFilter<"TourPlanTask"> | Date | string
     planner?: XOR<TaskPlannerScalarRelationFilter, TaskPlannerWhereInput>
@@ -57300,6 +57372,7 @@ export namespace Prisma {
     endTime?: SortOrder
     completionStatus?: SortOrder
     approvalStatus?: SortOrder
+    isActive?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     planner?: TaskPlannerOrderByWithRelationInput
@@ -57322,6 +57395,7 @@ export namespace Prisma {
     endTime?: DateTimeFilter<"TourPlanTask"> | Date | string
     completionStatus?: EnumCompletionStatusFilter<"TourPlanTask"> | $Enums.CompletionStatus
     approvalStatus?: EnumApprovalStatusFilter<"TourPlanTask"> | $Enums.ApprovalStatus
+    isActive?: BoolFilter<"TourPlanTask"> | boolean
     createdAt?: DateTimeFilter<"TourPlanTask"> | Date | string
     updatedAt?: DateTimeFilter<"TourPlanTask"> | Date | string
     planner?: XOR<TaskPlannerScalarRelationFilter, TaskPlannerWhereInput>
@@ -57341,6 +57415,7 @@ export namespace Prisma {
     endTime?: SortOrder
     completionStatus?: SortOrder
     approvalStatus?: SortOrder
+    isActive?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: TourPlanTaskCountOrderByAggregateInput
@@ -57362,6 +57437,7 @@ export namespace Prisma {
     endTime?: DateTimeWithAggregatesFilter<"TourPlanTask"> | Date | string
     completionStatus?: EnumCompletionStatusWithAggregatesFilter<"TourPlanTask"> | $Enums.CompletionStatus
     approvalStatus?: EnumApprovalStatusWithAggregatesFilter<"TourPlanTask"> | $Enums.ApprovalStatus
+    isActive?: BoolWithAggregatesFilter<"TourPlanTask"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"TourPlanTask"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"TourPlanTask"> | Date | string
   }
@@ -60808,6 +60884,7 @@ export namespace Prisma {
     startDate: Date | string
     endDate: Date | string
     approvalStatus?: $Enums.ApprovalStatus
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     employee: EmployeeCreateNestedOneWithoutTaskPlansInput
@@ -60822,6 +60899,7 @@ export namespace Prisma {
     startDate: Date | string
     endDate: Date | string
     approvalStatus?: $Enums.ApprovalStatus
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     doctorTasks?: DoctorTaskUncheckedCreateNestedManyWithoutPlannerInput
@@ -60834,6 +60912,7 @@ export namespace Prisma {
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
     approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     employee?: EmployeeUpdateOneRequiredWithoutTaskPlansNestedInput
@@ -60848,6 +60927,7 @@ export namespace Prisma {
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
     approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     doctorTasks?: DoctorTaskUncheckedUpdateManyWithoutPlannerNestedInput
@@ -60861,6 +60941,7 @@ export namespace Prisma {
     startDate: Date | string
     endDate: Date | string
     approvalStatus?: $Enums.ApprovalStatus
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -60870,6 +60951,7 @@ export namespace Prisma {
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
     approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -60880,6 +60962,7 @@ export namespace Prisma {
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
     approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -60891,6 +60974,7 @@ export namespace Prisma {
     endTime: Date | string
     completionStatus?: $Enums.CompletionStatus
     approvalStatus?: $Enums.ApprovalStatus
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     planner: TaskPlannerCreateNestedOneWithoutDoctorTasksInput
@@ -60909,6 +60993,7 @@ export namespace Prisma {
     endTime: Date | string
     completionStatus?: $Enums.CompletionStatus
     approvalStatus?: $Enums.ApprovalStatus
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     doctorInteractions?: DoctorInteractionUncheckedCreateNestedManyWithoutDoctorTaskInput
@@ -60921,6 +61006,7 @@ export namespace Prisma {
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
     completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
     approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     planner?: TaskPlannerUpdateOneRequiredWithoutDoctorTasksNestedInput
@@ -60939,6 +61025,7 @@ export namespace Prisma {
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
     completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
     approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     doctorInteractions?: DoctorInteractionUncheckedUpdateManyWithoutDoctorTaskNestedInput
@@ -60954,6 +61041,7 @@ export namespace Prisma {
     endTime: Date | string
     completionStatus?: $Enums.CompletionStatus
     approvalStatus?: $Enums.ApprovalStatus
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -60965,6 +61053,7 @@ export namespace Prisma {
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
     completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
     approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -60979,6 +61068,7 @@ export namespace Prisma {
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
     completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
     approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -60990,6 +61080,7 @@ export namespace Prisma {
     endTime: Date | string
     completionStatus?: $Enums.CompletionStatus
     approvalStatus?: $Enums.ApprovalStatus
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     planner: TaskPlannerCreateNestedOneWithoutChemistTasksInput
@@ -61008,6 +61099,7 @@ export namespace Prisma {
     endTime: Date | string
     completionStatus?: $Enums.CompletionStatus
     approvalStatus?: $Enums.ApprovalStatus
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     chemistInteractions?: ChemistInteractionUncheckedCreateNestedManyWithoutChemistTaskInput
@@ -61020,6 +61112,7 @@ export namespace Prisma {
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
     completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
     approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     planner?: TaskPlannerUpdateOneRequiredWithoutChemistTasksNestedInput
@@ -61038,6 +61131,7 @@ export namespace Prisma {
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
     completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
     approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     chemistInteractions?: ChemistInteractionUncheckedUpdateManyWithoutChemistTaskNestedInput
@@ -61053,6 +61147,7 @@ export namespace Prisma {
     endTime: Date | string
     completionStatus?: $Enums.CompletionStatus
     approvalStatus?: $Enums.ApprovalStatus
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -61064,6 +61159,7 @@ export namespace Prisma {
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
     completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
     approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -61078,6 +61174,7 @@ export namespace Prisma {
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
     completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
     approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -61090,6 +61187,7 @@ export namespace Prisma {
     endTime: Date | string
     completionStatus?: $Enums.CompletionStatus
     approvalStatus?: $Enums.ApprovalStatus
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     planner: TaskPlannerCreateNestedOneWithoutTourPlanTasksInput
@@ -61109,6 +61207,7 @@ export namespace Prisma {
     endTime: Date | string
     completionStatus?: $Enums.CompletionStatus
     approvalStatus?: $Enums.ApprovalStatus
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     tourPlanReports?: TourPlanReportUncheckedCreateNestedManyWithoutTourTaskInput
@@ -61122,6 +61221,7 @@ export namespace Prisma {
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
     completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
     approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     planner?: TaskPlannerUpdateOneRequiredWithoutTourPlanTasksNestedInput
@@ -61141,6 +61241,7 @@ export namespace Prisma {
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
     completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
     approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tourPlanReports?: TourPlanReportUncheckedUpdateManyWithoutTourTaskNestedInput
@@ -61157,6 +61258,7 @@ export namespace Prisma {
     endTime: Date | string
     completionStatus?: $Enums.CompletionStatus
     approvalStatus?: $Enums.ApprovalStatus
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -61169,6 +61271,7 @@ export namespace Prisma {
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
     completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
     approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -61184,6 +61287,7 @@ export namespace Prisma {
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
     completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
     approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -64119,6 +64223,7 @@ export namespace Prisma {
     startDate?: SortOrder
     endDate?: SortOrder
     approvalStatus?: SortOrder
+    isActive?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -64129,6 +64234,7 @@ export namespace Prisma {
     startDate?: SortOrder
     endDate?: SortOrder
     approvalStatus?: SortOrder
+    isActive?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -64139,6 +64245,7 @@ export namespace Prisma {
     startDate?: SortOrder
     endDate?: SortOrder
     approvalStatus?: SortOrder
+    isActive?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -64175,6 +64282,7 @@ export namespace Prisma {
     endTime?: SortOrder
     completionStatus?: SortOrder
     approvalStatus?: SortOrder
+    isActive?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -64189,6 +64297,7 @@ export namespace Prisma {
     endTime?: SortOrder
     completionStatus?: SortOrder
     approvalStatus?: SortOrder
+    isActive?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -64203,6 +64312,7 @@ export namespace Prisma {
     endTime?: SortOrder
     completionStatus?: SortOrder
     approvalStatus?: SortOrder
+    isActive?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -64227,6 +64337,7 @@ export namespace Prisma {
     endTime?: SortOrder
     completionStatus?: SortOrder
     approvalStatus?: SortOrder
+    isActive?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -64241,6 +64352,7 @@ export namespace Prisma {
     endTime?: SortOrder
     completionStatus?: SortOrder
     approvalStatus?: SortOrder
+    isActive?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -64255,6 +64367,7 @@ export namespace Prisma {
     endTime?: SortOrder
     completionStatus?: SortOrder
     approvalStatus?: SortOrder
+    isActive?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -64285,6 +64398,7 @@ export namespace Prisma {
     endTime?: SortOrder
     completionStatus?: SortOrder
     approvalStatus?: SortOrder
+    isActive?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -64300,6 +64414,7 @@ export namespace Prisma {
     endTime?: SortOrder
     completionStatus?: SortOrder
     approvalStatus?: SortOrder
+    isActive?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -64315,6 +64430,7 @@ export namespace Prisma {
     endTime?: SortOrder
     completionStatus?: SortOrder
     approvalStatus?: SortOrder
+    isActive?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -70527,6 +70643,7 @@ export namespace Prisma {
     startDate: Date | string
     endDate: Date | string
     approvalStatus?: $Enums.ApprovalStatus
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     doctorTasks?: DoctorTaskCreateNestedManyWithoutPlannerInput
@@ -70539,6 +70656,7 @@ export namespace Prisma {
     startDate: Date | string
     endDate: Date | string
     approvalStatus?: $Enums.ApprovalStatus
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     doctorTasks?: DoctorTaskUncheckedCreateNestedManyWithoutPlannerInput
@@ -70563,6 +70681,7 @@ export namespace Prisma {
     endTime: Date | string
     completionStatus?: $Enums.CompletionStatus
     approvalStatus?: $Enums.ApprovalStatus
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     planner: TaskPlannerCreateNestedOneWithoutDoctorTasksInput
@@ -70579,6 +70698,7 @@ export namespace Prisma {
     endTime: Date | string
     completionStatus?: $Enums.CompletionStatus
     approvalStatus?: $Enums.ApprovalStatus
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     doctorInteractions?: DoctorInteractionUncheckedCreateNestedManyWithoutDoctorTaskInput
@@ -70601,6 +70721,7 @@ export namespace Prisma {
     endTime: Date | string
     completionStatus?: $Enums.CompletionStatus
     approvalStatus?: $Enums.ApprovalStatus
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     planner: TaskPlannerCreateNestedOneWithoutChemistTasksInput
@@ -70617,6 +70738,7 @@ export namespace Prisma {
     endTime: Date | string
     completionStatus?: $Enums.CompletionStatus
     approvalStatus?: $Enums.ApprovalStatus
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     chemistInteractions?: ChemistInteractionUncheckedCreateNestedManyWithoutChemistTaskInput
@@ -70640,6 +70762,7 @@ export namespace Prisma {
     endTime: Date | string
     completionStatus?: $Enums.CompletionStatus
     approvalStatus?: $Enums.ApprovalStatus
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     planner: TaskPlannerCreateNestedOneWithoutTourPlanTasksInput
@@ -70657,6 +70780,7 @@ export namespace Prisma {
     endTime: Date | string
     completionStatus?: $Enums.CompletionStatus
     approvalStatus?: $Enums.ApprovalStatus
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     tourPlanReports?: TourPlanReportUncheckedCreateNestedManyWithoutTourTaskInput
@@ -71570,6 +71694,7 @@ export namespace Prisma {
     startDate?: DateTimeFilter<"TaskPlanner"> | Date | string
     endDate?: DateTimeFilter<"TaskPlanner"> | Date | string
     approvalStatus?: EnumApprovalStatusFilter<"TaskPlanner"> | $Enums.ApprovalStatus
+    isActive?: BoolFilter<"TaskPlanner"> | boolean
     createdAt?: DateTimeFilter<"TaskPlanner"> | Date | string
     updatedAt?: DateTimeFilter<"TaskPlanner"> | Date | string
   }
@@ -71603,6 +71728,7 @@ export namespace Prisma {
     endTime?: DateTimeFilter<"DoctorTask"> | Date | string
     completionStatus?: EnumCompletionStatusFilter<"DoctorTask"> | $Enums.CompletionStatus
     approvalStatus?: EnumApprovalStatusFilter<"DoctorTask"> | $Enums.ApprovalStatus
+    isActive?: BoolFilter<"DoctorTask"> | boolean
     createdAt?: DateTimeFilter<"DoctorTask"> | Date | string
     updatedAt?: DateTimeFilter<"DoctorTask"> | Date | string
   }
@@ -71636,6 +71762,7 @@ export namespace Prisma {
     endTime?: DateTimeFilter<"ChemistTask"> | Date | string
     completionStatus?: EnumCompletionStatusFilter<"ChemistTask"> | $Enums.CompletionStatus
     approvalStatus?: EnumApprovalStatusFilter<"ChemistTask"> | $Enums.ApprovalStatus
+    isActive?: BoolFilter<"ChemistTask"> | boolean
     createdAt?: DateTimeFilter<"ChemistTask"> | Date | string
     updatedAt?: DateTimeFilter<"ChemistTask"> | Date | string
   }
@@ -71670,6 +71797,7 @@ export namespace Prisma {
     endTime?: DateTimeFilter<"TourPlanTask"> | Date | string
     completionStatus?: EnumCompletionStatusFilter<"TourPlanTask"> | $Enums.CompletionStatus
     approvalStatus?: EnumApprovalStatusFilter<"TourPlanTask"> | $Enums.ApprovalStatus
+    isActive?: BoolFilter<"TourPlanTask"> | boolean
     createdAt?: DateTimeFilter<"TourPlanTask"> | Date | string
     updatedAt?: DateTimeFilter<"TourPlanTask"> | Date | string
   }
@@ -73635,6 +73763,7 @@ export namespace Prisma {
     endTime: Date | string
     completionStatus?: $Enums.CompletionStatus
     approvalStatus?: $Enums.ApprovalStatus
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     planner: TaskPlannerCreateNestedOneWithoutDoctorTasksInput
@@ -73651,6 +73780,7 @@ export namespace Prisma {
     endTime: Date | string
     completionStatus?: $Enums.CompletionStatus
     approvalStatus?: $Enums.ApprovalStatus
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     doctorInteractions?: DoctorInteractionUncheckedCreateNestedManyWithoutDoctorTaskInput
@@ -74907,6 +75037,7 @@ export namespace Prisma {
     endTime: Date | string
     completionStatus?: $Enums.CompletionStatus
     approvalStatus?: $Enums.ApprovalStatus
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     planner: TaskPlannerCreateNestedOneWithoutDoctorTasksInput
@@ -74924,6 +75055,7 @@ export namespace Prisma {
     endTime: Date | string
     completionStatus?: $Enums.CompletionStatus
     approvalStatus?: $Enums.ApprovalStatus
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -75178,6 +75310,7 @@ export namespace Prisma {
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
     completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
     approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     planner?: TaskPlannerUpdateOneRequiredWithoutDoctorTasksNestedInput
@@ -75195,6 +75328,7 @@ export namespace Prisma {
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
     completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
     approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -75910,6 +76044,7 @@ export namespace Prisma {
     endTime: Date | string
     completionStatus?: $Enums.CompletionStatus
     approvalStatus?: $Enums.ApprovalStatus
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     planner: TaskPlannerCreateNestedOneWithoutChemistTasksInput
@@ -75926,6 +76061,7 @@ export namespace Prisma {
     endTime: Date | string
     completionStatus?: $Enums.CompletionStatus
     approvalStatus?: $Enums.ApprovalStatus
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     chemistInteractions?: ChemistInteractionUncheckedCreateNestedManyWithoutChemistTaskInput
@@ -76791,6 +76927,7 @@ export namespace Prisma {
     endTime: Date | string
     completionStatus?: $Enums.CompletionStatus
     approvalStatus?: $Enums.ApprovalStatus
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     planner: TaskPlannerCreateNestedOneWithoutChemistTasksInput
@@ -76808,6 +76945,7 @@ export namespace Prisma {
     endTime: Date | string
     completionStatus?: $Enums.CompletionStatus
     approvalStatus?: $Enums.ApprovalStatus
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -77015,6 +77153,7 @@ export namespace Prisma {
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
     completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
     approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     planner?: TaskPlannerUpdateOneRequiredWithoutChemistTasksNestedInput
@@ -77032,6 +77171,7 @@ export namespace Prisma {
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
     completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
     approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -79192,6 +79332,7 @@ export namespace Prisma {
     endTime: Date | string
     completionStatus?: $Enums.CompletionStatus
     approvalStatus?: $Enums.ApprovalStatus
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     employee: EmployeeCreateNestedOneWithoutDoctorTasksInput
@@ -79208,6 +79349,7 @@ export namespace Prisma {
     endTime: Date | string
     completionStatus?: $Enums.CompletionStatus
     approvalStatus?: $Enums.ApprovalStatus
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     doctorInteractions?: DoctorInteractionUncheckedCreateNestedManyWithoutDoctorTaskInput
@@ -79230,6 +79372,7 @@ export namespace Prisma {
     endTime: Date | string
     completionStatus?: $Enums.CompletionStatus
     approvalStatus?: $Enums.ApprovalStatus
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     employee: EmployeeCreateNestedOneWithoutChemistTasksInput
@@ -79246,6 +79389,7 @@ export namespace Prisma {
     endTime: Date | string
     completionStatus?: $Enums.CompletionStatus
     approvalStatus?: $Enums.ApprovalStatus
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     chemistInteractions?: ChemistInteractionUncheckedCreateNestedManyWithoutChemistTaskInput
@@ -79269,6 +79413,7 @@ export namespace Prisma {
     endTime: Date | string
     completionStatus?: $Enums.CompletionStatus
     approvalStatus?: $Enums.ApprovalStatus
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     employee: EmployeeCreateNestedOneWithoutTourPlanTasksInput
@@ -79286,6 +79431,7 @@ export namespace Prisma {
     endTime: Date | string
     completionStatus?: $Enums.CompletionStatus
     approvalStatus?: $Enums.ApprovalStatus
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     tourPlanReports?: TourPlanReportUncheckedCreateNestedManyWithoutTourTaskInput
@@ -79463,6 +79609,7 @@ export namespace Prisma {
     startDate: Date | string
     endDate: Date | string
     approvalStatus?: $Enums.ApprovalStatus
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     employee: EmployeeCreateNestedOneWithoutTaskPlansInput
@@ -79476,6 +79623,7 @@ export namespace Prisma {
     startDate: Date | string
     endDate: Date | string
     approvalStatus?: $Enums.ApprovalStatus
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     chemistTasks?: ChemistTaskUncheckedCreateNestedManyWithoutPlannerInput
@@ -79699,6 +79847,7 @@ export namespace Prisma {
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
     approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     employee?: EmployeeUpdateOneRequiredWithoutTaskPlansNestedInput
@@ -79712,6 +79861,7 @@ export namespace Prisma {
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
     approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     chemistTasks?: ChemistTaskUncheckedUpdateManyWithoutPlannerNestedInput
@@ -79907,6 +80057,7 @@ export namespace Prisma {
     startDate: Date | string
     endDate: Date | string
     approvalStatus?: $Enums.ApprovalStatus
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     employee: EmployeeCreateNestedOneWithoutTaskPlansInput
@@ -79920,6 +80071,7 @@ export namespace Prisma {
     startDate: Date | string
     endDate: Date | string
     approvalStatus?: $Enums.ApprovalStatus
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     doctorTasks?: DoctorTaskUncheckedCreateNestedManyWithoutPlannerInput
@@ -80153,6 +80305,7 @@ export namespace Prisma {
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
     approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     employee?: EmployeeUpdateOneRequiredWithoutTaskPlansNestedInput
@@ -80166,6 +80319,7 @@ export namespace Prisma {
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
     approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     doctorTasks?: DoctorTaskUncheckedUpdateManyWithoutPlannerNestedInput
@@ -80373,6 +80527,7 @@ export namespace Prisma {
     startDate: Date | string
     endDate: Date | string
     approvalStatus?: $Enums.ApprovalStatus
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     employee: EmployeeCreateNestedOneWithoutTaskPlansInput
@@ -80386,6 +80541,7 @@ export namespace Prisma {
     startDate: Date | string
     endDate: Date | string
     approvalStatus?: $Enums.ApprovalStatus
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     doctorTasks?: DoctorTaskUncheckedCreateNestedManyWithoutPlannerInput
@@ -80567,6 +80723,7 @@ export namespace Prisma {
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
     approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     employee?: EmployeeUpdateOneRequiredWithoutTaskPlansNestedInput
@@ -80580,6 +80737,7 @@ export namespace Prisma {
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
     approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     doctorTasks?: DoctorTaskUncheckedUpdateManyWithoutPlannerNestedInput
@@ -80760,6 +80918,7 @@ export namespace Prisma {
     endTime: Date | string
     completionStatus?: $Enums.CompletionStatus
     approvalStatus?: $Enums.ApprovalStatus
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     planner: TaskPlannerCreateNestedOneWithoutTourPlanTasksInput
@@ -80777,6 +80936,7 @@ export namespace Prisma {
     endTime: Date | string
     completionStatus?: $Enums.CompletionStatus
     approvalStatus?: $Enums.ApprovalStatus
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     tourPlanReports?: TourPlanReportUncheckedCreateNestedManyWithoutTourTaskInput
@@ -80816,6 +80976,7 @@ export namespace Prisma {
     endTime: Date | string
     completionStatus?: $Enums.CompletionStatus
     approvalStatus?: $Enums.ApprovalStatus
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     planner: TaskPlannerCreateNestedOneWithoutTourPlanTasksInput
@@ -80834,6 +80995,7 @@ export namespace Prisma {
     endTime: Date | string
     completionStatus?: $Enums.CompletionStatus
     approvalStatus?: $Enums.ApprovalStatus
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -80862,6 +81024,7 @@ export namespace Prisma {
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
     completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
     approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     planner?: TaskPlannerUpdateOneRequiredWithoutTourPlanTasksNestedInput
@@ -80880,6 +81043,7 @@ export namespace Prisma {
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
     completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
     approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -83954,6 +84118,7 @@ export namespace Prisma {
     startDate: Date | string
     endDate: Date | string
     approvalStatus?: $Enums.ApprovalStatus
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -83967,6 +84132,7 @@ export namespace Prisma {
     endTime: Date | string
     completionStatus?: $Enums.CompletionStatus
     approvalStatus?: $Enums.ApprovalStatus
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -83980,6 +84146,7 @@ export namespace Prisma {
     endTime: Date | string
     completionStatus?: $Enums.CompletionStatus
     approvalStatus?: $Enums.ApprovalStatus
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -83994,6 +84161,7 @@ export namespace Prisma {
     endTime: Date | string
     completionStatus?: $Enums.CompletionStatus
     approvalStatus?: $Enums.ApprovalStatus
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -84963,6 +85131,7 @@ export namespace Prisma {
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
     approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     doctorTasks?: DoctorTaskUpdateManyWithoutPlannerNestedInput
@@ -84975,6 +85144,7 @@ export namespace Prisma {
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
     approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     doctorTasks?: DoctorTaskUncheckedUpdateManyWithoutPlannerNestedInput
@@ -84987,6 +85157,7 @@ export namespace Prisma {
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
     approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -84998,6 +85169,7 @@ export namespace Prisma {
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
     completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
     approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     planner?: TaskPlannerUpdateOneRequiredWithoutDoctorTasksNestedInput
@@ -85014,6 +85186,7 @@ export namespace Prisma {
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
     completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
     approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     doctorInteractions?: DoctorInteractionUncheckedUpdateManyWithoutDoctorTaskNestedInput
@@ -85028,6 +85201,7 @@ export namespace Prisma {
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
     completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
     approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -85039,6 +85213,7 @@ export namespace Prisma {
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
     completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
     approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     planner?: TaskPlannerUpdateOneRequiredWithoutChemistTasksNestedInput
@@ -85055,6 +85230,7 @@ export namespace Prisma {
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
     completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
     approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     chemistInteractions?: ChemistInteractionUncheckedUpdateManyWithoutChemistTaskNestedInput
@@ -85069,6 +85245,7 @@ export namespace Prisma {
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
     completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
     approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -85081,6 +85258,7 @@ export namespace Prisma {
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
     completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
     approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     planner?: TaskPlannerUpdateOneRequiredWithoutTourPlanTasksNestedInput
@@ -85098,6 +85276,7 @@ export namespace Prisma {
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
     completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
     approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tourPlanReports?: TourPlanReportUncheckedUpdateManyWithoutTourTaskNestedInput
@@ -85113,6 +85292,7 @@ export namespace Prisma {
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
     completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
     approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -85960,6 +86140,7 @@ export namespace Prisma {
     endTime: Date | string
     completionStatus?: $Enums.CompletionStatus
     approvalStatus?: $Enums.ApprovalStatus
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -86148,6 +86329,7 @@ export namespace Prisma {
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
     completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
     approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     planner?: TaskPlannerUpdateOneRequiredWithoutDoctorTasksNestedInput
@@ -86164,6 +86346,7 @@ export namespace Prisma {
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
     completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
     approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     doctorInteractions?: DoctorInteractionUncheckedUpdateManyWithoutDoctorTaskNestedInput
@@ -86178,6 +86361,7 @@ export namespace Prisma {
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
     completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
     approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -86391,6 +86575,7 @@ export namespace Prisma {
     endTime: Date | string
     completionStatus?: $Enums.CompletionStatus
     approvalStatus?: $Enums.ApprovalStatus
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -86580,6 +86765,7 @@ export namespace Prisma {
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
     completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
     approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     planner?: TaskPlannerUpdateOneRequiredWithoutChemistTasksNestedInput
@@ -86596,6 +86782,7 @@ export namespace Prisma {
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
     completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
     approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     chemistInteractions?: ChemistInteractionUncheckedUpdateManyWithoutChemistTaskNestedInput
@@ -86610,6 +86797,7 @@ export namespace Prisma {
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
     completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
     approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -86730,6 +86918,7 @@ export namespace Prisma {
     endTime: Date | string
     completionStatus?: $Enums.CompletionStatus
     approvalStatus?: $Enums.ApprovalStatus
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -86743,6 +86932,7 @@ export namespace Prisma {
     endTime: Date | string
     completionStatus?: $Enums.CompletionStatus
     approvalStatus?: $Enums.ApprovalStatus
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -86757,6 +86947,7 @@ export namespace Prisma {
     endTime: Date | string
     completionStatus?: $Enums.CompletionStatus
     approvalStatus?: $Enums.ApprovalStatus
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -86768,6 +86959,7 @@ export namespace Prisma {
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
     completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
     approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     employee?: EmployeeUpdateOneRequiredWithoutDoctorTasksNestedInput
@@ -86784,6 +86976,7 @@ export namespace Prisma {
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
     completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
     approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     doctorInteractions?: DoctorInteractionUncheckedUpdateManyWithoutDoctorTaskNestedInput
@@ -86798,6 +86991,7 @@ export namespace Prisma {
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
     completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
     approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -86809,6 +87003,7 @@ export namespace Prisma {
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
     completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
     approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     employee?: EmployeeUpdateOneRequiredWithoutChemistTasksNestedInput
@@ -86825,6 +87020,7 @@ export namespace Prisma {
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
     completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
     approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     chemistInteractions?: ChemistInteractionUncheckedUpdateManyWithoutChemistTaskNestedInput
@@ -86839,6 +87035,7 @@ export namespace Prisma {
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
     completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
     approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -86851,6 +87048,7 @@ export namespace Prisma {
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
     completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
     approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     employee?: EmployeeUpdateOneRequiredWithoutTourPlanTasksNestedInput
@@ -86868,6 +87066,7 @@ export namespace Prisma {
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
     completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
     approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tourPlanReports?: TourPlanReportUncheckedUpdateManyWithoutTourTaskNestedInput
@@ -86883,6 +87082,7 @@ export namespace Prisma {
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
     completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
     approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -87053,6 +87253,7 @@ export namespace Prisma {
     endTime: Date | string
     completionStatus?: $Enums.CompletionStatus
     approvalStatus?: $Enums.ApprovalStatus
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -87065,6 +87266,7 @@ export namespace Prisma {
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
     completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
     approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     planner?: TaskPlannerUpdateOneRequiredWithoutTourPlanTasksNestedInput
@@ -87082,6 +87284,7 @@ export namespace Prisma {
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
     completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
     approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tourPlanReports?: TourPlanReportUncheckedUpdateManyWithoutTourTaskNestedInput
@@ -87097,6 +87300,7 @@ export namespace Prisma {
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
     completionStatus?: EnumCompletionStatusFieldUpdateOperationsInput | $Enums.CompletionStatus
     approvalStatus?: EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

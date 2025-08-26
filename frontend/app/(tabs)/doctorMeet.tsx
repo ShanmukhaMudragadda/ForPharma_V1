@@ -251,7 +251,6 @@ export default function DoctorMeeting() {
 
     return (
         <StyledSafeAreaView className="flex-1 bg-gray-50">
-            <StatusBar barStyle="dark-content" backgroundColor="#FFFFFF" />
 
             {/* Header */}
             <StyledView className="bg-white px-5 py-4 flex-row justify-between items-center border-b border-gray-200">
