@@ -35,6 +35,12 @@ export default function CreateRCPA() {
     const router = useRouter();
     const params = useLocalSearchParams();
 
+    // Extract meeting context parameters
+    const fromMeeting = params.fromMeeting === 'true';
+    const customerType = params.customerType as string;
+    const meetingStartTime = params.meetingStartTime as string;
+    const returnToStep = params.returnToStep as string;
+
     // State management
     const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(null);
     const [selectedPeriod, setSelectedPeriod] = useState<'WEEKLY' | 'MONTHLY' | ''>('');
@@ -176,6 +182,20 @@ export default function CreateRCPA() {
         loadData();
     }, []);
 
+    // Pre-select chemist if coming from meeting
+    useEffect(() => {
+        if (fromMeeting && params.chemistId && params.chemistName && customerOptions.length > 0) {
+            const preSelectedCustomer = customerOptions.find(c =>
+                c.id === params.chemistId || c.label === params.chemistName
+            );
+
+            if (preSelectedCustomer) {
+                setSelectedCustomer(preSelectedCustomer);
+                console.log('✅ Auto-selected chemist from meeting:', preSelectedCustomer.label);
+            }
+        }
+    }, [fromMeeting, params.chemistId, params.chemistName, customerOptions]);
+
     // Convert YYYY-MM-DD back to DD-MM-YYYY for display
     const convertDateFromBackend = (dateStr: string): string => {
         if (!dateStr || typeof dateStr !== 'string') {
@@ -221,7 +241,7 @@ export default function CreateRCPA() {
         if (params.editData && customerOptions.length > 0 && availableDrugs.length > 0) {
             try {
                 const editData = JSON.parse(params.editData as string);
-                console.log('🔄 Loading RCPA edit data:', editData);
+                console.log('📄 Loading RCPA edit data:', editData);
 
                 setIsEditMode(true);
                 setEditRcpaId(editData.rcpaId);
@@ -413,7 +433,13 @@ export default function CreateRCPA() {
                 {
                     text: isEditMode ? 'Discard Changes' : 'Cancel RCPA',
                     style: 'destructive',
-                    onPress: () => router.back()
+                    onPress: () => {
+                        if (fromMeeting && returnToStep) {
+                            router.back(); // Return to meeting at correct step
+                        } else {
+                            router.back();
+                        }
+                    }
                 }
             ]
         );
@@ -443,6 +469,8 @@ export default function CreateRCPA() {
             Alert.alert('Error', 'Invalid date format. Please check your date selections.');
             return;
         }
+
+        const creationTime = meetingStartTime ? new Date(meetingStartTime).toLocaleTimeString() : new Date().toLocaleTimeString();
 
         const summaryData = {
             action: isEditMode ? 'edit' : 'create',
@@ -474,7 +502,12 @@ export default function CreateRCPA() {
                 year: 'numeric',
                 month: 'long',
                 day: 'numeric'
-            })
+            }),
+            createdTime: creationTime,
+            // Add meeting context
+            fromMeeting,
+            meetingStartTime,
+            returnToStep
         };
 
         console.log('📋 Final summary data:', JSON.stringify(summaryData, null, 2));
@@ -556,88 +589,150 @@ export default function CreateRCPA() {
                 contentContainerStyle={{ padding: 20, paddingBottom: 100 }}
                 keyboardShouldPersistTaps="handled"
             >
-                {/* Customer Selection - Custom dropdown */}
+                {/* Customer Selection - Custom dropdown with meeting context */}
                 <StyledView style={{ marginBottom: 20 }}>
                     <StyledText style={{ marginBottom: 6, fontWeight: '500', fontSize: 16, color: '#111827' }}>
                         Choose Customer <StyledText style={{ color: '#EF4444' }}>*</StyledText>
+                        {fromMeeting && (
+                            <StyledText style={{ color: '#0077B6', fontSize: 14, fontWeight: '400' }}>
+                                {' '}(From Meeting)
+                            </StyledText>
+                        )}
                     </StyledText>
-                    <StyledTouchableOpacity
-                        onPress={() => setIsCustomerListOpen(!isCustomerListOpen)}
-                        style={{
+
+                    {/* Show selected customer in meeting mode or dropdown in normal mode */}
+                    {fromMeeting && selectedCustomer ? (
+                        // Meeting mode - show selected customer (non-editable)
+                        <StyledView style={{
                             borderWidth: 1,
-                            borderColor: isCustomerListOpen || selectedCustomer ? "#0077B6" : "#E5E7EB",
+                            borderColor: '#0077B6',
                             borderRadius: 8,
                             padding: 14,
-                            backgroundColor: '#fff',
+                            backgroundColor: '#F0F8FF',
                             flexDirection: "row",
                             alignItems: "center",
                             justifyContent: 'space-between',
                             minHeight: 50,
-                            borderBottomLeftRadius: isCustomerListOpen ? 0 : 8,
-                            borderBottomRightRadius: isCustomerListOpen ? 0 : 8,
-                        }}
-                    >
-                        <StyledText style={{
-                            flex: 1,
-                            color: selectedCustomer ? '#111827' : '#9CA3AF',
-                            fontSize: 16
                         }}>
-                            {selectedCustomer ? selectedCustomer.label : "Select a customer..."}
-                        </StyledText>
-                        <Ionicons
-                            name={isCustomerListOpen ? "chevron-up-outline" : "chevron-down-outline"}
-                            size={20}
-                            color="#6B7280"
-                        />
-                    </StyledTouchableOpacity>
-
-                    {isCustomerListOpen && (
-                        <StyledView style={{
-                            backgroundColor: '#fff',
-                            borderWidth: 1,
-                            borderColor: '#0077B6',
-                            borderTopWidth: 0,
-                            borderBottomLeftRadius: 8,
-                            borderBottomRightRadius: 8,
-                            maxHeight: 200,
-                            elevation: 5,
-                            shadowColor: '#000',
-                            shadowOffset: { width: 0, height: 2 },
-                            shadowOpacity: 0.1,
-                            shadowRadius: 4,
-                            zIndex: 10,
-                        }}>
-                            <ScrollView nestedScrollEnabled={true}>
-                                {customerOptions.map((customer, index) => (
-                                    <StyledTouchableOpacity
-                                        key={customer.id}
-                                        onPress={() => {
-                                            setSelectedCustomer(customer);
-                                            setIsCustomerListOpen(false);
-                                        }}
-                                        style={{
-                                            paddingVertical: 14,
-                                            paddingHorizontal: 16,
-                                            borderBottomWidth: index < customerOptions.length - 1 ? 1 : 0,
-                                            borderBottomColor: '#F3F4F6'
-                                        }}
-                                    >
-                                        <StyledText style={{ fontSize: 16, fontWeight: '500', color: '#111827' }}>
-                                            {customer.label}
-                                        </StyledText>
-                                        {customer.subtitle && (
-                                            <StyledText style={{
-                                                fontSize: 14,
-                                                color: '#6B7280',
-                                                marginTop: 2
-                                            }}>
-                                                {customer.subtitle}
-                                            </StyledText>
-                                        )}
-                                    </StyledTouchableOpacity>
-                                ))}
-                            </ScrollView>
+                            <StyledView style={{ flex: 1 }}>
+                                <StyledText style={{
+                                    color: '#111827',
+                                    fontSize: 16,
+                                    fontWeight: '600'
+                                }}>
+                                    {selectedCustomer.label}
+                                </StyledText>
+                                {selectedCustomer.subtitle && (
+                                    <StyledText style={{
+                                        fontSize: 14,
+                                        color: '#6B7280',
+                                        marginTop: 2
+                                    }}>
+                                        {selectedCustomer.subtitle}
+                                    </StyledText>
+                                )}
+                            </StyledView>
+                            <StyledView style={{
+                                backgroundColor: '#0077B6',
+                                paddingHorizontal: 8,
+                                paddingVertical: 4,
+                                borderRadius: 12,
+                                flexDirection: 'row',
+                                alignItems: 'center'
+                            }}>
+                                <Ionicons name="people-outline" size={14} color="#FFFFFF" />
+                                <StyledText style={{
+                                    color: '#FFFFFF',
+                                    fontSize: 12,
+                                    fontWeight: '500',
+                                    marginLeft: 4
+                                }}>
+                                    Meeting
+                                </StyledText>
+                            </StyledView>
                         </StyledView>
+                    ) : (
+                        // Normal mode - show dropdown
+                        <>
+                            <StyledTouchableOpacity
+                                onPress={() => setIsCustomerListOpen(!isCustomerListOpen)}
+                                style={{
+                                    borderWidth: 1,
+                                    borderColor: isCustomerListOpen || selectedCustomer ? "#0077B6" : "#E5E7EB",
+                                    borderRadius: 8,
+                                    padding: 14,
+                                    backgroundColor: '#fff',
+                                    flexDirection: "row",
+                                    alignItems: "center",
+                                    justifyContent: 'space-between',
+                                    minHeight: 50,
+                                    borderBottomLeftRadius: isCustomerListOpen ? 0 : 8,
+                                    borderBottomRightRadius: isCustomerListOpen ? 0 : 8,
+                                }}
+                            >
+                                <StyledText style={{
+                                    flex: 1,
+                                    color: selectedCustomer ? '#111827' : '#9CA3AF',
+                                    fontSize: 16
+                                }}>
+                                    {selectedCustomer ? selectedCustomer.label : "Select a customer..."}
+                                </StyledText>
+                                <Ionicons
+                                    name={isCustomerListOpen ? "chevron-up-outline" : "chevron-down-outline"}
+                                    size={20}
+                                    color="#6B7280"
+                                />
+                            </StyledTouchableOpacity>
+
+                            {isCustomerListOpen && (
+                                <StyledView style={{
+                                    backgroundColor: '#fff',
+                                    borderWidth: 1,
+                                    borderColor: '#0077B6',
+                                    borderTopWidth: 0,
+                                    borderBottomLeftRadius: 8,
+                                    borderBottomRightRadius: 8,
+                                    maxHeight: 200,
+                                    elevation: 5,
+                                    shadowColor: '#000',
+                                    shadowOffset: { width: 0, height: 2 },
+                                    shadowOpacity: 0.1,
+                                    shadowRadius: 4,
+                                    zIndex: 10,
+                                }}>
+                                    <ScrollView nestedScrollEnabled={true}>
+                                        {customerOptions.map((customer, index) => (
+                                            <StyledTouchableOpacity
+                                                key={customer.id}
+                                                onPress={() => {
+                                                    setSelectedCustomer(customer);
+                                                    setIsCustomerListOpen(false);
+                                                }}
+                                                style={{
+                                                    paddingVertical: 14,
+                                                    paddingHorizontal: 16,
+                                                    borderBottomWidth: index < customerOptions.length - 1 ? 1 : 0,
+                                                    borderBottomColor: '#F3F4F6'
+                                                }}
+                                            >
+                                                <StyledText style={{ fontSize: 16, fontWeight: '500', color: '#111827' }}>
+                                                    {customer.label}
+                                                </StyledText>
+                                                {customer.subtitle && (
+                                                    <StyledText style={{
+                                                        fontSize: 14,
+                                                        color: '#6B7280',
+                                                        marginTop: 2
+                                                    }}>
+                                                        {customer.subtitle}
+                                                    </StyledText>
+                                                )}
+                                            </StyledTouchableOpacity>
+                                        ))}
+                                    </ScrollView>
+                                </StyledView>
+                            )}
+                        </>
                     )}
                 </StyledView>
 

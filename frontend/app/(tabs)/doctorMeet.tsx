@@ -9,7 +9,7 @@ import {
     StatusBar
 } from 'react-native';
 import { styled } from 'nativewind';
-import { useRouter, useLocalSearchParams } from 'expo-router';
+import { useRouter, useLocalSearchParams, useFocusEffect } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -75,6 +75,38 @@ export default function DoctorMeeting() {
     const [meetingRating, setMeetingRating] = useState(0);
     const [isSubmitting, setIsSubmitting] = useState(false);
 
+    // Time tracking for external flows
+    const [timeSpentInFlows, setTimeSpentInFlows] = useState<{ [key: number]: number }>({});
+
+    // Handle returning from external flows
+    useFocusEffect(
+        React.useCallback(() => {
+            // Check if we have params indicating return from external flow
+            if (params.returnFromFlow && params.timeSpent && params.returnToStep) {
+                const step = parseInt(params.returnToStep as string);
+                const timeSpent = parseInt(params.timeSpent as string);
+
+                console.log(`🔄 Returning to step ${step} after ${timeSpent} seconds in external flow`);
+
+                // Update time tracking
+                setTimeSpentInFlows(prev => ({
+                    ...prev,
+                    [step]: (prev[step] || 0) + timeSpent
+                }));
+
+                // Return to the correct step
+                setCurrentStep(step);
+
+                // Clear the params by navigating back to this route without the params
+                router.setParams({
+                    returnFromFlow: undefined,
+                    timeSpent: undefined,
+                    returnToStep: undefined
+                });
+            }
+        }, [params.returnFromFlow, params.timeSpent, params.returnToStep])
+    );
+
     // Handle drug selection
     const handleDrugSelect = (drug: Drug) => {
         setSelectedDrug(drug);
@@ -97,12 +129,17 @@ export default function DoctorMeeting() {
 
     // Navigate to sample distribution
     const handleSampleDistribution = () => {
+        const flowStartTime = new Date().toISOString();
         router.push({
             pathname: '/createDistribution',
             params: {
+                customerId: doctorId,
+                customerName: doctorName,
+                customerType: 'doctor',
                 fromMeeting: 'true',
-                doctorId: doctorId,
-                doctorName: doctorName
+                meetingStartTime: meetingStartTime.toISOString(),
+                returnToStep: currentStep.toString(),
+                flowStartTime
             }
         });
     };
@@ -160,6 +197,9 @@ export default function DoctorMeeting() {
         setIsSubmitting(true);
 
         try {
+            // Calculate total time including external flows
+            const totalExternalTime = Object.values(timeSpentInFlows).reduce((sum, time) => sum + time, 0);
+
             const meetingData = {
                 id: Date.now().toString(),
                 doctorId,
@@ -169,6 +209,8 @@ export default function DoctorMeeting() {
                 selectedDrugs: selectedDrug ? [selectedDrug] : [],
                 ...dcrFormData,
                 rating: meetingRating,
+                timeSpentInExternalFlows: totalExternalTime,
+                externalFlowsBreakdown: timeSpentInFlows,
                 createdAt: new Date().toISOString()
             };
 
@@ -274,7 +316,10 @@ export default function DoctorMeeting() {
             </StyledView>
 
             {/* Meeting Timer */}
-            <MeetingTimer startTime={meetingStartTime} />
+            <MeetingTimer
+                startTime={meetingStartTime}
+                additionalTime={Object.values(timeSpentInFlows).reduce((sum, time) => sum + time, 0)}
+            />
 
             {/* Step Indicator */}
             <StepIndicator

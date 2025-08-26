@@ -165,7 +165,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "C:\\Users\\ravi.meena_forsysinc\\pharma\\forpharma_revamped\\backend\\generated\\prisma-shared",
+      "value": "C:\\Users\\prateek.nagar_forsys\\Desktop\\22Aug\\forpharma_revamped\\backend\\generated\\prisma-shared",
       "fromEnvVar": null
     },
     "config": {
@@ -179,7 +179,7 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "C:\\Users\\ravi.meena_forsysinc\\pharma\\forpharma_revamped\\backend\\prisma-shared\\schema.prisma",
+    "sourceFilePath": "C:\\Users\\prateek.nagar_forsys\\Desktop\\22Aug\\forpharma_revamped\\backend\\prisma-shared\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
