@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
     View,
     Text,
@@ -14,18 +14,21 @@ import {
 } from 'react-native';
 import { styled } from 'nativewind';
 import { Ionicons } from '@expo/vector-icons';
-import { useRouter, useLocalSearchParams } from 'expo-router';
+import { useRouter, useLocalSearchParams, useFocusEffect } from 'expo-router';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { format } from 'date-fns';
 import TaskCard, { TaskData } from '../../../components/createTaskPlannerCard';
 import taskPlannerService from '../../../services/taskPlannerService';
 import taskService from '../../../services/taskService';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
 const StyledScrollView = styled(ScrollView);
 const StyledTouchableOpacity = styled(TouchableOpacity);
 const StyledSafeAreaView = styled(SafeAreaView);
+
+const PLANNER_STORAGE_KEY = 'currentTaskPlannerState';
 
 export default function CreateTaskPlan() {
     const router = useRouter();
@@ -38,63 +41,115 @@ export default function CreateTaskPlan() {
     const [showEndDatePicker, setShowEndDatePicker] = useState(false);
     const [dateConflict, setDateConflict] = useState(false);
 
-    // Task planner state
+    // Task planner state - properly declared
     const [currentPlannerId, setCurrentPlannerId] = useState<string | null>(null);
-    const [taskPlannerCreated, setTaskPlannerCreated] = useState(false);
+    const [isTaskPlannerCreated, setTaskPlannerCreated] = useState(false);
     const [tasks, setTasks] = useState<TaskData[]>([]);
 
     // UI state
     const [loading, setLoading] = useState(false);
+    const [initialLoading, setInitialLoading] = useState(true);
     const [showDateConflictModal, setShowDateConflictModal] = useState(false);
 
-    // Load tasks if planner exists
-    useEffect(() => {
-        if (currentPlannerId) {
-            loadExistingTasks();
+    // Save planner state to AsyncStorage
+    const savePlannerState = async (plannerId: string, isCreated: boolean) => {
+        try {
+            console.log("Saving planner state:", { plannerId, isCreated });
+            const stateToSave = {
+                currentPlannerId: plannerId,
+                taskPlannerCreated: isCreated,
+                startDate: startDate.toISOString(),
+                endDate: endDate.toISOString()
+            };
+            await AsyncStorage.setItem(PLANNER_STORAGE_KEY, JSON.stringify(stateToSave));
+            console.log("Successfully saved planner state");
+        } catch (error) {
+            console.error("Error saving planner state:", error);
         }
-    }, [currentPlannerId]);
+    };
 
-    const loadExistingTasks = async () => {
+    // Load planner state from AsyncStorage
+    const loadPlannerState = async () => {
+        try {
+            console.log("Loading planner state from AsyncStorage");
+            const saved = await AsyncStorage.getItem(PLANNER_STORAGE_KEY);
+
+            if (saved) {
+                const state = JSON.parse(saved);
+                console.log("Loaded state:", state);
+
+                if (state.currentPlannerId) {
+                    setCurrentPlannerId(state.currentPlannerId);
+                }
+                if (typeof state.taskPlannerCreated === 'boolean') {
+                    setTaskPlannerCreated(state.taskPlannerCreated);
+                }
+                if (state.startDate) {
+                    setStartDate(new Date(state.startDate));
+                }
+                if (state.endDate) {
+                    setEndDate(new Date(state.endDate));
+                }
+
+                return state;
+            }
+            return null;
+        } catch (error) {
+            console.error("Error loading planner state:", error);
+            return null;
+        }
+    };
+
+    // Clear planner state from AsyncStorage
+    const clearPlannerState = async () => {
+        try {
+            await AsyncStorage.removeItem(PLANNER_STORAGE_KEY);
+            console.log("Cleared planner state");
+        } catch (error) {
+            console.error("Error clearing planner state:", error);
+        }
+    };
+
+    // Load existing tasks - FIXED to match API response structure
+    const loadExistingTasks = async (plannerId: string) => {
         try {
             setLoading(true);
-            const tasksData = await taskService.getTasks(undefined, currentPlannerId);
+            console.log("Loading tasks for planner:", plannerId);
+            const response = await taskService.getTasksOfPlannerId(plannerId);
 
             const transformedTasks: TaskData[] = [];
 
-            // Transform doctor tasks
-            tasksData.doctorTasks?.forEach(task => {
-                transformedTasks.push({
-                    id: task.id,
-                    type: 'doctor',
-                    entityId: task.doctorId,
-                    entityName: task.doctor?.name || 'Unknown Doctor',
-                    entityDetails: task.doctor?.specialization || '',
-                    date: task.taskDate,
-                    startTime: task.startTime,
-                    endTime: task.endTime,
-                    location: task.doctor?.hospitalAssociations?.[0]?.hospital?.address || '',
-                    hasConflict: false,
-                    status: task.approvalStatus.toLowerCase() as 'draft' | 'pending' | 'approved' | 'rejected',
-                });
-            });
+            // The API returns response.data.tasks based on the service and controller
+            if (response && response.data && response.data.tasks && Array.isArray(response.data.tasks)) {
+                response.data.tasks.forEach((task: any) => {
+                    // Map the task type - API returns 'tourplan' but TaskData expects 'tour'
+                    let taskType: 'doctor' | 'chemist' | 'tour' = 'doctor';
+                    if (task.type === 'chemist') {
+                        taskType = 'chemist';
+                    } else if (task.type === 'tourplan') {
+                        taskType = 'tour';
+                    } else if (task.type === 'doctor') {
+                        taskType = 'doctor';
+                    }
 
-            // Transform chemist tasks
-            tasksData.chemistTasks?.forEach(task => {
-                transformedTasks.push({
-                    id: task.id,
-                    type: 'chemist',
-                    entityId: task.chemistId,
-                    entityName: task.chemist?.name || 'Unknown Chemist',
-                    entityDetails: task.chemist?.type || '',
-                    date: task.taskDate,
-                    startTime: task.startTime,
-                    endTime: task.endTime,
-                    location: task.chemist?.address || '',
-                    hasConflict: false,
-                    status: task.approvalStatus.toLowerCase() as 'draft' | 'pending' | 'approved' | 'rejected',
+                    transformedTasks.push({
+                        id: task.id,
+                        type: taskType,
+                        entityId: task.typeId,
+                        entityName: task.name || `Unknown ${task.type}`,
+                        entityDetails: task.details || '',
+                        date: task.date,
+                        startTime: task.startTime,
+                        endTime: task.endTime,
+                        location: task.location || '',
+                        hasConflict: false,
+                        status: (task.approvalStatus?.toLowerCase() || 'draft') as 'draft' | 'pending' | 'approved' | 'rejected',
+                    });
                 });
-            });
+            }
 
+            console.log("Transformed tasks:", transformedTasks);
+            console.log("Loaded tasks count:", transformedTasks.length);
             setTasks(transformedTasks);
         } catch (error) {
             console.error('Error loading tasks:', error);
@@ -102,6 +157,37 @@ export default function CreateTaskPlan() {
             setLoading(false);
         }
     };
+
+    // Initial load when component mounts
+    useEffect(() => {
+        const initializeComponent = async () => {
+            setInitialLoading(true);
+            const state = await loadPlannerState();
+
+            if (state && state.currentPlannerId && state.taskPlannerCreated) {
+                // If we have a saved state, load tasks
+                await loadExistingTasks(state.currentPlannerId);
+            }
+
+            setInitialLoading(false);
+        };
+
+        initializeComponent();
+    }, []);
+
+    // Use focus effect to reload tasks when returning to this screen
+    useFocusEffect(
+        useCallback(() => {
+            const reloadTasks = async () => {
+                if (currentPlannerId && isTaskPlannerCreated) {
+                    console.log("Screen focused, reloading tasks for planner:", currentPlannerId);
+                    await loadExistingTasks(currentPlannerId);
+                }
+            };
+
+            reloadTasks();
+        }, [currentPlannerId, isTaskPlannerCreated])
+    );
 
     const checkDateConflict = async () => {
         try {
@@ -119,10 +205,10 @@ export default function CreateTaskPlan() {
     };
 
     useEffect(() => {
-        if (taskPlannerCreated) {
+        if (isTaskPlannerCreated) {
             checkDateConflict();
         }
-    }, [startDate, endDate, taskPlannerCreated]);
+    }, [startDate, endDate, isTaskPlannerCreated]);
 
     const handleStartDateChange = (event: any, selectedDate?: Date) => {
         setShowStartDatePicker(false);
@@ -154,8 +240,13 @@ export default function CreateTaskPlan() {
             });
 
             if (response.success && response.taskPlanner) {
-                setCurrentPlannerId(response.taskPlanner.id);
+                const plannerId = response.taskPlanner.id;
+                setCurrentPlannerId(plannerId);
                 setTaskPlannerCreated(true);
+
+                // Save state to AsyncStorage
+                await savePlannerState(plannerId, true);
+
                 Alert.alert('Success', 'Task planner created successfully');
             }
         } catch (error: any) {
@@ -166,7 +257,7 @@ export default function CreateTaskPlan() {
     };
 
     const addTask = () => {
-        if (!currentPlannerId) {
+        if (!currentPlannerId || !isTaskPlannerCreated) {
             Alert.alert('Error', 'Please create task planner first');
             return;
         }
@@ -182,24 +273,50 @@ export default function CreateTaskPlan() {
         });
     };
 
+    const editTask = (taskId: string) => {
+        const task = tasks.find(t => t.id === taskId);
+        if (task && currentPlannerId) {
+            router.push({
+                pathname: '/dailyPlaner/createTasks',
+                params: {
+                    returnTo: 'createTaskPlanner',
+                    taskPlannerId: currentPlannerId,
+                    taskId: taskId,
+                    editMode: 'true',
+                    startDate: format(startDate, 'yyyy-MM-dd'),
+                    endDate: format(endDate, 'yyyy-MM-dd'),
+                }
+            });
+        }
+    };
+
     const deleteTask = async (taskId: string) => {
         try {
             const task = tasks.find(t => t.id === taskId);
             if (!task) return;
 
-            await taskService.deleteTask(
-                task.type === 'tour' ? 'tourplan' : task.type,
-                taskId
-            );
+            // Map task type for API call
+            let apiTaskType = task.type;
+            if (task.type === 'tour') {
+                apiTaskType = 'tourplan';
+            }
+
+            await taskService.deleteTask(apiTaskType, taskId);
 
             setTasks(prevTasks => prevTasks.filter(t => t.id !== taskId));
             Alert.alert('Success', 'Task deleted successfully');
+
+            // Reload tasks to ensure sync
+            if (currentPlannerId) {
+                await loadExistingTasks(currentPlannerId);
+            }
         } catch (error: any) {
             Alert.alert('Error', error.message || 'Failed to delete task');
         }
     };
 
     const saveDraft = async () => {
+        await clearPlannerState();
         Alert.alert('Success', 'Task plan saved as draft');
         router.back();
     };
@@ -210,9 +327,18 @@ export default function CreateTaskPlan() {
             return;
         }
 
-        // Update status to PENDING via API if needed
-        Alert.alert('Success', 'Task plan submitted for approval!');
-        router.back();
+        try {
+            // You can update planner status to PENDING via API if needed
+            // if (currentPlannerId) {
+            //     await taskPlannerService.updateTaskPlannerStatus(currentPlannerId, 'PENDING');
+            // }
+
+            await clearPlannerState();
+            Alert.alert('Success', 'Task plan submitted for approval!');
+            router.back();
+        } catch (error) {
+            Alert.alert('Error', 'Failed to submit task plan');
+        }
     };
 
     const cancelTaskPlan = async () => {
@@ -231,6 +357,7 @@ export default function CreateTaskPlan() {
                                 console.error('Error deleting task planner:', error);
                             }
                         }
+                        await clearPlannerState();
                         router.back();
                     }
                 }
@@ -279,13 +406,13 @@ export default function CreateTaskPlan() {
         );
     };
 
-    if (loading) {
+    if (initialLoading) {
         return (
             <StyledSafeAreaView className="flex-1 bg-gray-50">
                 <StatusBar backgroundColor="#0077B6" barStyle="light-content" />
                 <StyledView className="flex-1 justify-center items-center">
                     <ActivityIndicator size="large" color="#0077B6" />
-                    <StyledText className="text-gray-600 mt-3">Processing...</StyledText>
+                    <StyledText className="text-gray-600 mt-3">Loading...</StyledText>
                 </StyledView>
             </StyledSafeAreaView>
         );
@@ -336,11 +463,11 @@ export default function CreateTaskPlan() {
                             <StyledView className="flex-1 mr-2">
                                 <StyledText className="text-xs text-gray-500 mt-1">Start Date</StyledText>
                                 <StyledTouchableOpacity
-                                    onPress={() => !taskPlannerCreated && setShowStartDatePicker(true)}
+                                    onPress={() => !isTaskPlannerCreated && setShowStartDatePicker(true)}
                                     className="border border-gray-200 rounded-lg p-3"
-                                    disabled={taskPlannerCreated}
+                                    disabled={isTaskPlannerCreated}
                                 >
-                                    <StyledText className="text-sm text-gray-900">
+                                    <StyledText className={`text-sm ${isTaskPlannerCreated ? 'text-gray-500' : 'text-gray-900'}`}>
                                         {format(startDate, 'MMM dd, yyyy')}
                                     </StyledText>
                                 </StyledTouchableOpacity>
@@ -351,11 +478,11 @@ export default function CreateTaskPlan() {
                             <StyledView className="flex-1 ml-2">
                                 <StyledText className="text-xs text-gray-500 mt-1">End Date</StyledText>
                                 <StyledTouchableOpacity
-                                    onPress={() => !taskPlannerCreated && setShowEndDatePicker(true)}
+                                    onPress={() => !isTaskPlannerCreated && setShowEndDatePicker(true)}
                                     className="border border-gray-200 rounded-lg p-3"
-                                    disabled={taskPlannerCreated}
+                                    disabled={isTaskPlannerCreated}
                                 >
-                                    <StyledText className="text-sm text-gray-900">
+                                    <StyledText className={`text-sm ${isTaskPlannerCreated ? 'text-gray-500' : 'text-gray-900'}`}>
                                         {format(endDate, 'MMM dd, yyyy')}
                                     </StyledText>
                                 </StyledTouchableOpacity>
@@ -370,10 +497,19 @@ export default function CreateTaskPlan() {
                                 </StyledText>
                             </StyledView>
                         )}
+
+                        {isTaskPlannerCreated && (
+                            <StyledView className="mt-3 bg-green-50 border border-green-200 rounded-lg p-3 flex-row items-center">
+                                <StyledText className="text-green-600 text-xs mr-2">✓</StyledText>
+                                <StyledText className="text-green-700 text-xs flex-1">
+                                    Task planner created successfully
+                                </StyledText>
+                            </StyledView>
+                        )}
                     </StyledView>
 
                     {/* Step 2: Add Tasks - Only show after planner is created */}
-                    {taskPlannerCreated && (
+                    {isTaskPlannerCreated && (
                         <StyledView className="bg-white mx-5 mt-4 p-4 rounded-lg">
                             <StyledView className="flex-row items-center gap-2 mb-4">
                                 {renderSectionNumber('2')}
@@ -401,11 +537,28 @@ export default function CreateTaskPlan() {
                                         {renderTaskSummary()}
                                     </StyledView>
 
+                                    {/* Task Legend */}
+                                    <StyledView className="bg-gray-50 rounded-lg p-3 mb-3 flex-row justify-center gap-4">
+                                        <StyledView className="flex-row items-center">
+                                            <StyledView className="w-2 h-2 bg-blue-600 rounded-full mr-1" />
+                                            <StyledText className="text-xs text-gray-600">Doctor Visit</StyledText>
+                                        </StyledView>
+                                        <StyledView className="flex-row items-center">
+                                            <StyledView className="w-2 h-2 bg-purple-600 rounded-full mr-1" />
+                                            <StyledText className="text-xs text-gray-600">Chemist Visit</StyledText>
+                                        </StyledView>
+                                        <StyledView className="flex-row items-center">
+                                            <StyledView className="w-2 h-2 bg-green-600 rounded-full mr-1" />
+                                            <StyledText className="text-xs text-gray-600">Tour Plan</StyledText>
+                                        </StyledView>
+                                    </StyledView>
+
+                                    {/* Task Cards */}
                                     {tasks.map((task) => (
                                         <TaskCard
                                             key={task.id}
                                             task={task}
-                                            onEdit={() => { }}
+                                            onEdit={editTask}
                                             onDelete={deleteTask}
                                         />
                                     ))}
@@ -427,7 +580,7 @@ export default function CreateTaskPlan() {
 
                 {/* Bottom Actions */}
                 <StyledView className="absolute bottom-0 left-0 right-0 bg-white px-5 py-4 border-t border-gray-200">
-                    {!taskPlannerCreated ? (
+                    {!isTaskPlannerCreated ? (
                         // Initial state - only show Create Task Plan button
                         <StyledView className="flex-row gap-3">
                             <StyledTouchableOpacity
@@ -441,10 +594,15 @@ export default function CreateTaskPlan() {
                             <StyledTouchableOpacity
                                 onPress={createTaskPlanner}
                                 className="flex-1 bg-[#0077B6] py-3 rounded-lg items-center"
+                                disabled={loading}
                             >
-                                <StyledText className="text-sm font-semibold text-white">
-                                    Create Task Plan
-                                </StyledText>
+                                {loading ? (
+                                    <ActivityIndicator size="small" color="white" />
+                                ) : (
+                                    <StyledText className="text-sm font-semibold text-white">
+                                        Create Task Plan
+                                    </StyledText>
+                                )}
                             </StyledTouchableOpacity>
                         </StyledView>
                     ) : (
@@ -461,6 +619,8 @@ export default function CreateTaskPlan() {
                             <StyledTouchableOpacity
                                 onPress={saveDraft}
                                 className="flex-1 bg-gray-600 py-3 rounded-lg items-center"
+                                disabled={tasks.length === 0}
+                                style={{ opacity: tasks.length === 0 ? 0.5 : 1 }}
                             >
                                 <StyledText className="text-sm font-semibold text-white">
                                     Save Draft
@@ -469,6 +629,8 @@ export default function CreateTaskPlan() {
                             <StyledTouchableOpacity
                                 onPress={submitForApproval}
                                 className="flex-1 bg-green-500 py-3 rounded-lg items-center"
+                                disabled={tasks.length === 0}
+                                style={{ opacity: tasks.length === 0 ? 0.5 : 1 }}
                             >
                                 <StyledText className="text-sm font-semibold text-white">
                                     Submit

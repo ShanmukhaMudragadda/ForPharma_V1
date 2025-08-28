@@ -10,7 +10,7 @@ CREATE TYPE "ReportingPeriod" AS ENUM ('WEEKLY', 'MONTHLY');
 ALTER TABLE "orders" ALTER COLUMN "status" TYPE TEXT;
 
 -- Drop the old enum
-DROP TYPE IF EXISTS "OrderStatus";
+DROP TYPE IF EXISTS "OrderStatus" CASCADE;
 
 -- Create the new enum with only CONFIRMED and DRAFT
 CREATE TYPE "OrderStatus" AS ENUM ('CONFIRMED', 'DRAFT');
@@ -23,15 +23,15 @@ UPDATE "orders" SET "status" = 'DRAFT' WHERE "status" = 'CANCELLED';
 ALTER TABLE "orders" ALTER COLUMN "status" TYPE "OrderStatus" USING "status"::"OrderStatus";
 ALTER TABLE "orders" ALTER COLUMN "status" SET DEFAULT 'DRAFT';
 
--- 3. Add new columns to rcpa_reports table (remove IF NOT EXISTS)
-ALTER TABLE "rcpa_reports" ADD COLUMN "reporting_period" "ReportingPeriod";
-ALTER TABLE "rcpa_reports" ADD COLUMN "start_date" TIMESTAMP(3);
-ALTER TABLE "rcpa_reports" ADD COLUMN "end_date" TIMESTAMP(3);
-ALTER TABLE "rcpa_reports" ADD COLUMN "total_prescription" INTEGER;
+-- -- 3. Add new columns to rcpa_reports table (remove IF NOT EXISTS)
+-- ALTER TABLE "rcpa_reports" ADD COLUMN "reporting_period" "ReportingPeriod";
+-- ALTER TABLE "rcpa_reports" ADD COLUMN "start_date" TIMESTAMP(3);
+-- ALTER TABLE "rcpa_reports" ADD COLUMN "end_date" TIMESTAMP(3);
+-- ALTER TABLE "rcpa_reports" ADD COLUMN "total_prescription" INTEGER;
 
 -- 4. Add new columns to rcpa_drug_data table (remove IF NOT EXISTS)
-ALTER TABLE "rcpa_drug_data" ADD COLUMN "own_pack_size" VARCHAR(255) NOT NULL DEFAULT '';
-ALTER TABLE "rcpa_drug_data" ADD COLUMN "competitor_pack_size" VARCHAR(255) NOT NULL DEFAULT '';
+-- ALTER TABLE "rcpa_drug_data" ADD COLUMN "own_pack_size" VARCHAR(255) NOT NULL DEFAULT '';
+-- ALTER TABLE "rcpa_drug_data" ADD COLUMN "competitor_pack_size" VARCHAR(255) NOT NULL DEFAULT '';
 
 -- 5. Update existing rcpa_drug_data records to have meaningful pack sizes
 UPDATE "rcpa_drug_data" 
@@ -183,5 +183,7 @@ SET "doctor_id" = (
 );
 
 -- 16. Drop old indexes that are no longer needed (related to removed drug_id and gift_id columns)
-DROP INDEX IF EXISTS "doctor_distribution_drug_items_drug_id_idx";
-DROP INDEX IF EXISTS "doctor_distribution_gift_items_gift_id_idx";
+DROP INDEX IF EXISTS "doctor_distribution_drug_items_drug_id_idx" CASCADE;
+DROP INDEX IF EXISTS "doctor_distribution_gift_items_gift_id_idx" CASCADE;
+
+

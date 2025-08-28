@@ -12,7 +12,7 @@ const axiosInstance = axios.create({
     // $env:EXPO_DEVTOOLS_LISTEN_ADDRESS = "192.168.9.215"
 
 
-    baseURL: 'http://192.168.1.9:3000/api',
+    baseURL: 'http://192.168.9.215:3000/api',
     // baseURL: 'http://192.168.1.29:3000/api',
     timeout: 30000,
     headers: {

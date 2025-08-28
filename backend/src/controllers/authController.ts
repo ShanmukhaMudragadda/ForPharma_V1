@@ -299,7 +299,7 @@ export const loginController = async (req: Request, res: Response) => {
     }
 
     // Verify password with bcrypt
-    const isValidPassword = password === employee.password;
+    const isValidPassword = await bcrypt.compare(password, employee.password);
     // console.log("password validates");
 
     if (!isValidPassword) {

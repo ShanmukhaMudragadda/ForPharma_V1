@@ -58,7 +58,8 @@ class taskService {
 
     async getTasks(date: string) {
         try {
-            console.log('Fetching tasks from backend');
+            console.log('Fetching tasks from backend', { date });
+
             const response = await axiosInstance.get<GetTaskResponse>(`/tasks/getTasks/${date}`);
             if (response.data.success) {
                 console.log(response.data.data)
@@ -66,6 +67,25 @@ class taskService {
             }
             else {
                 throw new Error(response.data.message || `Failed to fetch tasks on date: ${date}`)
+            }
+
+        } catch (error) {
+            console.error('Error fetching tasks :', error);
+            throw error;
+        }
+    }
+
+    async getTasksOfPlannerId(plannerId: string) {
+        try {
+            console.log('Fetching tasks from backend for Task Planner', { plannerId });
+
+            const response = await axiosInstance.get<GetTaskResponse>(`/tasks/getTasksOfPlannerId/${plannerId}`);
+            if (response.data.success) {
+                console.log(response.data.data)
+                return response.data
+            }
+            else {
+                throw new Error(response.data.message || `Failed to fetch tasks Task Planner: ${plannerId}`)
             }
 
         } catch (error) {
