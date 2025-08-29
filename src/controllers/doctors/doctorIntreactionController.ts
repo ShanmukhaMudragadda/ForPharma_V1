@@ -547,7 +547,7 @@ export const deleteDoctorInteraction = async (req: Request, res: Response) => {
         const interaction = await tenantDb.doctorInteraction.findUnique({
             where: { id: interactionId },
             include: {
-                SampleDistribution: true
+                // SampleDistribution: true
             }
         });
 
@@ -559,12 +559,12 @@ export const deleteDoctorInteraction = async (req: Request, res: Response) => {
         }
 
         // Check if interaction has related distributions
-        if (interaction.SampleDistribution && interaction.SampleDistribution.length > 0) {
-            return res.status(400).json({
-                success: false,
-                message: 'Cannot delete interaction with associated distributions'
-            });
-        }
+        // if () {
+        //     return res.status(400).json({
+        //         success: false,
+        //         message: 'Cannot delete interaction with associated distributions'
+        //     });
+        // }
 
         // Check permission (only creator or admin can delete)
         if (interaction.employeeId !== userId && userRole !== 'ADMIN') {
