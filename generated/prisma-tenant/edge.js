@@ -796,7 +796,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "C:\\Users\\ravi.meena_forsysinc\\pharma\\forpharma_revamped\\backend\\generated\\prisma-tenant",
+      "value": "C:\\Users\\shanmukha.mudragadda\\Desktop\\ForPharma_Backend\\ForPharma_V1\\generated\\prisma-tenant",
       "fromEnvVar": null
     },
     "config": {
@@ -810,7 +810,7 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "C:\\Users\\ravi.meena_forsysinc\\pharma\\forpharma_revamped\\backend\\prisma-tenant\\schema.prisma",
+    "sourceFilePath": "C:\\Users\\shanmukha.mudragadda\\Desktop\\ForPharma_Backend\\ForPharma_V1\\prisma-tenant\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {

@@ -1,32 +1,15 @@
-
-import { Request, Response } from 'express';
-
 // Helper function - should be outside the controller
-const isValidEmail = (email: string): boolean => {
+const isValidEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
 };
-
-// DoctorInteraction
-
-// Create a new doctor interaction
-export const createDoctorInteraction = async (req: Request, res: Response) => {
+// ChemistInteraction Controllers
+// Create a new chemist interaction
+export const createChemistInteraction = async (req, res) => {
     try {
         const tenantDb = req.tenantDb;
-        const {
-            doctorId,
-            hospitalId,
-            interactionType,
-            startTime,
-            endTime,
-            purpose,
-            outcome,
-            comments,
-            rating,
-            doctorTaskId
-        } = req.body;
+        const { chemistId, interactionType, startTime, endTime, purpose, outcome, comments, rating, chemistTaskId } = req.body;
         const employeeId = req.user?.id; // Assuming user info is attached to request
-
         // Validation
         if (!tenantDb) {
             return res.status(500).json({
@@ -34,21 +17,18 @@ export const createDoctorInteraction = async (req: Request, res: Response) => {
                 message: 'Tenant database connection not established'
             });
         }
-
-        if (!doctorId || !interactionType || !startTime) {
+        if (!chemistId || !interactionType || !startTime) {
             return res.status(400).json({
                 success: false,
-                message: 'Doctor ID, interaction type, and start time are required'
+                message: 'Chemist ID, interaction type, and start time are required'
             });
         }
-
         if (!employeeId) {
             return res.status(401).json({
                 success: false,
                 message: 'User authentication required'
             });
         }
-
         // Validate rating if provided
         if (rating !== undefined && (rating < 1 || rating > 5)) {
             return res.status(400).json({
@@ -56,76 +36,52 @@ export const createDoctorInteraction = async (req: Request, res: Response) => {
                 message: 'Rating must be between 1 and 5'
             });
         }
-
-        // Check if doctor exists
-        const doctorExists = await tenantDb.doctor.findUnique({
-            where: { id: doctorId }
+        // Check if chemist exists
+        const chemistExists = await tenantDb.chemist.findUnique({
+            where: { id: chemistId }
         });
-
-        if (!doctorExists) {
+        if (!chemistExists) {
             return res.status(404).json({
                 success: false,
-                message: 'Doctor not found'
+                message: 'Chemist not found'
             });
         }
-
         // Check if employee exists
         const employeeExists = await tenantDb.employee.findUnique({
             where: { id: employeeId }
         });
-
         if (!employeeExists) {
             return res.status(404).json({
                 success: false,
                 message: 'Employee not found'
             });
         }
-
-        // Check if hospital exists (if provided)
-        if (hospitalId) {
-            const hospitalExists = await tenantDb.hospital.findUnique({
-                where: { id: hospitalId }
-            });
-
-            if (!hospitalExists) {
-                return res.status(404).json({
-                    success: false,
-                    message: 'Hospital not found'
-                });
-            }
-        }
-
         // Check if task exists (if provided)
-        if (doctorTaskId) {
-            const taskExists = await tenantDb.doctorTask.findUnique({
-                where: { id: doctorTaskId }
+        if (chemistTaskId) {
+            const taskExists = await tenantDb.chemistTask.findUnique({
+                where: { id: chemistTaskId }
             });
-
             if (!taskExists) {
                 return res.status(404).json({
                     success: false,
-                    message: 'Doctor task not found'
+                    message: 'Chemist task not found'
                 });
             }
         }
-
         // Validate start and end times
         const startDateTime = new Date(startTime);
         const endDateTime = endTime ? new Date(endTime) : null;
-
         if (endDateTime && endDateTime <= startDateTime) {
             return res.status(400).json({
                 success: false,
                 message: 'End time must be after start time'
             });
         }
-
         // Create the interaction
-        const interaction = await tenantDb.doctorInteraction.create({
+        const interaction = await tenantDb.chemistInteraction.create({
             data: {
-                doctorId,
+                chemistId,
                 employeeId,
-                hospitalId,
                 interactionType,
                 startTime: startDateTime,
                 endTime: endDateTime,
@@ -133,15 +89,14 @@ export const createDoctorInteraction = async (req: Request, res: Response) => {
                 outcome: outcome?.trim(),
                 comments: comments?.trim(),
                 rating,
-                doctorTaskId
+                chemistTaskId
             },
             include: {
-                doctor: {
+                chemist: {
                     select: {
                         id: true,
                         name: true,
-                        specialization: true,
-                        designation: true
+                        type: true
                     }
                 },
                 employee: {
@@ -151,29 +106,21 @@ export const createDoctorInteraction = async (req: Request, res: Response) => {
                         role: true
                     }
                 },
-                hospital: hospitalId ? {
-                    select: {
-                        id: true,
-                        name: true,
-                        city: true
-                    }
-                } : false,
-                DoctorTask: doctorTaskId ? {
+                chemistTask: chemistTaskId ? {
                     select: {
                         id: true,
                     }
                 } : false
             }
         });
-
         return res.status(201).json({
             success: true,
-            message: 'Doctor interaction created successfully',
+            message: 'Chemist interaction created successfully',
             interaction
         });
-
-    } catch (error: any) {
-        console.error('Error creating doctor interaction:', error);
+    }
+    catch (error) {
+        console.error('Error creating chemist interaction:', error);
         return res.status(500).json({
             success: false,
             message: 'An error occurred while creating the interaction',
@@ -181,13 +128,12 @@ export const createDoctorInteraction = async (req: Request, res: Response) => {
         });
     }
 };
-
-// Get all interactions for a specific doctor
-export const getInteractionsForDoctor = async (req: Request, res: Response) => {
+// Get all interactions for a specific chemist
+export const getInteractionsForChemist = async (req, res) => {
     try {
         const tenantDb = req.tenantDb;
-        const doctorId = req.params.doctorId;
-
+        const chemistId = req.params.chemistId;
+        const { interactionType, employeeId, startDate, endDate, page = 1, limit = 10 } = req.query;
         // Validation
         if (!tenantDb) {
             return res.status(500).json({
@@ -195,39 +141,69 @@ export const getInteractionsForDoctor = async (req: Request, res: Response) => {
                 message: 'Tenant database connection not established'
             });
         }
-
-        if (!doctorId) {
+        if (!chemistId) {
             return res.status(400).json({
                 success: false,
-                message: 'Doctor ID is required'
+                message: 'Chemist ID is required'
             });
         }
-
-        // Check if doctor exists
-        const doctorExists = await tenantDb.doctor.findUnique({
-            where: { id: doctorId },
+        // Check if chemist exists
+        const chemistExists = await tenantDb.chemist.findUnique({
+            where: { id: chemistId },
             select: {
                 id: true,
                 name: true,
-                specialization: true,
-                designation: true
+                type: true
             }
         });
-
-        if (!doctorExists) {
+        if (!chemistExists) {
             return res.status(404).json({
                 success: false,
-                message: 'Doctor not found'
+                message: 'Chemist not found'
             });
         }
-
         // Build where clause
-        const where: any = { doctorId };
-
-
+        const where = { chemistId };
+        if (interactionType)
+            where.interactionType = interactionType;
+        if (employeeId)
+            where.employeeId = employeeId;
+        // Date range filter
+        if (startDate || endDate) {
+            where.startTime = {};
+            if (startDate)
+                where.startTime.gte = new Date(startDate);
+            if (endDate)
+                where.startTime.lte = new Date(endDate);
+        }
+        // Calculate pagination
+        const skip = (Number(page) - 1) * Number(limit);
+        const take = Number(limit);
+        // Get total count
+        const totalCount = await tenantDb.chemistInteraction.count({ where });
+        // Get interaction statistics
+        const stats = await tenantDb.chemistInteraction.aggregate({
+            where: { chemistId },
+            _count: {
+                _all: true
+            },
+            _avg: {
+                rating: true
+            }
+        });
+        // Get interaction type breakdown
+        const interactionTypes = await tenantDb.chemistInteraction.groupBy({
+            by: ['interactionType'],
+            where: { chemistId },
+            _count: {
+                _all: true
+            }
+        });
         // Fetch interactions
-        const interactions = await tenantDb.doctorInteraction.findMany({
+        const interactions = await tenantDb.chemistInteraction.findMany({
             where,
+            skip,
+            take,
             include: {
                 employee: {
                     select: {
@@ -237,53 +213,47 @@ export const getInteractionsForDoctor = async (req: Request, res: Response) => {
                         firstName: true,
                         lastName: true
                     }
-                },
-                hospital: {
-                    select: {
-                        id: true,
-                        name: true,
-                        city: true
-                    }
                 }
             },
             orderBy: {
                 startTime: 'desc'
             }
         });
-
         return res.status(200).json({
             success: true,
-            message: 'Doctor interactions fetched successfully',
+            message: 'Chemist interactions fetched successfully',
             data: {
-                doctor: doctorExists,
+                chemist: chemistExists,
+                statistics: {
+                    totalInteractions: stats._count._all,
+                    averageRating: stats._avg.rating,
+                    byType: interactionTypes
+                },
                 interactions,
+                pagination: {
+                    total: totalCount,
+                    page: Number(page),
+                    limit: Number(limit),
+                    totalPages: Math.ceil(totalCount / Number(limit))
+                }
             }
         });
-
-    } catch (error: any) {
-        console.error('Error fetching doctor interactions:', error);
+    }
+    catch (error) {
+        console.error('Error fetching chemist interactions:', error);
         return res.status(500).json({
             success: false,
-            message: 'An error occurred while fetching doctor interactions',
+            message: 'An error occurred while fetching chemist interactions',
             error: error.message
         });
     }
 };
-
-// Get all interactions by an employee
-export const getInteractionsByEmployee = async (req: Request, res: Response) => {
+// Get all chemist interactions by an employee
+export const getChemistInteractionsByEmployee = async (req, res) => {
     try {
         const tenantDb = req.tenantDb;
         const employeeId = req.params.employeeId;
-        const {
-            doctorId,
-            interactionType,
-            startDate,
-            endDate,
-            page = 1,
-            limit = 10
-        } = req.query;
-
+        const { chemistId, interactionType, startDate, endDate, page = 1, limit = 10 } = req.query;
         // Validation
         if (!tenantDb) {
             return res.status(500).json({
@@ -291,14 +261,12 @@ export const getInteractionsByEmployee = async (req: Request, res: Response) => 
                 message: 'Tenant database connection not established'
             });
         }
-
         if (!employeeId) {
             return res.status(400).json({
                 success: false,
                 message: 'Employee ID is required'
             });
         }
-
         // Check if employee exists
         const employeeExists = await tenantDb.employee.findUnique({
             where: { id: employeeId },
@@ -308,62 +276,51 @@ export const getInteractionsByEmployee = async (req: Request, res: Response) => 
                 role: true
             }
         });
-
         if (!employeeExists) {
             return res.status(404).json({
                 success: false,
                 message: 'Employee not found'
             });
         }
-
         // Build where clause
-        const where: any = { employeeId };
-        if (doctorId) where.doctorId = doctorId;
-        if (interactionType) where.interactionType = interactionType;
-
+        const where = { employeeId };
+        if (chemistId)
+            where.chemistId = chemistId;
+        if (interactionType)
+            where.interactionType = interactionType;
         // Date range filter
         if (startDate || endDate) {
             where.startTime = {};
-            if (startDate) where.startTime.gte = new Date(startDate as string);
-            if (endDate) where.startTime.lte = new Date(endDate as string);
+            if (startDate)
+                where.startTime.gte = new Date(startDate);
+            if (endDate)
+                where.startTime.lte = new Date(endDate);
         }
-
         // Calculate pagination
         const skip = (Number(page) - 1) * Number(limit);
         const take = Number(limit);
-
         // Get total count
-        const totalCount = await tenantDb.doctorInteraction.count({ where });
-
+        const totalCount = await tenantDb.chemistInteraction.count({ where });
         // Get today's interactions count
         const today = new Date();
         today.setHours(0, 0, 0, 0);
-        const todayCount = await tenantDb.doctorInteraction.count({
+        const todayCount = await tenantDb.chemistInteraction.count({
             where: {
                 employeeId,
                 startTime: { gte: today }
             }
         });
-
         // Fetch interactions
-        const interactions = await tenantDb.doctorInteraction.findMany({
+        const interactions = await tenantDb.chemistInteraction.findMany({
             where,
             skip,
             take,
             include: {
-                doctor: {
+                chemist: {
                     select: {
                         id: true,
                         name: true,
-                        specialization: true,
-                        designation: true
-                    }
-                },
-                hospital: {
-                    select: {
-                        id: true,
-                        name: true,
-                        city: true
+                        type: true
                     }
                 }
             },
@@ -371,10 +328,9 @@ export const getInteractionsByEmployee = async (req: Request, res: Response) => 
                 startTime: 'desc'
             }
         });
-
         return res.status(200).json({
             success: true,
-            message: 'Employee interactions fetched successfully',
+            message: 'Employee chemist interactions fetched successfully',
             data: {
                 employee: employeeExists,
                 statistics: {
@@ -390,31 +346,23 @@ export const getInteractionsByEmployee = async (req: Request, res: Response) => 
                 }
             }
         });
-
-    } catch (error: any) {
-        console.error('Error fetching employee interactions:', error);
+    }
+    catch (error) {
+        console.error('Error fetching employee chemist interactions:', error);
         return res.status(500).json({
             success: false,
-            message: 'An error occurred while fetching employee interactions',
+            message: 'An error occurred while fetching employee chemist interactions',
             error: error.message
         });
     }
 };
-
-// Update a doctor interaction
-export const updateDoctorInteraction = async (req: Request, res: Response) => {
+// Update a chemist interaction
+export const updateChemistInteraction = async (req, res) => {
     try {
         const tenantDb = req.tenantDb;
         const interactionId = req.params.interactionId;
-        const {
-            endTime,
-            purpose,
-            outcome,
-            comments,
-            rating
-        } = req.body;
+        const { endTime, purpose, outcome, comments, rating } = req.body;
         const userId = req.user?.id; // Current user making the update
-
         // Validation
         if (!tenantDb) {
             return res.status(500).json({
@@ -422,26 +370,22 @@ export const updateDoctorInteraction = async (req: Request, res: Response) => {
                 message: 'Tenant database connection not established'
             });
         }
-
         if (!interactionId) {
             return res.status(400).json({
                 success: false,
                 message: 'Interaction ID is required'
             });
         }
-
         // Check if interaction exists
-        const existingInteraction = await tenantDb.doctorInteraction.findUnique({
+        const existingInteraction = await tenantDb.chemistInteraction.findUnique({
             where: { id: interactionId }
         });
-
         if (!existingInteraction) {
             return res.status(404).json({
                 success: false,
                 message: 'Interaction not found'
             });
         }
-
         // Check if user has permission to update (only creator can update)
         if (existingInteraction.employeeId !== userId) {
             return res.status(403).json({
@@ -449,7 +393,6 @@ export const updateDoctorInteraction = async (req: Request, res: Response) => {
                 message: 'You do not have permission to update this interaction'
             });
         }
-
         // Validate rating if provided
         if (rating !== undefined && (rating < 1 || rating > 5)) {
             return res.status(400).json({
@@ -457,7 +400,6 @@ export const updateDoctorInteraction = async (req: Request, res: Response) => {
                 message: 'Rating must be between 1 and 5'
             });
         }
-
         // Validate end time if provided
         if (endTime) {
             const endDateTime = new Date(endTime);
@@ -468,9 +410,8 @@ export const updateDoctorInteraction = async (req: Request, res: Response) => {
                 });
             }
         }
-
         // Update the interaction
-        const updatedInteraction = await tenantDb.doctorInteraction.update({
+        const updatedInteraction = await tenantDb.chemistInteraction.update({
             where: { id: interactionId },
             data: {
                 endTime: endTime ? new Date(endTime) : undefined,
@@ -480,11 +421,11 @@ export const updateDoctorInteraction = async (req: Request, res: Response) => {
                 rating
             },
             include: {
-                doctor: {
+                chemist: {
                     select: {
                         id: true,
                         name: true,
-                        specialization: true
+                        type: true
                     }
                 },
                 employee: {
@@ -493,24 +434,16 @@ export const updateDoctorInteraction = async (req: Request, res: Response) => {
                         email: true,
                         role: true
                     }
-                },
-                hospital: {
-                    select: {
-                        id: true,
-                        name: true,
-                        city: true
-                    }
                 }
             }
         });
-
         return res.status(200).json({
             success: true,
             message: 'Interaction updated successfully',
             interaction: updatedInteraction
         });
-
-    } catch (error: any) {
+    }
+    catch (error) {
         console.error('Error updating interaction:', error);
         return res.status(500).json({
             success: false,
@@ -519,15 +452,13 @@ export const updateDoctorInteraction = async (req: Request, res: Response) => {
         });
     }
 };
-
-// Delete a doctor interaction
-export const deleteDoctorInteraction = async (req: Request, res: Response) => {
+// Delete a chemist interaction
+export const deleteChemistInteraction = async (req, res) => {
     try {
         const tenantDb = req.tenantDb;
         const interactionId = req.params.interactionId;
         const userId = req.user?.id; // Current user making the request
         const userRole = req.user?.role; // Assuming role is available
-
         // Validation
         if (!tenantDb) {
             return res.status(500).json({
@@ -535,37 +466,22 @@ export const deleteDoctorInteraction = async (req: Request, res: Response) => {
                 message: 'Tenant database connection not established'
             });
         }
-
         if (!interactionId) {
             return res.status(400).json({
                 success: false,
                 message: 'Interaction ID is required'
             });
         }
-
         // Check if interaction exists
-        const interaction = await tenantDb.doctorInteraction.findUnique({
-            where: { id: interactionId },
-            include: {
-                SampleDistribution: true
-            }
+        const interaction = await tenantDb.chemistInteraction.findUnique({
+            where: { id: interactionId }
         });
-
         if (!interaction) {
             return res.status(404).json({
                 success: false,
                 message: 'Interaction not found'
             });
         }
-
-        // Check if interaction has related distributions
-        if (interaction.SampleDistribution && interaction.SampleDistribution.length > 0) {
-            return res.status(400).json({
-                success: false,
-                message: 'Cannot delete interaction with associated distributions'
-            });
-        }
-
         // Check permission (only creator or admin can delete)
         if (interaction.employeeId !== userId && userRole !== 'ADMIN') {
             return res.status(403).json({
@@ -573,18 +489,16 @@ export const deleteDoctorInteraction = async (req: Request, res: Response) => {
                 message: 'You do not have permission to delete this interaction'
             });
         }
-
         // Delete the interaction
-        await tenantDb.doctorInteraction.delete({
+        await tenantDb.chemistInteraction.delete({
             where: { id: interactionId }
         });
-
         return res.status(200).json({
             success: true,
             message: 'Interaction deleted successfully'
         });
-
-    } catch (error: any) {
+    }
+    catch (error) {
         console.error('Error deleting interaction:', error);
         return res.status(500).json({
             success: false,
@@ -593,9 +507,3 @@ export const deleteDoctorInteraction = async (req: Request, res: Response) => {
         });
     }
 };
-
-
-
-
-
-

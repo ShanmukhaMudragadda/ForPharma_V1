@@ -137,7 +137,6 @@ export const createChemistInteraction = async (req: Request, res: Response) => {
                 chemistTask: chemistTaskId ? {
                     select: {
                         id: true,
-                        taskStatus: true
                     }
                 } : false
             }
