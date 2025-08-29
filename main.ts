@@ -1,20 +1,20 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import SchemaManagementService from './src/services/SchemaManagementService.ts';
-import organizationRoutes from './src/routes/organizationRoutes.ts'
-import authRoutes from './src/routes/authRoutes.ts'
-import doctorRoutes from './src/routes/doctorRoutes.ts'
-import chemistRoutes from './src/routes/chemistRoutes.ts'
-import { cleanupMiddleware } from './src/middlewares/tenantMiddleware.ts';
-import orderRoutes from './src/routes/orderRoutes.ts';
-import drugRoutes from './src/routes/drugRoutes.ts'
-import rcpaRoutes from './src/routes/rcpaRoutes.ts';
-import dcrRoutes from './src/routes/dcrRoutes.ts'
-import sampleRoutes from './src/routes/sampleRoutes.ts'; // NEW SAMPLE ROUTES
-import taskPlannerRoutes from './src/routes/taskPlannerRoutes.ts'
-import taskRoutes from './src/routes/taskRoutes.ts'
-import tourPlanRoutes from './src/routes/tourPlanRoutes.ts'
+import SchemaManagementService from './src/services/SchemaManagementService';
+import organizationRoutes from './src/routes/organizationRoutes'
+import authRoutes from './src/routes/authRoutes'
+import doctorRoutes from './src/routes/doctorRoutes'
+import chemistRoutes from './src/routes/chemistRoutes'
+import { cleanupMiddleware } from './src/middlewares/tenantMiddleware';
+import orderRoutes from './src/routes/orderRoutes';
+import drugRoutes from './src/routes/drugRoutes'
+import rcpaRoutes from './src/routes/rcpaRoutes';
+import dcrRoutes from './src/routes/dcrRoutes'
+import sampleRoutes from './src/routes/sampleRoutes'; // NEW SAMPLE ROUTES
+import taskPlannerRoutes from './src/routes/taskPlannerRoutes'
+import taskRoutes from './src/routes/taskRoutes'
+import tourPlanRoutes from './src/routes/tourPlanRoutes'
 
 dotenv.config();
 

@@ -13,7 +13,7 @@
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
     "outDir": "dist",
-    "rootDir": "src",
+    "rootDir": ".",
     "baseUrl": "src",
     "paths": {
       "@/*": [
@@ -22,7 +22,8 @@
     }
   },
   "include": [
-    "src/**/*"
+    "src/**/*",
+    "main.ts"
   ],
   "exclude": [
     "node_modules",
