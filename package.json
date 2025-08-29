@@ -9,6 +9,7 @@
     "dev": "tsx watch main.ts",
     "dev:nodemon": "nodemon",
     "build": "tsc",
+    "heroku-postbuild": "npm run build",
     "prisma:generate": "npm run prisma:generate:shared && npm run prisma:generate:tenant",
     "prisma:generate:shared": "prisma generate --schema=./prisma-shared/schema.prisma",
     "prisma:migrate:shared": "prisma migrate dev --schema=./prisma-shared/schema.prisma",
