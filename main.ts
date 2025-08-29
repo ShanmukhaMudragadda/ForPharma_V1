@@ -114,8 +114,8 @@ app.use((err: any, req: express.Request, res: express.Response, next: express.Ne
 // Start the HTTP server
 const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
 
-const server = app.listen(3000, '0.0.0.0', () => {
-  console.log('Server running on 192.168.24.215:3000');
+const server = app.listen(port, () => {
+  console.log(`🚀 Server running on port ${port}`);
 });
 
 // Graceful shutdown procedures
