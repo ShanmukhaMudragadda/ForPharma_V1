@@ -1,13 +1,12 @@
 import express from 'express';
-import SchemaManagementService from '../services/SchemaManagementService';
-import tenantMiddleware from '../middlewares/tenantMiddleware';
+import tenantMiddleware from '../middlewares/tenantMiddleware.js';
 import {
     createChemistController,
     updateChemist,
     deleteChemist,
     getChemistListController,
     getChemistDetails
-} from '../controllers/chemists/chemistController'
+} from '../controllers/chemists/chemistController.js'
 
 import {
     // ChemistNote Controllers
@@ -16,7 +15,7 @@ import {
     getChemistNotesByEmployee,
     updateChemistNote,
     deleteChemistNote
-} from '../controllers/chemists/chemistNoteController'
+} from '../controllers/chemists/chemistNoteController.js'
 
 import {
     // ChemistInteraction Controllers
@@ -25,7 +24,7 @@ import {
     getChemistInteractionsByEmployee,
     updateChemistInteraction,
     deleteChemistInteraction,
-} from '../controllers/chemists/chemistInteractionController'
+} from '../controllers/chemists/chemistInteractionController.js'
 import {
 
 
@@ -34,10 +33,9 @@ import {
     getChemistsForDoctor,
     getDoctorsForChemist,
     deleteDoctorChemistRelation
-} from '../controllers/chemists/doctorChemistRelationController'
+} from '../controllers/chemists/doctorChemistRelationController.js'
 
 const router = express.Router();
-const schemaService = SchemaManagementService.getInstance();
 
 // Basic Chemist routes
 router.get('/', tenantMiddleware, getChemistListController);
